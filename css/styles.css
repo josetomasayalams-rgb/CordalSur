@@ -392,25 +392,20 @@ a.card:active { transform: scale(0.985); transition: transform var(--motion-snap
    host swaps '#' for the real wa.me URL when the number is confirmed — no build wiring for one link */
 .checkin-card { flex-direction: row; align-items: center; gap: 0; }
 .checkin-card__main { flex: 1 1 auto; text-decoration: none; color: inherit; }
+/* WhatsApp glyph floats free — no divider, no background, no box; subtle lift on hover */
 .checkin-card__wa {
   flex: none;
   display: grid;
   place-items: center;
-  width: 56px;
-  align-self: stretch;
-  margin-left: 12px;
+  width: 44px;
+  margin-left: 8px;
   color: var(--forest);
   text-decoration: none;
-  border-left: 1px solid rgba(90, 98, 108, 0.14);
-  transition: color var(--motion-snap), background var(--motion-snap);
+  transition: color var(--motion-snap);
 }
-.checkin-card__wa:hover,
-.checkin-card__wa:focus-visible {
-  background: rgba(31, 77, 58, 0.08);
-  outline: none;
-}
-.checkin-card__wa:focus-visible { box-shadow: inset 0 0 0 2px var(--forest); }
-.checkin-card__wa svg { display: block; }
+.checkin-card__wa:hover svg { transform: scale(1.08); }
+.checkin-card__wa:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; border-radius: var(--radius-md); }
+.checkin-card__wa svg { display: block; transition: transform var(--motion-snap); }
 .icon-box {
   width: 48px;
   height: 48px;
