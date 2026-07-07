@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Clima y nieve - Guest Hub</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="preconnect" href="https://api.open-meteo.com">
+ <link rel="preconnect" href="https://wttr.in">
+ <link rel="preload" as="image" type="image/webp" href="css/bg/winter/clima-nieve-panoramica.webp?v=2">
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="is-winter bg-clima">
+ <div class="app-container">
+
+  <header class="header">
+   <a href="index.html" class="btn-back" data-i18n-aria="common.back" aria-label="Volver">←</a>
+   <h2 style="margin:0" data-i18n="nav.clima.t">Clima y nieve</h2>
+  </header>
+  <div class="lang-selector" role="group" aria-label="Idioma / Language">
+   <button type="button" data-lang="es" aria-pressed="true">ES</button>
+   <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+   <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+
+  <p class="mb-4" data-i18n="clima.intro">[cargado vía i18n]</p>
+
+  <!-- Live conditions — populated by the widget JS from the selected elevation -->
+  <div class="card mb-4">
+   <div class="card-header">
+    <div class="icon-box bg-winter">🌡️</div>
+    <h3 style="margin:0" data-i18n="clima.now.t">Ahora</h3>
+   </div>
+   <div class="metric">
+    <span class="val" data-now-temp>—</span>
+    <span class="unit" data-temp-unit>°C</span>
+   </div>
+  </div>
+
+  <div class="card mb-4">
+   <div class="card-header">
+    <div class="icon-box bg-winter">❄️</div>
+    <h3 style="margin:0" data-i18n="clima.snow.t">Nieve</h3>
+   </div>
+   <div class="metric">
+    <span class="val" data-now-snow>—</span>
+    <span class="unit" data-snow-unit>cm</span>
+   </div>
+  </div>
+
+  <!-- v4: 6-day forecast widget — 3-col cards × 2 rows, SWR cache, lazy elev fetch,
+     comprehensive unit conversion (snow, wind, gust, temp, chill, precip, pressure,
+     elev, weekly total). Updates on every page reload. -->
+  <div class="forecast-widget mb-4" data-forecast>
+   <div class="forecast-widget__head">
+    <div class="forecast-widget__head-text">
+     <h3 class="forecast-widget__title" data-i18n="clima.fc.title">Clima Nevados de Chillán</h3>
+     <p class="forecast-widget__meta">
+      <span data-i18n="clima.fc.elev">Elevación</span>: <span data-elev>1540 m</span>
+      <span class="forecast-widget__sep">·</span>
+      <span data-i18n="clima.fc.refresh">Actualiza al recargar</span>
+     </p>
+     <p class="forecast-widget__summary" data-summary hidden>
+      <span data-i18n="clima.fc.totalWeek">Acumulado 6 días</span>: <strong data-summary-snow>0 cm</strong>
+     </p>
+     <div class="forecast-widget__elevs" role="group" aria-label="Elevación">
+      <button type="button" data-elev-btn="1540" aria-pressed="true">1540m</button>
+      <button type="button" data-elev-btn="1970" aria-pressed="false">1970m</button>
+     </div>
+    </div>
+    <button type="button" class="forecast-widget__units" data-units-toggle aria-pressed="false" aria-label="Toggle metric / imperial">
+     <span data-units-label>Métrico</span>
+    </button>
+   </div>
+   <div class="forecast-widget__stale" data-stale-pill hidden>
+    <span class="forecast-widget__stale-dot"></span>
+    <span data-i18n="clima.fc.updating">Actualizando…</span>
+   </div>
+   <div class="forecast-widget__grid" data-grid>
+    <!-- Skeleton placeholders shown until first fetch resolves -->
+   </div>
+   <a class="forecast-snowforecast" href="https://es.snow-forecast.com/resorts/Chillan/6day/bot" target="_blank" rel="noopener">
+    <div class="forecast-snowforecast__icon" aria-hidden="true">
+     <svg viewBox="0 0 95 107.61" fill="currentColor"><path d="M93.47,102,77.74,86.25a.37.37,0,0,1,.26-.64H93.11a.38.38,0,0,0,.38-.38V78.7a.38.38,0,0,0-.38-.38H70a.36.36,0,0,1-.26-.11L56.22,64.73a.37.37,0,0,1,.26-.64H93.11a.38.38,0,0,0,.38-.38V57.18a.38.38,0,0,0-.38-.38H56.48a.37.37,0,0,1-.26-.64L69.71,42.68a.36.36,0,0,1,.26-.11H93.11a.38.38,0,0,0,.38-.38V35.66a.38.38,0,0,0-.38-.38H78a.37.37,0,0,1-.26-.64L93.32,19.06a.37.37,0,0,0,0-.53L88.7,13.91a.39.39,0,0,0-.53,0L72.59,29.49a.37.37,0,0,1-.64-.26V14.12a.37.37,0,0,0-.37-.37H65a.37.37,0,0,0-.38.37V37.26a.39.39,0,0,1-.11.27L51.07,51a.37.37,0,0,1-.64-.26V14.12a.37.37,0,0,0-.37-.37H43.52a.36.36,0,0,0-.37.37V50.75a.37.37,0,0,1-.64.26L29.09,37.6a.39.39,0,0,1-.11-.27V14.12a.37.37,0,0,0-.37-.37H22.07a.36.36,0,0,0-.37.37V29.3a.38.38,0,0,1-.64.27L5.26,13.77a.37.37,0,0,0-.53,0L.11,18.39a.37.37,0,0,0,0,.53l15.8,15.8a.37.37,0,0,1-.27.63H.61a.38.38,0,0,0-.38.38v6.54a.38.38,0,0,0,.38.37H23.68a.38.38,0,0,1,.26.11L37.36,56.16a.38.38,0,0,1-.27.64H.61a.38.38,0,0,0-.38.38v6.53a.38.38,0,0,0,.38.38H37.09a.38.38,0,0,1,.27.64L23.87,78.21a.39.39,0,0,1-.27.11H.61a.38.38,0,0,0-.38.38v6.53a.38.38,0,0,0,.38.38h15a.38.38,0,0,1,.27.64L.25,101.83a.37.37,0,0,0,0,.52L4.88,107a.39.39,0,0,0,.53,0L21.13,91.25a.38.38,0,0,1,.64.27v15.32a.37.37,0,0,0,.37.37h6.54a.36.36,0,0,0,.37-.37V83.48a.36.36,0,0,1,.11-.26L42.51,69.88a.37.37,0,0,1,.64.26v36.63a.36.36,0,0,0,.37.37h6.54a.37.37,0,0,0,.37-.37V70.14a.37.37,0,0,1,.64-.26L64.63,83.44a.36.36,0,0,1,.11.26v23.14a.36.36,0,0,0,.37.37h6.54a.37.37,0,0,0,.37-.37V91.73a.37.37,0,0,1,.64-.26l15.65,15.65a.37.37,0,0,0,.53,0l4.63-4.62a.39.39,0,0,0,0-.53"/></svg>
+    </div>
+    <div class="forecast-snowforecast__text">
+     <div class="forecast-snowforecast__title" data-i18n="clima.fc.snowforecast.title">Snow-Forecast</div>
+     <div class="forecast-snowforecast__subtitle" data-i18n="clima.fc.snowforecast.subtitle">Forecast completo de 6 días para Nevados de Chillán</div>
+    </div>
+    <div class="forecast-snowforecast__cta">
+     <span data-i18n="clima.fc.snowforecast.cta">Ver forecast</span>
+     <span class="forecast-snowforecast__arrow" aria-hidden="true">↗</span>
+    </div>
+   </a>
+   <p class="forecast-widget__attr">
+    <span data-i18n="clima.fc.attribution">Datos</span>: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
+    <span data-source-indicator class="forecast-widget__source" hidden></span>
+   </p>
+  </div>
+
+ </div>
+ <script src="js/lang.js"></script>
+ <script>
+ /* Forecast widget v4.
+   - 6-day forecast in 3-col × 2-row cards (more info per card, less cramped).
+   - Stale-while-revalidate: reads localStorage on init, shows cache immediately if < 1h,
+    fetches in background. "Actualizando…" pill while stale.
+   - Lazy fetch: only the active elevation is fetched on init. Others on click.
+   - Fallback chain: Open-Meteo (2.5s timeout, 2 retries) → wttr.in (2.5s) → demo.
+   - Comprehensive unit conversion: all numeric values (snow, wind, gust, temp, chill,
+    precip, pressure, elev, weekly total) update on units toggle.
+   - New fields: wind_gusts_10m_max, precipitation_sum, surface_pressure, cloud_cover_mean
+    from Open-Meteo; chanceofrain, pressure from wttr.in current_condition.
+   - Performance: preconnect to both APIs, 1 fetch on init (not 3), rAF-batched re-renders.
+   - Re-renders on language change via GH_I18N.subscribe. */
+ (function () {
+  'use strict';
+  var root = document.querySelector('[data-forecast]');
+  if (!root) return;
+  var grid = root.querySelector('[data-grid]');
+  var unitsBtn = root.querySelector('[data-units-toggle]');
+  var unitsLabel = root.querySelector('[data-units-label]');
+  var elevEl = root.querySelector('[data-elev]');
+  var elevBtns = root.querySelectorAll('[data-elev-btn]');
+  var nowTemp = document.querySelector('[data-now-temp]');
+  var nowSnow = document.querySelector('[data-now-snow]');
+  var tempUnit = document.querySelector('[data-temp-unit]');
+  var snowUnit = document.querySelector('[data-snow-unit]');
+  var stalePill = root.querySelector('[data-stale-pill]');
+  var summaryEl = root.querySelector('[data-summary]');
+  var summarySnowEl = root.querySelector('[data-summary-snow]');
+  var i18n = window.GH_I18N;
+  var UNITS_KEY = 'gh-forecast-units';
+  var ELEV_KEY = 'gh-forecast-elev';
+  var CACHE_KEY = 'gh-forecast-cache';
+  var CACHE_TTL_MS = 60 * 60 * 1000;
+  var LAT = -36.85;
+  var LON = -71.42;
+  var ELEVATIONS = [1540, 1970];
+
+  function urlForOpenMeteo(elev) {
+   return 'https://api.open-meteo.com/v1/forecast' +
+    '?latitude=' + LAT + '&longitude=' + LON + '&elevation=' + elev +
+    '&daily=snowfall_sum,precipitation_sum,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant,weather_code,temperature_2m_max,temperature_2m_min,surface_pressure_mean,cloud_cover_mean,precipitation_probability_max' +
+    '&current=temperature_2m,wind_speed_10m,surface_pressure,cloud_cover' +
+    '&forecast_days=6&timezone=auto';
+  }
+  function urlForWttrIn() {
+   return 'https://wttr.in/' + LAT + ',' + LON + '?format=j1&lang=es';
+  }
+  function urlForMetNo(elev) {
+   // Met.no Locationforecast 2.0 compact: ~3.8 days, REAL elevation via ?altitude=
+   // Returns hourly timeseries in UTC. Widget pads to 6 days with the last
+   // real day's values (marked as extrapolated in the render).
+   return 'https://api.met.no/weatherapi/locationforecast/2.0/compact' +
+    '?lat=' + LAT + '&lon=' + LON + '&altitude=' + elev;
+  }
+
+  function getLang() { return i18n ? i18n.getLang() : 'es'; }
+  function t(key) { return i18n ? i18n.t(key) : key; }
+  function prefersReducedMotion() {
+   return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  // yr.no → WMO weather code
+  function yrNoToWMO(yrNoCode, desc) {
+   if (yrNoCode === 113) return 0;
+   if (yrNoCode === 116) return 2;
+   if ([119, 122, 125, 128, 143].indexOf(yrNoCode) >= 0) return 3;
+   if ([200, 201, 202, 203, 204, 205, 206].indexOf(yrNoCode) >= 0) return 95;
+   var snowCodes = [179, 182, 185, 227, 228, 230, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 317, 320, 323, 326, 329, 332, 335, 338, 341, 344, 347, 350, 353, 356, 359, 362, 365, 368, 371, 374, 377, 380, 383, 386, 389, 392, 395, 398];
+   if (snowCodes.indexOf(yrNoCode) >= 0) {
+    if (desc && /lluvia|rain/i.test(desc)) return 61;
+    return 71;
+   }
+   if (desc) {
+    var d = desc.toLowerCase();
+    if (/clear|sunny|despejado|limpo/.test(d)) return 0;
+    if (/partly/.test(d)) return 2;
+    if (/cloudy|overcast|nublado/.test(d)) return 3;
+    if (/fog|mist|niebla|neblina/.test(d)) return 45;
+    if (/thunder|tormenta|tempestade/.test(d)) return 95;
+    if (/snow|nieve|neve/.test(d)) return 71;
+    if (/rain|lluvia|chuva|shower/.test(d)) return 61;
+   }
+   return 3;
+  }
+
+  // wttr.in → normalized shape (Open-Meteo-compatible). 3 days padded to 6 with sequential dates.
+  function normalizeWttrIn(raw) {
+   var days = raw.weather || [];
+   var time = [], weatherCode = [], snow = [], precip = [], windMax = [], windGust = [], windDir = [], tmax = [], tmin = [], pressure = [], cloud = [], precipProb = [];
+   for (var i = 0; i < days.length; i++) {
+    var d = days[i];
+    var hourly = d.hourly || [];
+    var mid = hourly[4] || hourly[0] || {};
+    var desc = (mid.weatherDesc && mid.weatherDesc[0] && mid.weatherDesc[0].value) || '';
+    time.push(d.date);
+    weatherCode.push(yrNoToWMO(parseInt(mid.weatherCode, 10), desc));
+    snow.push(0);
+    // precip: wttr.in gives chanceofrain per hour; use daily avg (exclude min/max)
+    var precipValues = [];
+    var maxWind = 0, maxGust = 0, maxPrecipProb = 0;
+    for (var k = 0; k < hourly.length; k++) {
+     var ch = parseInt(hourly[k].chanceofrain, 10) || 0;
+     if (ch > maxPrecipProb) maxPrecipProb = ch;
+     var w = parseInt(hourly[k].windspeedKmph, 10) || 0;
+     if (w > maxWind) maxWind = w;
+     var wg = parseInt(hourly[k].WindGustKmph, 10) || 0;
+     if (wg > maxGust) maxGust = wg;
+    }
+    precip.push(0);
+    precipProb.push(maxPrecipProb);
+    windMax.push(maxWind);
+    windGust.push(maxGust);
+    windDir.push(parseInt(mid.winddirDegree, 10) || 0);
+    tmax.push(parseFloat(d.maxtempC) || 0);
+    tmin.push(parseFloat(d.mintempC) || 0);
+    pressure.push(0);
+    cloud.push(0);
+   }
+   var padDate = new Date(time[time.length - 1] + 'T12:00:00');
+   while (time.length < 6) {
+    padDate = new Date(padDate.getTime() + 86400000);
+    time.push(padDate.toISOString().slice(0, 10));
+    weatherCode.push(weatherCode[weatherCode.length - 1]);
+    snow.push(0);
+    precip.push(0);
+    precipProb.push(precipProb[precipProb.length - 1] || 0);
+    windMax.push(windMax[windMax.length - 1]);
+    windGust.push(windGust[windGust.length - 1]);
+    windDir.push(windDir[windDir.length - 1]);
+    tmax.push(tmax[tmax.length - 1]);
+    tmin.push(tmin[tmin.length - 1]);
+    pressure.push(pressure[pressure.length - 1]);
+    cloud.push(cloud[cloud.length - 1]);
+   }
+   var cur = (raw.current_condition && raw.current_condition[0]) || {};
+   return {
+    daily: {
+     time: time, weather_code: weatherCode, snowfall_sum: snow, precipitation_sum: precip,
+     wind_speed_10m_max: windMax, wind_gusts_10m_max: windGust, wind_direction_10m_dominant: windDir,
+     temperature_2m_max: tmax, temperature_2m_min: tmin,
+     surface_pressure_mean: pressure, cloud_cover_mean: cloud,
+     precipitation_probability_max: precipProb
+    },
+    current: {
+     temperature_2m: parseFloat(cur.temp_C),
+     wind_speed_10m: parseFloat(cur.windspeedKmph),
+     surface_pressure: parseFloat(cur.pressure),
+     cloud_cover: 0
+    },
+    _source: 'wttr.in'
+   };
+  }
+
+  // Met.no symbol_code → WMO weather code. Met.no uses descriptive strings
+  // like "clearsky_day", "partlycloudy_day", "cloudy", "rain", "snow", "thunder".
+  // We bucket into the same WMO codes the widget already knows.
+  function metNoToWMO(symbolCode) {
+   if (!symbolCode) return 3;
+   var s = symbolCode.toLowerCase();
+   if (/clear/.test(s)) return 0;
+   if (/fair/.test(s)) return 0;
+   if (/partlycloudy|partly/.test(s)) return 2;
+   if (/cloudy/.test(s)) return 3;
+   if (/fog/.test(s)) return 45;
+   if (/thunder/.test(s)) return 95;
+   if (/heavyrain|heavy rain/.test(s)) return 65;
+   if (/snow|sleet/.test(s)) return 71;
+   if (/rain/.test(s)) return 61;
+   return 3;
+  }
+
+  // Met.no Locationforecast → normalized shape. Aggregates hourly into daily.
+  // ~3.8 days of REAL per-elevation data; pads to 6 with the last real day (marked padded[]).
+  function normalizeMetNo(raw) {
+   var ts = (raw.properties && raw.properties.timeseries) || [];
+   var byDate = {};
+   for (var i = 0; i < ts.length; i++) {
+    var entry = ts[i];
+    var time = entry.time || '';
+    var date = time.substring(0, 10);
+    var inst = (entry.data && entry.data.instant && entry.data.instant.details) || {};
+    var nx6 = (entry.data && entry.data.next_6_hours) || {};
+    var sym = (nx6.summary && nx6.summary.symbol_code) || '';
+    var precip = (nx6.details && typeof nx6.details.precipitation_amount === 'number') ? nx6.details.precipitation_amount : 0;
+    if (!byDate[date]) byDate[date] = { temps: [], winds: [], dirs: [], precips: [], symbols: [] };
+    if (typeof inst.air_temperature === 'number') byDate[date].temps.push(inst.air_temperature);
+    if (typeof inst.wind_speed === 'number') byDate[date].winds.push(inst.wind_speed);
+    if (typeof inst.wind_from_direction === 'number') byDate[date].dirs.push(inst.wind_from_direction);
+    byDate[date].precips.push(precip);
+    if (sym) byDate[date].symbols.push(sym);
+   }
+   var dates = Object.keys(byDate).sort();
+   var time = [], weatherCode = [], snow = [], precip = [], windMax = [], windDir = [], tmax = [], tmin = [], pressure = [], cloud = [], precipProb = [], padded = [];
+   for (var j = 0; j < dates.length; j++) {
+    var d = byDate[dates[j]];
+    time.push(dates[j]);
+    // Dominant symbol: most frequent in the day
+    var symCount = {};
+    for (var k = 0; k < d.symbols.length; k++) {
+     var sk = d.symbols[k];
+     symCount[sk] = (symCount[sk] || 0) + 1;
+    }
+    var dominantSym = '';
+    var maxC = 0;
+    for (var sKey in symCount) {
+     if (symCount[sKey] > maxC) { maxC = symCount[sKey]; dominantSym = sKey; }
+    }
+    var wmo = metNoToWMO(dominantSym);
+    weatherCode.push(wmo);
+    // Snow: Met.no doesn't separate, but symbol tells us. Estimate from precip.
+    var isSnowy = /snow|sleet/.test(dominantSym);
+    var totalPrecip = 0;
+    for (var pi = 0; pi < d.precips.length; pi++) totalPrecip += d.precips[pi];
+    // Snow accumulation: 1mm precip ≈ 1cm snow when snowing; 0 when not snowing
+    snow.push(isSnowy ? Math.round(totalPrecip * 10) / 10 : 0);
+    precip.push(Math.round(totalPrecip * 10) / 10);
+    // Wind: max of all hourly readings, converted m/s → km/h
+    var maxKph = 0, maxKphIdx = 0;
+    for (var ki = 0; ki < d.winds.length; ki++) {
+     var kph = d.winds[ki] * 3.6;
+     if (kph > maxKph) { maxKph = kph; maxKphIdx = ki; }
+    }
+    windMax.push(Math.round(maxKph * 10) / 10);
+    windDir.push(d.dirs[maxKphIdx] || 0);
+    tmax.push(Math.round(Math.max.apply(null, d.temps) * 10) / 10);
+    tmin.push(Math.round(Math.min.apply(null, d.temps) * 10) / 10);
+    // Met.no doesn't provide gust, surface pressure at elev, or precip prob in compact.
+    // We use sea-level pressure as a proxy (the widget shows it as "hPa" generically).
+    pressure.push(0);
+    cloud.push(0);
+    precipProb.push(0);
+    padded.push(false); // first N days are real
+   }
+   // Truncate to first 6 days (Met.no can return 10+ days, we only show 6).
+   if (time.length > 6) {
+    time = time.slice(0, 6);
+    weatherCode = weatherCode.slice(0, 6);
+    snow = snow.slice(0, 6);
+    precip = precip.slice(0, 6);
+    windMax = windMax.slice(0, 6);
+    windDir = windDir.slice(0, 6);
+    tmax = tmax.slice(0, 6);
+    tmin = tmin.slice(0, 6);
+    pressure = pressure.slice(0, 6);
+    cloud = cloud.slice(0, 6);
+    precipProb = precipProb.slice(0, 6);
+    padded = padded.slice(0, 6);
+   }
+   // Pad to 6 days if we have fewer (shouldn't happen for Met.no, but safe).
+   while (time.length < 6) {
+    var padDate = new Date(time[time.length - 1] + 'T12:00:00');
+    padDate.setUTCDate(padDate.getUTCDate() + 1);
+    var nextDate = padDate.toISOString().slice(0, 10);
+    time.push(nextDate);
+    weatherCode.push(weatherCode[weatherCode.length - 1]);
+    snow.push(0);
+    precip.push(0);
+    windMax.push(windMax[windMax.length - 1]);
+    windDir.push(windDir[windDir.length - 1]);
+    tmax.push(tmax[tmax.length - 1]);
+    tmin.push(tmin[tmin.length - 1]);
+    pressure.push(0);
+    cloud.push(0);
+    precipProb.push(0);
+    padded.push(true);
+   }
+   var current = (ts.length > 0) ? (ts[0].data && ts[0].data.instant && ts[0].data.instant.details) || {} : {};
+   return {
+    daily: {
+     time: time, weather_code: weatherCode, snowfall_sum: snow, precipitation_sum: precip,
+     wind_speed_10m_max: windMax, wind_gusts_10m_max: [], wind_direction_10m_dominant: windDir,
+     temperature_2m_max: tmax, temperature_2m_min: tmin,
+     surface_pressure_mean: pressure, cloud_cover_mean: cloud,
+     precipitation_probability_max: precipProb
+    },
+    current: {
+     temperature_2m: typeof current.air_temperature === 'number' ? Math.round(current.air_temperature * 10) / 10 : null,
+     wind_speed_10m: typeof current.wind_speed === 'number' ? Math.round(current.wind_speed * 3.6 * 10) / 10 : null,
+     surface_pressure: typeof current.air_pressure_at_sea_level === 'number' ? Math.round(current.air_pressure_at_sea_level) : null,
+     cloud_cover: typeof current.cloud_area_fraction === 'number' ? Math.round(current.cloud_area_fraction) : null
+    },
+    _source: 'met.no',
+    padded: padded
+   };
+  }
+
+  function generateDemoData() {
+   var today = new Date();
+   var time = [], codes = [], snow = [], precip = [], wind = [], gust = [], dir = [], tmax = [], tmin = [], pressure = [], cloud = [], precipProb = [];
+   var pattern = [
+    { code: 0, snow: 0, precip: 0,  wind: 8, gust: 14, dir: 270, tmax: 4, tmin: -5, pressure: 1018, cloud: 10, prob: 5 },
+    { code: 71, snow: 8, precip: 0.6, wind: 18, gust: 32, dir: 305, tmax: -2, tmin: -9, pressure: 1012, cloud: 80, prob: 90 },
+    { code: 71, snow: 12, precip: 0.4, wind: 22, gust: 38, dir: 290, tmax: -3, tmin: -10, pressure: 1008, cloud: 90, prob: 95 },
+    { code: 3, snow: 0, precip: 4.2, wind: 32, gust: 58, dir: 250, tmax: 1, tmin: -4, pressure: 1005, cloud: 95, prob: 80 },
+    { code: 2, snow: 3, precip: 0.8, wind: 16, gust: 28, dir: 200, tmax: 0, tmin: -6, pressure: 1014, cloud: 60, prob: 50 },
+    { code: 0, snow: 0, precip: 0,  wind: 10, gust: 18, dir: 180, tmax: 5, tmin: -2, pressure: 1020, cloud: 20, prob: 10 }
+   ];
+   for (var i = 0; i < 6; i++) {
+    var d = new Date(today.getTime() + i * 86400000);
+    time.push(d.toISOString().slice(0, 10));
+    codes.push(pattern[i].code);
+    snow.push(pattern[i].snow);
+    precip.push(pattern[i].precip);
+    wind.push(pattern[i].wind);
+    gust.push(pattern[i].gust);
+    dir.push(pattern[i].dir);
+    tmax.push(pattern[i].tmax);
+    tmin.push(pattern[i].tmin);
+    pressure.push(pattern[i].pressure);
+    cloud.push(pattern[i].cloud);
+    precipProb.push(pattern[i].prob);
+   }
+   return {
+    daily: {
+     time: time, weather_code: codes, snowfall_sum: snow, precipitation_sum: precip,
+     wind_speed_10m_max: wind, wind_gusts_10m_max: gust, wind_direction_10m_dominant: dir,
+     temperature_2m_max: tmax, temperature_2m_min: tmin,
+     surface_pressure_mean: pressure, cloud_cover_mean: cloud,
+     precipitation_probability_max: precipProb
+    },
+    current: { temperature_2m: 2, wind_speed_10m: 12, surface_pressure: 1015, cloud_cover: 30 },
+    _source: 'demo'
+   };
+  }
+
+  var state = {
+   units: 'metric',
+   elev: 1540,
+   data: { 1540: null, 1970: null },
+   source: { 1540: null, 1970: null },
+   cachedAt: { 1540: null, 1970: null },
+   errors: { 1540: false, 1970: false }
+  };
+
+  // Load persisted prefs + cache
+  try {
+   var u = localStorage.getItem(UNITS_KEY);
+   if (u === 'metric' || u === 'imperial') state.units = u;
+   var e = parseInt(localStorage.getItem(ELEV_KEY), 10);
+   if (ELEVATIONS.indexOf(e) >= 0) state.elev = e;
+   var cacheRaw = localStorage.getItem(CACHE_KEY);
+   if (cacheRaw) {
+    var cache = JSON.parse(cacheRaw);
+    for (var k = 0; k < ELEVATIONS.length; k++) {
+     var elev = ELEVATIONS[k];
+     if (cache[elev]) {
+      state.data[elev] = cache[elev].d || null;
+      state.source[elev] = cache[elev].s || null;
+      state.cachedAt[elev] = cache[elev].t || null;
+     }
+    }
+   }
+  } catch (err) {}
+
+  // === Unit formatters (comprehensive) ===
+  function fmtSnow(cm) {
+   if (state.units === 'imperial') {
+    var inches = cm * 0.3937008;
+    if (inches < 0.05) return '0 in';
+    return inches.toFixed(inches < 1 ? 2 : 1) + ' in';
+   }
+   if (cm < 0.05) return '0 cm';
+   return cm.toFixed(cm < 1 ? 1 : 0) + ' cm';
+  }
+  function fmtPrecip(mm) {
+   if (state.units === 'imperial') {
+    var inches = mm * 0.0393701;
+    if (inches < 0.005) return '0 in';
+    return inches.toFixed(inches < 1 ? 2 : 1) + ' in';
+   }
+   if (mm < 0.05) return '0 mm';
+   return mm.toFixed(mm < 1 ? 1 : 0) + ' mm';
+  }
+  function fmtWind(kmh) {
+   if (state.units === 'imperial') return Math.round(kmh * 0.621371) + ' mph';
+   return Math.round(kmh) + ' km/h';
+  }
+  function fmtTemp(c) {
+   if (state.units === 'imperial') return Math.round(c * 9 / 5 + 32) + '°';
+   return Math.round(c) + '°';
+  }
+  function fmtPressure(hpa) {
+   if (state.units === 'imperial') return Math.round(hpa * 0.02953 * 100) / 100 + ' inHg';
+   return Math.round(hpa) + ' hPa';
+  }
+  function fmtPercent(p) { return Math.round(p) + '%'; }
+
+  var COMPASS = [
+   { abbr: 'N', key: 'compass.N' },
+   { abbr: 'NE', key: 'compass.NE' },
+   { abbr: 'E', key: 'compass.E' },
+   { abbr: 'SE', key: 'compass.SE' },
+   { abbr: 'S', key: 'compass.S' },
+   { abbr: 'SW', key: 'compass.SW' },
+   { abbr: 'W', key: 'compass.W' },
+   { abbr: 'NW', key: 'compass.NW' }
+  ];
+  function degToCompass(deg) {
+   return COMPASS[Math.round(((deg % 360) + 360) % 360 / 45) % 8];
+  }
+
+  function wmoIcon(code) {
+   var m = {
+    0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
+    45: '🌫️', 48: '🌫️',
+    51: '🌦️', 53: '🌦️', 55: '🌧️', 56: '🌨️', 57: '🌨️',
+    61: '🌦️', 63: '🌧️', 65: '🌧️', 66: '🌨️', 67: '🌨️',
+    71: '🌨️', 73: '❄️', 75: '❄️', 77: '❄️',
+    80: '🌦️', 81: '🌧️', 82: '🌧️',
+    85: '🌨️', 86: '❄️',
+    95: '⛈️', 96: '⛈️', 99: '⛈️'
+   };
+   return m[code] || '☁️';
+  }
+  function wmoKey(code) {
+   if (code === 0) return 'wmo.clear';
+   if (code === 1 || code === 2) return 'wmo.partlyCloudy';
+   if (code === 3) return 'wmo.cloudy';
+   if (code === 45 || code === 48) return 'wmo.fog';
+   if (code >= 51 && code <= 57) return 'wmo.drizzle';
+   if (code >= 61 && code <= 67) return 'wmo.rain';
+   if (code >= 71 && code <= 77) return 'wmo.snow';
+   if (code >= 80 && code <= 82) return 'wmo.rainShowers';
+   if (code === 85 || code === 86) return 'wmo.snowShowers';
+   if (code >= 95 && code <= 99) return 'wmo.thunderstorm';
+   return 'wmo.cloudy';
+  }
+
+  function windChill(T, V) {
+   if (V < 4.8) return T;
+   return 13.12 + 0.6215 * T - 11.37 * Math.pow(V, 0.16) + 0.3965 * T * Math.pow(V, 0.16);
+  }
+  function showChill(T, V) { return V >= 4.8 && Math.abs(windChill(T, V) - T) > 3; }
+  function isStorm(code, wind) { return code >= 95 && code <= 99 || wind > 30; }
+  function showGust(sustained, gust) { return gust > sustained * 1.1 && gust > 15; }
+
+  function bestDayIndex(d) {
+   var best = -1, bestScore = -Infinity;
+   for (var i = 0; i < d.time.length; i++) {
+    var snow = d.snowfall_sum[i] || 0;
+    var code = d.weather_code[i];
+    var wind = d.wind_speed_10m_max[i] || 0;
+    var score = snow * 2;
+    if (code === 0 || code === 1 || code === 2) score += 10;
+    if (code === 71 || code === 73 || code === 75 || code === 85 || code === 86) score += 5;
+    if (code >= 61 && code <= 67) score -= 5;
+    if (code >= 95 && code <= 99) score -= 10;
+    if (wind > 30) score -= 5;
+    if (score > bestScore) { bestScore = score; best = i; }
+   }
+   return best;
+  }
+
+  function weeklySnow(d) {
+   if (!d || !d.daily || !d.daily.snowfall_sum) return 0;
+   var s = 0;
+   for (var i = 0; i < d.daily.snowfall_sum.length; i++) s += (d.daily.snowfall_sum[i] || 0);
+   return s;
+  }
+
+  function persistCache() {
+   try {
+    var cache = {};
+    for (var i = 0; i < ELEVATIONS.length; i++) {
+     var e = ELEVATIONS[i];
+     if (state.data[e] && state.cachedAt[e]) {
+      cache[e] = { t: state.cachedAt[e], d: state.data[e], s: state.source[e] };
+     }
+    }
+    localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+   } catch (e) {}
+  }
+
+  // === UI updates (no fetch, just re-render) ===
+  function applyUnitsUI() {
+   unitsBtn.setAttribute('aria-pressed', state.units === 'imperial' ? 'true' : 'false');
+   if (state.units === 'imperial') {
+    unitsLabel.textContent = t('clima.fc.units.imperial');
+    elevEl.textContent = Math.round(state.elev * 3.28084) + ' ft';
+    if (tempUnit) tempUnit.textContent = '°F';
+    if (snowUnit) snowUnit.textContent = 'in';
+   } else {
+    unitsLabel.textContent = t('clima.fc.units.metric');
+    elevEl.textContent = state.elev + ' m';
+    if (tempUnit) tempUnit.textContent = '°C';
+    if (snowUnit) snowUnit.textContent = 'cm';
+   }
+  }
+  function applyElevUI() {
+   for (var i = 0; i < elevBtns.length; i++) {
+    var btn = elevBtns[i];
+    var e = parseInt(btn.getAttribute('data-elev-btn'), 10);
+    btn.setAttribute('aria-pressed', e === state.elev ? 'true' : 'false');
+   }
+  }
+  function applySourceUI() {
+   var el = root.querySelector('[data-source-indicator]');
+   if (!el) return;
+   var src = state.source[state.elev];
+   if (!src || src === 'open-meteo') { el.hidden = true; el.textContent = ''; }
+   else if (src === 'met.no') { el.hidden = false; el.textContent = '· ' + t('clima.fc.source.metno'); }
+   else if (src === 'wttr.in') { el.hidden = false; el.textContent = '· ' + t('clima.fc.source.wttr'); }
+   else if (src === 'demo') { el.hidden = false; el.textContent = '· ' + t('clima.fc.source.demo'); }
+  }
+  function applyStalePill(isStale) {
+   if (stalePill) stalePill.hidden = !isStale;
+  }
+  function applySummary() {
+   var d = state.data[state.elev];
+   if (!d || !summaryEl) return;
+   var total = weeklySnow(d);
+   if (total > 0) {
+    summaryEl.hidden = false;
+    if (summarySnowEl) summarySnowEl.textContent = fmtSnow(total);
+   } else {
+    summaryEl.hidden = true;
+   }
+  }
+
+  // === Render (rAF-batched) ===
+  var renderQueued = false;
+  function scheduleRender() {
+   if (renderQueued) return;
+   renderQueued = true;
+   requestAnimationFrame(function () {
+    renderQueued = false;
+    render();
+   });
+  }
+  function render() {
+   var data = state.data[state.elev];
+   if (!data) {
+    grid.innerHTML = '';
+    for (var s = 0; s < 6; s++) grid.appendChild(skeleton());
+    if (summaryEl) summaryEl.hidden = true;
+    return;
+   }
+   grid.innerHTML = '';
+   var d = data.daily;
+   var lang = getLang();
+   var bestI = bestDayIndex(d);
+   var padded = data.padded || [];
+   for (var i = 0; i < d.time.length; i++) {
+    grid.appendChild(renderDay(d.time[i], i, d, lang, bestI, padded[i]));
+   }
+   var cur = data.current || {};
+   if (nowTemp && typeof cur.temperature_2m === 'number') {
+    nowTemp.textContent = fmtTemp(cur.temperature_2m);
+    nowTemp.classList.remove('missing');
+   } else if (nowTemp && d.temperature_2m_max && d.temperature_2m_max[0] != null) {
+    nowTemp.textContent = fmtTemp(d.temperature_2m_max[0]);
+    nowTemp.classList.remove('missing');
+   }
+   if (nowSnow && d.snowfall_sum && d.snowfall_sum[0] != null) {
+    nowSnow.textContent = fmtSnow(d.snowfall_sum[0]).replace(/ (cm|in)$/, '');
+    nowSnow.classList.remove('missing');
+   }
+   applySummary();
+  }
+
+  function renderDay(dateStr, i, d, lang, bestI, isPadded) {
+   var dt = new Date(dateStr + 'T12:00:00');
+   var dayName = dt.toLocaleDateString(lang + '-' + lang.toUpperCase(), { weekday: 'short' }).replace('.', '');
+   var dayNum = dt.getDate();
+   var code = d.weather_code[i];
+   var snow = d.snowfall_sum[i] || 0;
+   var precip = d.precipitation_sum ? (d.precipitation_sum[i] || 0) : 0;
+   var wind = d.wind_speed_10m_max[i] || 0;
+   var gust = d.wind_gusts_10m_max ? (d.wind_gusts_10m_max[i] || 0) : 0;
+   var dir = d.wind_direction_10m_dominant[i] || 0;
+   var tmax = d.temperature_2m_max[i];
+   var tmin = d.temperature_2m_min[i];
+   var pressure = d.surface_pressure_mean ? (d.surface_pressure_mean[i] || 0) : 0;
+   var cloud = d.cloud_cover_mean ? (d.cloud_cover_mean[i] || 0) : 0;
+   var precipProb = d.precipitation_probability_max ? (d.precipitation_probability_max[i] || 0) : 0;
+
+   var compass = degToCompass(dir);
+   var chill = showChill(tmax, wind);
+   var storm = isStorm(code, wind);
+   var showG = showGust(wind, gust);
+   var isBest = i === bestI;
+
+   var day = document.createElement('div');
+   var cls = 'forecast-day';
+   if (i === 0) cls += ' forecast-day--today';
+   if (isBest) cls += ' forecast-day--best';
+   if (storm) cls += ' forecast-day--warning';
+   if (isPadded) cls += ' forecast-day--padded';
+   day.className = cls;
+   day.setAttribute('data-padded', isPadded ? 'true' : 'false');
+
+   var tempSuf = state.units === 'imperial' ? 'F' : 'C';
+   var indicators = '';
+   if (storm) indicators += '<span class="forecast-day__warn" title="' + t('clima.fc.warning') + '">⚠</span>';
+   if (isBest) indicators += '<span class="forecast-day__best" title="' + t('clima.fc.best') + '">★</span>';
+   if (isPadded) indicators += '<span class="forecast-day__ext" title="≈">≈</span>';
+
+   var gustLine = showG ? '<div class="forecast-day__metric" title="' + t('clima.fc.gust') + '"><span class="forecast-day__metric-icon">💨</span><span class="forecast-day__metric-val num">' + fmtWind(gust) + '</span></div>' : '';
+   var precipLine = (snow < 0.1 && precip > 0.1) ? '<div class="forecast-day__precip"><span class="forecast-day__precip-icon">💧</span><span class="num">' + fmtPrecip(precip) + '</span>' + (precipProb > 10 ? ' <span class="forecast-day__precip-prob">· ' + fmtPercent(precipProb) + '</span>' : '') + '</div>' : '';
+   var chillLine = chill ? '<div class="forecast-day__chill">' + t('clima.fc.feels') + ': ' + fmtTemp(windChill(tmax, wind)) + tempSuf + '</div>' : '';
+   var pressureLine = pressure > 0 ? '<div class="forecast-day__metric" title="' + t('clima.fc.pressure') + '"><span class="forecast-day__metric-icon">🌡</span><span class="forecast-day__metric-val num">' + fmtPressure(pressure) + '</span></div>' : '';
+   var cloudLine = cloud > 0 ? '<div class="forecast-day__metric forecast-day__metric--cloud" title="' + t('clima.fc.cloud') + '"><span class="forecast-day__metric-icon">☁</span><span class="forecast-day__metric-val num">' + fmtPercent(cloud) + '</span></div>' : '';
+
+   day.innerHTML =
+    '<div class="forecast-day__top">' +
+     '<div class="forecast-day__date">' +
+      '<span class="forecast-day__name">' + dayName + '</span>' +
+      '<span class="forecast-day__num">' + dayNum + '</span>' +
+     '</div>' +
+     '<div class="forecast-day__indicators">' + indicators + '</div>' +
+    '</div>' +
+    '<div class="forecast-day__sky">' +
+     '<span class="forecast-day__icon" aria-hidden="true">' + wmoIcon(code) + '</span>' +
+     '<span class="forecast-day__phrase">' + t(wmoKey(code)) + '</span>' +
+    '</div>' +
+    '<div class="forecast-day__snow">' +
+     '<span class="forecast-day__snow-val num">' + fmtSnow(snow) + '</span>' +
+    '</div>' +
+    precipLine +
+    '<div class="forecast-day__metrics">' +
+     '<div class="forecast-day__metric" title="' + t(compass.key) + '"><span class="forecast-day__metric-icon">💨</span><span class="forecast-day__metric-val num">' + fmtWind(wind) + ' ' + compass.abbr + '</span></div>' +
+     gustLine +
+     '<div class="forecast-day__metric"><span class="forecast-day__metric-icon">🌡</span><span class="forecast-day__metric-val num">' + fmtTemp(tmax) + tempSuf + ' / ' + fmtTemp(tmin) + tempSuf + '</span></div>' +
+     pressureLine +
+     cloudLine +
+    '</div>' +
+    chillLine;
+   return day;
+  }
+
+  function skeleton() {
+   var sk = document.createElement('div');
+   sk.className = 'forecast-day forecast-day--skeleton';
+   sk.innerHTML =
+    '<div class="forecast-day__top">' +
+     '<span class="skeleton skeleton--name"></span>' +
+     '<span class="skeleton skeleton--num"></span>' +
+    '</div>' +
+    '<div class="skeleton skeleton--sky"></div>' +
+    '<div class="skeleton skeleton--snow"></div>' +
+    '<div class="skeleton skeleton--metric"></div>' +
+    '<div class="skeleton skeleton--metric"></div>' +
+    '<div class="skeleton skeleton--metric"></div>';
+   return sk;
+  }
+
+  function setElevation(elev) {
+   if (elev === state.elev) return;
+   state.elev = elev;
+   try { localStorage.setItem(ELEV_KEY, String(elev)); } catch (err) {}
+   applyElevUI();
+   applyUnitsUI();
+   if (prefersReducedMotion()) {
+    render();
+   } else {
+    grid.classList.add('is-changing');
+    setTimeout(function () {
+     render();
+     requestAnimationFrame(function () { grid.classList.remove('is-changing'); });
+    }, 200);
+   }
+   // Lazy fetch: only the elev we just switched to
+   if (!state.data[elev]) fetchOne(elev);
+   else applyStalePill(false);
+  }
+
+  // === Fetch chain with SWR ===
+  function fetchWithTimeout(url, timeoutMs) {
+   var controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+   var timer = setTimeout(function () { if (controller) controller.abort(); }, timeoutMs);
+   var opts = { credentials: 'omit' };
+   if (controller) opts.signal = controller.signal;
+   return fetch(url, opts).finally(function () { clearTimeout(timer); });
+  }
+
+  function isCacheFresh(elev) {
+   var t = state.cachedAt[elev];
+   if (!t) return false;
+   return (Date.now() - t) < CACHE_TTL_MS;
+  }
+
+  function fetchOne(elev) {
+   if (state.data[elev] && isCacheFresh(elev)) {
+    // Fresh cache — no fetch needed
+    applyStalePill(false);
+    if (elev === state.elev) scheduleRender();
+    return;
+   }
+   if (state.data[elev] && !isCacheFresh(elev)) {
+    // Stale cache — show it AND refetch in background
+    applyStalePill(true);
+    if (elev === state.elev) scheduleRender();
+   } else {
+    // No cache — skeleton
+    applyStalePill(false);
+    if (elev === state.elev) render();
+   }
+   var omDelays = [0, 1500];
+   var metDelays = [0, 1000];
+   var wtDelays = [0];
+   var attempt = 0;
+
+   function tryOpenMeteo() {
+    if (attempt >= omDelays.length) { attempt = 0; return tryMetNo(); }
+    var delay = omDelays[attempt++];
+    setTimeout(function () {
+     fetchWithTimeout(urlForOpenMeteo(elev), 2500)
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (raw) {
+       raw._source = 'open-meteo';
+       state.data[elev] = raw;
+       state.source[elev] = 'open-meteo';
+       state.cachedAt[elev] = Date.now();
+       state.errors[elev] = false;
+       persistCache();
+       applyStalePill(false);
+       applySourceUI();
+       if (elev === state.elev) scheduleRender();
+      })
+      .catch(tryOpenMeteo);
+    }, delay);
+   }
+
+   function tryMetNo() {
+    if (attempt >= metDelays.length) { attempt = 0; return tryWttrIn(); }
+    var delay = metDelays[attempt++];
+    setTimeout(function () {
+     fetchWithTimeout(urlForMetNo(elev), 2500)
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (raw) {
+       var normalized = normalizeMetNo(raw);
+       state.data[elev] = normalized;
+       state.source[elev] = 'met.no';
+       state.cachedAt[elev] = Date.now();
+       state.errors[elev] = false;
+       persistCache();
+       applyStalePill(false);
+       applySourceUI();
+       if (elev === state.elev) scheduleRender();
+      })
+      .catch(tryMetNo);
+    }, delay);
+   }
+
+   function tryWttrIn() {
+    if (attempt >= wtDelays.length) return useDemo();
+    var delay = wtDelays[attempt++];
+    setTimeout(function () {
+     fetchWithTimeout(urlForWttrIn(), 2500)
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (raw) {
+       var normalized = normalizeWttrIn(raw);
+       state.data[elev] = normalized;
+       state.source[elev] = 'wttr.in';
+       state.cachedAt[elev] = Date.now();
+       state.errors[elev] = false;
+       persistCache();
+       applyStalePill(false);
+       applySourceUI();
+       if (elev === state.elev) scheduleRender();
+      })
+      .catch(tryWttrIn);
+    }, delay);
+   }
+
+   function useDemo() {
+    var demo = generateDemoData();
+    state.data[elev] = demo;
+    state.source[elev] = 'demo';
+    state.cachedAt[elev] = Date.now();
+    state.errors[elev] = false;
+    applyStalePill(false);
+    applySourceUI();
+    if (elev === state.elev) scheduleRender();
+   }
+
+   tryOpenMeteo();
+  }
+
+  // === Event handlers ===
+  unitsBtn.addEventListener('click', function () {
+   state.units = state.units === 'metric' ? 'imperial' : 'metric';
+   try { localStorage.setItem(UNITS_KEY, state.units); } catch (err) {}
+   applyUnitsUI();
+   scheduleRender();
+  });
+  for (var i = 0; i < elevBtns.length; i++) {
+   (function (btn) {
+    btn.addEventListener('click', function () { setElevation(parseInt(btn.getAttribute('data-elev-btn'), 10)); });
+   })(elevBtns[i]);
+  }
+  if (i18n && typeof i18n.subscribe === 'function') {
+   i18n.subscribe(function () { applyUnitsUI(); applySourceUI(); scheduleRender(); });
+  }
+
+  // === Init ===
+  applyUnitsUI();
+  applyElevUI();
+  applySourceUI();
+  render();
+  // Only fetch the ACTIVE elevation on init (lazy for others)
+  fetchOne(state.elev);
+ })();
+ </script>
+</body>
+</html>

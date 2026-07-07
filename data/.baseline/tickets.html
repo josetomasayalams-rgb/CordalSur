@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Tickets de ski - Guest Hub</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+ <link rel="preload" as="image" type="image/webp" href="css/bg/winter/tickets-pistas-nevados.webp?v=2">
+ <link rel="stylesheet" href="css/styles.css">
+</head>
+<!-- ponytail: is-winter emphasizes Tickets in season (GRAPHIFY §3 módulo 7); deployment toggles -->
+<body class="is-winter bg-tickets">
+ <div class="app-container">
+
+  <header class="header">
+   <a href="index.html" class="btn-back" data-i18n-aria="common.back" aria-label="Volver">←</a>
+   <h2 style="margin:0" data-i18n="nav.tickets.t">Tickets de ski</h2>
+  </header>
+  <div class="lang-selector" role="group" aria-label="Idioma / Language">
+   <button type="button" data-lang="es" aria-pressed="true">ES</button>
+   <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+   <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+
+  <!-- Season emphasis note -->
+  <div class="tag-group mb-4">
+   <span class="tag tag-winter">🎿 <span data-i18n="season.winter">Invierno</span></span>
+  </div>
+  <p class="mb-4" data-i18n="tickets.season.note">[cargado vía i18n]</p>
+  <p class="mb-4" data-i18n="tickets.intro">[cargado vía i18n]</p>
+
+  <!-- Pass card — price as missing em-dash, tabular-nums -->
+  <div class="card mb-4">
+   <div class="card-header">
+    <div class="icon-box bg-winter">🎟️</div>
+    <h3 style="margin:0" data-i18n="tickets.pass.t">[cargado vía i18n]</h3>
+   </div>
+   <div class="metric">
+    <span class="val missing">—</span>
+    <span class="unit">CLP</span>
+   </div>
+  </div>
+
+  <!-- External buy link — destination is a placeholder (§7) -->
+  <a href="https://www.nevadosdechillan.com/" class="ext-link-row">
+   <span>🛒 <span data-i18n="tickets.buy">[cargado vía i18n]</span></span>
+   <span class="chev">›</span>
+  </a>
+
+ </div>
+ <script src="js/lang.js"></script>
+</body>
+</html>

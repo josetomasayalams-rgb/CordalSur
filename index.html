@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Andes Chillán - Guest Hub</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="preload" as="image" type="image/webp" href="css/bg/winter/home-01-nevados-panorama.webp?v=2">
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="css/styles.css">
+</head>
+<!-- ponytail: is-winter is the default shell season state; deployment sets is-winter|is-summer from real date -->
+<body class="is-winter bg-home" data-bg-rotator="winter-home">
+ <div class="app-container">
+
+  <!-- HERO + language selector + season tag -->
+  <header class="hero-panel mb-8">
+   <div class="hero-panel__top">
+    <p class="kicker" data-i18n="home.location">Las Trancas · Nevados de Chillán</p>
+    <div class="lang-selector" role="group" aria-label="Idioma / Language">
+     <button type="button" data-lang="es" aria-pressed="true">ES</button>
+     <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+     <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+   </div>
+   <h1 class="hero-panel__title">Andes Chillán</h1>
+   <p class="hero-panel__welcome" data-i18n="home.welcome">[cargado vía i18n]</p>
+  </header>
+
+  <!-- Check-in — primary action, full width -->
+  <a href="check-in.html" class="card mb-4">
+   <div class="card-header">
+    <div class="icon-box bg-winter">🔑</div>
+    <div>
+     <h3 data-i18n="nav.checkin.t">Check-in</h3>
+     <p style="margin:0;font-size:0.9rem" data-i18n="nav.checkin.s">Llegada y acceso</p>
+    </div>
+   </div>
+  </a>
+
+  <!-- Discovery pair -->
+  <div class="grid-2 mb-4">
+   <a href="restaurantes.html" class="card" style="margin:0;padding:20px;">
+    <div class="icon-box bg-warm" style="margin-bottom:12px;">🍽️</div>
+    <h3 style="font-size:1.1rem" data-i18n="nav.restaurantes.t">Restaurantes</h3>
+    <p style="font-size:0.85rem;margin:0" data-i18n="nav.restaurantes.s">Dónde comer</p>
+   </a>
+   <a href="actividades.html" class="card" style="margin:0;padding:20px;">
+    <div class="icon-box bg-summer" style="margin-bottom:12px;">🚵</div>
+    <h3 style="font-size:1.1rem" data-i18n="nav.actividades.t">Actividades</h3>
+    <p style="font-size:0.85rem;margin:0" data-i18n="nav.actividades.s">Qué hacer</p>
+   </a>
+  </div>
+
+  <!-- Conditions pair: weather + tickets (winter-emphasized) -->
+  <div class="grid-2 mb-4">
+   <a href="clima.html" class="card" style="margin:0;padding:20px;">
+    <div class="icon-box bg-winter" style="margin-bottom:12px;">❄️</div>
+    <h3 style="font-size:1.1rem" data-i18n="nav.clima.t">Clima y nieve</h3>
+    <p style="font-size:0.85rem;margin:0" data-i18n="nav.clima.s">Pronóstico</p>
+   </a>
+   <a href="tickets.html" class="card season-winter" style="margin:0;padding:20px;">
+    <div class="icon-box bg-winter" style="margin-bottom:12px;">🎿</div>
+    <h3 style="font-size:1.1rem" data-i18n="nav.tickets.t">Tickets de ski</h3>
+    <p style="font-size:0.85rem;margin:0" data-i18n="nav.tickets.s">Centro de ski</p>
+   </a>
+  </div>
+
+  <!-- Departure + manual pair -->
+  <div class="grid-2 mb-4">
+   <a href="check-out.html" class="card" style="margin:0;padding:20px;">
+    <div class="icon-box bg-winter" style="margin-bottom:12px;">🚪</div>
+    <h3 style="font-size:1.1rem" data-i18n="nav.checkout.t">Check-out</h3>
+    <p style="font-size:0.85rem;margin:0" data-i18n="nav.checkout.s">Hora de salida</p>
+   </a>
+   <a href="instrucciones.html" class="card" style="margin:0;padding:20px;">
+    <div class="icon-box bg-winter" style="margin-bottom:12px;">📖</div>
+    <h3 style="font-size:1.1rem" data-i18n="nav.info.t">Manual del depto</h3>
+    <p style="font-size:0.85rem;margin:0" data-i18n="nav.info.s">Wi-Fi, calefacción, normas</p>
+   </a>
+  </div>
+
+  <!-- Emergency card (absorbed from the old emergencias.html — shell only, no real alerts) -->
+  <div class="emergency-card">
+   <div class="card-header">
+    <div class="icon-box">⚠️</div>
+    <div>
+     <h3 data-i18n="emergency.title">Emergencias</h3>
+     <p style="margin:0;font-size:0.9rem" data-i18n="emergency.sub">[cargado vía i18n]</p>
+    </div>
+   </div>
+   <a href="tel:133" class="btn btn-outline" data-i18n="emergency.action" style="margin-top:12px;">[cargado vía i18n]</a>
+  </div>
+
+  <!-- Quick contact — always reachable from Home -->
+  <div class="quick-contact">
+   <a href="#" class="btn btn-forest" data-i18n="quick.wa">[cargado vía i18n]</a>
+   <a href="#" class="btn btn-outline" data-i18n="quick.tel">[TODO(host)]</a>
+  </div>
+
+ </div>
+  <script src="js/lang.js"></script>
+  <script src="js/backgrounds.js"></script>
+</body>
+</html>

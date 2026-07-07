@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Fase contenido: copy real cargada vía i18n. TODO(host): confirmar hora, código de puerta, estacionamiento, acceso al portón. -->
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Check-in - Guest Hub</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+ <link rel="preload" as="image" type="image/webp" href="css/bg/winter/checkin-camino-nieve.webp?v=2">
+ <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="is-winter bg-checkin">
+ <div class="app-container">
+
+  <header class="header">
+   <a href="index.html" class="btn-back" data-i18n-aria="common.back" aria-label="Volver">←</a>
+   <h2 style="margin:0" data-i18n="nav.checkin.t">Check-in</h2>
+  </header>
+  <div class="lang-selector" role="group" aria-label="Idioma / Language">
+   <button type="button" data-lang="es" aria-pressed="true">ES</button>
+   <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+   <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+
+  <p class="mb-4" data-i18n="checkin.intro">Todo lo que necesitas para llegar y entrar con tranquilidad.</p>
+
+  <!-- Schedule — default time, tabular-nums. TODO(host): confirmar hora real. -->
+  <div class="card mb-4">
+   <span class="tag tag-winter" data-i18n="checkin.time.tag">Horario</span>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:8px">
+    <span style="color:var(--rock)" data-i18n="nav.checkin.t">Check-in</span>
+    <span class="num" style="font-size:1.5rem;color:var(--night);font-weight:700">16:00</span>
+   </div>
+  </div>
+
+  <!-- Location + external maps row (Google Maps — destination href is TODO(host)) -->
+  <div class="card mb-4">
+   <span class="tag tag-summer" data-i18n="checkin.location.tag">Ubicación</span>
+   <h3 style="margin-top:8px" data-i18n="checkin.location.body">[cargado vía i18n]</h3>
+   <!-- TODO(host): href con la ubicación exacta en Google Maps -->
+   <a href="https://www.google.com/maps/search/?api=1&query=Condominio+Andes+Chill%C3%A1n" class="ext-link-row" style="margin-top:4px">
+    <span>📍 <span data-i18n="checkin.maps">Google Maps</span></span>
+    <span class="chev">›</span>
+   </a>
+  </div>
+
+  <!-- Access steps — host-private, kept as TODO(host) placeholders (.ph) -->
+  <div class="card mb-4">
+   <h3 data-i18n="checkin.access.t">Acceso al departamento</h3>
+   <ol class="step-list">
+    <li class="step" data-i18n="checkin.access.s1">[cargado vía i18n]</li>
+    <li class="step" data-i18n="checkin.access.s2">[cargado vía i18n]</li>
+    <li class="step ph num" data-i18n="checkin.access.s3">[TODO(host)]</li>
+   </ol>
+  </div>
+
+  <!-- Tip card — real generic copy, warm tint @12% -->
+  <div class="card card--tint-wood mb-4">
+   <h3 style="color:var(--wood)" data-i18n="checkin.tip.t">Si llegas en invierno</h3>
+   <p style="color:var(--wood)" data-i18n="checkin.tip.body">[cargado vía i18n]</p>
+  </div>
+
+ </div>
+ <script src="js/lang.js"></script>
+</body>
+</html>

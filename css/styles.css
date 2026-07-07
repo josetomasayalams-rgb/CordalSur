@@ -1,0 +1,2316 @@
+:root {
+  /* ❄️ Winter (Base & Structure) */
+  --snow: #F7FAFC;
+  --ice: #DDEAF3;
+  --deep-blue: #12344D;
+  --night: #0B2538;
+
+  /* 🌲 Summer (Accents & Warmth) */
+  --forest: #1F4D3A;
+  --wood: #B7793E;
+  --rock: #5A626C; /* darker, blue-tinted → AA contrast headroom on snow (~5.8:1) */
+  --rock-light: #E5E7EB;
+  --copper: #C46A3A;
+
+  /* UI Tokens — card-bg bumped .88→.92 so cards stay readable over photo
+     backgrounds (WCAG contrast headroom against varying photo luminance). */
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --card-border: rgba(255, 255, 255, 0.82);
+  --shadow-soft: 0 12px 35px rgba(18, 52, 77, 0.10);
+  --shadow-lift: 0 18px 44px rgba(18, 52, 77, 0.16);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* expo-ish ease-out, no bounce */
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-pill: 999px;
+  --max-w: 600px; /* Mobile-first container */
+
+  /* Motion tokens (Foundation §15.7) — ≤300ms ease-out, no bounce */
+  --motion-snap: 150ms ease-out;
+  --motion-slide: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* 8px spacing scale (Foundation §15.1) */
+  --space-1: 4px;  --space-2: 8px;   --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px;  --space-12: 48px; --space-16: 64px;
+
+  /* Z-index layers (Foundation §15.5) */
+  --layer-base: 10; --layer-float: 30; --layer-modal: 50;
+
+  /* Semantic tints @10-15% (Foundation §7.5 — never saturated full-area) */
+  --tint-forest: rgba(31, 77, 58, 0.12);
+  --tint-wood:   rgba(183, 121, 62, 0.12);
+  --tint-copper: rgba(196, 106, 58, 0.12);
+  --tint-ice:    rgba(221, 234, 243, 0.60);
+  --copper-strong: #8F3E17; /* 100% text on copper tint, WCAG-safe */
+}
+
+/* Winter season adjustments: cool down the look (more ice/snow, less copper) */
+body.is-winter {
+  --snow: #F3F7FA;
+  --copper: #5B8FA9;
+  --copper-strong: #254F65;
+  --tint-copper: rgba(91, 143, 169, 0.12);
+  --card-bg: rgba(255, 255, 255, 0.94); /* slightly more opaque for extra readability in winter */
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+::selection { background: rgba(31, 77, 58, 0.18); color: var(--night); }
+
+/* FOUC guard — hide i18n text until lang.js applies it (no "[cargado vía i18n]" flash).
+   @media scripting: no-JS or legacy browsers ignore the block → fallback text shows. */
+[data-i18n] { transition: opacity 150ms var(--ease-out); }
+@media (scripting: enabled) {
+  html:not(.i18n-ready) [data-i18n] { opacity: 0; }
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--deep-blue);
+  /* Base shell — neutral gradient. The per-page photo + fade overlay is set
+     by the .bg-* modifier on each HTML <body>. The fade is built INTO the
+     page-specific background-image stack, so cards always land on a calm
+     surface regardless of which page they live on. */
+  background-color: var(--snow);
+  background-image: linear-gradient(180deg, #F8FBFD 0%, #EEF4F8 58%, #E3ECF2 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  min-height: 100dvh; /* Safari 15.4+ — iOS 100vh includes URL bar, 100dvh is the visible viewport */
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* is-summer / is-winter still drive the .tag-* system and .season-* hiding,
+   but no longer the background — user chose unified "mountain identity" over
+   winter/summer duality in the plan. The body's photo background is set by
+   the page-specific .bg-* class instead. */
+
+/* ============================================================
+   Per-page background system (FASE 2 del plan aprobado)
+   8 mountain-identity photos + layered fade overlay + WebP→JPG fallback.
+   Pattern: two stacked background-image declarations — the second one
+   (webp) overrides the first (jpg). Browsers that can't parse the webp
+   url() fall through to the jpg declaration.
+   - Home (bg-home): full-bleed hero, gentle fade so the photo reads as a
+     brand moment but the cards still land on a calm surface.
+   - 7 inner pages: strong fade (atmospheric texture, not a primary visual)
+     so the cards stay the protagonist. Per-page position is tuned for the
+     subject of each photo (peaks up, cabin centered, trail eye-level, etc).
+
+   iOS Safari fix (2026-07-03): background-attachment: fixed is gated to
+   hover-capable devices only. iOS Safari has a long-standing repaint bug
+   with fixed backgrounds (photo freezes or jankies during scroll). Touch
+   devices don't need the parallax effect — the fade is built INTO the
+   bg-image stack, so the visual reads coherently when the photo scrolls
+   with the content. Desktop with mouse keeps the original atmospheric effect.
+   ============================================================ */
+.bg-home, .bg-checkin, .bg-checkout, .bg-clima, .bg-tickets,
+.bg-instrucciones, .bg-restaurantes, .bg-actividades {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+@media (hover: hover) and (pointer: fine) {
+  .bg-home, .bg-checkin, .bg-checkout, .bg-clima, .bg-tickets,
+  .bg-instrucciones, .bg-restaurantes, .bg-actividades {
+    background-attachment: fixed;
+  }
+}
+
+/* BACKGROUND ROTATOR LAYERS */
+.has-bg-rotator {
+  background-image: none !important;
+  isolation: isolate;
+}
+.bg-rotator__layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1200ms ease-in-out;
+  pointer-events: none;
+}
+.bg-rotator__layer.is-active {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bg-rotator__layer {
+    transition: none !important;
+  }
+}
+
+/* HOME — full-bleed hero */
+.bg-home {
+  background-position: center 30%;
+  /* JPG fallback first (browsers that can't parse webp ignore the 2nd rule) */
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0) 0%, rgba(243,247,250,0.35) 55%, rgba(243,247,250,0.92) 100%),
+    url("bg/winter/home-01-nevados-panorama.jpg?v=2");
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0) 0%, rgba(243,247,250,0.35) 55%, rgba(243,247,250,0.92) 100%),
+    url("bg/winter/home-01-nevados-panorama.webp?v=2");
+}
+
+/* CHECK-IN — camino nieve */
+.bg-checkin {
+  background-position: center 40%;
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/checkin-camino-nieve.jpg?v=2");
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/checkin-camino-nieve.webp?v=2");
+}
+
+/* CHECK-OUT — bosque atardecer */
+.bg-checkout {
+  background-position: center 35%;
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/checkout-bosque-atardecer.jpg?v=2");
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/checkout-bosque-atardecer.webp?v=2");
+}
+
+/* CLIMA — nieve panoramica */
+.bg-clima {
+  background-position: center 50%;
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/clima-nieve-panoramica.jpg?v=2");
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/clima-nieve-panoramica.webp?v=2");
+}
+
+/* TICKETS — pistas nevados */
+.bg-tickets {
+  background-position: center 45%;
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/tickets-pistas-nevados.jpg?v=2");
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/tickets-pistas-nevados.webp?v=2");
+}
+
+/* INSTRUCCIONES — termas nieve */
+.bg-instrucciones {
+  background-position: center 45%;
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/instrucciones-termas-nieve.jpg?v=2");
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/instrucciones-termas-nieve.webp?v=2");
+}
+
+/* RESTAURANTES — atardecer bosque */
+.bg-restaurantes {
+  background-position: center 50%;
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/restaurantes-atardecer-bosque.jpg?v=2");
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/restaurantes-atardecer-bosque.webp?v=2");
+}
+
+/* ACTIVIDADES — montana otono */
+.bg-actividades {
+  background-position: center 50%;
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/actividades-montana-otono.jpg?v=2");
+  background-image:
+    linear-gradient(180deg, rgba(243,247,250,0.15) 0%, rgba(243,247,250,0.45) 50%, rgba(243,247,250,0.8) 100%),
+    url("bg/winter/actividades-montana-otono.webp?v=2");
+}
+
+/* Entrance — single unified reveal. Product law: no orchestrated load cascade;
+   a guest opens the app to get information, not to watch it choreograph in. */
+@keyframes gh-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* ponytail: fill-mode 'backwards' (not 'both') — retaining transform:translateY(0)
+   after exit would make .app-container a containing block and break the sticky
+   .quick-contact bar. Backwards reverts to no transform once the reveal finishes. */
+.app-container { animation: gh-rise 0.42s var(--ease-out) backwards; }
+
+/* Focus ring — accessible + professional */
+a:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--deep-blue);
+  outline-offset: 2px;
+}
+
+.app-container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 28px 24px;
+  padding-bottom: 120px; /* clears the floating quick-contact toolbar */
+}
+
+/* Typography — Inter, one family; wordmark gets confident scale + display tracking */
+h1, h2, h3 { color: var(--night); margin: 0; letter-spacing: -0.03em; text-wrap: balance; }
+h1 { font-size: clamp(2.6rem, 11vw, 3.25rem); line-height: 1.0; letter-spacing: -0.045em; font-weight: 800; margin-bottom: 10px; }
+h2 { font-size: 1.5rem; margin-bottom: 16px; }
+h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; }
+p { color: var(--rock); margin: 0 0 16px 0; }
+a { color: var(--wood); text-decoration: none; font-weight: 600; }
+/* Kicker — editorial location dek; leading accent dot anchors it under the wordmark */
+.kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 6px 0 0; font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--rock);
+}
+.kicker::before {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--forest); display: inline-block;
+}
+
+/* Home masthead — hairline closes the hero, editorial separation from the card list */
+.app-container > header.mb-8 { padding-bottom: 24px; border-bottom: 1px solid var(--tint-ice); }
+
+/* Header / Back navigation */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.btn-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--deep-blue);
+  box-shadow: var(--shadow-soft);
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+.btn-back:hover { transform: translateY(-2px); }
+.btn-back:active { transform: scale(0.92); }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px 24px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 1.05rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(18,52,77,0.12);
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+  text-decoration: none;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(18,52,77,0.18), 0 0 0 4px rgba(18,52,77,0.06); }
+.btn:active { transform: translateY(0) scale(0.975); box-shadow: 0 4px 10px rgba(18,52,77,0.14); transition: transform var(--motion-snap), box-shadow var(--motion-snap); }
+.btn-wood { background: var(--wood); color: white; }
+.btn-forest { background: var(--forest); color: white; }
+.btn-outline { background: var(--card-bg); color: var(--deep-blue); border: 1px solid var(--card-border); }
+
+/* Cards */
+.card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.66), rgba(255,255,255,0.36));
+  border: 1px solid rgba(255,255,255,0.58);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 50px rgba(11,37,56,0.18), inset 0 1px 0 rgba(255,255,255,0.75);
+  backdrop-filter: blur(22px) saturate(1.65);
+  -webkit-backdrop-filter: blur(22px) saturate(1.65);
+  padding: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  will-change: transform, backdrop-filter;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+a.card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 22px 56px rgba(11,37,56,0.22), inset 0 1px 0 rgba(255,255,255,0.82);
+  transition-duration: 220ms;
+}
+/* ponytail: press snaps in 150ms (not the 300ms hover ease) — tactile, instant */
+a.card:active { transform: scale(0.985); transition: transform var(--motion-snap); }
+
+/* Pointer-aware spotlight — desktop hover only (lang.js sets --mx/--my; touch no-op).
+   Fades 200ms; conveys interactivity. Content stays above via z-index, not paint order. */
+.card, .emergency-card, .rest-card, .hero-panel { position: relative; }
+.card::before, .emergency-card::before, .rest-card::before, .hero-panel::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: radial-gradient(130px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.6), transparent 60%);
+  opacity: 0; transition: opacity 200ms var(--ease-out); pointer-events: none; z-index: 0;
+}
+.card > *, .emergency-card > *, .rest-card > *, .hero-panel > * { position: relative; z-index: 1; }
+@media (hover: hover) {
+  .card:hover::before, .emergency-card:hover::before, .rest-card:hover::before, .hero-panel:hover::before { opacity: 1; }
+}
+.bg-home .card::before,
+.bg-home .emergency-card::before,
+.bg-home .hero-panel::before {
+  background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.42), transparent 64%);
+  transition-duration: 220ms;
+}
+/* ponytail: blur moved OFF base .card (was on every card → anti-pattern Foundation §17.3).
+   .glass modifier applies it surgically (header, emergency, quick-contact), never over tabular text. */
+.glass {
+  background: rgba(255, 255, 255, 0.92); /* .88→.92 keeps WCAG contrast near any numeric context */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md); /* ponytail: was hardcoded 16px (off the 14/20/28/999 scale) → token restores §8 Shape Consistency Lock */
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  color: white;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  transition: transform var(--motion-slide);
+}
+/* Season Icons Gradients */
+.bg-winter { background: linear-gradient(135deg, var(--ice), var(--deep-blue)); }
+.bg-summer { background: linear-gradient(135deg, var(--forest), #2E7D5A); }
+.bg-warm { background: linear-gradient(135deg, var(--wood), var(--copper)); }
+.bg-copper { background: linear-gradient(135deg, var(--copper), var(--copper-strong)); }
+.card:hover .icon-box { transform: translateY(-2px) scale(1.05); }
+
+/* Metric — big number + unit row inside a card. Unifies the hero-data size
+   (was 2rem on tickets vs 2.4rem on clima). Schedule rows (check-in/out times)
+   are a different key-value pattern, intentionally not a metric. */
+.metric { display: flex; align-items: baseline; gap: 8px; }
+.metric .val { font-size: 2.4rem; font-weight: 800; line-height: 1; letter-spacing: -0.03em; color: var(--night); font-variant-numeric: tabular-nums; }
+.metric .val.missing { color: var(--rock); opacity: 0.45; }
+.metric .unit { color: var(--rock); opacity: 0.6; font-weight: 600; }
+
+/* Tags */
+.tag-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.tag {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.tag-winter { background: rgba(221,234,243,0.6); color: var(--deep-blue); }
+.tag-summer { background: rgba(31,77,58,0.1); color: var(--forest); }
+.tag-alert { background: rgba(196,106,58,0.15); color: #8F3E17; }
+
+/* Grid for sub-items */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* Utility */
+.mb-4 { margin-bottom: 16px; }
+.mb-8 { margin-bottom: 32px; }
+.text-center { text-align: center; }
+
+/* ============================================================
+   [NUEVO] Component library — casco Andes Chillán
+   Apple ADN aterrizado vía DESIGN.md / GRAPHIFY_MAESTRO.md
+   ============================================================ */
+
+/* Placeholder marker — visible skeleton, purity guardrail §7.3 */
+.ph { color: var(--rock); opacity: 0.5; font-style: italic; }
+
+/* Tabular numerals — supreme rule for any fluctuating number (Foundation §6.4) */
+.num { font-variant-numeric: tabular-nums; }
+/* Missing numeric value — em-dash, light gray, never 0/empty (Foundation §6.4/§10) */
+.missing { color: var(--rock); opacity: 0.45; font-variant-numeric: tabular-nums; }
+
+/* Pending — host-private field not yet filled (lang.js adds this on [TODO(host)] values).
+   Calm italic muted state, not an alarm. Buttons dim to read as unavailable. */
+.pending { color: var(--rock); opacity: 0.75; font-style: italic; }
+.pending.btn { opacity: 0.5; font-style: italic; cursor: not-allowed; }
+
+/* Section title — one notch below h2 + hairline for scan rhythm (was 1.5rem == h2 → collapsed) */
+.section-title { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; margin: 28px 0 12px; padding-bottom: 10px; border-bottom: 1px solid var(--tint-ice); color: var(--night); }
+
+/* Language selector — segmented ES|PT|EN, persists localStorage, fallback ES */
+.lang-selector {
+  display: inline-flex; gap: 0; background: var(--tint-ice);
+  padding: 4px; border-radius: var(--radius-pill); margin-bottom: 24px;
+}
+.lang-selector button {
+  border: none; background: transparent; cursor: pointer; font-family: inherit;
+  padding: 8px 16px; border-radius: var(--radius-pill);
+  font-weight: 700; font-size: 0.85rem; color: var(--deep-blue); opacity: 0.6;
+  transition: background var(--motion-snap), color var(--motion-snap), opacity var(--motion-snap);
+}
+.lang-selector button:hover { opacity: 0.85; }
+.lang-selector button[aria-pressed="true"] {
+  background: #fff; color: var(--night); opacity: 1; box-shadow: 0 2px 8px rgba(18, 52, 77, 0.08);
+}
+
+/* Seasonal emphasis — is-winter/is-summer hides off-season blocks (GRAPHIFY §7.7) */
+.is-winter .season-summer { display: none; }
+.is-summer .season-winter { display: none; }
+
+/* Quick Contact — always-visible floating toolbar. Frosted so content scrolling
+   beneath reads as an intentional overlay (iOS bottom-bar pattern), not a collision. */
+.quick-contact {
+  position: sticky; bottom: 16px; z-index: var(--layer-float);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px;
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  background: rgba(247, 250, 252, 0.78);
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 -10px 30px rgba(18, 52, 77, 0.12);
+}
+
+/* FichaCard — structured fields (Restaurantes/Actividades) */
+.ficha-card .ficha-fields { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; font-size: 0.92rem; }
+.ficha-card .ficha-fields .row { display: flex; justify-content: space-between; gap: 12px; }
+.ficha-card .ficha-fields .label { color: var(--rock); opacity: 0.7; }
+.ficha-card .ficha-fields .val { color: var(--night); font-weight: 600; }
+
+/* FilterBar — temporada / tipo / clima */
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.filter-bar .tag { cursor: pointer; transition: opacity var(--motion-snap); }
+.filter-bar .tag[aria-pressed="false"] { opacity: 0.5; }
+
+/* ExternalLinkRow — destination is a placeholder (§7) */
+.ext-link-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 16px 20px; background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-soft);
+  text-decoration: none; color: var(--deep-blue); margin-bottom: 16px;
+  transition: transform 0.25s var(--ease-out);
+}
+a.ext-link-row:hover { transform: translateY(-2px); }
+a.ext-link-row:active { transform: scale(0.98); }
+.ext-link-row .chev { color: var(--wood); font-weight: 700; transition: transform var(--motion-snap); }
+a.ext-link-row:hover .chev { transform: translateX(3px); }
+
+/* Forecast widget v4 — 6-day forecast, 3-col cards × 2 rows.
+   Card-style chrome (matches .card tokens), all numeric values use tabular-nums
+   so day columns stay vertically aligned. Today highlighted, best day ringed,
+   storm day copper-bordered. */
+.forecast-widget {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  padding: 20px 16px 14px;
+}
+.forecast-widget__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0 4px 14px;
+  border-bottom: 1px solid var(--tint-ice);
+  margin-bottom: 12px;
+}
+.forecast-widget__head-text { min-width: 0; flex: 1; }
+.forecast-widget__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--night);
+  margin: 0 0 4px;
+}
+.forecast-widget__meta {
+  font-size: 0.78rem;
+  color: var(--rock);
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+.forecast-widget__summary {
+  font-size: 0.78rem;
+  color: var(--rock);
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+.forecast-widget__summary strong {
+  color: var(--night);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.forecast-widget__summary[hidden] { display: none; }
+.forecast-widget__sep { margin: 0 6px; opacity: 0.5; }
+.forecast-widget__elevs {
+  display: inline-flex;
+  gap: 0;
+  background: var(--tint-ice);
+  padding: 3px;
+  border-radius: var(--radius-pill);
+}
+.forecast-widget__elevs button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  padding: 8px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--deep-blue);
+  opacity: 0.6;
+  transition: background var(--motion-snap), color var(--motion-snap), opacity var(--motion-snap);
+  min-width: 56px;
+  min-height: 44px;
+}
+.forecast-widget__elevs button:hover { opacity: 0.85; }
+.forecast-widget__elevs button[aria-pressed="true"] {
+  background: var(--winter);
+  color: var(--night);
+  opacity: 1;
+  box-shadow: 0 2px 6px rgba(18, 52, 77, 0.08);
+}
+.forecast-widget__units {
+  flex-shrink: 0;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--tint-ice);
+  color: var(--deep-blue);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background var(--motion-snap), color var(--motion-snap);
+  min-width: 80px;
+  min-height: 44px;
+}
+.forecast-widget__units[aria-pressed="true"] {
+  background: var(--forest);
+  color: #fff;
+  border-color: var(--forest);
+}
+
+/* SWR pill — "Actualizando..." when stale cache is shown while refetching. */
+.forecast-widget__stale {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 8px 4px;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--tint-ice);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--rock);
+}
+.forecast-widget__stale[hidden] { display: none; }
+.forecast-widget__stale-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--wood);
+  animation: stale-pulse 1.2s ease-in-out infinite;
+}
+@keyframes stale-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50%      { opacity: 1;   transform: scale(1.2); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forecast-widget__stale-dot { animation: none; opacity: 1; }
+}
+
+/* Grid: 3-col × 2 rows, consistent on all viewports. */
+.forecast-widget__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 4px 0 8px;
+  margin: 0;
+  transition: opacity 180ms ease-out;
+}
+.forecast-widget__grid.is-changing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Forecast day v4 — redesigned card with clear hierarchy.
+   Top: date + indicators. Sky: icon + phrase. Snow: HERO.
+   Precip pill (if applicable). Metrics: wind, gust?, temp, pressure?, cloud?.
+   Optional chill line. */
+.forecast-day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 12px 8px 10px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--tint-ice);
+  min-width: 0;
+  transition: background var(--motion-snap), border-color var(--motion-snap);
+}
+.forecast-day--today {
+  background: var(--tint-ice);
+  border-color: rgba(31, 77, 58, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(31, 77, 58, 0.08);
+}
+.forecast-day--best {
+  background: linear-gradient(180deg, rgba(31, 77, 58, 0.08) 0%, rgba(255, 255, 255, 0.55) 70%);
+  border-color: rgba(31, 77, 58, 0.4);
+  box-shadow: 0 0 0 1px rgba(31, 77, 58, 0.18);
+}
+.forecast-day--warning {
+  background: rgba(196, 106, 58, 0.08);
+  border-color: rgba(196, 106, 58, 0.5);
+  box-shadow: 0 0 0 1px rgba(196, 106, 58, 0.18);
+}
+/* Padded day (extrapolated from the last real day) — subtle, less prominent.
+   The "≈" marker in the indicators slot signals the user that this day's
+   values were filled with the previous day's actuals (Met.no fallback only
+   has ~3.8 days; we pad to 6 for layout consistency). */
+.forecast-day--padded {
+  opacity: 0.6;
+}
+.forecast-day__ext {
+  font-size: 0.9rem;
+  color: var(--rock);
+  font-weight: 700;
+  cursor: help;
+}
+.forecast-day__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 24px;
+  position: relative;
+}
+.forecast-day__date {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  line-height: 1;
+}
+.forecast-day__name {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--rock);
+}
+.forecast-day__num {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--night);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.forecast-day__indicators {
+  display: flex;
+  gap: 3px;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+.forecast-day__best {
+  color: var(--forest);
+  font-weight: 800;
+  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.6));
+  cursor: help;
+}
+.forecast-day__warn {
+  color: var(--copper-strong);
+  cursor: help;
+  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.6));
+}
+.forecast-day__sky {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 24px;
+}
+.forecast-day__icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.forecast-day__phrase {
+  font-size: 0.72rem;
+  color: var(--rock);
+  line-height: 1.15;
+  text-align: left;
+  text-wrap: balance;
+  hyphens: auto;
+}
+.forecast-day__snow {
+  text-align: center;
+  margin: 2px 0 0;
+}
+.forecast-day__snow-val {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--night);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.forecast-day__precip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.7rem;
+  color: var(--copper-strong);
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  background: rgba(221, 234, 243, 0.4);
+  white-space: nowrap;
+}
+.forecast-day__precip-icon { font-size: 0.85rem; }
+.forecast-day__precip-prob { opacity: 0.7; }
+.forecast-day__metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+  width: 100%;
+  margin-top: 2px;
+}
+.forecast-day__metric {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  color: var(--night);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: help;
+}
+.forecast-day__metric--cloud { color: var(--rock); }
+.forecast-day__metric-icon {
+  font-size: 0.78rem;
+  opacity: 0.7;
+}
+.forecast-day__metric-val {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.72rem;
+}
+.forecast-day__chill {
+  font-size: 0.65rem;
+  color: var(--copper-strong);
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding-top: 2px;
+}
+
+/* Skeleton — animated placeholder while data is fetching. */
+.skeleton {
+  display: block;
+  background: linear-gradient(90deg,
+    rgba(221, 234, 243, 0.45) 0%,
+    rgba(221, 234, 243, 0.85) 50%,
+    rgba(221, 234, 243, 0.45) 100%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  border-radius: var(--radius-pill);
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+.forecast-day--skeleton { padding: 12px 8px 10px; }
+.forecast-day--skeleton > * { margin: 3px 0; }
+.skeleton--name { width: 32px; height: 10px; }
+.skeleton--num { width: 18px; height: 14px; }
+.skeleton--sky { width: 80%; height: 16px; }
+.skeleton--snow { width: 60px; height: 32px; border-radius: var(--radius-sm); }
+.skeleton--metric { width: 80%; height: 10px; }
+@keyframes skeleton-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; background: rgba(221, 234, 243, 0.55); }
+}
+
+.forecast-widget__error {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--copper-strong);
+  font-style: italic;
+  padding: 32px 16px;
+  margin: 0;
+}
+.forecast-widget__attr {
+  font-size: 0.72rem;
+  color: var(--rock);
+  opacity: 0.7;
+  text-align: center;
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--tint-ice);
+}
+.forecast-widget__attr a { color: var(--wood); text-decoration: underline; }
+
+/* v4.3 — Eye-catching Snow-Forecast callout card. Prominent below the grid with
+   the real Snow-Forecast snowflake icon (inlined SVG from their site) on a red
+   gradient background. Hover lifts the card. White text, copper-on-white CTA pill. */
+.forecast-snowforecast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #c01b2e 0%, #8f1422 100%);
+  color: #fff;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(192, 27, 46, 0.25);
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+.forecast-snowforecast:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(192, 27, 46, 0.4);
+}
+.forecast-snowforecast__icon {
+  width: 32px;
+  flex-shrink: 0;
+  color: #fff;
+}
+.forecast-snowforecast__icon svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  fill: currentColor;
+}
+.forecast-snowforecast__text {
+  flex: 1;
+  min-width: 0;
+}
+.forecast-snowforecast__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin-bottom: 2px;
+}
+.forecast-snowforecast__subtitle {
+  font-size: 0.78rem;
+  opacity: 0.92;
+  line-height: 1.3;
+}
+.forecast-snowforecast__cta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.forecast-snowforecast__arrow {
+  font-size: 1rem;
+  margin-left: 2px;
+}
+.forecast-widget__source {
+  font-size: 0.65rem;
+  color: var(--copper-strong);
+  font-style: italic;
+  margin-left: 4px;
+  padding: 1px 6px;
+  background: var(--tint-copper);
+  border-radius: var(--radius-pill);
+  vertical-align: middle;
+}
+.forecast-widget__source[hidden] { display: none; }
+
+/* Emergency Card — copper accent, direct tel action (absorbed from emergencias.html) */
+.emergency-card {
+  background: var(--tint-copper); border: 1px solid rgba(196, 106, 58, 0.3);
+  border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px;
+}
+.emergency-card h3 { color: var(--copper-strong); }
+.emergency-card .btn { background: var(--copper); color: #fff; }
+
+/* Home Liquid Glass — scoped to the landing hub so dense content pages stay readable. */
+.bg-home .card,
+.bg-home .emergency-card,
+.bg-home .quick-contact {
+  background: linear-gradient(135deg, rgba(255,255,255,0.66), rgba(255,255,255,0.36));
+  border: 1px solid rgba(255,255,255,0.58);
+  box-shadow: 0 18px 50px rgba(11,37,56,0.18), inset 0 1px 0 rgba(255,255,255,0.75);
+  backdrop-filter: blur(22px) saturate(1.65);
+  -webkit-backdrop-filter: blur(22px) saturate(1.65);
+  overflow: hidden;
+}
+.bg-home .card::after,
+.bg-home .emergency-card::after,
+.bg-home .quick-contact::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(125deg, rgba(255,255,255,0.46) 0%, rgba(255,255,255,0.12) 34%, rgba(255,255,255,0) 58%);
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 0;
+}
+.bg-home .quick-contact { position: sticky; }
+.bg-home .quick-contact > * { position: relative; z-index: 1; }
+@media (hover: hover) {
+  .bg-home a.card:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 22px 56px rgba(11,37,56,0.22), inset 0 1px 0 rgba(255,255,255,0.82);
+    transition-duration: 220ms;
+  }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bg-home .card,
+  .bg-home .emergency-card,
+  .bg-home .quick-contact {
+    background: rgba(255,255,255,0.88);
+  }
+}
+
+/* Accordion / FAQ — native <details>, progressive disclosure (Foundation §3.10) */
+.accordion details {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-soft);
+  margin-bottom: 12px; overflow: hidden;
+}
+.accordion summary {
+  cursor: pointer; padding: 16px 20px; font-weight: 700; color: var(--night);
+  list-style: none; display: flex; justify-content: space-between; align-items: center;
+}
+.accordion summary::-webkit-details-marker { display: none; }
+.accordion summary::after { content: "›"; color: var(--wood); font-size: 1.2rem; transition: transform var(--motion-snap); }
+.accordion details[open] summary::after { transform: rotate(90deg); }
+.accordion .body { padding: 0 20px 16px; color: var(--rock); }
+
+/* Empty state — calm delayed rise-in (reuses gh-rise) */
+.empty-state { text-align: center; padding: 40px 16px; color: var(--rock); animation: gh-rise 0.5s var(--ease-out) 120ms backwards; }
+.empty-state .emoji { font-size: 2.5rem; display: block; margin-bottom: 12px; opacity: 0.7; animation: gh-rise 0.6s var(--ease-out) 200ms backwards; }
+
+/* Data field block (e.g. credential placeholders) — inner radius = outer − padding */
+.field-block { background: rgba(255, 255, 255, 0.5); padding: 12px 16px; border-radius: var(--radius-md); margin-top: 12px; }
+
+/* Step list (check-in access) */
+.step-list { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.step-list .step strong { color: var(--night); }
+
+/* Reduced motion (Foundation §5.8) */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+/* ============================================================
+   Restaurants — ficha-card extensions, recos, sort bar, details
+   ============================================================ */
+
+/* Tags inside a ficha-card (chips de los tags del item) */
+.ficha-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.ficha-tags .tag { text-transform: none; letter-spacing: 0; font-size: 0.72rem; }
+
+/* Why-go paragraph (italic, muted, 1-line-ish) */
+.ficha-card__why { color: var(--rock); font-style: italic; font-size: 0.92rem; margin: 10px 0 0; line-height: 1.4; }
+
+/* Rating block inside ficha */
+.ficha-card__rating { margin-top: 12px; font-size: 0.95rem; color: var(--night); font-weight: 700; }
+.ficha-card__rating--pending { color: var(--rock); font-weight: 600; font-style: italic; }
+.ficha-card__rating-fallback { color: var(--rock); font-weight: 400; font-size: 0.82rem; font-style: normal; margin-top: 2px; }
+
+/* Action buttons inside ficha (small variant of .btn) */
+.btn--sm { width: auto; padding: 10px 14px; font-size: 0.82rem; box-shadow: 0 4px 10px rgba(18,52,77,0.10); }
+.ficha-card__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.ficha-card__actions .btn { flex: 1 1 calc(50% - 4px); min-width: 120px; }
+
+/* Reco block — 3 recomendaciones rápidas, computado client-side */
+.reco-block { background: var(--tint-wood); padding: 14px 16px; border-radius: var(--radius-lg); margin-bottom: 12px; }
+.reco-block__title { color: var(--forest); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 8px; }
+.reco-block__list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.reco-block__list li { color: var(--night); font-size: 0.92rem; font-weight: 600; }
+.reco-block__list .num { color: var(--copper); margin-right: 4px; }
+
+/* Sort bar — same look as .filter-bar but visually separated from category chips */
+.filter-bar--sort { margin-top: -8px; padding-top: 12px; border-top: 1px solid var(--tint-ice); }
+
+/* Details block (validar candidatos) — muted by default, expands on click */
+.details-pending { margin-top: 32px; }
+.details-pending > summary { color: var(--rock); font-style: italic; font-size: 0.92rem; cursor: pointer; padding: 12px 0; list-style: none; }
+.details-pending > summary::before { content: "▸ "; color: var(--copper); margin-right: 4px; }
+.details-pending[open] > summary::before { content: "▾ "; }
+.details-pending > summary:hover { color: var(--night); }
+
+/* ============================================================
+   Actividades / Restaurantes — catastro orquestado (2026-07-04)
+   Modules, top section, filter bar real, safety, stars, CTAs.
+   ============================================================ */
+
+/* Module section wrapper — separator above each module */
+.modulo {
+  margin: 32px 0 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--tint-ice);
+}
+.modulo:first-of-type { border-top: 0; }
+.modulo h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--night);
+  margin: 0 0 12px;
+}
+.modulo-top { border-top: 0; padding-top: 0; margin-top: 16px; }
+
+/* Module TOC — anchor nav, mobile-first */
+.modulo-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  margin: 16px 0 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-soft);
+}
+.modulo-toc a {
+  color: var(--deep-blue);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--tint-ice);
+  transition: background var(--motion-snap);
+}
+.modulo-toc a:hover { background: var(--tint-wood); color: var(--night); }
+
+/* ============================================================
+   Top section v3.5 — Harmony pass: opaque panel, no overlap, clear hierarchy.
+   1 card Hero (Prioridad 1) + 9 cards Grid (Prioridad 2-3).
+   ============================================================ */
+
+/* Top section: 100% solid white panel so the page hero image stays OUT.
+   Override the v3.3 line 998 (border-top:0; padding-top:0; margin-top:16px). */
+.modulo-top {
+  background: #ffffff;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 18px 14px 16px;
+  margin-top: 8px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-soft);
+}
+.top-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+.top-header h2 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: var(--night);
+  letter-spacing: -0.01em;
+}
+.top-subtitle {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--rock);
+  font-weight: 500;
+}
+
+/* Hero: 1 card grande destacada. Subtle border (no copper pesado), no shadow lift. */
+.top-hero {
+  position: relative;
+  margin-bottom: 16px;
+}
+.hero-badge {
+  /* Above the card to avoid any overlap with card-header content. */
+  position: relative;
+  display: inline-block;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #4A2C00;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(255, 165, 0, 0.35);
+}
+
+/* Grid: 9 cards compactas */
+.grid-top {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 480px) {
+  .grid-top { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 720px) {
+  .grid-top { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* Hero card variant — clean, no gradient conflict with body. Border subtle, no shadow. */
+.ficha-card.ficha-card--hero {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--copper);
+  box-shadow: none;
+  padding: 16px 18px;
+  position: relative;
+}
+.ficha-card--hero .icon-box {
+  font-size: 1.8rem;
+  padding: 10px 14px;
+}
+.ficha-card--hero .card-header h3 { font-size: 1.15rem; line-height: 1.2; }
+.ficha-card--hero .card-header p { font-size: 0.78rem; }
+.ficha-card--hero .ficha-copy { font-size: 0.92rem; line-height: 1.45; margin-top: 10px; }
+.ficha-card--hero .ficha-meta { font-size: 0.82rem; padding: 10px 12px; background: var(--tint-ice); }
+.ficha-card--hero .ficha-tech { font-size: 0.78rem; padding: 8px 12px; }
+.ficha-card--hero .cta-primary { padding: 14px 18px; font-size: 0.95rem; }
+.ficha-card--hero .cta-maps { padding: 10px 14px; font-size: 0.88rem; }
+.ficha-card--hero .stars { font-size: 0.85rem; }
+.ficha-card--hero .mapa-badge {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 8px;
+  margin-top: 4px;
+  font-size: 0.78rem;
+  padding: 4px 12px;
+}
+@media (min-width: 720px) {
+  .top-hero { max-width: 100%; }
+}
+
+/* Top section cards: ficha-secure and mapa-badge INLINE (not absolute),
+   so they don't overlap with stars in the card-header. */
+.modulo-top .ficha-secure {
+  position: relative;
+  top: auto;
+  right: auto;
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.7rem;
+  background: rgba(196, 106, 58, 0.15);
+  color: var(--copper-strong);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  z-index: 1;
+  margin-bottom: 6px;
+}
+.modulo-top .mapa-badge {
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  margin-bottom: 6px;
+  margin-right: 6px;
+}
+.modulo-top .ficha-compact .ficha-copy { margin-top: 8px; }
+
+/* Grid card variant: simplified (no meta/tech/cta-fallback/details). */
+.grid-top .ficha-compact .ficha-meta,
+.grid-top .ficha-compact .ficha-tech,
+.grid-top .ficha-compact .cta-fallback,
+.grid-top .ficha-compact .ficha-details { display: none; }
+.grid-top .ficha-compact .cta-primary { margin-top: 8px; font-size: 0.78rem; padding: 8px 10px; }
+.grid-top .ficha-compact { padding: 14px 14px 12px; }
+.grid-top .ficha-compact .ficha-copy { font-size: 0.82rem; margin-top: 4px; line-height: 1.35; }
+
+/* Mobile (≥480px y <720px) - 2 cols, cards ~270px wide: keep horizontal card-header */
+.grid-top .ficha-compact .card-header { gap: 8px; }
+.grid-top .ficha-compact .card-header h3 { font-size: 0.85rem; line-height: 1.2; }
+.grid-top .ficha-compact .card-header p { font-size: 0.66rem; }
+.grid-top .ficha-compact .icon-box { font-size: 1.3rem; padding: 6px 8px; }
+.grid-top .ficha-compact .stars { font-size: 0.68rem; }
+
+/* Desktop (≥720px) - 3 cols, cards ~177px wide: stack card-header vertical */
+@media (min-width: 720px) {
+  .grid-top .ficha-compact .card-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+  }
+  .grid-top .ficha-compact .card-header h3 { font-size: 0.88rem; }
+  .grid-top .ficha-compact .card-header p { font-size: 0.7rem; }
+  .grid-top .ficha-compact .icon-box { font-size: 1.6rem; padding: 8px 10px; }
+  .grid-top .ficha-compact .stars { font-size: 0.7rem; }
+  .grid-top .ficha-compact .ficha-copy { font-size: 0.78rem; }
+}
+
+/* CTA Maps — botón secundario con tinte ice */
+.cta-maps {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--tint-ice);
+  color: var(--deep-blue);
+  border: 1px solid var(--ice);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--motion-snap), border-color var(--motion-snap), transform var(--motion-snap);
+}
+.cta-maps:hover {
+  background: rgba(221, 234, 243, 0.95);
+  border-color: var(--deep-blue);
+  transform: translateY(-1px);
+}
+.cta-maps:active { transform: translateY(0); }
+.cta-maps::before {
+  font-size: 1.05em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Callout — disclaimer + safety admonitions (per catastro reglas 6 + 7) */
+.callout {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  margin: 12px 0 16px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+.callout > span { font-size: 1.1rem; flex-shrink: 0; }
+.callout p { margin: 0; }
+.callout-alert {
+  background: rgba(196, 106, 58, 0.10);
+  border: 1px solid rgba(196, 106, 58, 0.25);
+  color: var(--night);
+}
+.callout-secure {
+  background: rgba(31, 77, 58, 0.10);
+  border: 1px solid rgba(31, 77, 58, 0.25);
+  color: var(--night);
+}
+
+/* Stars — editorial 1-5 rating (catastro regla #4) */
+.stars {
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  color: var(--wood);
+  font-variant-numeric: tabular-nums;
+  align-self: flex-start;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.stars[data-estrellas="1"] { color: var(--rock); opacity: 0.5; }
+.stars[data-estrellas="2"] { opacity: 0.65; }
+.stars[data-estrellas="3"] { opacity: 0.85; }
+
+/* Ficha card — catastro extensions */
+.ficha-card { position: relative; }
+/* ponytail: prevent horizontal overflow on narrow viewports. The grid cell can
+   otherwise be expanded by wide children (long title text, stars, data-attrs). */
+.ficha-card { word-wrap: break-word; overflow-wrap: break-word; max-width: 100%; min-width: 0; }
+/* ponytail: card-header needs min-width:0 on the text container so flex shrinks
+   it below content width when the title is long. */
+.ficha-card .card-header { min-width: 0; }
+.ficha-card .card-header > div:not(.icon-box):not(.stars) { min-width: 0; flex: 1 1 auto; }
+.ficha-card .card-header > div h3 { font-size: 1rem; line-height: 1.2; }
+/* ponytail: keep stars compact so they don't push the card wider than the cell. */
+.ficha-card .stars { flex-shrink: 0; font-size: 0.72rem; }
+.ficha-card .ficha-fields .val,
+.ficha-card .ficha-fields .label {
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+/* ponytail: em-dash placeholder should look like a placeholder, not text. */
+.ficha-card .val.val--empty { color: var(--rock); opacity: 0.55; font-style: italic; }
+.ficha-card .ficha-copy {
+  font-size: 0.92rem;
+  color: var(--night);
+  line-height: 1.45;
+  margin: 10px 0 0;
+}
+.ficha-secure {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 0.72rem;
+  background: rgba(196, 106, 58, 0.15);
+  color: var(--copper-strong);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  z-index: 1;
+}
+.ficha-secure-callout {
+  background: rgba(196, 106, 58, 0.08);
+  border-left: 3px solid var(--copper);
+  padding: 10px 12px;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--night);
+}
+.ficha-card a.ext-link-row {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  padding: 12px 16px;
+}
+
+/* Filter bar — multi-dimension (5 filters: temporada, categoria, perfil, dificultad, zona) */
+.filter-bar--multi {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.filter-label {
+  font-size: 0.72rem;
+  color: var(--rock);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  min-width: 80px;
+  font-weight: 600;
+}
+.filter-group .tag {
+  cursor: pointer;
+  transition: opacity var(--motion-snap), background var(--motion-snap);
+  border: 0;
+  font-family: inherit;
+  font-size: 0.78rem;
+}
+.filter-group .tag[aria-pressed="false"] { opacity: 0.5; }
+.filter-group .tag[aria-pressed="true"] { background: var(--tint-wood); color: var(--night); font-weight: 700; }
+.filter-bar-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--tint-ice);
+  font-size: 0.82rem;
+  color: var(--rock);
+}
+.filter-clear {
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.78rem;
+  color: var(--copper-strong);
+  cursor: pointer;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+}
+.filter-clear:hover { background: var(--tint-copper); }
+.filter-count { font-variant-numeric: tabular-nums; }
+
+/* Filter rules — hide non-matching ficha-cards when a filter dimension is active.
+   perfil is multi-OR: card shows if it has any selected perfil.
+   temporada/dificultad/zona are single-select: exact match. */
+[data-page="actividades"][data-filter-temporada] .ficha-card:not([data-temporada-key=""]):not([data-module=""]) { /* no-op base */ }
+[data-page="actividades"][data-filter-temporada="invierno"] .ficha-card:not([data-temporada-key="invierno"]):not([data-temporada-key="anual"]):not([data-temporada-key="multi"]) { display: none; }
+[data-page="actividades"][data-filter-temporada="verano"] .ficha-card:not([data-temporada-key="verano"]):not([data-temporada-key="anual"]):not([data-temporada-key="multi"]) { display: none; }
+[data-page="actividades"][data-filter-temporada="anual"] .ficha-card:not([data-temporada-key="anual"]) { display: none; }
+[data-page="actividades"][data-filter-temporada="multi"] .ficha-card:not([data-temporada-key="multi"]) { display: none; }
+[data-page="actividades"][data-filter-dificultad="facil"] .ficha-card:not([data-dificultad-key="facil"]) { display: none; }
+[data-page="actividades"][data-filter-dificultad="media"] .ficha-card:not([data-dificultad-key="media"]) { display: none; }
+[data-page="actividades"][data-filter-dificultad="alta"] .ficha-card:not([data-dificultad-key="alta"]) { display: none; }
+[data-page="actividades"][data-filter-zona="plaza_tata"] .ficha-card:not([data-zona-key="plaza_tata"]) { display: none; }
+[data-page="actividades"][data-filter-zona="nevados"] .ficha-card:not([data-zona-key="nevados"]) { display: none; }
+[data-page="actividades"][data-filter-zona="valle_las_trancas"] .ficha-card:not([data-zona-key="valle_las_trancas"]) { display: none; }
+[data-page="actividades"][data-filter-zona="shangrila"] .ficha-card:not([data-zona-key="shangrila"]) { display: none; }
+[data-page="actividades"][data-filter-zona="reserva_nuble"] .ficha-card:not([data-zona-key="reserva_nuble"]) { display: none; }
+/* When ANY filter is set, hide the top section (so the user browses the filtered list, not the curated top) */
+[data-page="actividades"][data-filter-temporada] .modulo-top,
+[data-page="actividades"][data-filter-dificultad] .modulo-top,
+[data-page="actividades"][data-filter-zona] .modulo-top { display: none; }
+
+/* Subcategoria filter — when active, hide cards without subcategoria AND cards not matching the value */
+[data-page="actividades"][data-filter-subcategoria] .ficha-card[data-subcategoria=""] { display: none; }
+[data-page="actividades"][data-filter-subcategoria="trekking_facil"] .ficha-card[data-subcategoria]:not([data-subcategoria="trekking_facil"]) { display: none; }
+[data-page="actividades"][data-filter-subcategoria="trekking_intermedio"] .ficha-card[data-subcategoria]:not([data-subcategoria="trekking_intermedio"]) { display: none; }
+[data-page="actividades"][data-filter-subcategoria="trekking_exigente"] .ficha-card[data-subcategoria]:not([data-subcategoria="trekking_exigente"]) { display: none; }
+[data-page="actividades"][data-filter-subcategoria="cascadas_y_agua"] .ficha-card[data-subcategoria]:not([data-subcategoria="cascadas_y_agua"]) { display: none; }
+[data-page="actividades"][data-filter-subcategoria="geotermia"] .ficha-card[data-subcategoria]:not([data-subcategoria="geotermia"]) { display: none; }
+[data-page="actividades"][data-filter-subcategoria="miradores"] .ficha-card[data-subcategoria]:not([data-subcategoria="miradores"]) { display: none; }
+[data-page="actividades"][data-filter-subcategoria="mtb_trancas"] .ficha-card[data-subcategoria]:not([data-subcategoria="mtb_trancas"]) { display: none; }
+[data-page="actividades"][data-filter-subcategoria="mtb_shangrila"] .ficha-card[data-subcategoria]:not([data-subcategoria="mtb_shangrila"]) { display: none; }
+[data-page="actividades"][data-filter-subcategoria="mtb_bike_park"] .ficha-card[data-subcategoria]:not([data-subcategoria="mtb_bike_park"]) { display: none; }
+[data-page="actividades"][data-filter-subcategoria="pumptrack"] .ficha-card[data-subcategoria]:not([data-subcategoria="pumptrack"]) { display: none; }
+[data-page="actividades"][data-filter-subcategoria="ruta_con_guia"] .ficha-card[data-subcategoria]:not([data-subcategoria="ruta_con_guia"]) { display: none; }
+
+/* Perfil filter — multi-OR is JS-driven (CSS :not() can't do union).
+   See js/actividades.js applyPerfilMultiOr() — toggles .ficha-card--hidden class.
+   We only hide empty-perfil cards via CSS when any perfil filter is active. */
+[data-page="actividades"][data-filter-perfil] .ficha-card[data-perfil="[]"] { display: none; }
+[data-page="actividades"][data-filter-perfil] .modulo-top { display: none; }
+.ficha-card.ficha-card--hidden-perfil { display: none; }
+
+/* No-results state (shown via JS when 0 cards match) */
+.ficha-empty { display: none; padding: 32px 16px; text-align: center; color: var(--rock); font-style: italic; }
+[data-page="actividades"][data-noresults="true"] .ficha-empty { display: block; }
+
+/* ============================================================
+   Action links (Maps / Instagram / sitio oficial) — v4
+   Hyperlink aesthetic: chip with icon, hover state, address as detail.
+   ============================================================ */
+.ficha-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 12px 0 4px;
+}
+.ficha-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: var(--tint-ice);
+  color: var(--deep-blue);
+  font-weight: 600;
+  font-size: 0.92rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background var(--motion-snap), border-color var(--motion-snap), transform var(--motion-snap);
+}
+.ficha-link:hover {
+  background: rgba(221, 234, 243, 0.9);
+  border-color: var(--ice);
+  transform: translateX(2px);
+}
+.ficha-link:active { transform: translateX(0) scale(0.99); }
+.ficha-link::before {
+  font-size: 1.05rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.ficha-link--maps::before { content: "📍"; }
+.ficha-link--ig::before   { content: "📷"; }
+.ficha-link--web::before  { content: "🔗"; }
+.ficha-link__detail {
+  font-weight: 400;
+  font-size: 0.82rem;
+  color: var(--rock);
+  margin-left: auto;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60%;
+  min-width: 0;
+}
+
+/* ============================================================
+   Restaurant list v5 — compact 2-line rows
+   Each row: name + rating (line 1), Maps + IG links (line 2)
+   ============================================================ */
+.rest-list { display: flex; flex-direction: column; }
+.rest-row {
+  padding: 14px 8px;
+  border-bottom: 1px solid var(--tint-ice);
+  border-radius: var(--radius-md);
+  transition: background var(--motion-snap);
+}
+.rest-row:hover { background: var(--tint-ice); }
+.rest-row:last-child { border-bottom: 0; }
+.rr-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.rr-left {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.rr-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--night);
+  letter-spacing: -0.02em;
+}
+/* Category badges */
+.rr-cat {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+.rr-cat--restaurante { background: var(--tint-forest); color: var(--forest); }
+.rr-cat--cafe        { background: var(--tint-ice); color: var(--deep-blue); }
+.rr-cat--panaderia   { background: rgba(196, 106, 58, 0.10); color: #8F3E17; }
+.rr-cat--heladeria   { background: rgba(18, 52, 77, 0.08); color: var(--deep-blue); }
+.rr-cat--bar         { background: var(--tint-copper); color: var(--copper-strong); }
+.rr-cat--cerveceria  { background: var(--tint-wood); color: var(--wood); }
+.rr-cat--dulce       { background: rgba(196, 106, 58, 0.08); color: #8F3E17; }
+.rr-cat--supermercado { background: rgba(31, 77, 58, 0.10); color: var(--forest); }
+.rr-cat--compras     { background: var(--rock-light); color: var(--rock); }
+.rr-rating {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--copper-strong);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.rr-rating small {
+  font-weight: 400;
+  color: var(--rock);
+  font-size: 0.78rem;
+}
+.rr-rating--pending {
+  color: var(--rock);
+  font-style: italic;
+  font-weight: 400;
+}
+.rr-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+  align-items: center;
+}
+.rr-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity var(--motion-snap), transform var(--motion-snap);
+}
+.rr-link:hover { opacity: 0.7; transform: scale(1.1); }
+.rr-link svg { display: block; }
+
+/* ============================================================
+   v8: Filter bar + card con depth
+   Buttons always solid (not hover-dependent) — active = dark, inactive = light pill.
+   ============================================================ */
+.rest-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 24px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-pill);
+  align-items: center;
+  position: sticky;
+  top: 8px;
+  z-index: 10;
+  backdrop-filter: blur(12px) saturate(1.3);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+  box-shadow: var(--shadow-soft);
+}
+.rest-filter__btn {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--night);
+  cursor: pointer;
+  opacity: 1; /* always solid — no transparency change on hover */
+  transition: background var(--motion-snap), color var(--motion-snap), border-color var(--motion-snap), transform var(--motion-snap);
+}
+.rest-filter__btn:hover {
+  background: var(--tint-ice);
+  border-color: var(--deep-blue);
+  transform: translateY(-1px);
+}
+.rest-filter__btn--active {
+  background: var(--deep-blue);
+  color: #fff;
+  border-color: var(--deep-blue);
+  box-shadow: 0 2px 6px rgba(18, 52, 77, 0.20);
+}
+.rest-filter__btn--active:hover {
+  background: var(--night);
+  border-color: var(--night);
+}
+.rest-filter__count {
+  margin-left: auto;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--rock);
+  font-variant-numeric: tabular-nums;
+  padding: 4px 10px;
+  background: var(--tint-ice);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+/* Card with depth */
+.rest-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.rest-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.66), rgba(255,255,255,0.36));
+  border: 1px solid rgba(255,255,255,0.58);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 50px rgba(11,37,56,0.18), inset 0 1px 0 rgba(255,255,255,0.75);
+  padding: 18px 18px 14px;
+  backdrop-filter: blur(22px) saturate(1.65);
+  -webkit-backdrop-filter: blur(22px) saturate(1.65);
+  position: relative;
+  overflow: hidden;
+  will-change: transform, backdrop-filter;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 150px;
+  transition: box-shadow 220ms var(--ease-out), transform 220ms var(--ease-out);
+}
+.rest-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 22px 56px rgba(11,37,56,0.22), inset 0 1px 0 rgba(255,255,255,0.82);
+}
+/* ponytail v3.8 — module accent: top-border 3px en color del módulo. Da identidad sin saturar. */
+.rest-card[data-module="termas"]    { border-top: 3px solid var(--copper); }
+.rest-card[data-module="nieve"]     { border-top: 3px solid var(--deep-blue); }
+.rest-card[data-module="senderos"]  { border-top: 3px solid var(--forest); }
+.rest-card[data-module="bici"]      { border-top: 3px solid var(--wood); }
+.rest-card[data-module="aventura"]  { border-top: 3px solid #6B5B95; }
+.rest-card[data-module="servicios"] { border-top: 3px solid var(--rock); }
+/* ponytail v3.8 — card header with icon (left of name, 46x46 tinted square) */
+.rest-card__head {
+  display: flex;
+  align-items: center;  /* center for icon+name alignment */
+  gap: 12px;
+  margin-bottom: 4px;
+}
+.rest-card__icon {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  line-height: 1;
+  border-radius: var(--radius-md);
+  background: var(--tint-wood);
+}
+.rest-card__icon.bg-winter { background: var(--tint-ice); }
+.rest-card__icon.bg-summer { background: var(--tint-forest); }
+.rest-card__icon.bg-warm   { background: var(--tint-copper); }
+.rest-card__head-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.rest-card__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--night);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
+}
+.rest-card__cats { display: flex; flex-wrap: wrap; gap: 4px; flex-shrink: 0; }
+.rest-card__desc {
+  font-size: 0.85rem;
+  color: var(--rock);
+  margin: 6px 0 10px;
+  line-height: 1.4;
+  font-style: italic;
+}
+.rest-card__foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 28px;
+  padding-top: 6px;
+  border-top: 1px solid var(--tint-ice);
+  margin-top: 4px;
+}
+.rest-card__rating {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.rest-card__links {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+.act-card__module {
+  font-size: 0.72rem;
+  color: var(--rock);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+/* ponytail v3.11 — CTAs claros al pie de la card. Botón principal "Ver info oficial" +
+   link secundario "Cómo llegar". Profesionales y armónicos. */
+.rest-card__ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.rest-card__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--deep-blue);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  text-align: center;
+  transition: background var(--motion-snap), transform var(--motion-snap);
+}
+.rest-card__cta:hover {
+  background: var(--night);
+  transform: translateY(-1px);
+}
+.rest-card__cta:active { transform: translateY(0); }
+.rest-card__cta::after {
+  content: "→";
+  font-weight: 400;
+  font-size: 1.05em;
+  margin-left: 2px;
+}
+.rest-card__cta-maps {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--deep-blue);
+  text-decoration: none;
+  border: 1px solid var(--ice);
+  border-radius: var(--radius-md);
+  background: var(--tint-ice);
+  transition: background var(--motion-snap), border-color var(--motion-snap);
+  text-align: center;
+}
+.rest-card__cta-maps:hover {
+  background: rgba(221, 234, 243, 0.95);
+  border-color: var(--deep-blue);
+}
+.rr-rating {
+  font-size: 0.85rem;
+  color: var(--night);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.rr-rating strong { font-weight: 700; }
+.rr-rating small { font-weight: 400; color: var(--rock); font-size: 0.78rem; }
+.rr-stars { color: #f5a623; font-size: 0.95rem; }
+.rr-rating--pending {
+  font-style: italic;
+  color: var(--rock);
+  font-size: 0.78rem;
+}
+.rest-card__links { display: flex; gap: 10px; align-items: center; }
+
+/* ============================================================
+   Catastro v3 — ficha-compact + mapa badges + CTAs + details
+   ============================================================ */
+
+/* Compact card layout: denser, scrollable, with optional expandable details */
+.ficha-card.ficha-compact {
+  padding: 14px 16px;
+}
+.ficha-compact .ficha-copy {
+  margin-top: 8px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+/* Mapa estado badges — green = verificado, amber = pendiente */
+.mapa-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  margin: 8px 0 0;
+  letter-spacing: 0.01em;
+}
+.mapa-badge--verificado {
+  background: rgba(31, 77, 58, 0.12);
+  color: var(--forest);
+}
+.mapa-badge--pendiente {
+  background: rgba(183, 121, 62, 0.15);
+  color: var(--copper-strong);
+}
+.mapa-badge--validacion {
+  background: rgba(196, 106, 58, 0.22);
+  color: var(--copper-strong);
+  border: 1px dashed var(--copper);
+}
+
+/* Card marcada como validación local: borde dashed + opacidad reducida */
+.ficha-card--validacion {
+  border: 1px dashed var(--copper);
+  background: rgba(255, 250, 245, 0.85);
+}
+.ficha-card--validacion .ficha-copy {
+  color: var(--rock);
+}
+
+/* Fila técnica outdoor compacta: "Mapa: Trailforks · Estado: verificado · Tipo: singletrack · Login: no" */
+.ficha-tech {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: rgba(18, 52, 77, 0.04);
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+.tech-item { white-space: normal; word-break: break-word; }
+.tech-label {
+  color: var(--rock);
+  font-weight: 500;
+  margin-right: 2px;
+  text-transform: lowercase;
+}
+.tech-val {
+  color: var(--night);
+  font-weight: 700;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.tech-sep {
+  color: var(--rock);
+  opacity: 0.4;
+}
+
+/* Meta row: "11.7 km · ↑ 802 m · alta · invierno" — compact summary */
+.ficha-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: var(--tint-ice);
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  color: var(--night);
+  font-weight: 600;
+}
+.meta-item { white-space: normal; word-break: break-word; overflow-wrap: anywhere; }
+.meta-dist { color: var(--deep-blue); font-variant-numeric: tabular-nums; }
+.meta-elev { color: var(--forest); font-variant-numeric: tabular-nums; }
+.meta-diff { text-transform: capitalize; }
+.meta-temp { color: var(--rock); font-weight: 500; text-transform: lowercase; flex-basis: 100%; margin-top: 2px; }
+.meta-sep {
+  color: var(--rock);
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+/* CTAs: primary big + fallback small text link */
+.ficha-ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+.cta-primary {
+  display: block;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: var(--deep-blue);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: background var(--motion-snap), transform var(--motion-snap);
+}
+.cta-primary:hover { background: var(--night); transform: translateY(-1px); }
+.cta-primary:active { transform: translateY(0); }
+.cta-fallback {
+  font-size: 0.78rem;
+  color: var(--rock);
+  text-decoration: none;
+  text-align: center;
+  font-weight: 500;
+  padding: 2px 4px;
+}
+.cta-fallback:hover { color: var(--deep-blue); text-decoration: underline; }
+
+/* Expandible details — clean <details> without browser chrome */
+.ficha-details {
+  margin-top: 10px;
+  border-top: 1px dashed var(--tint-ice);
+  padding-top: 8px;
+}
+.ficha-details > summary {
+  list-style: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--deep-blue);
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+}
+.ficha-details > summary::-webkit-details-marker { display: none; }
+.ficha-details > summary::before {
+  content: "▸";
+  font-size: 0.7rem;
+  transition: transform var(--motion-snap);
+  color: var(--rock);
+}
+.ficha-details[open] > summary::before { transform: rotate(90deg); }
+.ficha-details > summary:hover { color: var(--night); }
+.ficha-details .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+  font-size: 0.82rem;
+  border-bottom: 1px solid var(--tint-ice);
+}
+.ficha-details .row:last-child { border-bottom: 0; }
+.ficha-details .label {
+  color: var(--rock);
+  opacity: 0.85;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.ficha-details .val {
+  color: var(--night);
+  font-weight: 600;
+  text-align: right;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.ficha-details .val.num { font-variant-numeric: tabular-nums; }
+.ficha-details .val.val--empty { color: var(--rock); opacity: 0.5; font-style: italic; font-weight: 400; }
+
+/* Secure callout inside details */
+.ficha-details .ficha-secure-callout {
+  margin-top: 8px;
+  font-size: 0.78rem;
+}
+
+/* Source line at bottom of details */
+.ficha-source {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--tint-ice);
+  font-size: 0.7rem;
+  color: var(--rock);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* Subcategoria filter group — wraps chips */
+.filter-group--subcat .tag {
+  font-size: 0.74rem;
+}
+
+/* Keep top section cards slightly bigger (legacy non-compact layout) */
+.modulo-top .ficha-card { padding: 16px 18px; }
+
+/* Compact the cards inside modules to make scanning faster */
+.modulo:not(.modulo-top) .ficha-compact .card-header h3 { font-size: 0.95rem; }
+.modulo:not(.modulo-top) .ficha-compact .card-header p { font-size: 0.75rem; }
+
+/* ============================================================
+   Liquid Glass system-wide pass
+   Applies the same Apple-inspired material to every guest-facing section.
+   Dense catalogue surfaces get a stronger white mix so scanning stays calm.
+   ============================================================ */
+.card,
+.btn-back,
+.btn-outline,
+.quick-contact,
+.lang-selector,
+.ext-link-row,
+.forecast-widget,
+.forecast-day,
+.emergency-card,
+.accordion details,
+.modulo-toc,
+.filter-bar--multi,
+.rest-filter-bar,
+.rest-card,
+.field-block {
+  background: linear-gradient(135deg, rgba(255,255,255,0.66), rgba(255,255,255,0.36));
+  border-color: rgba(255,255,255,0.58);
+  box-shadow: 0 18px 50px rgba(11,37,56,0.18), inset 0 1px 0 rgba(255,255,255,0.75);
+  backdrop-filter: blur(22px) saturate(1.65);
+  -webkit-backdrop-filter: blur(22px) saturate(1.65);
+}
+.card,
+.quick-contact,
+.ext-link-row,
+.forecast-widget,
+.forecast-day,
+.emergency-card,
+.accordion details,
+.modulo-toc,
+.filter-bar--multi,
+.rest-filter-bar,
+.rest-card,
+.field-block {
+  position: relative;
+  overflow: hidden;
+}
+.card::after,
+.quick-contact::after,
+.ext-link-row::after,
+.forecast-widget::after,
+.forecast-day::after,
+.emergency-card::after,
+.accordion details::after,
+.modulo-toc::after,
+.filter-bar--multi::after,
+.rest-filter-bar::after,
+.rest-card::after,
+.field-block::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(125deg, rgba(255,255,255,0.46) 0%, rgba(255,255,255,0.12) 34%, rgba(255,255,255,0) 58%);
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 0;
+}
+.quick-contact > *,
+.ext-link-row > *,
+.forecast-widget > *,
+.forecast-day > *,
+.emergency-card > *,
+.accordion details > *,
+.modulo-toc > *,
+.filter-bar--multi > *,
+.rest-filter-bar > *,
+.rest-card > *,
+.field-block > * {
+  position: relative;
+  z-index: 1;
+}
+.ficha-card.ficha-card--hero {
+  background: linear-gradient(135deg, rgba(255,255,255,0.78), rgba(255,255,255,0.52));
+  box-shadow: 0 18px 50px rgba(11,37,56,0.14), inset 0 1px 0 rgba(255,255,255,0.78);
+}
+.ficha-card--validacion.card {
+  background: linear-gradient(135deg, rgba(255,250,245,0.85), rgba(255,255,255,0.58));
+}
+.emergency-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(91,143,169,0.16));
+}
+.card.card--tint-wood {
+  background: linear-gradient(135deg, rgba(253,246,238,0.78), rgba(255,255,255,0.52));
+  border-color: rgba(183,121,62,0.35);
+}
+.card.card--tint-forest {
+  background: linear-gradient(135deg, rgba(240,248,245,0.78), rgba(255,255,255,0.52));
+  border-color: rgba(31,77,58,0.35);
+}
+.forecast-day--today {
+  background: linear-gradient(135deg, rgba(221,234,243,0.85), rgba(255,255,255,0.58));
+}
+.forecast-day--best {
+  background: linear-gradient(135deg, rgba(31,77,58,0.12), rgba(255,255,255,0.6));
+}
+.forecast-day--warning {
+  background: linear-gradient(135deg, rgba(196,106,58,0.12), rgba(255,255,255,0.6));
+}
+@media (hover: hover) {
+  a.card:hover,
+  a.ext-link-row:hover,
+  .rest-card:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 22px 56px rgba(11,37,56,0.22), inset 0 1px 0 rgba(255,255,255,0.82);
+    transition-duration: 220ms;
+  }
+}
+
+/* ==========================================================================
+   Hero Panel: Cabecera Liquid Glass Premium
+   ========================================================================== */
+.hero-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.76) 0%, rgba(255, 255, 255, 0.42) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: var(--radius-lg); /* 28px */
+  padding: 24px 22px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 42px rgba(18, 52, 77, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  will-change: transform, opacity;
+  animation: heroReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Brillo interno dinámico */
+.hero-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Distribución flex para la fila superior */
+.hero-panel__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ajustes de kicker para acoplarse al flex */
+.hero-panel .kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--rock);
+}
+
+/* Título de marca (Wordmark) */
+.hero-panel__title {
+  font-size: clamp(2.0rem, 8vw, 2.6rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--dark-night);
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Descripción de bienvenida */
+.hero-panel__welcome {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--rock);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Micro-animación de entrada fluida */
+@keyframes heroReveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Adaptación del selector de idiomas dentro del panel */
+.hero-panel .lang-selector {
+  margin: 0;
+  padding: 2px;
+  background: rgba(18, 52, 77, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-md); /* 16px concéntrico */
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .hero-panel,
+  .card,
+  .btn-back,
+  .btn-outline,
+  .quick-contact,
+  .lang-selector,
+  .ext-link-row,
+  .forecast-widget,
+  .forecast-day,
+  .emergency-card,
+  .accordion details,
+  .modulo-toc,
+  .filter-bar--multi,
+  .rest-filter-bar,
+  .rest-card,
+  .field-block {
+    background: rgba(255,255,255,0.88);
+  }
+}

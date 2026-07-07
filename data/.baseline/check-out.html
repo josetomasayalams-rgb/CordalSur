@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- Fase contenido: copy real vía i18n. TODO(host): confirmar hora de salida. -->
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Check-out - Guest Hub</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+ <link rel="preload" as="image" type="image/webp" href="css/bg/winter/checkout-bosque-atardecer.webp?v=2">
+ <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="is-winter bg-checkout">
+ <div class="app-container">
+
+  <header class="header">
+   <a href="index.html" class="btn-back" data-i18n-aria="common.back" aria-label="Volver">←</a>
+   <h2 style="margin:0" data-i18n="nav.checkout.t">Check-out</h2>
+  </header>
+  <div class="lang-selector" role="group" aria-label="Idioma / Language">
+   <button type="button" data-lang="es" aria-pressed="true">ES</button>
+   <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+   <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+
+  <p class="mb-4" data-i18n="checkout.intro">[cargado vía i18n]</p>
+
+  <!-- Departure deadline — default time, tabular-nums. TODO(host): confirmar hora real. -->
+  <div class="card mb-4">
+   <span class="tag tag-winter" data-i18n="checkout.time.tag">Hora de salida</span>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:8px">
+    <span style="color:var(--rock)" data-i18n="nav.checkout.t">Check-out</span>
+    <span class="num" style="font-size:1.5rem;color:var(--night);font-weight:700">12:00</span>
+   </div>
+  </div>
+
+  <!-- Before-you-leave checklist — real generic copy -->
+  <div class="card mb-4">
+   <h3 data-i18n="checkout.before.t">Antes de irte</h3>
+   <ul class="step-list">
+    <li class="step" data-i18n="checkout.item1">[cargado vía i18n]</li>
+    <li class="step" data-i18n="checkout.item2">[cargado vía i18n]</li>
+    <li class="step" data-i18n="checkout.item3">[cargado vía i18n]</li>
+   </ul>
+  </div>
+
+  <!-- Farewell — real copy, forest tint -->
+  <div class="card card--tint-forest mb-4">
+   <p style="color:var(--forest)" data-i18n="checkout.farewell">[cargado vía i18n]</p>
+  </div>
+
+ </div>
+ <script src="js/lang.js"></script>
+</body>
+</html>
