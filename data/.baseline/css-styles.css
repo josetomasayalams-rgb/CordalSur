@@ -489,6 +489,34 @@ a.card:active { transform: scale(0.985); transition: transform var(--motion-snap
   box-shadow: 0 -10px 30px rgba(18, 52, 77, 0.12);
 }
 
+/* ── Creator credit — subtle footer mark ── */
+.site-credit {
+  margin: var(--space-6) 0 0;
+  padding-top: var(--space-4);
+  text-align: center;
+  border-top: 1px solid rgba(90, 98, 108, 0.14); /* --rock @ 14% — hairline sutil */
+}
+.site-credit__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  color: var(--rock);
+  text-decoration: none;
+  text-shadow: 0 1px 2px rgba(247, 250, 252, 0.55); /* legibilidad sobre la foto de fondo */
+  opacity: 0.82;
+  transition: opacity var(--motion-snap), color var(--motion-snap);
+}
+.site-credit__icon { display: block; flex: none; }
+.site-credit__handle { font-weight: 600; }
+.site-credit__link:hover,
+.site-credit__link:focus-visible {
+  opacity: 1;
+  color: var(--forest);
+  outline: none;
+}
+
 /* FichaCard — structured fields (Restaurantes/Actividades) */
 .ficha-card .ficha-fields { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; font-size: 0.92rem; }
 .ficha-card .ficha-fields .row { display: flex; justify-content: space-between; gap: 12px; }

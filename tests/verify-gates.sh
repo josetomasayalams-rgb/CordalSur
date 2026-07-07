@@ -34,7 +34,8 @@ if [ -z "$hits" ]; then echo "  PASS (0 hits)"; else echo "  FAIL"; echo "$hits"
 echo ""
 echo "=== Gate 3: real http hrefs ==="
 hits=$(grep -rnE 'href="https?://' *.html \
-  | grep -vE 'fonts\.(googleapis|gstatic)|preconnect|open-meteo\.com|wttr\.in|snow-forecast\.com|google\.com/maps|nevadosdechillan\.com|wa\.me|bordehoteles\.cl|cabanaslascabras\.cl|trancas\.cl|turismovallelastrancas\.com|conaf\.cl|instagram\.com|wikiloc\.com|trailforks\.com|andeshandbook\.org|wikiexplora\.com|tripadvisor\.es|backchillan\.com|rucahueescalador\.cl' 2>/dev/null || true)
+  | grep -vE 'fonts\.(googleapis|gstatic)|preconnect|open-meteo\.com|wttr\.in|snow-forecast\.com|google\.com/maps|nevadosdechillan\.com|wa\.me|bordehoteles\.cl|cabanaslascabras\.cl|trancas\.cl|turismovallelastrancas\.com|conaf\.cl|instagram\.com|wikiloc\.com|trailforks\.com|andeshandbook\.org|wikiexplora\.com|tripadvisor\.es|backchillan\.com|rucahueescalador\.cl|github\.com' 2>/dev/null || true)
+# github.com — approved for the creator-credit link to the author's profile (footer.site-credit)
 if [ -z "$hits" ]; then echo "  PASS (0 hits)"; else echo "  FAIL"; echo "$hits" | head -3; fi
 
 echo ""
