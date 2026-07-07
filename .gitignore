@@ -10,3 +10,6 @@ Thumbs.db
 agentdb.rvf
 agentdb.rvf.lock
 ruvector.db
+
+# Claude Code local config (dev hooks/settings — not part of the release)
+.claude/
