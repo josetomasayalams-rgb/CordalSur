@@ -443,20 +443,22 @@ const actFilterBar = `      <div id="act-filter-bar" class="rest-filter-bar">
       <script type="application/json" id="activities-data">${JSON.stringify(allActivities).replace(/<\//g, '<\\/').replace(/&/g, '\\u0026')}</script>`;
 
 function actCard(e) {
+  const id = e.id || '';
   const name = e.name || tVal(e.nombre, 'es') || '';
   const module = e.module_id || 'act';
-  const catBadge = `<span class="rr-cat rr-cat--${module}">${attrEsc(module)}</span>`;
+  const catBadge = `<span class="rr-cat rr-cat--${module}" data-i18n="act.filter.${module}">${attrEsc(module)}</span>`;
   // ponytail v3.8 — icon grande en el header (representa la actividad)
   const icon = e.icon || '📍';
   const iconBg = e.iconBg || 'bg-warm';
   const iconHtml = `<div class="rest-card__icon ${attrEsc(iconBg)}" aria-hidden="true">${icon}</div>`;
   // Description: pick the first non-garbage value from copy_card / notas_seguridad / horario
   let desc = '';
+  let descField = '';
   for (const f of ['copy_card', 'notas_seguridad', 'horario']) {
     const v = tVal(e[f], 'es');
-    if (v && v.length > 8 && !/^(n\/?a|por confirmar|segun actividad)/i.test(v)) { desc = v; break; }
+    if (v && v.length > 8 && !/^(n\/?a|por confirmar|segun actividad)/i.test(v)) { desc = v; descField = f; break; }
   }
-  const descHtml = desc ? `<p class="rest-card__desc">${attrEsc(simplifyCopyText(desc))}</p>` : '';
+  const descHtml = desc ? `<p class="rest-card__desc" data-i18n="${id}.${descField}">${attrEsc(simplifyCopyText(desc))}</p>` : '';
   // ponytail v3.11 — CTAs claros al pie de la card. Botón principal "Ver info oficial" +
   // link secundario "Cómo llegar" usando mapa.primario_url o fallback, o auto-gen desde nombre+zona.
   const webUrl = e.link_oficial;
@@ -489,7 +491,7 @@ function actCard(e) {
         <header class="rest-card__head">
           ${iconHtml}
           <div class="rest-card__head-text">
-            <h3 class="rest-card__name">${attrEsc(name)}</h3>
+            <h3 class="rest-card__name" data-i18n="${id}.nombre">${attrEsc(name)}</h3>
             <div class="rest-card__cats">${catBadge}</div>
           </div>
         </header>
