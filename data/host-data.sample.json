@@ -40,7 +40,13 @@
     "reco.cafe.t":        { "es": "Café o dulce", "pt": "", "en": "" },
     "reco.bar.t":         { "es": "Noche con cerveza", "pt": "", "en": "" },
     "reco.depto.t":       { "es": "Para llevar al departamento", "pt": "", "en": "" },
-    "act.empty":          { "es": "Pronto cargaremos las mejores actividades.", "pt": "", "en": "" }
+    "act.empty":          { "es": "Pronto cargaremos las mejores actividades.", "pt": "", "en": "" },
+    "act.top.t":          { "es": "Qué hacer en Las Trancas", "pt": "", "en": "" },
+    "act.filter.count":    { "es": "Mostrando", "pt": "", "en": "" },
+    "rest.filter.count":   { "es": "lugares", "pt": "", "en": "" },
+    "theme.label":        { "es": "Tema", "pt": "", "en": "" },
+    "theme.light":        { "es": "Claro", "pt": "", "en": "" },
+    "theme.dark":         { "es": "Oscuro", "pt": "", "en": "" }
   },
   "urls": {
     "checkin.maps":   "https://maps.google.com/?q=Las+Trancas",

@@ -31,6 +31,15 @@ function tVal(v, L) {
   const o = asL10n(v);
   return o[L] || o.es || '';
 }
+function simplifyCopyText(s) {
+  const raw = String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
+  if (!raw) return '';
+  const clause = raw.split(/[:;—–]/)[0].trim();
+  const sentence = clause || raw.split(/(?<=[.!?])\s+/)[0].trim();
+  const cleaned = sentence.replace(/\s+([,.;:!?])/g, '$1').replace(/[.。]+$/g, '');
+  if (cleaned.length > 120) return cleaned.slice(0, 117).replace(/[\s,-–]+$/g, '') + '…';
+  return cleaned;
+}
 const esc = (s) => String(s == null ? '' : s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 const attrEsc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const R = (s) => String(s == null ? '' : s);
@@ -192,7 +201,7 @@ for (const e of (data.activities || [])) {
       let raw = e[f];
       if (f === 'acceso_inicio' && e.ruta) raw = e.ruta.acceso_inicio;
       if (f === 'cta_label' && e.mapa) raw = e.mapa.cta_label;
-      const v = tVal(raw, L);
+      const v = f === 'copy_card' ? simplifyCopyText(tVal(raw, L)) : tVal(raw, L);
       if (v) { appendKeys(L, [[`${e.id}.${f}`, v]]); listingKeys++; }
     }
   }
@@ -411,7 +420,7 @@ const actFilterBar = `      <div id="act-filter-bar" class="rest-filter-bar">
         <button type="button" class="rest-filter__btn" data-filter="bici" data-i18n="act.filter.bici">Bici</button>
         <button type="button" class="rest-filter__btn" data-filter="aventura" data-i18n="act.filter.aventura">Aventura</button>
         <button type="button" class="rest-filter__btn" data-filter="servicios" data-i18n="act.filter.servicios">Servicios</button>
-        <span class="rest-filter__count" id="act-filter-count" data-i18n="rest.filter.count">${allActivities.length} actividades</span>
+        <span class="rest-filter__count" id="act-filter-count" data-i18n="act.filter.count">${allActivities.length} actividades</span>
       </div>
       <script type="application/json" id="activities-data">${JSON.stringify(allActivities).replace(/<\//g, '<\\/').replace(/&/g, '\\u0026')}</script>`;
 
@@ -429,7 +438,7 @@ function actCard(e) {
     const v = tVal(e[f], 'es');
     if (v && v.length > 8 && !/^(n\/?a|por confirmar|segun actividad)/i.test(v)) { desc = v; break; }
   }
-  const descHtml = desc ? `<p class="rest-card__desc">${attrEsc(desc)}</p>` : '';
+  const descHtml = desc ? `<p class="rest-card__desc">${attrEsc(simplifyCopyText(desc))}</p>` : '';
   // ponytail v3.11 — CTAs claros al pie de la card. Botón principal "Ver info oficial" +
   // link secundario "Cómo llegar" usando mapa.primario_url o fallback, o auto-gen desde nombre+zona.
   const webUrl = e.link_oficial;
@@ -475,7 +484,7 @@ function actCard(e) {
 }
 
 const actCards = allActivities.map(actCard).join('\n');
-regenListings('actividades.html', `    <h2 class="section-title" data-i18n="act.top.t">Actividades en Las Trancas</h2>
+regenListings('actividades.html', `    <h2 class="section-title" data-i18n="act.top.t">Qué hacer en Las Trancas</h2>
 ${actFilterBar}
     <div class="rest-grid">
 ${actCards}

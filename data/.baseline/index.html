@@ -14,15 +14,19 @@
 <body class="is-winter bg-home" data-bg-rotator="winter-home">
  <div class="app-container">
 
-  <!-- HERO + language selector + season tag -->
+  <!-- Preferences — language + theme, separated from the hero content. -->
+  <div class="top-controls" aria-label="Preferencias">
+   <div class="lang-selector" role="group" aria-label="Idioma / Language">
+    <button type="button" data-lang="es" aria-pressed="true">ES</button>
+    <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+   </div>
+  </div>
+
+  <!-- HERO — clean brand moment -->
   <header class="hero-panel mb-8">
    <div class="hero-panel__top">
     <p class="kicker" data-i18n="home.location">Las Trancas · Nevados de Chillán</p>
-    <div class="lang-selector" role="group" aria-label="Idioma / Language">
-     <button type="button" data-lang="es" aria-pressed="true">ES</button>
-     <button type="button" data-lang="pt" aria-pressed="false">PT</button>
-     <button type="button" data-lang="en" aria-pressed="false">EN</button>
-    </div>
    </div>
    <h1 class="hero-panel__title">Andes Chillán</h1>
    <p class="hero-panel__welcome" data-i18n="home.welcome">[cargado vía i18n]</p>
@@ -126,5 +130,6 @@
  </div>
   <script src="js/lang.js"></script>
   <script src="js/backgrounds.js"></script>
+  <script src="js/theme.js"></script>
 </body>
 </html>

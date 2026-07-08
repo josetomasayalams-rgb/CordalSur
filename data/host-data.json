@@ -131,9 +131,24 @@
       "en": "We'll soon load the best activities."
     },
     "act.top.t": {
-      "es": "Top recomendado",
-      "pt": "Top recomendado",
-      "en": "Top picks"
+      "es": "Qué hacer en Las Trancas",
+      "pt": "O que fazer em Las Trancas",
+      "en": "What to do in Las Trancas"
+    },
+    "theme.label": {
+      "es": "Tema",
+      "pt": "Tema",
+      "en": "Theme"
+    },
+    "theme.light": {
+      "es": "Claro",
+      "pt": "Claro",
+      "en": "Light"
+    },
+    "theme.dark": {
+      "es": "Oscuro",
+      "pt": "Escuro",
+      "en": "Dark"
     },
     "act.module.act": {
       "es": "Actividades",
