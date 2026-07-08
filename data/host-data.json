@@ -50,11 +50,6 @@
       "pt": "Preços e horários podem mudar por temporada. Confira sempre na fonte oficial.",
       "en": "Prices and hours can change with season. Always check the official source."
     },
-    "rest.intro": {
-      "es": "Una selección curada para que elijas rápido: cena, algo simple, o para llevar al depto.",
-      "pt": "Uma seleção curada para você escolher rápido: jantar, algo simples, ou para levar ao apê.",
-      "en": "A curated selection so you choose fast: dinner, something simple, or to bring back to the apartment."
-    },
     "rest.title": {
       "es": "Comida y provisiones en Las Trancas",
       "pt": "Comida e provisões em Las Trancas",
@@ -104,11 +99,6 @@
       "es": "Para llevar al departamento",
       "pt": "Para levar ao apartamento",
       "en": "To bring to the apartment"
-    },
-    "act.intro": {
-      "es": "Una guía curada para que elijas rápido: nieve, termas, senderos, bici y más.",
-      "pt": "Um guia curado para escolher rápido: neve, termas, trilhas, bike e mais.",
-      "en": "A curated guide so you choose fast: snow, hot springs, hikes, biking and more."
     },
     "act.filter.season": {
       "es": "Temporada",
@@ -265,11 +255,6 @@
       "pt": "Las Trancas · Nevados de Chillán",
       "en": "Las Trancas · Nevados de Chillán"
     },
-    "home.welcome": {
-      "es": "Bienvenido a Andes Chillán. Tu refugio de montaña en Las Trancas, listo para que descanses.",
-      "pt": "Bem-vindo ao Andes Chillán. Seu refúgio de montanha em Las Trancas, pronto para você descansar.",
-      "en": "Welcome to Andes Chillán. Your mountain refuge in Las Trancas, ready for you to rest."
-    },
     "season.winter": {
       "es": "Invierno",
       "pt": "Inverno",
@@ -324,19 +309,15 @@
     "nav.info.s": "Wi-Fi, calefacción, normas",
     "checkin.time.tag": "Horario",
     "checkin.location.tag": "Ubicación",
-    "checkin.intro": "Todo lo que necesitas para llegar y entrar con tranquilidad.",
     "checkin.location.body": "Estamos en Las Trancas, a pocos minutos del centro de ski Nevados de Chillán. Te enviaremos la dirección exacta y las indicaciones por WhatsApp antes de tu llegada.",
     "checkin.access.t": "Acceso al departamento",
     "checkin.tip.t": "Si llegas en invierno",
     "checkin.tip.body": "Lleva cadenas para la nieve, especialmente al atardecer. El camino puede congelarse y el clima cambia rápido en la montaña.",
-    "checkout.intro": "Antes de irte, unos pasos sencillos nos ayudan a mantener todo impecable.",
     "checkout.time.tag": "Hora de salida",
-    "checkout.before.t": "Antes de partir",
     "checkout.item1": "Deja las llaves donde te indicamos al entrar.",
     "checkout.item2": "Cierra ventanas y apaga luces y calefacción.",
     "checkout.item3": "Saca la basura y deja los platos limpios.",
     "checkout.farewell": "Gracias por cuidar este refugio como propio. Buen viaje de regreso, te esperamos pronto.",
-    "clima.intro": "Revisa el clima antes de salir a la montaña.",
     "clima.now.t": "Ahora",
     "clima.now.temp": "[TODO(host): temperatura en vivo]",
     "clima.snow.t": "Nieve",
@@ -381,10 +362,7 @@
     "wmo.rainShowers": "Chubascos de lluvia",
     "wmo.snowShowers": "Chubascos de nieve",
     "wmo.thunderstorm": "Tormenta",
-    "tickets.intro": "Compra tus tickets de ski en línea y ahorra tiempo.",
-    "tickets.season.note": "En invierno la temporada de ski está en pleno rendimiento, con nieve fresca y pistas abiertas todos los días.",
     "tickets.buy": "Nevados de Chillán",
-    "info.intro": "Bienvenido a Andes Chillán, tu refugio de montaña en Las Trancas.",
     "info.faq.t": "Preguntas frecuentes",
     "info.q1": "¿Cómo me conecto al Wi-Fi?",
     "info.a1": "La red y la contraseña están en la tarjeta del alojamiento o junto al router. Si no las encuentras, escríbenos por WhatsApp.",

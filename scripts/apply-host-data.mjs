@@ -88,14 +88,21 @@ function writeBlock(L, newBody) {
     'act.module.act.sub', 'act.module.termas.sub', 'act.module.nieve.sub',
     'act.module.mtb.sub', 'act.module.atractivos.sub', 'act.module.bienestar.sub',
     'act.module.servicios.sub',
-    'act.filter.cat'
+    'act.filter.cat',
+    'clima.intro',
+    'tickets.intro', 'tickets.season.note',
+    'checkin.intro', 'checkout.intro',
+    'botiquin.intro', 'buggy.intro',
+    'info.intro', 'act.intro', 'rest.intro',
+    'home.welcome'
   ];
-  const DEAD_RE = new RegExp(`\\n\\s*'(${DEAD.map(k => k.replace(/\./g, '\\.')).join('|')})':\\s*'[^']*',?`, 'g');
+  const DEAD_RE = new RegExp(`'\\s*(?:${DEAD.map(k => k.replace(/\./g, '\\.')).join('|')})'\\s*:\\s*'[^']*'\\s*,?`, 'g');
   for (const L of LANGS) {
     const blk = findBlock(L);
     if (!blk) continue;
     const cleaned = blk.body.replace(DEAD_RE, '');
     if (cleaned !== blk.body) {
+      // Normalize trailing whitespace; drop the block's normalizer would misbehave here.
       lang = lang.slice(0, blk.bodyStart) + cleaned + lang.slice(blk.end);
     }
   }

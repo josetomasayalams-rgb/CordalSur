@@ -2584,9 +2584,12 @@ html[data-theme="dark"] .top-controls::before {
 }
 html[data-theme="dark"] .prefs-stack .lang-selector,
 html[data-theme="dark"] .theme-selector__buttons,
-html[data-theme="dark"] .top-controls .lang-selector {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.10);
+html[data-theme="dark"] .top-controls .lang-selector,
+html[data-theme="dark"] .top-controls .theme-selector__buttons,
+html[data-theme="dark"] .prefs-stack .theme-selector__buttons {
+  background: linear-gradient(180deg, rgba(15,24,37,0.72), rgba(15,24,37,0.46));
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 html[data-theme="dark"] .header,
 html[data-theme="dark"] .app-container > p.mb-4 {
@@ -2719,7 +2722,17 @@ html[data-theme="dark"] .site-credit__link { text-shadow: none; }
 
 @media (max-width: 540px) {
   .top-controls {
+    flex-direction: column;
     align-items: stretch;
+    gap: 10px;
+    padding: 10px;
+  }
+  .top-controls .lang-selector {
+    width: 100%;
+  }
+  .top-controls .theme-selector,
+  .top-controls .theme-selector__buttons {
+    width: 100%;
   }
   .top-controls .theme-selector__buttons {
     height: 100%;
