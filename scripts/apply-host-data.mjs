@@ -214,6 +214,17 @@ for (const e of (data.activities || [])) {
   }
 }
 
+// Restaurant cards: nombre and descripcion_corta are i18n; propagate per language.
+for (const e of (data.restaurants || [])) {
+  if (e.status !== 'publicar') continue;
+  for (const L of LANGS) {
+    const name = tVal(e.nombre, L);
+    if (name) { appendKeys(L, [[`${e.id}.nombre`, name]]); listingKeys++; }
+    const desc = tVal(e.descripcion_corta || e.shortDescription, L);
+    if (desc) { appendKeys(L, [[`${e.id}.descripcion_corta`, desc]]); listingKeys++; }
+  }
+}
+
 fs.writeFileSync(langPath, lang);
 
 // ---------- 2. @LISTINGS HTML regen ----------
@@ -511,24 +522,30 @@ const CAT_CLASS = {
 
 // ponytail v8: card con depth + description + rating, data-categories para el filter.
 function restCard(e) {
-  const name = e.name || '';
+  const id = e.id || '';
+  const name = e.name || tVal(e.nombre, 'es') || '';
   const cats = (e.categories || []);
   const catsAttr = cats.map(c => c.replace(/[^a-zA-Z0-9áéíóúñ ]/g, '').toLowerCase().replace(/ /g, '-')).join(' ');
-  const catsHtml = cats.map(c =>
-    `<span class="rr-cat ${CAT_CLASS[c] || ''}">${attrEsc(c)}</span>`
-  ).join(' ');
+  const catsHtml = cats.map(c => {
+    const slug = c.replace(/[^a-zA-Z0-9áéíóúñ ]/g, '').toLowerCase().replace(/ /g, '-');
+    const key = `rest.cat.${slug}`;
+    return `<span class="rr-cat ${CAT_CLASS[c] || ''}" data-i18n="${key}">${attrEsc(c)}</span>`;
+  }).join(' ');
   // Rating: Google primero, luego fallback. Si no hay rating, se renderiza un div vacío
   // (para mantener la grid/flex con la columna de links a la derecha).
   let ratingInner = '';
   if (e.googleRating != null) {
-    ratingInner = `<span class="rr-rating"><span class="rr-stars">★</span> <strong>${e.googleRating}</strong> <small>(${e.googleReviewCount}) Google</small></span>`;
+    ratingInner = `<span class="rr-rating"><span class="rr-stars">★</span> <strong>${e.googleRating}</strong> <small>(${e.googleReviewCount}) <span data-i18n="rest.source.google">Google</span></small></span>`;
   } else if (e.ratingValue != null) {
-    ratingInner = `<span class="rr-rating"><span class="rr-stars">★</span> <strong>${e.ratingValue}</strong> <small>(${e.ratingCount}) ${e.ratingSource}</small></span>`;
+    const srcKey = (e.ratingSource || '').toLowerCase().indexOf('tripadvisor') >= 0 ? 'rest.source.tripadvisor' : 'rest.source.other';
+    ratingInner = `<span class="rr-rating"><span class="rr-stars">★</span> <strong>${e.ratingValue}</strong> <small>(${e.ratingCount}) <span data-i18n="${srcKey}">${attrEsc(e.ratingSource || '')}</span></small></span>`;
   }
   const rating = `<div class="rest-card__rating">${ratingInner}</div>`;
-  // Description
-  const desc = e.shortDescription
-    ? `<p class="rest-card__desc">${attrEsc(e.shortDescription)}</p>`
+  // Description — pull from i18n field so lang.js can swap by language.
+  const descInitial = tVal(e.descripcion_corta || e.shortDescription, 'es');
+  const descKey = (e.descripcion_corta || e.shortDescription) ? `${id}.descripcion_corta` : '';
+  const desc = descKey
+    ? `<p class="rest-card__desc" data-i18n="${descKey}">${attrEsc(descInitial)}</p>`
     : '';
   // Links — SVG logos
   const maps = e.googleMapsUrl
@@ -540,7 +557,7 @@ function restCard(e) {
   const links = [maps, ig].filter(Boolean).join('');
   return `      <article class="rest-card" data-categories="${attrEsc(catsAttr)}" data-id="${attrEsc(e.id || '')}">
         <header class="rest-card__head">
-          <h3 class="rest-card__name">${attrEsc(name)}</h3>
+          <h3 class="rest-card__name" data-i18n="${id}.nombre">${attrEsc(name)}</h3>
           <div class="rest-card__cats">${catsHtml}</div>
         </header>
         ${desc}

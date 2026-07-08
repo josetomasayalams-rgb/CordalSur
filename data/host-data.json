@@ -628,7 +628,17 @@
       "confidence": "alta",
       "categories": [
         "Restaurante"
-      ]
+      ],
+      "nombre": {
+        "es": "Sitari Tapas y Brasas",
+        "pt": "Sitari Tapas e Brasas",
+        "en": "Sitari Tapas and Brasas"
+      },
+      "descripcion_corta": {
+        "es": "Tapas y brasas con producto propio.",
+        "pt": "Tapas e brasas com ingredientes próprios.",
+        "en": "Tapas and grilled dishes with house-made ingredients."
+      }
     },
     {
       "id": "bagual",
@@ -655,7 +665,17 @@
       "categories": [
         "Café",
         "Bar"
-      ]
+      ],
+      "nombre": {
+        "es": "Bagual",
+        "pt": "Bagual",
+        "en": "Bagual"
+      },
+      "descripcion_corta": {
+        "es": "Crepería, café y bar.",
+        "pt": "Creperia, café e bar.",
+        "en": "Creperie, coffee and bar."
+      }
     },
     {
       "id": "restaurant-borde-andino",
@@ -680,7 +700,17 @@
       "confidence": "alta",
       "categories": [
         "Restaurante"
-      ]
+      ],
+      "nombre": {
+        "es": "Restaurant Borde Andino",
+        "pt": "Restaurante Borde Andino",
+        "en": "Borde Andino Restaurant"
+      },
+      "descripcion_corta": {
+        "es": "Cocina amplia para familia.",
+        "pt": "Cozinha variada para a família.",
+        "en": "Wide-ranging menu for the family."
+      }
     },
     {
       "id": "los-hualles-restobar",
@@ -707,7 +737,17 @@
       "categories": [
         "Restaurante",
         "Bar"
-      ]
+      ],
+      "nombre": {
+        "es": "Los Hualles Restobar",
+        "pt": "Los Hualles Restobar",
+        "en": "Los Hualles Restobar"
+      },
+      "descripcion_corta": {
+        "es": "Platos caseros, pizzas y tragos.",
+        "pt": "Pratos caseiros, pizzas e drinques.",
+        "en": "Home-style plates, pizzas and cocktails."
+      }
     },
     {
       "id": "oliva-s-restaurant",
@@ -732,7 +772,17 @@
       "confidence": "alta",
       "categories": [
         "Restaurante"
-      ]
+      ],
+      "nombre": {
+        "es": "Oliva's Restaurant",
+        "pt": "Oliva's Restaurant",
+        "en": "Oliva's Restaurant"
+      },
+      "descripcion_corta": {
+        "es": "Carnes y pastas; pet friendly.",
+        "pt": "Carnes e massas; pet friendly.",
+        "en": "Meat and pasta; pet friendly."
+      }
     },
     {
       "id": "miski-lirio",
@@ -758,7 +808,17 @@
       "categories": [
         "Restaurante",
         "Bar"
-      ]
+      ],
+      "nombre": {
+        "es": "Miski Lirio",
+        "pt": "Miski Lirio",
+        "en": "Miski Lirio"
+      },
+      "descripcion_corta": {
+        "es": "Bar y pastelería; cócteles.",
+        "pt": "Bar e confeitaria; cocktails.",
+        "en": "Bar and pastry shop; cocktails."
+      }
     },
     {
       "id": "restaurante-pizzer-a-chil-in",
@@ -783,7 +843,17 @@
       "confidence": "alta",
       "categories": [
         "Restaurante"
-      ]
+      ],
+      "nombre": {
+        "es": "Restaurante Pizzería Chil'in",
+        "pt": "Restaurante Pizzería Chil'in",
+        "en": "Restaurante Pizzería Chil'in"
+      },
+      "descripcion_corta": {
+        "es": "Fusión y pizzería.",
+        "pt": "Fusão e pizzaria.",
+        "en": "Fusion food and pizzeria."
+      }
     },
     {
       "id": "pizzas-and-beers-del-valle",
@@ -809,7 +879,17 @@
       "categories": [
         "Restaurante",
         "Bar"
-      ]
+      ],
+      "nombre": {
+        "es": "Pizzas and Beers del Valle",
+        "pt": "Pizzas and Beers del Valle",
+        "en": "Pizzas and Beers del Valle"
+      },
+      "descripcion_corta": {
+        "es": "Pizza y cerveza artesanal.",
+        "pt": "Pizza e cerveja artesanal.",
+        "en": "Pizza and craft beer."
+      }
     },
     {
       "id": "steak-house",
@@ -835,7 +915,17 @@
       "confidence": "alta",
       "categories": [
         "Restaurante"
-      ]
+      ],
+      "nombre": {
+        "es": "Steak House",
+        "pt": "Steak House",
+        "en": "Steak House"
+      },
+      "descripcion_corta": {
+        "es": "Carnes a las brasas y vinos.",
+        "pt": "Carnes na brasa e vinhos.",
+        "en": "Grilled meats and wines."
+      }
     },
     {
       "id": "restobar-shangrila",
@@ -861,7 +951,17 @@
       "categories": [
         "Restaurante",
         "Bar"
-      ]
+      ],
+      "nombre": {
+        "es": "Restobar Shangrila",
+        "pt": "Restobar Shangrila",
+        "en": "Restobar Shangrila"
+      },
+      "descripcion_corta": {
+        "es": "Salida nocturna simple.",
+        "pt": "Programa noturno simples.",
+        "en": "Simple night out."
+      }
     },
     {
       "id": "snow-pub",
@@ -886,7 +986,17 @@
       "confidence": "alta",
       "categories": [
         "Bar"
-      ]
+      ],
+      "nombre": {
+        "es": "Snow Pub",
+        "pt": "Snow Pub",
+        "en": "Snow Pub"
+      },
+      "descripcion_corta": {
+        "es": "Pub de montaña post-esquí.",
+        "pt": "Pub de montanha pós-esqui.",
+        "en": "Mountain pub for after-ski."
+      }
     },
     {
       "id": "las-bravas-cafe",
@@ -913,7 +1023,17 @@
       "categories": [
         "Café",
         "Bar"
-      ]
+      ],
+      "nombre": {
+        "es": "Las Bravas Cafe",
+        "pt": "Las Bravas Cafe",
+        "en": "Las Bravas Cafe"
+      },
+      "descripcion_corta": {
+        "es": "Cafetería con desayuno y schop.",
+        "pt": "Cafeteria com café da manhã e chope.",
+        "en": "Coffee shop with breakfast and draft beer."
+      }
     },
     {
       "id": "dulce-monta-a",
@@ -938,7 +1058,17 @@
       "confidence": "alta",
       "categories": [
         "Dulce"
-      ]
+      ],
+      "nombre": {
+        "es": "Dulce Montaña",
+        "pt": "Dulce Montaña",
+        "en": "Dulce Montaña"
+      },
+      "descripcion_corta": {
+        "es": "Pastelería clásica de la zona.",
+        "pt": "Confeitaria clássica da zona.",
+        "en": "Classic local pastry shop."
+      }
     },
     {
       "id": "koiwe-cafe-boutique",
@@ -963,7 +1093,17 @@
       "confidence": "alta",
       "categories": [
         "Café"
-      ]
+      ],
+      "nombre": {
+        "es": "Koiwe Cafe & Boutique",
+        "pt": "Koiwe Cafe & Boutique",
+        "en": "Koiwe Cafe & Boutique"
+      },
+      "descripcion_corta": {
+        "es": "Café de especialidad.",
+        "pt": "Café de especialidade.",
+        "en": "Specialty coffee."
+      }
     },
     {
       "id": "lux-petit-club-cafe-bar",
@@ -991,7 +1131,17 @@
       "categories": [
         "Café",
         "Bar"
-      ]
+      ],
+      "nombre": {
+        "es": "Lux / Petit Club Cafe Bar",
+        "pt": "Lux / Petit Club Cafe Bar",
+        "en": "Lux / Petit Club Cafe Bar"
+      },
+      "descripcion_corta": {
+        "es": "Cafe bar con sushi y área infantil.",
+        "pt": "Café-bar com sushi e área infantil.",
+        "en": "Cafe-bar with sushi and kids area."
+      }
     },
     {
       "id": "las-cacha-as",
@@ -1015,7 +1165,17 @@
       "confidence": "alta",
       "categories": [
         "Dulce"
-      ]
+      ],
+      "nombre": {
+        "es": "Las Cachañas",
+        "pt": "Las Cachañas",
+        "en": "Las Cachañas"
+      },
+      "descripcion_corta": {
+        "es": "Pastelería y sandwichería.",
+        "pt": "Confeitaria e sanduíches.",
+        "en": "Pastry and sandwich shop."
+      }
     },
     {
       "id": "caramba-helados",
@@ -1040,7 +1200,17 @@
       "confidence": "alta",
       "categories": [
         "Heladería"
-      ]
+      ],
+      "nombre": {
+        "es": "Caramba Helados",
+        "pt": "Caramba Helados",
+        "en": "Caramba Helados"
+      },
+      "descripcion_corta": {
+        "es": "Helados artesanales.",
+        "pt": "Sorvetes artesanais.",
+        "en": "Handcrafted ice cream."
+      }
     },
     {
       "id": "che-cami",
@@ -1066,7 +1236,17 @@
       "confidence": "alta",
       "categories": [
         "Dulce"
-      ]
+      ],
+      "nombre": {
+        "es": "Che Cami",
+        "pt": "Che Cami",
+        "en": "Che Cami"
+      },
+      "descripcion_corta": {
+        "es": "Pastelería con talleres para niños.",
+        "pt": "Confeitaria com oficinas para crianças.",
+        "en": "Pastry shop with kids workshops."
+      }
     },
     {
       "id": "valdo",
@@ -1092,7 +1272,17 @@
       "confidence": "alta",
       "categories": [
         "Panadería"
-      ]
+      ],
+      "nombre": {
+        "es": "Valdo",
+        "pt": "Valdo",
+        "en": "Valdo"
+      },
+      "descripcion_corta": {
+        "es": "Empanadas, kombuchas y dulces.",
+        "pt": "Empanadas, kombuchas e doces.",
+        "en": "Empanadas, kombuchas and sweets."
+      }
     },
     {
       "id": "malcontenta-panader-a",
@@ -1129,7 +1319,6 @@
       "publicRatingFallback": "",
       "ratingValue": null,
       "ratingCount": null,
-      "ratingSource": "Google",
       "instagramUrl": "https://www.instagram.com/goodmorninglastrancas/",
       "instagramHandle": "@goodmorninglastrancas",
       "phone": "+56 9 6342 3408",
@@ -1155,7 +1344,17 @@
       "notes": "La ficha de Tripadvisor no aparece con el nombre exacto 'Panadería Valle Las Trancas', pero 'Malcontenta Panadería' coincide en ubicación, teléfono, rubro y descripción, por lo que probablemente es la misma operación o un nombre comercial anterior.",
       "categories": [
         "Panadería"
-      ]
+      ],
+      "nombre": {
+        "es": "Panadería Valle Las Trancas",
+        "pt": "Panadería Valle Las Trancas",
+        "en": "Panadería Valle Las Trancas"
+      },
+      "descripcion_corta": {
+        "es": "Micro panadería artesanal en Plaza Olivas, conocida por panes de fermentación natural, bollería y productos frescos del día.",
+        "pt": "Micro padaria artesanal na Plaza Olivas, conhecida por pães de fermentação natural, bolos e produtos frescos do dia.",
+        "en": "Artisan micro bakery at Plaza Olivas, known for naturally leavened breads, pastries and fresh products of the day."
+      }
     },
     {
       "id": "cervecer-a-garganta-del-diablo",
@@ -1179,7 +1378,17 @@
       "confidence": "alta",
       "categories": [
         "Cervecería"
-      ]
+      ],
+      "nombre": {
+        "es": "Cervecería Garganta del Diablo",
+        "pt": "Cervecería Garganta del Diablo",
+        "en": "Cervecería Garganta del Diablo"
+      },
+      "descripcion_corta": {
+        "es": "Cerveza local de montaña.",
+        "pt": "Cerveja local de montanha.",
+        "en": "Local mountain beer."
+      }
     },
     {
       "id": "cervecer-a-shangrila",
@@ -1203,7 +1412,17 @@
       "confidence": "alta",
       "categories": [
         "Cervecería"
-      ]
+      ],
+      "nombre": {
+        "es": "Cervecería Shangrila",
+        "pt": "Cervecería Shangrila",
+        "en": "Cervecería Shangrila"
+      },
+      "descripcion_corta": {
+        "es": "Cerveza de Valle Shangrila.",
+        "pt": "Cerveja do Vale Shangrila.",
+        "en": "Shangrila Valley beer."
+      }
     },
     {
       "id": "la-cava-de-la-monta-a",
@@ -1228,7 +1447,17 @@
       "confidence": "alta",
       "categories": [
         "Compras gourmet"
-      ]
+      ],
+      "nombre": {
+        "es": "La Cava de la Montaña",
+        "pt": "La Cava de la Montaña",
+        "en": "La Cava de la Montaña"
+      },
+      "descripcion_corta": {
+        "es": "Vinos, licores y cervezas.",
+        "pt": "Vinhos, licores e cervejas.",
+        "en": "Wines, spirits and beers."
+      }
     },
     {
       "id": "charcuter-a-las-cabras",
@@ -1253,7 +1482,17 @@
       "confidence": "alta",
       "categories": [
         "Compras gourmet"
-      ]
+      ],
+      "nombre": {
+        "es": "Charcutería Las Cabras",
+        "pt": "Charcutería Las Cabras",
+        "en": "Charcutería Las Cabras"
+      },
+      "descripcion_corta": {
+        "es": "Embutidos artesanales y tablas.",
+        "pt": "Enchidos artesanais e tábuas.",
+        "en": "Artisan cured meats and boards."
+      }
     },
     {
       "id": "patio-tranquino",
@@ -1453,7 +1692,17 @@
       "ratingSource": null,
       "instagramUrl": "https://www.instagram.com/faunalounge.cl/",
       "phone": null,
-      "confidence": "media"
+      "confidence": "media",
+      "nombre": {
+        "es": "Fauna Lounge",
+        "pt": "Fauna Lounge",
+        "en": "Fauna Lounge"
+      },
+      "descripcion_corta": {
+        "es": "Bar lounge con coctelería de autor, comida y música.",
+        "pt": "Bar lounge com cocktails de autor, comida e música.",
+        "en": "Lounge bar with signature cocktails, food and music."
+      }
     },
     {
       "id": "super-el-refugio",
@@ -1480,7 +1729,17 @@
       "instagramUrl": "https://www.instagram.com/el_refugio_supermercado/",
       "websiteUrl": null,
       "phone": null,
-      "confidence": "media"
+      "confidence": "media",
+      "nombre": {
+        "es": "Supermercado El Refugio",
+        "pt": "Supermercado El Refugio",
+        "en": "Supermercado El Refugio"
+      },
+      "descripcion_corta": {
+        "es": "Abastecimiento de comestibles y bebestibles.",
+        "pt": "Mercearia e bebidas.",
+        "en": "Groceries and drinks."
+      }
     },
     {
       "id": "minimarket-rucahue",
@@ -1509,7 +1768,17 @@
       "instagramUrl": null,
       "websiteUrl": "https://www.rucahueescalador.cl/servicios/minimarket",
       "phone": null,
-      "confidence": "media"
+      "confidence": "media",
+      "nombre": {
+        "es": "Rucahue Minimarket",
+        "pt": "Rucahue Minimarket",
+        "en": "Rucahue Minimarket"
+      },
+      "descripcion_corta": {
+        "es": "Minimarket con panes, bebidas, lácteos y abarrotes.",
+        "pt": "Minimercado com pães, bebidas, laticínios e mercearia.",
+        "en": "Minimarket with bread, drinks, dairy and groceries."
+      }
     },
     {
       "id": "super-mcpato",
@@ -1537,7 +1806,17 @@
       "instagramUrl": "https://www.instagram.com/mc.pato_supermercado/",
       "websiteUrl": null,
       "phone": null,
-      "confidence": "media"
+      "confidence": "media",
+      "nombre": {
+        "es": "McPato Supermercado",
+        "pt": "McPato Supermercado",
+        "en": "McPato Supermercado"
+      },
+      "descripcion_corta": {
+        "es": "Supermercado en Camino Shangri-La.",
+        "pt": "Supermercado no Camino Shangri-La.",
+        "en": "Supermarket on Camino Shangri-La."
+      }
     },
     {
       "id": "val-panaderia-bravas",
