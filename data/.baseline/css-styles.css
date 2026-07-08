@@ -2660,6 +2660,22 @@ html[data-theme="dark"] .rr-cat--compras {
   color: var(--night);
   border-color: rgba(255,255,255,0.12);
 }
+/* Top section panels (legacy v3.5) + any other solid-white container.
+   Without this, they keep their #fff / #ffffff background in dark mode. */
+html[data-theme="dark"] .modulo-top,
+html[data-theme="dark"] .top-header,
+html[data-theme="dark"] .ficha-card.ficha-card--validacion,
+html[data-theme="dark"] .reco-block {
+  background: linear-gradient(135deg, rgba(13,20,31,0.88), rgba(13,20,31,0.62));
+  border-color: rgba(255,255,255,0.12);
+  color: var(--night);
+}
+html[data-theme="dark"] .reco-block__list li { color: var(--night); }
+html[data-theme="dark"] .reco-block__title { color: var(--forest); }
+html[data-theme="dark"] .btn { color: var(--night); }
+html[data-theme="dark"] .btn-wood,
+html[data-theme="dark"] .btn-forest { color: #fff; }
+html[data-theme="dark"] .btn-alert { color: #fff; }
 html[data-theme="dark"] .site-credit__link { text-shadow: none; }
 @media (hover: hover) {
   a.card:hover,
