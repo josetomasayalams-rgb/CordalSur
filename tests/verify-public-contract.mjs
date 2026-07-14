@@ -20,8 +20,9 @@ for (const file of expectedPages) {
   const html = read(file);
   if (!/<title>[^<]*Cordal Sur[^<]*<\/title>/i.test(html)) fail(`${file}: static title must contain Cordal Sur`);
   if (!/<html\b[^>]*data-i18n-title="page\.[^"]+"/i.test(html)) fail(`${file}: <html> needs a localized page.* title key`);
+  if (!html.includes('js/lang.js?v=5')) fail(`${file}: localized copy must use the current cache version`);
   if (!html.includes("document.documentElement.classList.add('access-pending')") ||
-      !html.includes('css/access.css?v=1') || !html.includes('js/access.js?v=1')) {
+      !html.includes('css/access.css?v=1') || !html.includes('js/access.js?v=2')) {
     fail(`${file}: guest gate must load before protected content is shown`);
   }
   if (!html.includes('https://cordal-sur-access.josetomasayalams.workers.dev')) {
@@ -95,4 +96,33 @@ if (!read('worker/src/index.js').includes('DEFAULT_GUEST_PIN_DIGEST')) {
 }
 if (userFacing.includes('__CORDAL_SUR_ACCESS_API__')) fail('unresolved access API placeholder remains');
 
-if (!process.exitCode) console.log('  PASS (brand, WhatsApp, emergency and page-title contract)');
+const accessScript = read('js/access.js');
+const adminScript = read('js/admin.js');
+const adminHtml = read('admin.html');
+if (!accessScript.includes("var ADMIN_TOKEN_KEY = 'cordal-sur-admin-token-v1'") ||
+    !accessScript.includes('sessionStorage.getItem(ADMIN_TOKEN_KEY)')) {
+  fail('the public gate must read the administrator session from sessionStorage');
+}
+if (/localStorage\.(?:getItem|setItem)\(ADMIN_TOKEN_KEY\)/.test(accessScript)) {
+  fail('the administrator token must never be persisted in localStorage');
+}
+if (!accessScript.includes('session.role !== candidate.role') ||
+    !accessScript.includes('result.role !== sessionRole')) {
+  fail('the public gate must verify the server-confirmed role before granting administrator access');
+}
+if (!accessScript.includes('async function restoreGuestSession()') ||
+    !accessScript.includes('async function expireActiveSession(error)') ||
+    !accessScript.includes("failedRole === 'admin' && await restoreGuestSession()") ||
+    !accessScript.includes("addEventListener('pageshow'")) {
+  fail('administrator access must revalidate after history restores and safely fall back to a valid guest session');
+}
+if (!adminScript.includes('href="index.html"') || !adminScript.includes("t('admin.enterSite')") ||
+    !adminHtml.includes('js/lang.js?v=5') || !adminHtml.includes('js/admin.js?v=2')) {
+  fail('Administration must expose the localized same-tab platform entry action');
+}
+const enterSiteCopy = hostData.scalar?.['admin.enterSite'];
+if (!enterSiteCopy || !enterSiteCopy.es || !enterSiteCopy.pt || !enterSiteCopy.en) {
+  fail('admin.enterSite must be translated in ES/PT/EN');
+}
+
+if (!process.exitCode) console.log('  PASS (brand, WhatsApp, emergency, admin access and page-title contract)');

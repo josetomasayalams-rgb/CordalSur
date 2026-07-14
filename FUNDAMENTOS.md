@@ -186,7 +186,7 @@ Cordal Sur/
 │
 ├── js/
 │   ├── lang.js                  ← i18n ES/PT/EN (un solo archivo, todos los strings)
-│   ├── access.js                ← validación de sesión de huésped
+│   ├── access.js                ← validación de sesión de huésped o administrador
 │   ├── admin.js                 ← calendario de estadías
 │   ├── whatsapp.js              ← mensaje localizado al anfitrión
 │   ├── restaurants.js            ← filter bar de restaurantes.html

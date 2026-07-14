@@ -1777,6 +1777,7 @@
       'home.preferences.aria': 'Preferencias de visualización',
       'clima.units.aria': 'Cambiar entre unidades métricas e imperiales',
       'buggy.whatsapp.aria': 'Abrir WhatsApp para coordinar el buggy',
+      'admin.enterSite': 'Ingresar a la plataforma',
     
     },
 
@@ -3544,6 +3545,7 @@
       'home.preferences.aria': 'Preferências de visualização',
       'clima.units.aria': 'Alternar entre unidades métricas e imperiais',
       'buggy.whatsapp.aria': 'Abrir o WhatsApp para coordenar o buggy',
+      'admin.enterSite': 'Entrar na plataforma',
     
     },
 
@@ -5311,6 +5313,7 @@
       'home.preferences.aria': 'Display preferences',
       'clima.units.aria': 'Toggle metric and imperial units',
       'buggy.whatsapp.aria': 'Open WhatsApp to arrange the buggy',
+      'admin.enterSite': 'Enter the platform',
     
     }
   };

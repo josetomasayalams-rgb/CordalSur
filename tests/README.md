@@ -20,6 +20,8 @@ Las puertas validan:
 - ausencia de atributos accesibles congelados en un solo idioma;
 - contrato público de Cordal Sur: diez títulos, WhatsApp, logo/marca y cinco
   teléfonos de emergencia;
+- comportamiento de sesión administrador: entrada a la guía, validación de rol,
+  fallback a huésped, expiración en segundo plano y conservación ante cortes de red;
 - fuente canónica estricta `{ es, pt, en }`, sin fallback silencioso;
 - idempotencia del generador sin modificar archivos versionados.
 - paridad byte a byte de los snapshots canónicos y sus aliases de compatibilidad.

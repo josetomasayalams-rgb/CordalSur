@@ -42,7 +42,7 @@ project-root/
 │
 ├── js/
 │   ├── lang.js                  ← i18n (ES/PT/EN), all keys live here
-│   ├── access.js                ← guest session gate
+│   ├── access.js                ← guest/admin session gate
 │   ├── admin.js                 ← stay calendar UI
 │   ├── whatsapp.js              ← localized check-in message
 │   ├── restaurants.js            ← filter bar for restaurantes.html
@@ -106,6 +106,12 @@ project-root/
 | `js/activities.js` | Filter bar for actividades.html |
 
 Access secrets never belong in this repository. Only digests are stored as Cloudflare Worker secrets; guest/admin PIN placeholders remain neutral in published source.
+
+An authenticated administrator can use **Ingresar a la plataforma** from the
+dashboard. The public gate validates that same administrator token with the
+Worker and grants access even when there is no active guest stay. The token
+remains in `sessionStorage`, so navigation must continue in the same tab and
+still expires after 30 minutes.
 
 ## How the filter bar works
 

@@ -199,7 +199,7 @@
     var list = stays.length ? '<div class="cs-stay-list">' + stays.map(stayCard).join('') + '</div>' : '<p class="cs-empty">' + t('admin.empty') + '</p>';
     var expiration = expiresAt ? '<p class="cs-hint">' + t('admin.expires') + ': ' + escapeHtml(displayDate(expiresAt)) + '</p>' : '';
     return '<section class="cs-panel"><div class="cs-dashboard-head"><div><h1>' + t('admin.dashboard.title') + '</h1><p class="cs-lead">' + t('admin.dashboard.subtitle') + '</p>' + expiration + '</div>' +
-      '<div class="cs-admin-actions"><button class="cs-button" type="button" data-action="new"' + (busy ? ' disabled' : '') + '>' + t('admin.newStay') + '</button><button class="cs-text-button" type="button" data-action="logout"' + (busy ? ' disabled' : '') + '>' + t('admin.logout') + '</button></div></div>' +
+      '<div class="cs-admin-actions"><a class="cs-button" href="index.html">' + t('admin.enterSite') + '</a><button class="cs-button cs-button--secondary" type="button" data-action="new"' + (busy ? ' disabled' : '') + '>' + t('admin.newStay') + '</button><button class="cs-text-button" type="button" data-action="logout"' + (busy ? ' disabled' : '') + '>' + t('admin.logout') + '</button></div></div>' +
       alertHtml() + list + formView() + '</section>';
   }
 
