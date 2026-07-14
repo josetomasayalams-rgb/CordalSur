@@ -68,7 +68,8 @@
     "emergency.tel": "tel:131"
   },
   "publicSupport": {
-    "whatsappUrl": "https://wa.me/56900000000"
+    "whatsappUrl": "https://wa.me/56900000000",
+    "instagramUrl": "https://www.instagram.com/"
   },
   "restaurants": [],
   "activities": []
