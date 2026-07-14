@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="cordal-api-base" content="https://cordal-sur-access.josetomasayalams.workers.dev">
+  <title>Cordal Sur · Administración</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/access.css?v=1">
+</head>
+<body class="cs-admin-page">
+  <main class="cs-admin-shell">
+    <header class="cs-admin-topbar">
+      <p class="cs-brand-word">Cordal Sur</p>
+      <div class="cs-admin-actions">
+        <div class="cs-language" role="group" data-i18n-aria="admin.language" aria-label="Idioma">
+          <button type="button" data-admin-lang="es" aria-pressed="true">ES</button>
+          <button type="button" data-admin-lang="pt" aria-pressed="false">PT</button>
+          <button type="button" data-admin-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <a class="cs-text-button" href="index.html" data-i18n="admin.back">Volver</a>
+      </div>
+    </header>
+    <div id="admin-app" aria-live="polite"></div>
+  </main>
+  <script src="js/lang.js?v=4"></script>
+  <script src="js/admin.js?v=1" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
+</body>
+</html>

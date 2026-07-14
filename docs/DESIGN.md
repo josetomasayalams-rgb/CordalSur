@@ -1,4 +1,4 @@
-# Andes Chillán Guest Hub - Design System (awesomedesign.md)
+# Cordal Sur - Design System (awesomedesign.md)
 
 ## Brand Core
 - **Vibe:** A modern mountain refuge. 50/50 balance between Winter (snow/ice) and Summer (forest/earth).

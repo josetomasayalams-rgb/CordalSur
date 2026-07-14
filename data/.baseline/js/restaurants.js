@@ -18,6 +18,17 @@
 
   var countEl = document.getElementById('rest-filter-count');
   var cards = document.querySelectorAll('.rest-card');
+  var shownCount = cards.length;
+
+  function renderCount(lang) {
+    if (!countEl) return;
+    var vars = { shown: shownCount, total: cards.length };
+    if (window.GH_I18N && typeof window.GH_I18N.format === 'function') {
+      countEl.textContent = window.GH_I18N.format('rest.filter.count', vars, lang);
+      return;
+    }
+    countEl.textContent = shownCount + ' / ' + cards.length;
+  }
 
   function attrEsc(s) {
     return String(s == null ? '' : s)
@@ -52,9 +63,8 @@
       }
     }
     // Update count
-    if (countEl) {
-      countEl.textContent = shown + ' / ' + cards.length;
-    }
+    shownCount = shown;
+    renderCount(window.GH_I18N && window.GH_I18N.getLang());
   }
 
   // Delegate click
@@ -64,6 +74,10 @@
     var filter = btn.getAttribute('data-filter');
     if (filter) applyFilter(filter);
   });
+
+  if (window.GH_I18N && typeof window.GH_I18N.subscribe === 'function') {
+    window.GH_I18N.subscribe(renderCount);
+  }
 
   // Initial state
   applyFilter('all');

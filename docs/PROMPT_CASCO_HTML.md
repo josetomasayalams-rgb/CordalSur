@@ -1,4 +1,4 @@
-# Guest Hub "Andes Chillán" — Prompt One-Shot: Generar el CASCO HTML de Diseño
+# Cordal Sur — Prompt One-Shot: Generar el CASCO HTML de Diseño
 
 > **Pega este prompt tal cual en una sesión nueva de Claude Code.** Produce SOLO el casco de diseño (shell + tokens + componentes vacíos + navegación esqueleto + placeholders tipados). **NUNCA rellena contenido real.**
 
@@ -6,7 +6,7 @@
 
 ## 1. ROL Y OBJETIVO
 
-Actúas como **Arquitecto de Información + Diseñador UX/UI premium** (registro: *product app shell*, no brand marketing). Tu único entregable es el **CASCO HTML de diseño** del Guest Hub: el marco silencioso de una app a la que se accede por QR.
+Actúas como **Arquitecto de Información + Diseñador UX/UI premium** (registro: *product app shell*, no brand marketing). Tu único entregable es el **CASCO HTML de diseño** del Cordal Sur: el marco silencioso de una app a la que se accede por QR.
 
 - **Generas:** design tokens, app shell, biblioteca de componentes, layout y navegación esqueleto, sistema de placeholders tipados, esqueleto i18n ES/PT/EN.
 - **NO generas:** contenido real de módulos (textos, horarios, nombres, precios, links externos de producción, teléfonos, SSID). Los valores ausentes se representan como placeholders tipados, nunca como 0, vacío ni lorem.
@@ -18,25 +18,24 @@ Antes de escribir una sola línea, ejecuta la **secuencia de ejecución obligato
 
 ## 2. CONTEXTO
 
-**Guest Hub Andes Chillán** — un Airbnb en Las Trancas / Nevados de Chillán. Ecosistema de páginas HTML estáticas, cada una accesible por un **código QR físico** en el departamento. **Mobile-first** (el huésped llega por el celular), **multilenguaje ES/PT/EN**, estética de **refugio de montaña moderno 50/50 invierno/verano** (sutil, no literal, no folleto turístico).
+**Cordal Sur** — un Airbnb en Las Trancas / Nevados de Chillán. Ecosistema de páginas HTML estáticas, cada una accesible por un **código QR físico** en el departamento. **Mobile-first** (el huésped llega por el celular), **multilenguaje ES/PT/EN**, estética de **refugio de montaña moderno 50/50 invierno/verano** (sutil, no literal, no folleto turístico).
 
 - Acceso: `QR → index.html` (hub central). Cada módulo es una hoja a **1 nivel de profundidad**. Cero menús anidados.
 - Sin frameworks, sin build step, sin bundlers, sin preprocesadores, sin npm install. HTML + CSS vainilla + un `lang.js` plano para i18n. `maximum-scale=1` (QR/mobile).
 
-**Archivos fuente obligatorios a Read antes de generar (rutas absolutas):**
-- `/Users/josetomasayala/Desktop/Skills/D_Fundamentos_Diseno_APPLE copy/APPLE_LIKE_DESIGN_FOUNDATION.md` — ADN visual indiscutido (15 principios + tokens).
-- `/Users/josetomasayala/Desktop/Skills/GuestHub/DESIGN.md` — adaptación canónica al territorio (la instancia de marca PROPIA del proyecto; no es una marca de catálogo externo).
-- `/Users/josetomasayala/Desktop/Skills/GuestHub/GRAPHIFY_MAESTRO.md` — mapa de arquitectura (la verdad sobre módulos/orden/flujo).
-- `/Users/josetomasayala/Desktop/Skills/GuestHub/css/styles.css` — tokens reales existentes (respeta los tokens de color canónicos; completa la capa semántica/funcional que falta — verificadamente **no contiene `tabular-nums`**, añádelo).
+**Archivos fuente obligatorios antes de generar (rutas relativas al repositorio):**
+- `docs/DESIGN.md` — ADN visual y adaptación canónica al territorio (15 principios + tokens).
+- `docs/GRAPHIFY_MAESTRO.md` — mapa de arquitectura (la verdad sobre módulos/orden/flujo).
+- `./css/styles.css` — tokens reales existentes (respeta los tokens de color canónicos; completa la capa semántica/funcional que falta — verificadamente **no contiene `tabular-nums`**, añádelo).
 
-> **Fuentes visuales: solo dos.** `GuestHub/DESIGN.md` + `APPLE_LIKE_DESIGN_FOUNDATION.md`. No invoques ninguna skill externa que reemplace o sobrescriba `GuestHub/DESIGN.md` (ver la fila ⚠️ `design-md` de la tabla §6.A).
-> **Nota sobre el encabezado del archivo:** `GuestHub/DESIGN.md` se autodenomina `(awesomedesign.md)` en su cabecera **por herencia de plantilla**, no porque haya sido generado por `/design-md`. Es la instancia PROPIA del proyecto. No la "actualices" con `/design-md`.
+> **Fuente visual canónica:** `docs/DESIGN.md`. No invoques ninguna skill externa que la reemplace o sobrescriba (ver la fila ⚠️ `design-md` de la tabla §6.A).
+> **Nota sobre el encabezado del archivo:** `docs/DESIGN.md` se autodenomina `(awesomedesign.md)` en su cabecera **por herencia de plantilla**, no porque haya sido generado por `/design-md`. Es la instancia PROPIA del proyecto. No la "actualices" con `/design-md`.
 
 ---
 
 ## 3. ADN VISUAL OBLIGATORIO (tokens exactos)
 
-Lee y respeta los **15 principios Apple** (claridad antes que decoración, deferencia al contenido, jerarquía silenciosa por opacidad, calma visual, precisión técnica grilla 8px, profundidad sutil sombras 3-10%, progressive disclosure, belleza silenciosa) de `D_Fundamentos_Diseno_APPLE copy/APPLE_LIKE_DESIGN_FOUNDATION.md`. Aterrízalos con la paleta dual de `GuestHub/DESIGN.md`.
+Lee y respeta los **15 principios Apple** (claridad antes que decoración, deferencia al contenido, jerarquía silenciosa por opacidad, calma visual, precisión técnica grilla 8px, profundidad sutil sombras 3-10%, progressive disclosure, belleza silenciosa) de `D_Fundamentos_Diseno_APPLE copy/APPLE_LIKE_DESIGN_FOUNDATION.md`. Aterrízalos con la paleta dual de `docs/DESIGN.md`.
 
 **Tokens de color (canónicos, en `:root` de `css/styles.css`):**
 - **Invierno (base / estructura, frío):** `--snow #F7FAFC` (bg principal) · `--ice #DDEAF3` (bg sutiles/cards secundarias) · `--deep-blue #12344D` (texto primario, headers estructurales) · `--night #0B2538` (texto alto contraste, h1/h2/h3, footers).
@@ -65,14 +64,14 @@ Lee y respeta los **15 principios Apple** (claridad antes que decoración, defer
 
 ## 4. ARQUITECTURA GRAPHIFY
 
-Lee `GuestHub/GRAPHIFY_MAESTRO.md` como el **único plano**. El grafo tiene 3 ramas:
+Lee `docs/GRAPHIFY_MAESTRO.md` como el **único plano**. El grafo tiene 3 ramas:
 - **Rama A · Sistema & Fundación:** tokens, App Shell, i18n, biblioteca de componentes.
 - **Rama B · Módulos Base:** nodo Home (módulo 1, hub de navegación) + 7 hojas a 1 nivel de profundidad orientadas al huésped (módulos 2–8).
 - **Rama C · Módulos Futuros:** Staff/Operación (módulo 9). **Solo stub reservado, NO se desarrolla en el casco.**
 
 > **Conteo canónico de archivos HTML: 8 en total.** `index.html` (Home/hub, módulo 1) + 7 hojas a 1 nivel de profundidad (módulos 2–8: Check-in, Check-out, Restaurantes, Actividades, Clima, Tickets, Info Depto). Home **NO** es hoja; es el hub de navegación. (El "módulo 9 / Staff" es Rama C y queda como stub sin HTML.)
 >
-> ⚠️ **DISCREPANCIA CON EL DISCO — RESOLVER ANTES DE GENERAR (no ignorar):** `GuestHub/` contiene en disco **dos archivos HTML adicionales NO listados en el conteo canónico**: `cafe.html` y `emergencias.html`. El `index.html` real **los enlaza** (`href="cafe.html"`, `href="emergencias.html"`). Además, **ambos contienen contenido real que viola el guardrail de pureza** de §7: `cafe.html` incluye copy de marketing ("Tu pack de bienvenida incluye café gratis...") y un stepper funcional; `emergencias.html` incluye alertas reales ("No hay agua caliente", "Falla calefacción") con `onclick="alert('Enviando alerta a Google Workspace...')"`.
+> ⚠️ **DISCREPANCIA CON EL DISCO — RESOLVER ANTES DE GENERAR (no ignorar):** `CORDAL-SUR-ONLINE/` contiene en disco **dos archivos HTML adicionales NO listados en el conteo canónico**: `cafe.html` y `emergencias.html`. El `index.html` real **los enlaza** (`href="cafe.html"`, `href="emergencias.html"`). Además, **ambos contienen contenido real que viola el guardrail de pureza** de §7: `cafe.html` incluye copy de marketing ("Tu pack de bienvenida incluye café gratis...") y un stepper funcional; `emergencias.html` incluye alertas reales ("No hay agua caliente", "Falla calefacción") con `onclick="alert('Enviando alerta a Google Workspace...')"`.
 >
 > **Resolución obligatoria (GRAPHIFY_MAESTRO §3 es la fuente de verdad):** según el maestro, las **emergencias** son un subnodo del **módulo 8 (Info Depto / instrucciones)** (no un módulo independiente), y el módulo Staff es la Rama C. Por tanto:
 > - **`emergencias.html`**: **NO es un HTML canónico separado.** Su funcionalidad (Emergency Card) se absorbe en `index.html` y/o `instrucciones.html` (módulo 8). Regenera el Emergency Card allí como casco vacío con placeholders tipados (destino `tel:` como placeholder, ver §7). **No preserves el copy real ni el `onclick` a Google Workspace** (son contenido/prototipo).
@@ -95,7 +94,7 @@ Lee `GuestHub/GRAPHIFY_MAESTRO.md` como el **único plano**. El grafo tiene 3 ra
 ## 5. ENTREGABLE DEL CASCO (estructura de archivos exacta)
 
 ```
-GuestHub/
+CORDAL-SUR-ONLINE/
 ├── css/styles.css          # :root tokens + clases base existentes + clases [NUEVO] + tabular-nums + motion tokens
 ├── js/lang.js              # diccionarios {es,pt,en} con TODAS las data-i18n keys como placeholders; localStorage; fallback ES
 ├── index.html              # Home/hub (selector ES|PT|EN, SeasonTag, QuickContact, accesos a los 8 módulos, Emergency Card)
@@ -123,7 +122,7 @@ GuestHub/
 
 ## 6. LLAMADOS A COMANDOS POR SKILL (sintaxis verificada)
 
-> **Verificación:** todos los comandos de esta sección fueron confirmados leyendo el `SKILL.md` / archivo de comando real de cada skill instalada (`/Users/josetomasayala/.claude/skills/**`, `/Users/josetomasayala/.claude/plugins/cache/**`) y contrastados con el **catálogo registrado del sistema** (que expone las skills con su namespace exacto). No hay sintaxis inventada. Donde una skill no es slash-invocable, se dice explícitamente.
+> **Verificación:** todos los comandos de esta sección fueron confirmados leyendo el `SKILL.md` / archivo de comando real de cada skill instalada (`~/.claude/skills/**`, `~/.claude/plugins/cache/**`) y contrastados con el **catálogo registrado del sistema** (que expone las skills con su namespace exacto). No hay sintaxis inventada. Donde una skill no es slash-invocable, se dice explícitamente.
 
 Antes de generar una sola línea, declara un **Design Read** de una línea:
 > `Reading this as: product app shell for Airbnb guests (ES/PT/EN, mobile-first, QR-accessed), with a mountain-refuge aesthetic, leaning toward native CSS + custom tokens (no framework).`
@@ -132,14 +131,14 @@ Antes de generar una sola línea, declara un **Design Read** de una línea:
 
 | Skill (catálogo) | Comando(s) exacto(s) | Cuándo invocarlo | Nota / contraindicación |
 |---|---|---|---|
-| **Graphify** | `/graphify <path>` · `/graphify <path> --no-viz` · `/graphify <path> --directed` · `/graphify <path> --update` · `/graphify query "<pregunta>"` · `/graphify path "A" "B"` · `/graphify explain "X"` | **PRIMERO.** Lee el material canónico **ya existente** en `GuestHub/` (maestro, design, css, hojas `[EXISTS]`) y alinea tu comprensión con la arquitectura. `query`/`path`/`explain` solo tras existir `graphify-out/graph.json`. | Contrato estricto: **NO** generes `graphify-out/` sobre archivos del casco que aún no existen. `--no-viz` omite el HTML (solo graph.json + reporte), ideal mientras el casco esté vacío. `--directed` modela dependencias tokens→componentes→pantallas. |
-| **Obsidian Skills (obsidian-cli)** | `obsidian read file="D_Fundamentos_Diseno_APPLE copy"` · `obsidian search query="<term>" limit=10` · `obsidian vault="<vault>" search query="typography" limit=10` · `obsidian backlinks file="D_Fundamentos_Diseno_APPLE copy"` | **N/A para este proyecto por defecto** (la nota Apple es archivo en disco, ver nota). Se reserva para el caso hipotético en que la nota Apple viva en un vault de Obsidian en vez de en disco: úsala para extraer el ADN Apple y localizar notas relacionadas (tokens, color, tipografía). | ⚠️ **N/A para este proyecto:** el ADN Apple **es archivo en disco** confirmado (`/Users/josetomasayala/Desktop/Skills/D_Fundamentos_Diseno_APPLE copy/APPLE_LIKE_DESIGN_FOUNDATION.md`, ver §2). Haz `Read` directo; **no invoques obsidian-cli** salvo que verifiques que la nota vive en un vault con Obsidian abierto. Es la **única** skill de Obsidian que lee/consulta; `obsidian-markdown` y `json-canvas` NO sirven para leer (ver fila de abajo). Nota de sintaxis: `vault=<name>` puede ir en cualquier posición; el SKILL recomienda ponerlo primero. |
+| **Graphify** | `/graphify <path>` · `/graphify <path> --no-viz` · `/graphify <path> --directed` · `/graphify <path> --update` · `/graphify query "<pregunta>"` · `/graphify path "A" "B"` · `/graphify explain "X"` | **PRIMERO.** Lee el material canónico **ya existente** en `CORDAL-SUR-ONLINE/` (maestro, design, css, hojas `[EXISTS]`) y alinea tu comprensión con la arquitectura. `query`/`path`/`explain` solo tras existir `graphify-out/graph.json`. | Contrato estricto: **NO** generes `graphify-out/` sobre archivos del casco que aún no existen. `--no-viz` omite el HTML (solo graph.json + reporte), ideal mientras el casco esté vacío. `--directed` modela dependencias tokens→componentes→pantallas. |
+| **Obsidian Skills (obsidian-cli)** | `obsidian read file="D_Fundamentos_Diseno_APPLE copy"` · `obsidian search query="<term>" limit=10` · `obsidian vault="<vault>" search query="typography" limit=10` · `obsidian backlinks file="D_Fundamentos_Diseno_APPLE copy"` | **N/A para este proyecto por defecto** (la nota Apple es archivo en disco, ver nota). Se reserva para el caso hipotético en que la nota Apple viva en un vault de Obsidian en vez de en disco: úsala para extraer el ADN Apple y localizar notas relacionadas (tokens, color, tipografía). | ⚠️ **N/A para este proyecto:** el ADN Apple **es archivo en disco** confirmado (`docs/DESIGN.md`, ver §2). Haz `Read` directo; **no invoques obsidian-cli** salvo que verifiques que la nota vive en un vault con Obsidian abierto. Es la **única** skill de Obsidian que lee/consulta; `obsidian-markdown` y `json-canvas` NO sirven para leer (ver fila de abajo). Nota de sintaxis: `vault=<name>` puede ir en cualquier posición; el SKILL recomienda ponerlo primero. |
 | **Obsidian Skills (obsidian-markdown / json-canvas)** | *(sin slash de lectura; solo sintaxis para escribir)* | **NO las uses para leer el vault.** `obsidian-markdown` es referencia de sintaxis para **escribir** `.md` Obsidian; `json-canvas` solo crea archivos `.canvas` visuales. | ⚠️ **Contraindicadas para la tarea DATA de leer el ADN Apple.** Para leer, usa `obsidian-cli` (fila de arriba). |
 | **Ponytail** | `/ponytail:ponytail` (default=full) · `/ponytail:ponytail full` · `/ponytail:ponytail lite` · `/ponytail:ponytail off` · `/ponytail:ponytail-review` · `/ponytail:ponytail-audit` · `/ponytail:ponytail-debt` · `/ponytail:ponytail-gain` · `/ponytail:ponytail-help` | **Después de Graphify, ANTES de generar** cada bloque (shell, tokens, componentes). Cuestiona si la pieza necesita existir (YAGNI), prefiere stdlib/CSS nativo antes que código custom, una línea antes que cincuenta. `/ponytail:ponytail-review` tras cada bloque caza sobre-ingeniería en el diff. | **Usa el namespace `ponytail:` (forma verificada contra el catálogo registrado del sistema).** El nivel va como argumento: `/ponytail:ponytail full` o `/ponytail:ponytail lite`. ⚠️ `/ponytail:ponytail ultra` **CONTRAINDICADO**: puede borrar marcadores estructurales del brief (tokens, placeholders tipados). Desactiva con `/ponytail:ponytail off`. *Nota de ambigüedad:* el skill `ponytail-help` RECLAMA internamente que `/ponytail` (sin namespace) funciona en Claude Code, pero el **registro real** (source of truth) expone `ponytail:ponytail`. Si el slash directo `/ponytail` no resuelve en tu sesión, usa `/ponytail:ponytail`. |
 | **Impeccable** (umbrella v3.1.1) | `/impeccable teach` · `/impeccable shape "[target]"` · `/impeccable craft "[target]"` · `/impeccable critique [target]` · `/impeccable audit [target]` · `/impeccable polish [target]` · `/impeccable harden [target]` · `/impeccable clarify [target]` · `/impeccable distill [target]` · `/impeccable extract [target]` · `/impeccable document` | **Eje del flujo de diseño.** `teach` si falta contexto de producto; `shape` planea el UX/UI del shell antes de escribir HTML; `craft` shape-then-build end-to-end; `critique`/`audit`/`polish`/`harden`/`clarify` en QA final. | Regla crítica de routing: el **setup corre primero** (loader `node .claude/skills/impeccable/scripts/load-context.mjs` carga `DESIGN.md`/`PRODUCT.md`); los sub-comandos **no re-invocan** `/impeccable`. Si `PRODUCT.md` falta/vacío → corre `/impeccable teach` antes de cualquier diseño. |
 | ⚠️ **Impeccable — pin de sub-comandos como slash cortos** | `node .claude/skills/impeccable/scripts/pin.mjs pin <command>` · `node .../pin.mjs unpin <command>` · (tras pinear:) `/shape` · `/craft` · `/critique` · `/audit` · `/polish` · `/distill` · `/harden` · `/clarify` | **SOLO** si quieres invocar sub-comandos como slash cortos (`/shape` en vez de `/impeccable shape`). | ⚠️ **Contraindicado asumir que existen por defecto.** `/shape`, `/craft`, `/critique`, `/polish`, `/audit`, `/distill`, `/harden`, `/clarify` **NO existen como slash autónomos** salvo que los pinees antes con `pin.mjs`. En el casco, llama siempre `/impeccable <sub>`. |
 | **Taste Skill (design-taste-frontend)** | *(no slash-invocable — se dispara por propósito)* | **Gatekeeper de tells / anti-slop** sobre el HTML generado. La IA la lee al detectar front-end de marca/landing/redesign. Pre-Flight Check de ~60 casillas. | **No existe `/design-taste-frontend` ni `/taste-skill`.** No inventes comando. ⚠️ **Tensión documentada:** su propio `SKILL.md §8` declara *"Not dashboards, not data tables, not multi-step product UI"*; un *product app shell* está en el borde de ese out-of-scope. Por ello se aplica como gatekeeper de **tells y bans** (em-dash ban, eyebrow restraint, paleta premium-consumer ban, anti-center-bias, layout-repetition ban) y NO se aplican linealmente sus prescripts de landing/hero. *(El catálogo del usuario la llama "Taste Skill"; `design-taste-frontend` es la skill instalada resultante.)* **Diales recomendados para ESTE casco** (override del baseline `8/6/4` del SKILL, justificado por design-read Apple-y / mountain-refuge / mobile): `DESIGN_VARIANCE 7 · MOTION_INTENSITY 5 · VISUAL_DENSITY 3`. Son una **inferencia razonable, NO un preset canónico** del SKILL: el preset "Premium consumer" del SKILL es `7/6/3` y "Portfolio (Developer)" es `6/5/4`; `MOTION=5` no aparece exactamente en ningún preset. Si duda, respete `7/6/3` (Premium consumer) como referencia canónica más cercana. Eyebrow cap: máx 1 eyebrow por cada 3 secciones. |
-| ⚠️ **awesomedesign.md (design-md)** | `/design-md [brand]` · `/design-md apple` · `/design-md airbnb` · `/design-md` (sin arg = recomienda 4-6 opciones) | **SOLO si decides conscientemente** adoptar un DESIGN.md externo de marca probada (74 marcas en `~/.claude/skills/design-md/collection/design-md/`, con carpetas `apple` y `airbnb` verificadas). Ejecutar **antes** de `/impeccable craft` para que el casco se construya sobre ese DESIGN.md. | ⚠️ **CONTRAINDICADO por defecto:** `GuestHub/DESIGN.md` ya existe y es la instancia de marca PROPIA del proyecto. `/design-md apple`/`airbnb` mostraría **diff + confirmación** (el SKILL flow paso 3 **NO** sobrescribe en silencio: copia el `DESIGN.md` de la colección al project root solo tras aceptar el diff). Al aceptarla, **COPIARÍA** su DESIGN.md al project root, **sobrescribiendo `GuestHub/DESIGN.md`** con la definición de marca externa canónica de la colección y rompiendo la adaptación al territorio Chillán. Por defecto **NO lo invoques**; carga tu DESIGN.md propio vía el loader de Impeccable. Update de la colección: `git -C ~/.claude/skills/design-md/collection pull`. |
+| ⚠️ **awesomedesign.md (design-md)** | `/design-md [brand]` · `/design-md apple` · `/design-md airbnb` · `/design-md` (sin arg = recomienda 4-6 opciones) | **SOLO si decides conscientemente** adoptar un DESIGN.md externo de marca probada (74 marcas en `~/.claude/skills/design-md/collection/design-md/`, con carpetas `apple` y `airbnb` verificadas). Ejecutar **antes** de `/impeccable craft` para que el casco se construya sobre ese DESIGN.md. | ⚠️ **CONTRAINDICADO por defecto:** `docs/DESIGN.md` ya existe y es la instancia de marca PROPIA del proyecto. `/design-md apple`/`airbnb` mostraría **diff + confirmación** (el SKILL flow paso 3 **NO** sobrescribe en silencio: copia el `DESIGN.md` de la colección al project root solo tras aceptar el diff). Al aceptarla, **COPIARÍA** su DESIGN.md al project root, **sobrescribiendo `docs/DESIGN.md`** con la definición de marca externa canónica de la colección y rompiendo la adaptación al territorio Chillán. Por defecto **NO lo invoques**; carga tu DESIGN.md propio vía el loader de Impeccable. Update de la colección: `git -C ~/.claude/skills/design-md/collection pull`. |
 | **Playwright CLI** | `npx playwright screenshot <url> out.png` · `... --viewport-size=375,812` · `... --viewport-size=390,844` · `... --device="iPhone 15"` · `... --full-page --wait-for-timeout=3000` · `... --color-scheme=dark` · `npx playwright pdf <url> out.pdf` · `npx playwright codegen <url>` · `npx playwright open <url>` · `npx playwright test` · `npx playwright install <browser>` | **Gate final de QA visual.** Captura cada uno de los 8 HTML a viewport mobile y valida el checklist de §8. Ver §8 para rutas `file://`/server estático. | **Siempre `npx playwright`** (el binario global no está en PATH; npx lo resuelve sin descargar). Solo Chromium instalado por defecto (Firefox/WebKit requieren `npx playwright install <browser>`). |
 | **Ruflo Swarm** (opcional) | `/ruflo-swarm:swarm` · `/ruflo-swarm:watch` · `npx @claude-flow/cli@latest swarm init --topology hierarchical --max-agents 8 --strategy specialized` · `npx @claude-flow/cli@latest swarm init --topology hierarchical-mesh --max-agents 15 --strategy specialized` · `npx @claude-flow/cli@latest swarm status` · `npx @claude-flow/cli@latest swarm health` · `npx @claude-flow/cli@latest swarm shutdown` · `npx @claude-flow/cli@latest swarm watch --stream` | **SOLO si paralelizas** el workflow en múltiples agentes (uno tokens, otro componentes, otro navegación). Requiere plugin `ruflo-core` (servidor MCP). | ⚠️ **Contraindicado para el casco por defecto** (HTML único, mobile-first) — es sobre-ingeniería salvo paralelización real. Flags CLI verificados: **solo** `--topology`, `--max-agents`, `--strategy`. ⚠️ `--consensus raft` y `--memory hybrid` **NO están verificados** como flags CLI (son settings conceptuales del README); no los uses sin confirmar con `npx @claude-flow/cli@latest swarm init --help`. `/ruflo-swarm:swarm-init` y `/ruflo-swarm:monitor-stream` **NO existen como slash** (son skills internas). |
 
@@ -148,25 +147,25 @@ Antes de generar una sola línea, declara un **Design Read** de una línea:
 Sigue este orden. Cada comando es copiable tal cual.
 
 **FASE 0 — Alineación (sobre lo EXISTENTE, antes de generar):**
-1. **(N/A para este proyecto)** `obsidian read file="D_Fundamentos_Diseno_APPLE copy"` — se omite: la nota Apple **es archivo en disco** (`/Users/josetomasayala/Desktop/Skills/D_Fundamentos_Diseno_APPLE copy/APPLE_LIKE_DESIGN_FOUNDATION.md`, ver §2). Haz `Read` directo en su lugar. *(Reservado solo si verificas que la nota vive en un vault de Obsidian con la app abierta.)*
-2. `/graphify /Users/josetomasayala/Desktop/Skills/GuestHub --no-viz` — construye el grafo de alineación sobre lo **existente** (maestro, design, css, hojas `[EXISTS]`). Omite HTML (solo `graph.json` + `GRAPH_REPORT.md`). Considera `--directed` para modelar dependencias tokens→componentes→pantallas.
-3. **(Solo si editaste archivos puntuales tras el paso 2)** `/graphify /Users/josetomasayala/Desktop/Skills/GuestHub --update` — refresh incremental (requiere `graphify-out/` previo).
+1. **(N/A para este proyecto)** Obsidian se omite: los principios ya están consolidados en `docs/DESIGN.md`.
+2. `/graphify . --no-viz` — construye el grafo de alineación sobre lo **existente** (maestro, design, css, hojas `[EXISTS]`). Omite HTML (solo `graph.json` + `GRAPH_REPORT.md`). Considera `--directed` para modelar dependencias tokens→componentes→pantallas.
+3. **(Solo si editaste archivos puntuales tras el paso 2)** `/graphify . --update` — refresh incremental (requiere `graphify-out/` previo).
 4. `/graphify query "¿Cada componente vacío referencia un token declarado? ¿La navegación esqueleto cubre ES/PT/EN? ¿Hay fugas de contenido real en los [EXISTS]?"` — fast-path (ya existe `graph.json`) para validar consistencia antes de generar. Variantes: `--dfs` para trazado puntual, `--budget 1500` para tope de tokens.
 
 **FASE 1 — Disciplina mínima (Ponytail va PRIMERO en cada decisión de implementación):**
 5. `/ponytail:ponytail full` — activa la escalera YAGNI→stdlib→native→one-line→minimum antes de generar. Marca cada simplificación con comentario `// ponytail: <decisión, techo, upgrade path>`. *(Si el slash directo `/ponytail` funciona en tu sesión, es equivalente; si no resuelve, usa `/ponytail:ponytail`.)*
 
 **FASE 2 — Forma del shell (antes de escribir HTML):**
-6. `/impeccable teach` — **solo si** `PRODUCT.md`/contexto de producto falta o está vacío (el casco es diseño+estructura, sin contenido: registra marca Guest Hub, registro Brand, anti-references). Si el loader ya carga `GuestHub/DESIGN.md` y `GRAPHIFY_MAESTRO.md`, sáltate este paso.
-7. `/impeccable shape "casco HTML Andes Chillán: shell + tokens + componentes vacíos + navegación esqueleto + placeholders tipados, mobile-first, ES/PT/EN"` — planea la UX/UI del app shell.
+6. `/impeccable teach` — **solo si** `PRODUCT.md`/contexto de producto falta o está vacío (el casco es diseño+estructura, sin contenido: registra marca Cordal Sur, registro Brand, anti-references). Si el loader ya carga `docs/DESIGN.md` y `docs/GRAPHIFY_MAESTRO.md`, sáltate este paso.
+7. `/impeccable shape "casco HTML Cordal Sur: shell + tokens + componentes vacíos + navegación esqueleto + placeholders tipados, mobile-first, ES/PT/EN"` — planea la UX/UI del app shell.
 
 **FASE 3 — Implementar el casco (orden topológico de §4):**
-8. Implementa siguiendo el orden de §4: extender `css/styles.css` (respeta existentes + añade `tabular-nums`, grilla 8px, motion tokens, clases `[NUEVO]`) → App Shell + i18n (`lang.js` con todas las keys como placeholders tipados) → biblioteca de componentes → `index.html` + 7 hojas HTML. **Aplica la regla de purga de §4 a TODO `[EXISTS]`** (incluido `cafe.html`/`emergencias.html`): preserva tokens/clases, vacía contenido real a placeholders, elimina `onclick`/copy de marketing.
+8. Implementa siguiendo el orden de §4: extender `css/styles.css` (respeta existentes + añade `tabular-nums`, grilla 8px, motion tokens, clases `[NUEVO]`) → App Shell + i18n (`lang.js` con todas las keys como placeholders tipados) → biblioteca de componentes → `index.html` + 9 hojas HTML. **Aplica la regla de purga de §4 a TODO `[EXISTS]`**: preserva tokens/clases, vacía contenido real a placeholders y elimina handlers inline.
 9. `/ponytail:ponytail-review` — tras **cada bloque** generado (shell, tokens, componentes), caza dependencias innecesarias, abstracciones de una sola implementación, stdlib reinventado, dead code.
 
 **FASE 4 — Gatekeeper de tells + refino:**
 10. **design-taste-frontend** *(carga por propósito, NO slash)* — aplica diales (`DESIGN_VARIANCE 7 / MOTION_INTENSITY 5 / VISUAL_DENSITY 3`, inferencia; referencia canónica más cercana `7/6/3` Premium consumer) y el Pre-Flight Check de ~60 casillas al HTML generado, **enfocado en tells/bans** (jerarquía, eyebrow ≤ ceil(sectionCount/3), bans: em-dash en copy, Inter default sin razón, 3 cards idénticas, paleta beige/cream/brass premium-consumer, gradient text, div-fake-screenshots). ⚠️ Recordatorio: su `SKILL.md §8` declara out-of-scope los *product UI / app shells*, así que aplica como gatekeeper de tells, no como prescript de landing/hero.
-11. `/impeccable craft "casco HTML Andes Chillán"` — shape-then-build end-to-end (tras confirmar el plan de `shape`).
+11. `/impeccable craft "casco HTML Cordal Sur"` — shape-then-build end-to-end (tras confirmar el plan de `shape`).
 12. `/impeccable audit` — a11y, perf, responsive, anti-patterns del casco.
 13. `/impeccable critique` — UX review con scoring heurístico (Nielsen).
 14. `/impeccable polish` — refino final (contraste, espaciado, alineación).
@@ -174,13 +173,11 @@ Sigue este orden. Cada comando es copiable tal cual.
 16. `/impeccable clarify` — microcopy de navegación y labels.
 
 **FASE 5 — QA visual (gate final):**
-17. Para **cada uno de los 8 HTML** (Home + 7 hojas):
+17. Para **cada uno de los 10 HTML públicos** (Home + 9 hojas):
     ```bash
     # Opción A: server estático para que css/js relativos resuelvan
-    python3 -m http.server 8000 --directory /Users/josetomasayala/Desktop/Skills/GuestHub
+    python3 -m http.server 8000 --directory .
     npx playwright screenshot --viewport-size=375,812 http://localhost:8000/<modulo>.html out-<modulo>.png
-    # Opción B: rutas file:// absolutas si el casco no depende de fetch/import
-    npx playwright screenshot --viewport-size=375,812 "file:///Users/josetomasayala/Desktop/Skills/GuestHub/<modulo>.html" out-<modulo>.png
     # Modo oscuro (validar fotos de fondo + cards sobre cada página)
     npx playwright screenshot --viewport-size=390,844 --color-scheme=dark http://localhost:8000/<modulo>.html out-<modulo>-dark.png
     ```
@@ -233,7 +230,7 @@ El casco pasa solo si cumple **todos** estos gates (checklist Graphify §9 + Fou
 - **Anti-slop:** cero em-dash como separador en UI copy (la excepción de valor numérico ausente de §6 no cuenta), eyebrow ≤ ceil(sectionCount/3), sin paleta premium-consumer genérica (beige/cream/brass), sin gradient text, sin side-stripe borders, sin grids de cards idénticas.
 - **i18n:** `data-i18n` en toda cadena; selector persistente; fallback ES.
 - **Calma visual 50/50 sutil:** fondo frío + acentos cálidos, NO pantalla partida.
-- **Sin fugas de contenido:** `grep -rE "Google Workspace|agua caliente|Tienda Café|Snow Forecast|Google Maps|WhatsApp" GuestHub/*.html` devuelve cero hits en los 8 HTML canónicos tras el build (todo a placeholders).
+- **Sin fugas de contenido:** `grep -rE "Google Workspace|agua caliente|Tienda Café|Snow Forecast|Google Maps|WhatsApp" CORDAL-SUR-ONLINE/*.html` devuelve cero hits en los 8 HTML canónicos tras el build (todo a placeholders).
 
 **Verificación visual con Playwright (gate final):** ver FASE 5 (paso 17) de §6.B para los comandos exactos por viewport y modo oscuro.
 

@@ -21,15 +21,36 @@ if (!projectDir || !dataPath) {
 const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 const LANGS = ['es', 'pt', 'en'];
 
-function asL10n(v) {
+// A plain string is never treated as a translation. The only exceptions are
+// immutable public names whose spelling is intentionally identical in every
+// language. Keeping this allowlist explicit prevents new Spanish copy from
+// leaking silently into Portuguese or English.
+const IDENTICAL_TEXT_ALLOWLIST = new Set([
+  'scalar.brand',
+  'scalar.home.location',
+  'scalar.clima.forecast',
+  'scalar.tickets.buy'
+]);
+
+function asL10n(v, context = '') {
   if (v == null) return { es: '', pt: '', en: '' };
-  if (typeof v === 'string') return { es: v, pt: v, en: v };
-  if (typeof v === 'object') return { es: v.es || '', pt: v.pt || v.es || '', en: v.en || v.es || '' };
-  return { es: String(v), pt: String(v), en: String(v) };
+  if (typeof v === 'string') {
+    if (IDENTICAL_TEXT_ALLOWLIST.has(context)) return { es: v, pt: v, en: v };
+    throw new Error(`${context || 'i18n value'}: expected { es, pt, en }, received a plain string`);
+  }
+  if (typeof v !== 'object' || Array.isArray(v)) {
+    throw new Error(`${context || 'i18n value'}: expected { es, pt, en }`);
+  }
+  for (const L of LANGS) {
+    if (!Object.prototype.hasOwnProperty.call(v, L) || typeof v[L] !== 'string') {
+      throw new Error(`${context || 'i18n value'}: missing string translation "${L}"`);
+    }
+  }
+  return { es: v.es, pt: v.pt, en: v.en };
 }
-function tVal(v, L) {
-  const o = asL10n(v);
-  return o[L] || o.es || '';
+function tVal(v, L, context = '') {
+  const o = asL10n(v, context);
+  return o[L];
 }
 function simplifyCopyText(s) {
   const raw = String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
@@ -94,7 +115,10 @@ function writeBlock(L, newBody) {
     'checkin.intro', 'checkout.intro',
     'botiquin.intro', 'buggy.intro',
     'info.intro', 'act.intro', 'rest.intro',
-    'home.welcome'
+    'home.welcome',
+    'act.atr-laguna-huemul.copy_card',
+    'act.atr-garganta-diablo.nombre',
+    'act.atr-banos-rafa.nombre'
   ];
   const DEAD_RE = new RegExp(`'\\s*(?:${DEAD.map(k => k.replace(/\./g, '\\.')).join('|')})'\\s*:\\s*'[^']*'\\s*,?`, 'g');
   for (const L of LANGS) {
@@ -163,23 +187,16 @@ function appendKeys(L, pairs) {
   writeBlock(L, newBody.replace(/\n    $/, ''));
 }
 
-// scalar keys
-// ponytail: accept both formats — {es,pt,en} objects AND plain ES strings.
-// String scalars are written only to the ES block; PT/EN fallback to ES at lookup time
-// (lang.js t() function already does FALLBACK='es' fallback when key missing in target lang).
+// Scalar keys are a strict three-language contract. Empty strings remain valid for
+// host-private values that have intentionally not been published yet.
 let scalarsApplied = 0;
 for (const [key, v] of Object.entries(data.scalar || {})) {
   if (v == null) continue;
-  if (typeof v === 'string') {
-    // ES-only scalar: write only to ES block.
-    if (v.trim()) {
-      setKeyInBlock('es', key, v);
-      scalarsApplied++;
-    }
-  } else if (typeof v === 'object' && v.es) {
-    for (const L of LANGS) setKeyInBlock(L, key, v[L] || v.es);
-    scalarsApplied++;
+  const localized = asL10n(v, `scalar.${key}`);
+  for (const L of LANGS) {
+    if (localized[L].trim()) setKeyInBlock(L, key, localized[L]);
   }
+  scalarsApplied++;
 }
 
 // per-listing keys (id-based, stable). 16 L10N_FIELDS × 3 langs per listing.
@@ -194,7 +211,8 @@ let listingKeys = 0;
 for (const e of (data.restaurants || [])) {
   for (const L of LANGS) {
     for (const f of L10N_FIELDS) {
-      const v = tVal(e[f], L);
+      if (e[f] == null) continue;
+      const v = tVal(e[f], L, `restaurants.${e.id}.${f}`);
       if (v) { appendKeys(L, [[`${e.id}.${f}`, v]]); listingKeys++; }
     }
   }
@@ -208,7 +226,10 @@ for (const e of (data.activities || [])) {
       let raw = e[f];
       if (f === 'acceso_inicio' && e.ruta) raw = e.ruta.acceso_inicio;
       if (f === 'cta_label' && e.mapa) raw = e.mapa.cta_label;
-      const v = f === 'copy_card' ? simplifyCopyText(tVal(raw, L)) : tVal(raw, L);
+      if (raw == null) continue;
+      const v = f === 'copy_card'
+        ? simplifyCopyText(tVal(raw, L, `activities.${e.id}.${f}`))
+        : tVal(raw, L, `activities.${e.id}.${f}`);
       if (v) { appendKeys(L, [[`${e.id}.${f}`, v]]); listingKeys++; }
     }
   }
@@ -218,9 +239,9 @@ for (const e of (data.activities || [])) {
 for (const e of (data.restaurants || [])) {
   if (e.status !== 'publicar') continue;
   for (const L of LANGS) {
-    const name = tVal(e.nombre, L);
+    const name = tVal(e.nombre, L, `restaurants.${e.id}.nombre`);
     if (name) { appendKeys(L, [[`${e.id}.nombre`, name]]); listingKeys++; }
-    const desc = tVal(e.descripcion_corta || e.shortDescription, L);
+    const desc = tVal(e.descripcion_corta || e.shortDescription, L, `restaurants.${e.id}.descripcion_corta`);
     if (desc) { appendKeys(L, [[`${e.id}.descripcion_corta`, desc]]); listingKeys++; }
   }
 }
@@ -438,7 +459,7 @@ const actFilterBar = `      <div id="act-filter-bar" class="rest-filter-bar">
         <button type="button" class="rest-filter__btn" data-filter="bici" data-i18n="act.filter.bici">Bici</button>
         <button type="button" class="rest-filter__btn" data-filter="aventura" data-i18n="act.filter.aventura">Aventura</button>
         <button type="button" class="rest-filter__btn" data-filter="servicios" data-i18n="act.filter.servicios">Servicios</button>
-        <span class="rest-filter__count" id="act-filter-count" data-i18n="act.filter.count">${allActivities.length} actividades</span>
+        <span class="rest-filter__count" id="act-filter-count" aria-live="polite">${allActivities.length} / ${allActivities.length}</span>
       </div>
       <script type="application/json" id="activities-data">${JSON.stringify(allActivities).replace(/<\//g, '<\\/').replace(/&/g, '\\u0026')}</script>`;
 
@@ -551,10 +572,10 @@ function restCard(e) {
     : '';
   // Links — SVG logos
   const maps = e.googleMapsUrl
-    ? `<a class="rr-link" href="${attrEsc(e.googleMapsUrl)}" target="_blank" rel="noopener" title="Cómo llegar" aria-label="Cómo llegar">${SVG_MAPS}</a>`
+    ? `<a class="rr-link" href="${attrEsc(e.googleMapsUrl)}" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar">${SVG_MAPS}</a>`
     : '';
   const ig = e.instagramUrl
-    ? `<a class="rr-link" href="${attrEsc(e.instagramUrl)}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">${SVG_IG}</a>`
+    ? `<a class="rr-link" href="${attrEsc(e.instagramUrl)}" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram">${SVG_IG}</a>`
     : '';
   const links = [maps, ig].filter(Boolean).join('');
   return `      <article class="rest-card" data-categories="${attrEsc(catsAttr)}" data-id="${attrEsc(e.id || '')}">
@@ -589,7 +610,7 @@ const filterBar = `      <div id="rest-filter-bar" class="rest-filter-bar">
         <button type="button" class="rest-filter__btn" data-filter="cervecería" data-i18n="rest.filter.cerveceria">Cervecería</button>
         <button type="button" class="rest-filter__btn" data-filter="supermercado" data-i18n="rest.filter.supermercado">Supermercado</button>
         <button type="button" class="rest-filter__btn" data-filter="compras-gourmet" data-i18n="rest.filter.compras">Compras gourmet</button>
-        <span class="rest-filter__count" id="rest-filter-count" data-i18n="rest.filter.count">28 lugares</span>
+        <span class="rest-filter__count" id="rest-filter-count" aria-live="polite">${publicar.length} / ${publicar.length}</span>
       </div>
       <script type="application/json" id="restaurants-data">${safeJson}</script>`;
 regenListings('restaurantes.html', `    <h2 class="section-title" data-i18n="rest.title">Comida y provisiones en Las Trancas</h2>
@@ -598,7 +619,76 @@ ${filterBar}
 ${restCards}
     </div>`);
 
-// ---------- 3. Validate lang.js ----------
+// ---------- 3. Canonical page titles + public support ----------
+// These small patches keep a later data regeneration from restoring the legacy
+// brand or an obsolete contact number outside the @LISTINGS blocks.
+const PAGE_TITLE_KEYS = {
+  'index.html': 'page.home.title',
+  'check-in.html': 'page.checkin.title',
+  'check-out.html': 'page.checkout.title',
+  'restaurantes.html': 'page.restaurants.title',
+  'actividades.html': 'page.activities.title',
+  'clima.html': 'page.weather.title',
+  'tickets.html': 'page.tickets.title',
+  'instrucciones.html': 'page.manual.title',
+  'botiquin.html': 'page.firstaid.title',
+  'buggy.html': 'page.buggy.title'
+};
+
+function setAttribute(tag, name, value) {
+  const attr = `${name}="${attrEsc(value)}"`;
+  const re = new RegExp(`\\s${name}="[^"]*"`);
+  if (re.test(tag)) return tag.replace(re, ` ${attr}`);
+  return tag.replace(/>$/, ` ${attr}>`);
+}
+
+for (const [file, key] of Object.entries(PAGE_TITLE_KEYS)) {
+  const p = `${projectDir}/${file}`;
+  let html = fs.readFileSync(p, 'utf8');
+  const title = tVal(data.scalar[key], 'es', `scalar.${key}`);
+  if (!/<html\b[^>]*>/i.test(html) || !/<title>[\s\S]*?<\/title>/i.test(html)) {
+    throw new Error(`${file}: missing <html> or <title>`);
+  }
+  html = html.replace(/<html\b[^>]*>/i, (tag) => setAttribute(tag, 'data-i18n-title', key));
+  html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${attrEsc(title)}</title>`);
+  fs.writeFileSync(p, html);
+}
+
+const publicWhatsApp = data.publicSupport && data.publicSupport.whatsappUrl;
+if (!/^https:\/\/wa\.me\/\d+$/.test(publicWhatsApp || '')) {
+  throw new Error('publicSupport.whatsappUrl must be https://wa.me/<digits>');
+}
+const publicWhatsAppPhone = publicWhatsApp.replace(/^https:\/\/wa\.me\//, '');
+const publicWhatsAppFallback = tVal(
+  data.scalar['whatsapp.checkin.message'],
+  'es',
+  'scalar.whatsapp.checkin.message'
+);
+const publicWhatsAppHref = `${publicWhatsApp}?text=${encodeURIComponent(publicWhatsAppFallback)}`;
+for (const file of ['index.html', 'check-in.html']) {
+  const p = `${projectDir}/${file}`;
+  let html = fs.readFileSync(p, 'utf8');
+  html = html.replace(/<a\b[^>]*\bdata-whatsapp-link\b[^>]*>/g, (tag) =>
+    setAttribute(tag, 'href', publicWhatsAppHref)
+  );
+  fs.writeFileSync(p, html);
+}
+
+const whatsAppScriptPath = `${projectDir}/js/whatsapp.js`;
+let whatsAppScript = fs.readFileSync(whatsAppScriptPath, 'utf8');
+if (!/var PHONE = '\d+';/.test(whatsAppScript) ||
+    !/var DEFAULT_MESSAGE = '(?:[^'\\]|\\.)*';/.test(whatsAppScript)) {
+  throw new Error('js/whatsapp.js: canonical PHONE or DEFAULT_MESSAGE declaration missing');
+}
+whatsAppScript = whatsAppScript
+  .replace(/var PHONE = '\d+';/, `var PHONE = '${publicWhatsAppPhone}';`)
+  .replace(
+    /var DEFAULT_MESSAGE = '(?:[^'\\]|\\.)*';/,
+    `var DEFAULT_MESSAGE = '${esc(publicWhatsAppFallback)}';`
+  );
+fs.writeFileSync(whatsAppScriptPath, whatsAppScript);
+
+// ---------- 4. Validate lang.js ----------
 try { execSync(`node -c "${langPath}"`, { stdio: 'pipe' }); } catch (e) {
   console.error('lang.js syntax error after write:\n' + e.stderr.toString());
   process.exit(2);

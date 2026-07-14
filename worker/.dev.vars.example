@@ -1,0 +1,6 @@
+# Copy to .dev.vars. Never commit the real file.
+TOKEN_SECRET=replace-with-at-least-32-random-bytes
+PIN_PEPPER=replace-with-a-different-at-least-32-byte-secret
+# HMAC-SHA256 hex digests made with the same PIN_PEPPER. Keep plaintext PINs private.
+ADMIN_PIN_DIGEST=replace-with-output-from-npm-run-hash-pin
+DEFAULT_GUEST_PIN_DIGEST=replace-with-output-from-npm-run-hash-pin

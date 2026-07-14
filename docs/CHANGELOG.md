@@ -1,6 +1,6 @@
-# Changelog — Guest Hub Casco
+# Changelog — Cordal Sur Casco
 
-All notable changes to the GuestHub canonical files (HTML, CSS, JS in `*.html`, `css/styles.css`, `js/lang.js`, `js/restaurants.js`, `staff/README.md`).
+All notable changes to the Cordal Sur canonical files (HTML, CSS, JS in `*.html`, `css/styles.css`, `js/lang.js`, `js/restaurants.js`, `staff/README.md`).
 
 The format is loosely based on [Keep a Changelog](https://keepachangelog.com/), trimmed to the project's needs.
 

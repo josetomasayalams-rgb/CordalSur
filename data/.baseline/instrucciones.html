@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <!-- Fase contenido: copy real vía i18n (FAQ genéricas). TODO(host): credenciales Wi-Fi, teléfonos.
    Emergency Card absorbida del antiguo emergencias.html (subnodo módulo 8, GRAPHIFY §3). -->
-<html lang="es">
+<html lang="es" data-i18n-title="page.manual.title">
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Manual - Guest Hub</title>
+ <script>document.documentElement.classList.add('access-pending');</script>
+ <style>html.access-pending body{visibility:hidden}</style>
+ <title>Manual · Cordal Sur</title>
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
  <link rel="preload" as="image" type="image/webp" media="(min-width: 720px)" fetchpriority="high" href="css/bg/winter/instrucciones-termas-nieve.webp?v=2">
   <script>(function(){try{var k="gh-theme-v3";try{localStorage.removeItem("gh-theme");localStorage.removeItem("gh-theme-v2")}catch(e){}var t=(localStorage.getItem(k)==="dark")?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){document.documentElement.setAttribute("data-theme","light")}})();</script>
-<link rel="stylesheet" href="css/styles.css?v=3">
+ <link rel="stylesheet" href="css/styles.css?v=4">
+ <link rel="stylesheet" href="css/access.css?v=1">
 </head>
 <body class="is-winter bg-instrucciones">
  <div class="app-container">
@@ -20,7 +23,7 @@
    <a href="index.html" class="btn-back" data-i18n-aria="common.back" aria-label="Volver">←</a>
    <h2 style="margin:0" data-i18n="nav.info.t">Manual</h2>
   </header>
-  <div class="lang-selector" role="group" aria-label="Idioma / Language">
+  <div class="lang-selector" role="group" data-i18n-aria="lang.selector" aria-label="Idioma">
    <button type="button" data-lang="es" aria-pressed="true">ES</button>
    <button type="button" data-lang="pt" aria-pressed="false">PT</button>
    <button type="button" data-lang="en" aria-pressed="false">EN</button>
@@ -56,7 +59,8 @@
   </div>
 
  </div>
-  <script src="js/lang.js"></script>
-  <script src="js/theme.js?v=2"></script>
+ <script src="js/lang.js?v=4"></script>
+ <script src="js/access.js?v=1" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
+  <script src="js/theme.js?v=3"></script>
 </body>
 </html>

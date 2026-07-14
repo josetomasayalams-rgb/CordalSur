@@ -1,4 +1,4 @@
-# Landing Page Andes Chillán — Fundamentos
+# Cordal Sur — Fundamentos
 
 > Documento de fundamentos: qué es, cómo funciona, cómo mantenerlo, y por qué cada decisión técnica existe. Si solo querés abrir el proyecto, lee el [README.md](README.md) (quick start). Si querés entenderlo, seguí leyendo.
 
@@ -34,7 +34,10 @@ Hay 8 pantallas en total. Son 8 HTMLs independientes que comparten CSS y JS.
 
 Razón: el hospedaje es un negocio pequeño. El dueño del depto **no** es desarrollador. Cada dependencia que agrego es una dependencia que puede romperse en 3 años, que requiere actualizaciones, que ocupa espacio, y que hace que un freelancer cualquiera no pueda mantener la página. La página tiene que sobrevivir 5+ años sin mantenimiento técnico significativo. Para eso, la página tiene que ser **lo más simple posible**.
 
-La página abre con `file://` directamente en el navegador. Sin servidor. Sin internet para la primera carga. Sin permisos especiales.
+La interfaz sigue siendo HTML/CSS/JavaScript estático y se sirve por HTTP desde
+GitHub Pages. El control de acceso y el calendario consultan un Cloudflare
+Worker, por lo que producción necesita conexión a internet; no existe un build
+step para la interfaz.
 
 ### 2.2 Mobile-first
 
@@ -48,7 +51,11 @@ La página abre con `file://` directamente en el navegador. Sin servidor. Sin in
 - **PT** es el segundo más común. Es el mercado brasileño grande (São Paulo, Río).
 - **EN** es el tercero. Para turistas de USA/EU.
 
-Todo string traducible vive en `data/host-data.json#scalar` y se propaga a `js/lang.js` por el script. No hay strings hardcoded en HTML. Esto se valida en el `Gate 2` del script de pruebas.
+El copy global vive en `data/host-data.json#scalar`; el copy específico de cada
+ficha vive en los registros localizados de restaurantes y actividades. El
+generador materializa ambos en `js/lang.js`. El texto español presente en HTML
+es un fallback progresivo: cada nodo traducible usa `data-i18n*` y queda
+localizado antes de liberar la interfaz. Esto se valida en el `Gate 2`.
 
 ### 2.4 Datos del host, no del sistema
 
@@ -160,9 +167,10 @@ Reglas de uso (NO negociables):
 ## 5. Estructura del proyecto
 
 ```
-Landing Page Andes Chillán/
+Cordal Sur/
 ├── README.md                    ← quick start (cómo regenerar, estructura)
 ├── index.html                   ← home / hub
+├── admin.html                   ← calendario privado de estadías
 ├── check-in.html
 ├── check-out.html
 ├── actividades.html
@@ -173,10 +181,14 @@ Landing Page Andes Chillán/
 │
 ├── css/
 │   ├── styles.css               ← único stylesheet, todos los tokens aquí
+│   ├── access.css               ← acceso de huéspedes + Administración
 │   └── bg/                       ← fotos de fondo por página (CC0/Unsplash)
 │
 ├── js/
 │   ├── lang.js                  ← i18n ES/PT/EN (un solo archivo, todos los strings)
+│   ├── access.js                ← validación de sesión de huésped
+│   ├── admin.js                 ← calendario de estadías
+│   ├── whatsapp.js              ← mensaje localizado al anfitrión
 │   ├── restaurants.js            ← filter bar de restaurantes.html
 │   └── activities.js             ← filter bar de actividades.html
 │
@@ -186,20 +198,19 @@ Landing Page Andes Chillán/
 ├── data/
 │   ├── host-data.json            ← ÚNICA fuente de datos del host (NO tocar desde código)
 │   ├── host-data.sample.json     ← fake data para dry-runs
-│   └── .baseline/                ← snapshot congelado de los 12 archivos canónicos
+│   └── .baseline/                ← 15 snapshots canónicos + 4 aliases verificados
 │
 ├── docs/                         ← constitución del proyecto
 │   ├── DESIGN.md                 ← tokens, typography, grid
 │   ├── GRAPHIFY_MAESTRO.md       ← arquitectura por módulo
 │   ├── CHANGELOG.md              ← qué hay en cada versión
-│   ├── PROMPT_CASCO_HTML.md      ← el prompt que generó el casco
-│   └── catastro/                 ← catastro source (markdown tables)
+│   └── PROMPT_CASCO_HTML.md      ← el prompt histórico que generó el casco
 │
 ├── tests/
-│   └── verify-gates.sh          ← corre los 3 gates de no-regresión
+│   └── verify-gates.sh          ← corre los 5 gates de no-regresión
 │
-└── staff/                        ← stub para Rama C (futuro)
-    └── README.md
+├── worker/                       ← API Cloudflare + D1, migración y tests
+└── staff/README.md               ← stub para Rama C (futuro)
 ```
 
 ## 6. Cómo mantener el proyecto
@@ -300,7 +311,7 @@ Estos son nice-to-have, no requeridos. El proyecto está completo y funcional.
 
 ## 10. Cómo migrar esta carpeta a otro lugar
 
-La carpeta `Landing Page Andes Chillán/` es **autocontenida**. No tiene referencias hardcoded a paths absolutos fuera de sí misma. Para migrar a otro lugar:
+La carpeta `Cordal Sur/` es **autocontenida**. No tiene referencias hardcoded a paths absolutos fuera de sí misma. Para migrar a otro lugar:
 
 1. **Copiar toda la carpeta** a otro directorio.
 2. **Verificar permisos**: que el script `apply-host-data.mjs` sea ejecutable (en Linux: `chmod +x`).
@@ -315,5 +326,5 @@ La carpeta `Landing Page Andes Chillán/` es **autocontenida**. No tiene referen
 - `docs/GRAPHIFY_MAESTRO.md` — arquitectura por módulo
 - `docs/CHANGELOG.md` — historia de cambios
 - `docs/PROMPT_CASCO_HTML.md` — el prompt que generó el casco
-- `tests/verify-gates.sh` — 3 gates de no-regresión
+- `tests/verify-gates.sh` — 5 gates de no-regresión
 - `AGENTS.md` (en el directorio padre `Skills/`) — convenciones globales del monorepo

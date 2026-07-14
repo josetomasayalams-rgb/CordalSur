@@ -1,6 +1,6 @@
-# Landing Page Andes Chillán
+# Cordal Sur
 
-A static, multilingual (ES/PT/EN) landing page for the Las Trancas Airbnb guest hub. No build framework, no npm, no backend. Just HTML, CSS, vanilla JS, and a single Node script to propagate host-provided data.
+Guía privada multilingüe (ES/PT/EN) para huéspedes en Las Trancas · Nevados de Chillán. La interfaz se publica como HTML/CSS/JavaScript estático en GitHub Pages; el calendario, las sesiones y las claves se centralizan en Cloudflare Worker + D1.
 
 > **¿Querés entender el proyecto desde cero?** Lee [`FUNDAMENTOS.md`](FUNDAMENTOS.md). Cubre el "por qué" de cada decisión técnica, el sistema de diseño, y cómo migrar esta carpeta a otro lugar.
 
@@ -10,8 +10,12 @@ A static, multilingual (ES/PT/EN) landing page for the Las Trancas Airbnb guest 
 # 1. Apply host-provided data to lang.js + regenerate @LISTINGS blocks
 node scripts/apply-host-data.mjs . data/host-data.json
 
-# 2. Open index.html in a browser
-# (works file:// directly, no server needed)
+# 2. Serve the folder over HTTP for local UI work
+python3 -m http.server 8765 --bind 127.0.0.1
+
+# 3. Run the complete read-only checks
+bash tests/verify-gates.sh
+npm --prefix worker test
 ```
 
 For the filter bar (restaurantes.html / actividades.html) to work, the browser must support `defer` scripts — all modern browsers do.
@@ -19,9 +23,10 @@ For the filter bar (restaurantes.html / actividades.html) to work, the browser m
 ## Project structure
 
 ```
-landingpage/
+project-root/
 ├── README.md                    ← this file
 ├── index.html                   ← home / hub
+├── admin.html                   ← private stay calendar administration
 ├── check-in.html
 ├── check-out.html
 ├── actividades.html
@@ -32,20 +37,26 @@ landingpage/
 │
 ├── css/
 │   ├── styles.css               ← single stylesheet, all design tokens here
+│   ├── access.css               ← guest gate + Administration UI
 │   └── bg/                       ← per-page background photos (CC0/Unsplash)
 │
 ├── js/
 │   ├── lang.js                  ← i18n (ES/PT/EN), all keys live here
+│   ├── access.js                ← guest session gate
+│   ├── admin.js                 ← stay calendar UI
+│   ├── whatsapp.js              ← localized check-in message
 │   ├── restaurants.js            ← filter bar for restaurantes.html
 │   └── activities.js             ← filter bar for actividades.html
 │
 ├── scripts/
 │   └── apply-host-data.mjs       ← propagates data/host-data.json → lang.js + HTML
+├── assets/brand/                ← Cordal Sur symbol copied into the project
+├── worker/                      ← Cloudflare Worker, D1 migration and tests
 │
 ├── data/
 │   ├── host-data.json            ← live data (the "truth" the script reads)
 │   ├── host-data.sample.json     ← fake data for dry-runs
-│   └── .baseline/                ← frozen snapshot of canonical files (14 files)
+│   └── .baseline/                ← synchronized snapshot of 15 canonical files
 │       ├── index.html
 │       ├── check-in.html
 │       ├── check-out.html
@@ -61,21 +72,21 @@ landingpage/
 │       ├── js/restaurants.js
 │       ├── js/activities.js
 │       └── css-styles.css         ← (renamed from css/styles.css to keep flat)
+│       # Four legacy aliases are also checked for compatibility.
 │
-├── docs/                         ← design constitution + catastro source
+├── docs/                         ← design constitution + architecture notes
 │   ├── DESIGN.md                 ← color tokens, typography, grid (the visual contract)
 │   ├── GRAPHIFY_MAESTRO.md       ← module-by-module architecture map
 │   ├── CHANGELOG.md              ← what's in each version
 │   ├── PROMPT_CASCO_HTML.md      ← the one-shot prompt that generated the casco
-│   └── catastro/                 ← catastro source (markdown tables)
 │
 └── tests/
-    └── verify-gates.sh          ← runs all 3 no-regression gates
+    └── verify-gates.sh          ← runs all 5 no-regression gates
 ```
 
-## Canonical files (14)
+## Canonical sources
 
-`apply-host-data.mjs` regenerates these from `data/host-data.json`:
+`data/host-data.json` is the source of truth for visible copy, titles, public WhatsApp support and listings. `apply-host-data.mjs` propagates it into the ten public pages and runtime JavaScript without language fallback.
 
 | File | Purpose |
 |---|---|
@@ -90,11 +101,11 @@ landingpage/
 | `instrucciones.html` | Apartment manual |
 | `restaurantes.html` | Comida y provisiones (filtros: Todos/Restaurantes/Café/...) |
 | `css/styles.css` | All design tokens + component styles |
-| `js/lang.js` | i18n ES/PT/EN (single source of truth for all translatable strings) |
+| `js/lang.js` | Generated runtime dictionary for ES/PT/EN |
 | `js/restaurants.js` | Filter bar for restaurantes.html |
 | `js/activities.js` | Filter bar for actividades.html |
 
-Everything outside this list is **not** canonical — it's a design artifact, a backup, or runtime state.
+Access secrets never belong in this repository. Only digests are stored as Cloudflare Worker secrets; guest/admin PIN placeholders remain neutral in published source.
 
 ## How the filter bar works
 
@@ -127,20 +138,21 @@ The script will:
 
 ## No-regression gates
 
-`bash tests/verify-gates.sh` runs four checks:
+`bash tests/verify-gates.sh` runs five checks:
 
-- **Gate 1 (snapshot drift):** All 14 canonical files must match `.baseline/`.
-- **Gate 2 (prototype leak):** No forbidden names (Tienda Café, Stripe, etc.) in the HTML or lang.js.
-- **Gate 3 (real http hrefs):** All real URLs are in the exemption list (Google Maps, Instagram, etc.).
-- **Bonus (script idempotency):** running `apply-host-data.mjs` twice with the same input produces identical SHA-256 for the touched files.
+- **Gate 1:** sintaxis JavaScript.
+- **Gate 2:** paridad y cobertura completa de 1.758 claves ES/PT/EN.
+- **Gate 3:** contrato público de marca, títulos, Emergencias y WhatsApp.
+- **Gate 4:** idempotencia del generador en una copia temporal.
+- **Gate 5:** paridad byte a byte entre fuentes canónicas, snapshots y aliases.
 
-All four must return 0 hits.
+All five must complete successfully.
 
 ## Design philosophy
 
-- No frameworks, no build pipeline, no npm install. Just plain HTML/CSS/JS that runs in any browser via `file://`.
+- La interfaz no usa frameworks ni build pipeline; necesita HTTP porque valida sesiones contra el Worker.
 - Spanish (es) is the primary language. Portuguese (pt) and English (en) are full translations.
-- Every translatable string lives in `data/host-data.json#scalar` and gets propagated to `js/lang.js` by the script. No hardcoded strings in HTML.
+- Global interface copy lives in `data/host-data.json#scalar`; listing-specific copy lives in the localized restaurant/activity records. The generator materializes both into `js/lang.js`. Spanish HTML copy is a progressive fallback; `data-i18n*` attributes replace it before the localized interface is released.
 - The `staff/` directory is a stub for a future staff operations module — it lives inside the baseline because the `staff/README.md` is part of the canonical snapshot, but no other staff functionality is built yet.
 
 ## What is NOT in this folder
@@ -149,6 +161,6 @@ All four must return 0 hits.
 - Backup files (`*.backup-v2`, `*.backup-v3`).
 - Old prototypes (`cafe.html`, `emergencias.html`, `graphify.html`).
 - Design iteration logs (`artifacts/`, `graphify-out/`).
-- The messy history that lived in the parent `GuestHub/` directory (hooks, agent state, etc.).
+- El historial de prototipos que vivía fuera de este repositorio (hooks, agent state, etc.).
 
-If you need to recover any of those, they're in the original `GuestHub/` directory.
+La guía de despliegue y rotación de secretos está en [`worker/README.md`](worker/README.md).

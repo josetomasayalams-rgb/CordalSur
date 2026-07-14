@@ -1,48 +1,89 @@
 #!/usr/bin/env bash
-# tests/verify-gates.sh — runs the 3 no-regression gates from AGENTS.md.
-# Usage: bash tests/verify-gates.sh
-# Exits 0 if all gates pass, 1 otherwise.
+# Read-only production gates. Generator checks run exclusively in a temporary copy.
 
-set -e
+set -euo pipefail
 cd "$(dirname "$0")/.."
 
-echo "=== Gate 1: snapshot drift (14 canonical files) ==="
-failed=0
-# Map relative-to-root path → relative-to-baseline path.
-# Baseline uses a flat layout (js/lang.js, css-styles.css) while the
-# landingpage folder uses subdirs (js/lang.js, css/styles.css).
-for f in css/styles.css:css-styles.css js/lang.js:js/lang.js js/restaurants.js:js/restaurants.js \
-         index.html:index.html check-in.html:check-in.html check-out.html:check-out.html \
-         botiquin.html:botiquin.html buggy.html:buggy.html \
-         restaurantes.html:restaurantes.html actividades.html:actividades.html \
-         clima.html:clima.html tickets.html:tickets.html instrucciones.html:instrucciones.html \
-         staff/README.md:staff/README.md; do
-  live="${f%%:*}"
-  base="${f##*:}"
-  if ! diff -q "data/.baseline/$base" "$live" > /dev/null 2>&1; then
-    echo "  DIFF: $live (baseline: $base)"
-    failed=1
-  fi
+echo "=== Gate 1: JavaScript syntax ==="
+for file in js/*.js scripts/*.mjs tests/*.mjs; do
+  node --check "$file"
 done
-if [ $failed -eq 0 ]; then echo "  PASS"; else echo "  FAIL"; fi
+echo "  PASS"
 
-echo ""
-echo "=== Gate 2: prototype leak ==="
-hits=$(grep -rnE "Google Workspace|agua caliente|Tienda Café|Dolce Gusto|Stripe|nieve2026|AndesChillan_5G|CESFAM" \
-  *.html js/lang.js js/restaurants.js js/activities.js 2>/dev/null || true)
-if [ -z "$hits" ]; then echo "  PASS (0 hits)"; else echo "  FAIL"; echo "$hits" | head -3; fi
+echo "=== Gate 2: complete i18n contract ==="
+node tests/verify-i18n.mjs
 
-echo ""
-echo "=== Gate 3: real http hrefs ==="
-hits=$(grep -rnE 'href="https?://' *.html \
-  | grep -vE 'fonts\.(googleapis|gstatic)|preconnect|open-meteo\.com|wttr\.in|snow-forecast\.com|google\.com/maps|nevadosdechillan\.com|wa\.me|bordehoteles\.cl|cabanaslascabras\.cl|trancas\.cl|turismovallelastrancas\.com|conaf\.cl|instagram\.com|wikiloc\.com|trailforks\.com|andeshandbook\.org|wikiexplora\.com|tripadvisor\.es|backchillan\.com|rucahueescalador\.cl|github\.com' 2>/dev/null || true)
-# github.com — approved for the creator-credit link to the author's profile (footer.site-credit)
-if [ -z "$hits" ]; then echo "  PASS (0 hits)"; else echo "  FAIL"; echo "$hits" | head -3; fi
+echo "=== Gate 3: public Cordal Sur contract ==="
+node tests/verify-public-contract.mjs
 
-echo ""
-echo "=== Bonus: script idempotency ==="
-node scripts/apply-host-data.mjs . data/host-data.json > /dev/null 2>&1
-sha1=$(sha256sum js/lang.js restaurantes.html | cut -d' ' -f1)
-node scripts/apply-host-data.mjs . data/host-data.json > /dev/null 2>&1
-sha2=$(sha256sum js/lang.js restaurantes.html | cut -d' ' -f1)
-if [ "$sha1" = "$sha2" ]; then echo "  PASS (idempotent)"; else echo "  FAIL (non-idempotent)"; fi
+echo "=== Gate 4: generator idempotency (temporary copy) ==="
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+mkdir -p "$tmp/site"
+cp -R . "$tmp/site/"
+
+node "$tmp/site/scripts/apply-host-data.mjs" "$tmp/site" "$tmp/site/data/host-data.json" >/dev/null
+first="$(node - "$tmp/site" <<'NODE'
+const crypto = require('node:crypto');
+const fs = require('node:fs');
+const path = require('node:path');
+const root = process.argv[2];
+const files = [
+  'js/lang.js', 'index.html', 'check-in.html', 'check-out.html',
+  'restaurantes.html', 'actividades.html', 'clima.html', 'tickets.html',
+  'instrucciones.html', 'botiquin.html', 'buggy.html', 'js/whatsapp.js'
+];
+const hash = crypto.createHash('sha256');
+for (const file of files) hash.update(fs.readFileSync(path.join(root, file)));
+process.stdout.write(hash.digest('hex'));
+NODE
+)"
+node "$tmp/site/scripts/apply-host-data.mjs" "$tmp/site" "$tmp/site/data/host-data.json" >/dev/null
+second="$(node - "$tmp/site" <<'NODE'
+const crypto = require('node:crypto');
+const fs = require('node:fs');
+const path = require('node:path');
+const root = process.argv[2];
+const files = [
+  'js/lang.js', 'index.html', 'check-in.html', 'check-out.html',
+  'restaurantes.html', 'actividades.html', 'clima.html', 'tickets.html',
+  'instrucciones.html', 'botiquin.html', 'buggy.html', 'js/whatsapp.js'
+];
+const hash = crypto.createHash('sha256');
+for (const file of files) hash.update(fs.readFileSync(path.join(root, file)));
+process.stdout.write(hash.digest('hex'));
+NODE
+)"
+test "$first" = "$second"
+node "$tmp/site/scripts/apply-host-data.mjs" "$tmp/site" "$tmp/site/data/host-data.sample.json" >/dev/null
+echo "  PASS"
+
+echo "=== Gate 5: canonical snapshot parity ==="
+check_snapshot() {
+  if ! cmp -s "$1" "$2"; then
+    echo "  FAIL: snapshot $2 differs from $1" >&2
+    exit 1
+  fi
+}
+check_snapshot index.html data/.baseline/index.html
+check_snapshot check-in.html data/.baseline/check-in.html
+check_snapshot check-out.html data/.baseline/check-out.html
+check_snapshot botiquin.html data/.baseline/botiquin.html
+check_snapshot buggy.html data/.baseline/buggy.html
+check_snapshot actividades.html data/.baseline/actividades.html
+check_snapshot clima.html data/.baseline/clima.html
+check_snapshot tickets.html data/.baseline/tickets.html
+check_snapshot instrucciones.html data/.baseline/instrucciones.html
+check_snapshot restaurantes.html data/.baseline/restaurantes.html
+check_snapshot css/styles.css data/.baseline/css-styles.css
+check_snapshot js/lang.js data/.baseline/js/lang.js
+check_snapshot js/lang.js data/.baseline/js-lang.js
+check_snapshot js/lang.js data/.baseline/lang.js
+check_snapshot js/activities.js data/.baseline/js/activities.js
+check_snapshot js/activities.js data/.baseline/activities.js
+check_snapshot js/restaurants.js data/.baseline/js/restaurants.js
+check_snapshot js/restaurants.js data/.baseline/restaurants.js
+check_snapshot staff/README.md data/.baseline/staff/README.md
+echo "  PASS"
+
+echo "=== All gates passed ==="

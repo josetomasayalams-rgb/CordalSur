@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <!-- Fase contenido: copy real cargada vía i18n. TODO(host): confirmar hora, código de puerta, estacionamiento, acceso al portón. -->
-<html lang="es">
+<html lang="es" data-i18n-title="page.checkin.title">
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Check-in - Guest Hub</title>
+ <script>document.documentElement.classList.add('access-pending');</script>
+ <style>html.access-pending body{visibility:hidden}</style>
+ <title>Check-in · Cordal Sur</title>
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
  <link rel="preload" as="image" type="image/webp" media="(min-width: 720px)" fetchpriority="high" href="css/bg/winter/checkin-camino-nieve.webp?v=2">
   <script>(function(){try{var k="gh-theme-v3";try{localStorage.removeItem("gh-theme");localStorage.removeItem("gh-theme-v2")}catch(e){}var t=(localStorage.getItem(k)==="dark")?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){document.documentElement.setAttribute("data-theme","light")}})();</script>
-<link rel="stylesheet" href="css/styles.css?v=3">
+ <link rel="stylesheet" href="css/styles.css?v=4">
+ <link rel="stylesheet" href="css/access.css?v=1">
 </head>
 <body class="is-winter bg-checkin">
  <div class="app-container">
@@ -19,7 +22,7 @@
    <a href="index.html" class="btn-back" data-i18n-aria="common.back" aria-label="Volver">←</a>
    <h2 style="margin:0" data-i18n="nav.checkin.t">Check-in</h2>
   </header>
-  <div class="lang-selector" role="group" aria-label="Idioma / Language">
+  <div class="lang-selector" role="group" data-i18n-aria="lang.selector" aria-label="Idioma">
    <button type="button" data-lang="es" aria-pressed="true">ES</button>
    <button type="button" data-lang="pt" aria-pressed="false">PT</button>
    <button type="button" data-lang="en" aria-pressed="false">EN</button>
@@ -39,7 +42,7 @@
    <span class="tag tag-summer" data-i18n="checkin.location.tag">Ubicación</span>
    <h3 style="margin-top:8px" data-i18n="checkin.location.body">[cargado vía i18n]</h3>
    <!-- TODO(host): href con la ubicación exacta en Google Maps -->
-   <a href="https://www.google.com/maps/search/?api=1&query=Condominio+Andes+Chill%C3%A1n" class="ext-link-row" style="margin-top:4px">
+   <a href="https://www.google.com/maps/search/?api=1&amp;query=Condominio+Andes+Chill%C3%A1n" class="ext-link-row" style="margin-top:4px">
     <span>📍 <span data-i18n="checkin.maps">Google Maps</span></span>
     <span class="chev">›</span>
    </a>
@@ -61,8 +64,28 @@
    <p style="color:var(--wood)" data-i18n="checkin.tip.body">[cargado vía i18n]</p>
   </div>
 
+  <!-- Direct support — visible and localized; href is enriched by js/whatsapp.js. -->
+  <div class="card whatsapp-support-card mb-4">
+   <div class="whatsapp-support-card__copy">
+    <span class="whatsapp-support-card__icon" aria-hidden="true">
+     <svg viewBox="0 0 32 32" width="26" height="26" focusable="false">
+      <path fill="currentColor" d="M16.001 2.667c-7.36 0-13.334 5.973-13.334 13.333 0 2.347.617 4.64 1.787 6.667l-1.893 6.92 7.067-1.86a13.27 13.27 0 0 0 6.373 1.62h.005c7.355 0 13.333-5.973 13.333-13.333S23.361 2.667 16.001 2.667zm0 24.267h-.004a11.06 11.06 0 0 1-5.632-1.538l-.404-.24-4.194 1.099 1.12-4.089-.262-.419a11.04 11.04 0 0 1-1.69-5.88c0-6.107 4.97-11.077 11.083-11.077 2.96 0 5.74 1.154 7.832 3.248a11.01 11.01 0 0 1 3.243 7.835c-.002 6.106-4.972 11.075-11.075 11.075zm6.083-8.296c-.333-.167-1.97-.972-2.276-1.083-.305-.111-.527-.167-.749.167-.222.333-.86 1.083-1.055 1.305-.194.222-.389.25-.722.083-.333-.167-1.406-.518-2.678-1.653-.99-.883-1.658-1.975-1.852-2.308-.194-.333-.021-.513.146-.679.15-.15.333-.389.5-.583.167-.194.222-.333.333-.556.111-.222.056-.417-.028-.583-.083-.167-.749-1.806-1.027-2.472-.27-.649-.545-.561-.749-.572l-.638-.011c-.222 0-.583.083-.889.417-.306.333-1.166 1.139-1.166 2.779s1.194 3.223 1.36 3.445c.167.222 2.347 3.582 5.682 5.022.794.343 1.413.547 1.896.7.797.253 1.523.217 2.095.132.639-.095 1.97-.805 2.248-1.581.278-.776.278-1.443.194-1.581-.083-.139-.305-.222-.638-.389z"/>
+     </svg>
+    </span>
+    <span>
+     <strong data-i18n="whatsapp.checkin.title">¿Necesitas ayuda con tu llegada?</strong>
+     <small data-i18n="whatsapp.checkin.body">Escríbenos directamente por WhatsApp.</small>
+    </span>
+   </div>
+   <a class="btn whatsapp-support-card__action" href="https://wa.me/56990137732?text=Hola%2C%20soy%20hu%C3%A9sped%20de%20Cordal%20Sur.%20Necesito%20ayuda%20con%20mi%20check-in." target="_blank" rel="noopener" data-whatsapp-link data-whatsapp-message-key="whatsapp.checkin.message" data-i18n-aria="whatsapp.checkin.aria" aria-label="Contactar por WhatsApp">
+    <span data-i18n="whatsapp.checkin.action">Abrir WhatsApp</span>
+   </a>
+  </div>
+
  </div>
-  <script src="js/lang.js"></script>
+ <script src="js/lang.js?v=4"></script>
+ <script src="js/access.js?v=1" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
+  <script src="js/whatsapp.js"></script>
   <script src="js/theme.js?v=3"></script>
 </body>
 </html>

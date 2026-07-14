@@ -1,0 +1,9 @@
+{
+  "name": "cordal-sur-access-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "hash-pin": "node scripts/hash-pin.mjs"
+  }
+}

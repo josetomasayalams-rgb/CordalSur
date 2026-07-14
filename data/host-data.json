@@ -39,7 +39,11 @@
       "pt": "Passe diário",
       "en": "Day pass"
     },
-    "tickets.pass.price": "[TODO(host): precio del ticket]",
+    "tickets.pass.price": {
+      "es": "[TODO(host): precio del ticket]",
+      "pt": "[TODO(host): preço do ticket]",
+      "en": "[TODO(host): ticket price]"
+    },
     "rest.empty": {
       "es": "Pronto cargaremos nuestros lugares favoritos.",
       "pt": "Em breve carregaremos nossos lugares favoritos.",
@@ -246,9 +250,9 @@
       "en": "Back"
     },
     "brand": {
-      "es": "Guest Hub",
-      "pt": "Guest Hub",
-      "en": "Guest Hub"
+      "es": "Cordal Sur",
+      "pt": "Cordal Sur",
+      "en": "Cordal Sur"
     },
     "home.location": {
       "es": "Las Trancas · Nevados de Chillán",
@@ -281,95 +285,395 @@
       "en": "Emergencies"
     },
     "emergency.sub": {
-      "es": "Contacto directo en caso de urgencia.",
-      "pt": "Contato direto em caso de urgência.",
-      "en": "Direct contact in case of urgency."
+      "es": "Números oficiales de ayuda en Chile. Llama sólo cuando sea necesario.",
+      "pt": "Números oficiais de ajuda no Chile. Ligue somente quando necessário.",
+      "en": "Official emergency numbers in Chile. Call only when necessary."
     },
-    "nav.checkin.t": "Check-in",
-    "nav.checkin.s": "Llegada y acceso",
-    "nav.checkout.t": "Check-out",
-    "nav.checkout.s": "Hora de salida",
+    "nav.checkin.t": {
+      "es": "Check-in",
+      "pt": "Check-in",
+      "en": "Check-in"
+    },
+    "nav.checkin.s": {
+      "es": "Llegada y acceso",
+      "pt": "Chegada e acesso",
+      "en": "Arrival & access"
+    },
+    "nav.checkout.t": {
+      "es": "Check-out",
+      "pt": "Check-out",
+      "en": "Check-out"
+    },
+    "nav.checkout.s": {
+      "es": "Hora de salida",
+      "pt": "Hora de saída",
+      "en": "Departure"
+    },
     "nav.restaurantes.t": {
       "es": "Comida y provisiones",
       "pt": "Comida e provisões",
       "en": "Food and provisions"
     },
-    "nav.restaurantes.s": "Dónde comer",
-    "nav.actividades.t": "Actividades",
-    "nav.actividades.s": "Qué hacer",
-    "nav.clima.t": "Clima y nieve",
-    "nav.clima.s": "Pronóstico",
-    "nav.tickets.t": "Tickets de ski",
-    "nav.tickets.s": "Centro de ski",
+    "nav.restaurantes.s": {
+      "es": "Dónde comer",
+      "pt": "Onde comer e abastecer-se",
+      "en": "Where to eat & stock up"
+    },
+    "nav.actividades.t": {
+      "es": "Actividades",
+      "pt": "Atividades",
+      "en": "Activities"
+    },
+    "nav.actividades.s": {
+      "es": "Qué hacer",
+      "pt": "O que fazer",
+      "en": "What to do"
+    },
+    "nav.clima.t": {
+      "es": "Clima y nieve",
+      "pt": "Clima e neve",
+      "en": "Weather & snow"
+    },
+    "nav.clima.s": {
+      "es": "Pronóstico",
+      "pt": "Previsão",
+      "en": "Forecast"
+    },
+    "nav.tickets.t": {
+      "es": "Tickets de ski",
+      "pt": "Tickets de ski",
+      "en": "Ski tickets"
+    },
+    "nav.tickets.s": {
+      "es": "Centro de ski",
+      "pt": "Centro de ski",
+      "en": "Ski resort"
+    },
     "nav.info.t": {
       "es": "Manual",
       "pt": "Manual",
       "en": "Manual"
     },
-    "nav.info.s": "Wi-Fi, calefacción, normas",
-    "checkin.time.tag": "Horario",
-    "checkin.location.tag": "Ubicación",
-    "checkin.location.body": "Estamos en Las Trancas, a pocos minutos del centro de ski Nevados de Chillán. Te enviaremos la dirección exacta y las indicaciones por WhatsApp antes de tu llegada.",
-    "checkin.access.t": "Acceso al departamento",
-    "checkin.tip.t": "Si llegas en invierno",
-    "checkin.tip.body": "Lleva cadenas para la nieve, especialmente al atardecer. El camino puede congelarse y el clima cambia rápido en la montaña.",
-    "checkout.time.tag": "Hora de salida",
-    "checkout.item1": "Deja las llaves donde te indicamos al entrar.",
-    "checkout.item2": "Cierra ventanas y apaga luces y calefacción.",
-    "checkout.item3": "Saca la basura y deja los platos limpios.",
-    "checkout.farewell": "Gracias por cuidar este refugio como propio. Buen viaje de regreso, te esperamos pronto.",
-    "clima.now.t": "Ahora",
-    "clima.now.temp": "[TODO(host): temperatura en vivo]",
-    "clima.snow.t": "Nieve",
-    "clima.snow.depth": "[TODO(host): nieve en vivo]",
-    "clima.forecast": "Snow Forecast",
-    "clima.fc.title": "Clima Nevados de Chillán",
-    "clima.fc.elev": "Elevación",
-    "clima.fc.refresh": "Actualiza al recargar",
-    "clima.fc.loading": "Cargando pronóstico…",
-    "clima.fc.error": "No se pudo cargar el pronóstico. Revisa tu conexión.",
-    "clima.fc.attribution": "Datos",
-    "clima.fc.feels": "Sensación",
-    "clima.fc.best": "Mejor día",
-    "clima.fc.warning": "Viento fuerte o tormenta — ojo con este día",
-    "clima.fc.source.wttr": "Open-Meteo no disponible, datos vía wttr.in",
-    "clima.fc.source.metno": "Open-Meteo no disponible, datos vía Met.no",
-    "clima.fc.source.demo": "sin conexión — datos de muestra",
-    "clima.fc.snowforecast": "Ver en Snow-Forecast",
-    "clima.fc.units.metric": "Métrico",
-    "clima.fc.units.imperial": "Imperial",
-    "clima.fc.totalWeek": "Acumulado 6 días",
-    "clima.fc.updating": "Actualizando…",
-    "clima.fc.gust": "Ráfaga",
-    "clima.fc.precip": "Lluvia",
-    "clima.fc.pressure": "Presión",
-    "clima.fc.cloud": "Nubosidad",
-    "compass.N": "Norte",
-    "compass.NE": "Noreste",
-    "compass.E": "Este",
-    "compass.SE": "Sureste",
-    "compass.S": "Sur",
-    "compass.SW": "Suroeste",
-    "compass.W": "Oeste",
-    "compass.NW": "Noroeste",
-    "wmo.clear": "Despejado",
-    "wmo.partlyCloudy": "Parcialmente nublado",
-    "wmo.cloudy": "Nublado",
-    "wmo.fog": "Niebla",
-    "wmo.drizzle": "Llovizna",
-    "wmo.rain": "Lluvia",
-    "wmo.snow": "Nieve",
-    "wmo.rainShowers": "Chubascos de lluvia",
-    "wmo.snowShowers": "Chubascos de nieve",
-    "wmo.thunderstorm": "Tormenta",
-    "tickets.buy": "Nevados de Chillán",
-    "info.faq.t": "Preguntas frecuentes",
-    "info.q1": "¿Cómo me conecto al Wi-Fi?",
-    "info.a1": "La red y la contraseña están en la tarjeta del alojamiento o junto al router. Si no las encuentras, escríbenos por WhatsApp.",
-    "info.q2": "¿Cómo funciona la calefacción?",
-    "info.a2": "Usa el termostato del living para ajustar la temperatura. Recomendamos mantener 21 °C para un calor parejo durante todo el día.",
-    "info.q3": "¿Cuáles son las reglas de la casa y el reciclaje?",
-    "info.a3": "No fumar dentro, respeta el descanso tras las 22:00 y apaga luces y calefacción al salir. Separa vidrio, plástico y papel en los contenedores señalados.",
+    "nav.info.s": {
+      "es": "Wi-Fi, calefacción, normas",
+      "pt": "Wi-Fi, aquecimento, regras",
+      "en": "Wi-Fi, heating, rules"
+    },
+    "checkin.time.tag": {
+      "es": "Horario",
+      "pt": "Horário",
+      "en": "Schedule"
+    },
+    "checkin.location.tag": {
+      "es": "Ubicación",
+      "pt": "Localização",
+      "en": "Location"
+    },
+    "checkin.location.body": {
+      "es": "Estamos en Las Trancas, a pocos minutos del centro de ski Nevados de Chillán. Te enviaremos la dirección exacta y las indicaciones por WhatsApp antes de tu llegada.",
+      "pt": "Estamos em Las Trancas, a poucos minutos do centro de esqui Nevados de Chillán. Enviaremos o endereço exato e as indicações pelo WhatsApp antes da sua chegada.",
+      "en": "We are in Las Trancas, a few minutes from the Nevados de Chillán ski center. We will send you the exact address and directions via WhatsApp before your arrival."
+    },
+    "checkin.access.t": {
+      "es": "Acceso al departamento",
+      "pt": "Acesso ao apartamento",
+      "en": "Apartment access"
+    },
+    "checkin.tip.t": {
+      "es": "Si llegas en invierno",
+      "pt": "Se chegar no inverno",
+      "en": "If you arrive in winter"
+    },
+    "checkin.tip.body": {
+      "es": "Lleva cadenas para la nieve, especialmente al atardecer. El camino puede congelarse y el clima cambia rápido en la montaña.",
+      "pt": "Leve correntes para a neve, especialmente ao anoitecer. O caminho pode congelar e o clima muda rápido na montanha.",
+      "en": "Carry snow chains, especially around dusk. The road can freeze and mountain weather changes fast."
+    },
+    "checkout.time.tag": {
+      "es": "Hora de salida",
+      "pt": "Hora de saída",
+      "en": "Departure time"
+    },
+    "checkout.item1": {
+      "es": "Deja las llaves donde te indicamos al entrar.",
+      "pt": "Deixe as chaves no local indicado na chegada.",
+      "en": "Leave the keys where indicated when you arrived."
+    },
+    "checkout.item2": {
+      "es": "Cierra ventanas y apaga luces y calefacción.",
+      "pt": "Feche as janelas e desligue as luzes e o aquecimento.",
+      "en": "Close the windows and turn off the lights and heating."
+    },
+    "checkout.item3": {
+      "es": "Saca la basura y deja los platos limpios.",
+      "pt": "Retire o lixo e deixe a louça limpa.",
+      "en": "Take out the trash and leave the dishes clean."
+    },
+    "checkout.farewell": {
+      "es": "Gracias por cuidar este refugio como propio. Buen viaje de regreso, te esperamos pronto.",
+      "pt": "Obrigado por cuidar deste refúgio como se fosse seu. Boa viagem de volta e esperamos receber você novamente em breve.",
+      "en": "Thank you for caring for this retreat as if it were your own. Have a safe trip home; we hope to welcome you again soon."
+    },
+    "clima.now.t": {
+      "es": "Ahora",
+      "pt": "Agora",
+      "en": "Now"
+    },
+    "clima.now.temp": {
+      "es": "[TODO(host): temperatura en vivo]",
+      "pt": "[TODO(host): temperatura ao vivo]",
+      "en": "[TODO(host): live temperature]"
+    },
+    "clima.snow.t": {
+      "es": "Nieve",
+      "pt": "Neve",
+      "en": "Snow"
+    },
+    "clima.snow.depth": {
+      "es": "[TODO(host): nieve en vivo]",
+      "pt": "[TODO(host): neve ao vivo]",
+      "en": "[TODO(host): live snow]"
+    },
+    "clima.forecast": {
+      "es": "Snow Forecast",
+      "pt": "Snow Forecast",
+      "en": "Snow Forecast"
+    },
+    "clima.fc.title": {
+      "es": "Clima Nevados de Chillán",
+      "pt": "Clima Nevados de Chillán",
+      "en": "Nevados de Chillán weather"
+    },
+    "clima.fc.elev": {
+      "es": "Elevación",
+      "pt": "Elevação",
+      "en": "Elevation"
+    },
+    "clima.fc.refresh": {
+      "es": "Actualiza al recargar",
+      "pt": "Atualiza ao recarregar",
+      "en": "Updates on reload"
+    },
+    "clima.fc.loading": {
+      "es": "Cargando pronóstico…",
+      "pt": "Carregando previsão…",
+      "en": "Loading forecast…"
+    },
+    "clima.fc.error": {
+      "es": "No se pudo cargar el pronóstico. Revisa tu conexión.",
+      "pt": "Não foi possível carregar a previsão. Verifique sua conexão.",
+      "en": "Could not load the forecast. Check your connection."
+    },
+    "clima.fc.attribution": {
+      "es": "Datos",
+      "pt": "Dados",
+      "en": "Data"
+    },
+    "clima.fc.feels": {
+      "es": "Sensación",
+      "pt": "Sensação",
+      "en": "Feels like"
+    },
+    "clima.fc.best": {
+      "es": "Mejor día",
+      "pt": "Melhor dia",
+      "en": "Best day"
+    },
+    "clima.fc.warning": {
+      "es": "Viento fuerte o tormenta — ojo con este día",
+      "pt": "Vento forte ou tempestade — atenção a este dia",
+      "en": "Strong wind or storm — watch out this day"
+    },
+    "clima.fc.source.wttr": {
+      "es": "Open-Meteo no disponible, datos vía wttr.in",
+      "pt": "Open-Meteo indisponível, dados via wttr.in",
+      "en": "Open-Meteo unavailable, data via wttr.in"
+    },
+    "clima.fc.source.metno": {
+      "es": "Open-Meteo no disponible, datos vía Met.no",
+      "pt": "Open-Meteo indisponível, dados via Met.no",
+      "en": "Open-Meteo unavailable, data via Met.no"
+    },
+    "clima.fc.source.demo": {
+      "es": "sin conexión — datos de muestra",
+      "pt": "sem conexão — dados de amostra",
+      "en": "no connection — sample data"
+    },
+    "clima.fc.snowforecast": {
+      "es": "Ver en Snow-Forecast",
+      "pt": "Ver no Snow-Forecast",
+      "en": "View on Snow-Forecast"
+    },
+    "clima.fc.units.metric": {
+      "es": "Métrico",
+      "pt": "Métrico",
+      "en": "Metric"
+    },
+    "clima.fc.units.imperial": {
+      "es": "Imperial",
+      "pt": "Imperial",
+      "en": "Imperial"
+    },
+    "clima.fc.totalWeek": {
+      "es": "Acumulado 6 días",
+      "pt": "Acumulado 6 dias",
+      "en": "6-day total"
+    },
+    "clima.fc.updating": {
+      "es": "Actualizando…",
+      "pt": "Atualizando…",
+      "en": "Updating…"
+    },
+    "clima.fc.gust": {
+      "es": "Ráfaga",
+      "pt": "Rajada",
+      "en": "Gust"
+    },
+    "clima.fc.precip": {
+      "es": "Lluvia",
+      "pt": "Chuva",
+      "en": "Rain"
+    },
+    "clima.fc.pressure": {
+      "es": "Presión",
+      "pt": "Pressão",
+      "en": "Pressure"
+    },
+    "clima.fc.cloud": {
+      "es": "Nubosidad",
+      "pt": "Nebulosidade",
+      "en": "Cloud cover"
+    },
+    "compass.N": {
+      "es": "Norte",
+      "pt": "Norte",
+      "en": "North"
+    },
+    "compass.NE": {
+      "es": "Noreste",
+      "pt": "Nordeste",
+      "en": "Northeast"
+    },
+    "compass.E": {
+      "es": "Este",
+      "pt": "Leste",
+      "en": "East"
+    },
+    "compass.SE": {
+      "es": "Sureste",
+      "pt": "Sudeste",
+      "en": "Southeast"
+    },
+    "compass.S": {
+      "es": "Sur",
+      "pt": "Sul",
+      "en": "South"
+    },
+    "compass.SW": {
+      "es": "Suroeste",
+      "pt": "Sudoeste",
+      "en": "Southwest"
+    },
+    "compass.W": {
+      "es": "Oeste",
+      "pt": "Oeste",
+      "en": "West"
+    },
+    "compass.NW": {
+      "es": "Noroeste",
+      "pt": "Noroeste",
+      "en": "Northwest"
+    },
+    "wmo.clear": {
+      "es": "Despejado",
+      "pt": "Céu limpo",
+      "en": "Clear sky"
+    },
+    "wmo.partlyCloudy": {
+      "es": "Parcialmente nublado",
+      "pt": "Parcialmente nublado",
+      "en": "Partly cloudy"
+    },
+    "wmo.cloudy": {
+      "es": "Nublado",
+      "pt": "Nublado",
+      "en": "Cloudy"
+    },
+    "wmo.fog": {
+      "es": "Niebla",
+      "pt": "Nevoeiro",
+      "en": "Fog"
+    },
+    "wmo.drizzle": {
+      "es": "Llovizna",
+      "pt": "Garoa",
+      "en": "Drizzle"
+    },
+    "wmo.rain": {
+      "es": "Lluvia",
+      "pt": "Chuva",
+      "en": "Rain"
+    },
+    "wmo.snow": {
+      "es": "Nieve",
+      "pt": "Neve",
+      "en": "Snow"
+    },
+    "wmo.rainShowers": {
+      "es": "Chubascos de lluvia",
+      "pt": "Pancadas de chuva",
+      "en": "Rain showers"
+    },
+    "wmo.snowShowers": {
+      "es": "Chubascos de nieve",
+      "pt": "Pancadas de neve",
+      "en": "Snow showers"
+    },
+    "wmo.thunderstorm": {
+      "es": "Tormenta",
+      "pt": "Trovoada",
+      "en": "Thunderstorm"
+    },
+    "tickets.buy": {
+      "es": "Nevados de Chillán",
+      "pt": "Nevados de Chillán",
+      "en": "Nevados de Chillán"
+    },
+    "info.faq.t": {
+      "es": "Preguntas frecuentes",
+      "pt": "Perguntas frequentes",
+      "en": "Frequently asked questions"
+    },
+    "info.q1": {
+      "es": "¿Cómo me conecto al Wi-Fi?",
+      "pt": "Como me conecto ao Wi-Fi?",
+      "en": "How do I connect to Wi-Fi?"
+    },
+    "info.a1": {
+      "es": "La red y la contraseña están en la tarjeta del alojamiento o junto al router. Si no las encuentras, escríbenos por WhatsApp.",
+      "pt": "A rede e a senha estão no cartão da acomodação ou ao lado do roteador. Se não encontrar, fale conosco pelo WhatsApp.",
+      "en": "The network and password are on the welcome card or near the router. If you can't find them, message us on WhatsApp."
+    },
+    "info.q2": {
+      "es": "¿Cómo funciona la calefacción?",
+      "pt": "Como funciona o aquecimento?",
+      "en": "How does the heating work?"
+    },
+    "info.a2": {
+      "es": "Usa el termostato del living para ajustar la temperatura. Recomendamos mantener 21 °C para un calor parejo durante todo el día.",
+      "pt": "Use o termostato da sala para ajustar a temperatura. Recomendamos manter 21 °C para um calor uniforme durante todo o dia.",
+      "en": "Use the living-room thermostat to adjust the temperature. We recommend keeping it at 21 °C for even warmth throughout the day."
+    },
+    "info.q3": {
+      "es": "¿Cuáles son las reglas de la casa y el reciclaje?",
+      "pt": "Quais são as regras da casa e de reciclagem?",
+      "en": "What are the house and recycling rules?"
+    },
+    "info.a3": {
+      "es": "No fumar dentro, respeta el descanso tras las 22:00 y apaga luces y calefacción al salir. Separa vidrio, plástico y papel en los contenedores señalados.",
+      "pt": "Não fume dentro, respeite o horário de silêncio após as 22h e desligue as luzes e o aquecimento ao sair. Separe vidro, plástico e papel nos recipientes indicados.",
+      "en": "Do not smoke indoors, respect quiet hours after 10:00 p.m., and turn off the lights and heating when you leave. Separate glass, plastic, and paper in the marked bins."
+    },
     "act.cta.guia": {
       "es": "Reservar con guía",
       "pt": "Reservar com guia",
@@ -397,7 +701,7 @@
     },
     "act.filter.anual": {
       "es": "Todo el año",
-      "pt": "O ano todo",
+      "pt": "O ano inteiro",
       "en": "Year-round"
     },
     "act.filter.multi": {
@@ -441,9 +745,9 @@
       "en": "Clear filters"
     },
     "act.filter.count": {
-      "es": "Mostrando",
-      "pt": "Mostrando",
-      "en": "Showing"
+      "es": "Mostrando {shown} de {total}",
+      "pt": "Mostrando {shown} de {total}",
+      "en": "Showing {shown} of {total}"
     },
     "act.noresults": {
       "es": "Sin resultados para esta combinación. Probá quitar un filtro.",
@@ -515,7 +819,11 @@
       "pt": "Segurança técnica",
       "en": "Technical safety"
     },
-    "checkin.maps": "Cómo llegar",
+    "checkin.maps": {
+      "es": "Cómo llegar",
+      "pt": "Como chegar",
+      "en": "Get directions"
+    },
     "rest.filter.all": {
       "es": "Todos",
       "pt": "Todos",
@@ -562,9 +870,9 @@
       "en": "Gourmet shopping"
     },
     "rest.filter.count": {
-      "es": "lugares",
-      "pt": "locais",
-      "en": "places"
+      "es": "Mostrando {shown} de {total}",
+      "pt": "Mostrando {shown} de {total}",
+      "en": "Showing {shown} of {total}"
     },
     "act.filter.nieve": {
       "es": "Nieve",
@@ -595,14 +903,662 @@
       "es": "Servicios",
       "pt": "Serviços",
       "en": "Services"
+    },
+    "page.home.title": {
+      "es": "Cordal Sur · Las Trancas",
+      "pt": "Cordal Sur · Las Trancas",
+      "en": "Cordal Sur · Las Trancas"
+    },
+    "page.checkin.title": {
+      "es": "Check-in · Cordal Sur",
+      "pt": "Check-in · Cordal Sur",
+      "en": "Check-in · Cordal Sur"
+    },
+    "page.checkout.title": {
+      "es": "Check-out · Cordal Sur",
+      "pt": "Check-out · Cordal Sur",
+      "en": "Check-out · Cordal Sur"
+    },
+    "page.restaurants.title": {
+      "es": "Comida y provisiones · Cordal Sur",
+      "pt": "Comida e provisões · Cordal Sur",
+      "en": "Food and provisions · Cordal Sur"
+    },
+    "page.activities.title": {
+      "es": "Actividades · Cordal Sur",
+      "pt": "Atividades · Cordal Sur",
+      "en": "Activities · Cordal Sur"
+    },
+    "page.weather.title": {
+      "es": "Clima y nieve · Cordal Sur",
+      "pt": "Clima e neve · Cordal Sur",
+      "en": "Weather and snow · Cordal Sur"
+    },
+    "page.tickets.title": {
+      "es": "Tickets de ski · Cordal Sur",
+      "pt": "Ingressos de esqui · Cordal Sur",
+      "en": "Ski tickets · Cordal Sur"
+    },
+    "page.manual.title": {
+      "es": "Manual · Cordal Sur",
+      "pt": "Manual · Cordal Sur",
+      "en": "Manual · Cordal Sur"
+    },
+    "page.firstaid.title": {
+      "es": "Botiquín · Cordal Sur",
+      "pt": "Kit de primeiros socorros · Cordal Sur",
+      "en": "First-aid kit · Cordal Sur"
+    },
+    "page.buggy.title": {
+      "es": "Buggy a Plaza Tata · Cordal Sur",
+      "pt": "Buggy até a Plaza Tata · Cordal Sur",
+      "en": "Buggy to Plaza Tata · Cordal Sur"
+    },
+    "emergency.toggle": {
+      "es": "Ver números de emergencia",
+      "pt": "Ver números de emergência",
+      "en": "View emergency numbers"
+    },
+    "emergency.aria": {
+      "es": "Abrir números de emergencia",
+      "pt": "Abrir números de emergência",
+      "en": "Open emergency numbers"
+    },
+    "emergency.samu": {
+      "es": "SAMU",
+      "pt": "SAMU",
+      "en": "SAMU"
+    },
+    "emergency.bomberos": {
+      "es": "Bomberos",
+      "pt": "Bombeiros",
+      "en": "Fire department"
+    },
+    "emergency.carabineros": {
+      "es": "Carabineros",
+      "pt": "Carabineros",
+      "en": "Police"
+    },
+    "emergency.socorro": {
+      "es": "Socorro Andino",
+      "pt": "Socorro Andino",
+      "en": "Mountain rescue"
+    },
+    "emergency.conaf": {
+      "es": "CONAF",
+      "pt": "CONAF",
+      "en": "CONAF"
+    },
+    "whatsapp.checkin.label": {
+      "es": "Ayuda por WhatsApp",
+      "pt": "Ajuda pelo WhatsApp",
+      "en": "WhatsApp help"
+    },
+    "whatsapp.checkin.title": {
+      "es": "¿Necesitas ayuda con tu llegada?",
+      "pt": "Precisa de ajuda com sua chegada?",
+      "en": "Need help with your arrival?"
+    },
+    "whatsapp.checkin.aria": {
+      "es": "Abrir WhatsApp para pedir ayuda con el check-in",
+      "pt": "Abrir o WhatsApp para pedir ajuda com o check-in",
+      "en": "Open WhatsApp for check-in help"
+    },
+    "whatsapp.checkin.message": {
+      "es": "Hola, soy huésped de Cordal Sur. Necesito ayuda con mi check-in.",
+      "pt": "Olá, sou hóspede da Cordal Sur. Preciso de ajuda com meu check-in.",
+      "en": "Hello, I’m a guest at Cordal Sur. I need help with my check-in."
+    },
+    "botiquin.step.3": {
+      "es": "Ante una urgencia médica grave, llama al 131. Para otros casos, revisa Emergencias en la portada.",
+      "pt": "Em uma emergência médica grave, ligue para 131. Para outros casos, consulte Emergências na página inicial.",
+      "en": "For a serious medical emergency, call 131. For other situations, check Emergencies on the home page."
+    },
+    "botiquin.reco.cta": {
+      "es": "Llamar al 131",
+      "pt": "Ligar para 131",
+      "en": "Call 131"
+    },
+    "access.title": {
+      "es": "Acceso a Cordal Sur",
+      "pt": "Acesso à Cordal Sur",
+      "en": "Access Cordal Sur"
+    },
+    "access.subtitle": {
+      "es": "Ingresa la clave de tu estadía. Sólo tendrás que hacerlo una vez en este dispositivo.",
+      "pt": "Digite a senha da sua estadia. Você só precisará fazer isso uma vez neste dispositivo.",
+      "en": "Enter your stay PIN. You will only need to do this once on this device."
+    },
+    "access.pin.label": {
+      "es": "Clave de huésped",
+      "pt": "Senha do hóspede",
+      "en": "Guest PIN"
+    },
+    "access.pin.placeholder": {
+      "es": "NN-NN",
+      "pt": "NN-NN",
+      "en": "NN-NN"
+    },
+    "access.submit": {
+      "es": "Ingresar",
+      "pt": "Entrar",
+      "en": "Continue"
+    },
+    "access.admin": {
+      "es": "Administración",
+      "pt": "Administração",
+      "en": "Administration"
+    },
+    "access.checking": {
+      "es": "Verificando acceso…",
+      "pt": "Verificando acesso…",
+      "en": "Checking access…"
+    },
+    "access.locked.title": {
+      "es": "Acceso no disponible",
+      "pt": "Acesso indisponível",
+      "en": "Access unavailable"
+    },
+    "access.locked.body": {
+      "es": "No hay una estadía activa en este momento. Revisa las fechas o contacta al anfitrión.",
+      "pt": "Não há uma estadia ativa neste momento. Confira as datas ou fale com o anfitrião.",
+      "en": "There is no active stay at this time. Check your dates or contact the host."
+    },
+    "access.config.error": {
+      "es": "El acceso todavía no está configurado. Inténtalo más tarde.",
+      "pt": "O acesso ainda não está configurado. Tente novamente mais tarde.",
+      "en": "Access has not been configured yet. Please try again later."
+    },
+    "access.network.error": {
+      "es": "No pudimos conectar con el servicio de acceso. Revisa tu conexión e inténtalo nuevamente.",
+      "pt": "Não foi possível conectar ao serviço de acesso. Confira sua conexão e tente novamente.",
+      "en": "We could not connect to the access service. Check your connection and try again."
+    },
+    "access.invalid": {
+      "es": "La clave no es válida para una estadía activa.",
+      "pt": "A senha não é válida para uma estadia ativa.",
+      "en": "The PIN is not valid for an active stay."
+    },
+    "access.rateLimited": {
+      "es": "Demasiados intentos. Espera unos minutos antes de volver a intentar.",
+      "pt": "Muitas tentativas. Aguarde alguns minutos antes de tentar novamente.",
+      "en": "Too many attempts. Wait a few minutes before trying again."
+    },
+    "access.sessionExpired": {
+      "es": "Tu acceso venció. Ingresa nuevamente la clave de tu estadía.",
+      "pt": "Seu acesso expirou. Digite novamente a senha da sua estadia.",
+      "en": "Your access has expired. Enter your stay PIN again."
+    },
+    "access.showPin": {
+      "es": "Mostrar clave",
+      "pt": "Mostrar senha",
+      "en": "Show PIN"
+    },
+    "access.hidePin": {
+      "es": "Ocultar clave",
+      "pt": "Ocultar senha",
+      "en": "Hide PIN"
+    },
+    "access.language": {
+      "es": "Idioma",
+      "pt": "Idioma",
+      "en": "Language"
+    },
+    "admin.page.title": {
+      "es": "Administración · Cordal Sur",
+      "pt": "Administração · Cordal Sur",
+      "en": "Administration · Cordal Sur"
+    },
+    "admin.login.title": {
+      "es": "Administración",
+      "pt": "Administração",
+      "en": "Administration"
+    },
+    "admin.login.subtitle": {
+      "es": "Configura las estadías y el acceso de huéspedes.",
+      "pt": "Configure as estadias e o acesso dos hóspedes.",
+      "en": "Configure stays and guest access."
+    },
+    "admin.pin.label": {
+      "es": "Clave de administrador",
+      "pt": "Senha de administrador",
+      "en": "Administrator PIN"
+    },
+    "admin.pin.placeholder": {
+      "es": "NN-NN",
+      "pt": "NN-NN",
+      "en": "NN-NN"
+    },
+    "admin.login.submit": {
+      "es": "Ingresar",
+      "pt": "Entrar",
+      "en": "Sign in"
+    },
+    "admin.back": {
+      "es": "Volver al acceso",
+      "pt": "Voltar ao acesso",
+      "en": "Back to access"
+    },
+    "admin.logout": {
+      "es": "Cerrar sesión",
+      "pt": "Sair",
+      "en": "Sign out"
+    },
+    "admin.sessionExpired": {
+      "es": "La sesión administrativa venció. Ingresa nuevamente.",
+      "pt": "A sessão administrativa expirou. Entre novamente.",
+      "en": "The administrator session has expired. Sign in again."
+    },
+    "admin.invalid": {
+      "es": "Clave de administrador incorrecta.",
+      "pt": "Senha de administrador incorreta.",
+      "en": "Incorrect administrator PIN."
+    },
+    "admin.rateLimited": {
+      "es": "Demasiados intentos. Espera unos minutos antes de volver a intentar.",
+      "pt": "Muitas tentativas. Aguarde alguns minutos antes de tentar novamente.",
+      "en": "Too many attempts. Wait a few minutes before trying again."
+    },
+    "admin.networkError": {
+      "es": "No pudimos conectar con el servicio. Revisa tu conexión.",
+      "pt": "Não foi possível conectar ao serviço. Confira sua conexão.",
+      "en": "We could not connect to the service. Check your connection."
+    },
+    "admin.dashboard.title": {
+      "es": "Estadías",
+      "pt": "Estadias",
+      "en": "Stays"
+    },
+    "admin.dashboard.subtitle": {
+      "es": "Programa cuándo estará disponible el acceso de huéspedes.",
+      "pt": "Programe quando o acesso dos hóspedes estará disponível.",
+      "en": "Schedule when guest access will be available."
+    },
+    "admin.newStay": {
+      "es": "Nueva estadía",
+      "pt": "Nova estadia",
+      "en": "New stay"
+    },
+    "admin.empty": {
+      "es": "Aún no hay estadías programadas.",
+      "pt": "Ainda não há estadias programadas.",
+      "en": "No stays have been scheduled yet."
+    },
+    "admin.loading": {
+      "es": "Cargando estadías…",
+      "pt": "Carregando estadias…",
+      "en": "Loading stays…"
+    },
+    "admin.label": {
+      "es": "Nombre o referencia",
+      "pt": "Nome ou referência",
+      "en": "Name or reference"
+    },
+    "admin.label.placeholder": {
+      "es": "Ej.: Familia Pérez",
+      "pt": "Ex.: Família Pérez",
+      "en": "E.g. Smith family"
+    },
+    "admin.start": {
+      "es": "Inicio",
+      "pt": "Início",
+      "en": "Start"
+    },
+    "admin.end": {
+      "es": "Término",
+      "pt": "Término",
+      "en": "End"
+    },
+    "admin.guestPin": {
+      "es": "Clave del huésped",
+      "pt": "Senha do hóspede",
+      "en": "Guest PIN"
+    },
+    "admin.guestPin.placeholder": {
+      "es": "NN-NN",
+      "pt": "NN-NN",
+      "en": "NN-NN"
+    },
+    "admin.guestPin.hint": {
+      "es": "Déjala vacía para usar la clave predeterminada al crear o conservar la actual al editar.",
+      "pt": "Deixe em branco para usar a senha padrão ao criar ou manter a atual ao editar.",
+      "en": "Leave blank to use the default PIN when creating or keep the current PIN when editing."
+    },
+    "admin.enabled": {
+      "es": "Acceso habilitado",
+      "pt": "Acesso habilitado",
+      "en": "Access enabled"
+    },
+    "admin.save": {
+      "es": "Guardar",
+      "pt": "Salvar",
+      "en": "Save"
+    },
+    "admin.cancel": {
+      "es": "Cancelar",
+      "pt": "Cancelar",
+      "en": "Cancel"
+    },
+    "admin.edit": {
+      "es": "Editar",
+      "pt": "Editar",
+      "en": "Edit"
+    },
+    "admin.delete": {
+      "es": "Eliminar",
+      "pt": "Excluir",
+      "en": "Delete"
+    },
+    "admin.finish": {
+      "es": "Finalizar ahora",
+      "pt": "Encerrar agora",
+      "en": "End now"
+    },
+    "admin.enable": {
+      "es": "Habilitar",
+      "pt": "Habilitar",
+      "en": "Enable"
+    },
+    "admin.disable": {
+      "es": "Deshabilitar",
+      "pt": "Desabilitar",
+      "en": "Disable"
+    },
+    "admin.status.active": {
+      "es": "Activa",
+      "pt": "Ativa",
+      "en": "Active"
+    },
+    "admin.status.upcoming": {
+      "es": "Próxima",
+      "pt": "Próxima",
+      "en": "Upcoming"
+    },
+    "admin.status.ended": {
+      "es": "Finalizada",
+      "pt": "Encerrada",
+      "en": "Ended"
+    },
+    "admin.status.disabled": {
+      "es": "Deshabilitada",
+      "pt": "Desabilitada",
+      "en": "Disabled"
+    },
+    "admin.confirm.delete": {
+      "es": "¿Eliminar esta estadía? Esta acción no se puede deshacer.",
+      "pt": "Excluir esta estadia? Esta ação não pode ser desfeita.",
+      "en": "Delete this stay? This action cannot be undone."
+    },
+    "admin.confirm.finish": {
+      "es": "¿Finalizar esta estadía ahora? El acceso de huéspedes vencerá de inmediato.",
+      "pt": "Encerrar esta estadia agora? O acesso dos hóspedes expirará imediatamente.",
+      "en": "End this stay now? Guest access will expire immediately."
+    },
+    "admin.error.overlap": {
+      "es": "Las fechas se superponen con otra estadía.",
+      "pt": "As datas se sobrepõem a outra estadia.",
+      "en": "These dates overlap another stay."
+    },
+    "admin.error.validation": {
+      "es": "Revisa los datos ingresados.",
+      "pt": "Confira os dados informados.",
+      "en": "Check the information you entered."
+    },
+    "admin.error.ambiguousTime": {
+      "es": "Esta hora se repite por el cambio de horario. Elige otra hora.",
+      "pt": "Este horário se repete por causa da mudança de horário. Escolha outro horário.",
+      "en": "This time occurs twice because of daylight saving time. Choose another time."
+    },
+    "admin.error.nonexistentTime": {
+      "es": "Esta hora no existe por el cambio de horario. Elige otra hora.",
+      "pt": "Este horário não existe por causa da mudança de horário. Escolha outro horário.",
+      "en": "This time does not exist because of daylight saving time. Choose another time."
+    },
+    "admin.error.config": {
+      "es": "La administración todavía no está configurada.",
+      "pt": "A administração ainda não está configurada.",
+      "en": "Administration has not been configured yet."
+    },
+    "admin.error.generic": {
+      "es": "Ocurrió un error. Inténtalo nuevamente.",
+      "pt": "Ocorreu um erro. Tente novamente.",
+      "en": "Something went wrong. Try again."
+    },
+    "admin.success.created": {
+      "es": "Estadía creada.",
+      "pt": "Estadia criada.",
+      "en": "Stay created."
+    },
+    "admin.success.updated": {
+      "es": "Estadía actualizada.",
+      "pt": "Estadia atualizada.",
+      "en": "Stay updated."
+    },
+    "admin.success.deleted": {
+      "es": "Estadía eliminada.",
+      "pt": "Estadia excluída.",
+      "en": "Stay deleted."
+    },
+    "admin.success.finished": {
+      "es": "Estadía finalizada.",
+      "pt": "Estadia encerrada.",
+      "en": "Stay ended."
+    },
+    "admin.timezone": {
+      "es": "Zona horaria: America/Santiago",
+      "pt": "Fuso horário: America/Santiago",
+      "en": "Time zone: America/Santiago"
+    },
+    "admin.expires": {
+      "es": "Sesión administrativa válida hasta",
+      "pt": "Sessão administrativa válida até",
+      "en": "Administrator session valid until"
+    },
+    "admin.language": {
+      "es": "Idioma",
+      "pt": "Idioma",
+      "en": "Language"
+    },
+    "admin.revealPin": {
+      "es": "Mostrar clave",
+      "pt": "Mostrar senha",
+      "en": "Show PIN"
+    },
+    "admin.hidePin": {
+      "es": "Ocultar clave",
+      "pt": "Ocultar senha",
+      "en": "Hide PIN"
+    },
+    "nav.buggy.t": {
+      "es": "Buggy a Plaza Tata",
+      "pt": "Buggy até a Plaza Tata",
+      "en": "Buggy to Plaza Tata"
+    },
+    "nav.buggy.s": {
+      "es": "Traslado a pistas",
+      "pt": "Traslado até as pistas",
+      "en": "Transfer to the slopes"
+    },
+    "nav.firstaid.t": {
+      "es": "Botiquín de emergencia",
+      "pt": "Kit de primeiros socorros",
+      "en": "First-aid kit"
+    },
+    "nav.firstaid.s": {
+      "es": "Primeros auxilios",
+      "pt": "Primeiros socorros",
+      "en": "First aid"
+    },
+    "whatsapp.checkin.body": {
+      "es": "Escríbenos directamente por WhatsApp.",
+      "pt": "Fale conosco diretamente pelo WhatsApp.",
+      "en": "Message us directly on WhatsApp."
+    },
+    "whatsapp.checkin.action": {
+      "es": "Abrir WhatsApp",
+      "pt": "Abrir WhatsApp",
+      "en": "Open WhatsApp"
+    },
+    "emergency.instructions": {
+      "es": "Toca el servicio que necesitas para llamar.",
+      "pt": "Toque no serviço de que precisa para ligar.",
+      "en": "Tap the service you need to call."
+    },
+    "emergency.samu.sub": {
+      "es": "Urgencias médicas",
+      "pt": "Emergências médicas",
+      "en": "Medical emergencies"
+    },
+    "emergency.samu.call": {
+      "es": "Llamar al 131, SAMU",
+      "pt": "Ligar para 131, SAMU",
+      "en": "Call 131, SAMU"
+    },
+    "emergency.firefighters": {
+      "es": "Bomberos",
+      "pt": "Bombeiros",
+      "en": "Fire department"
+    },
+    "emergency.firefighters.sub": {
+      "es": "Incendios y rescate",
+      "pt": "Incêndios e resgate",
+      "en": "Fire and rescue"
+    },
+    "emergency.firefighters.call": {
+      "es": "Llamar al 132, Bomberos",
+      "pt": "Ligar para 132, Bombeiros",
+      "en": "Call 132, fire department"
+    },
+    "emergency.police": {
+      "es": "Carabineros",
+      "pt": "Carabineros",
+      "en": "Police"
+    },
+    "emergency.police.sub": {
+      "es": "Seguridad y asistencia policial",
+      "pt": "Segurança e assistência policial",
+      "en": "Safety and police assistance"
+    },
+    "emergency.police.call": {
+      "es": "Llamar al 133, Carabineros",
+      "pt": "Ligar para 133, Carabineros",
+      "en": "Call 133, police"
+    },
+    "emergency.mountain": {
+      "es": "Socorro Andino",
+      "pt": "Socorro Andino",
+      "en": "Mountain rescue"
+    },
+    "emergency.mountain.sub": {
+      "es": "Emergencias de montaña",
+      "pt": "Emergências em montanha",
+      "en": "Mountain emergencies"
+    },
+    "emergency.mountain.call": {
+      "es": "Llamar al 136, Socorro Andino",
+      "pt": "Ligar para 136, Socorro Andino",
+      "en": "Call 136, mountain rescue"
+    },
+    "emergency.conaf.sub": {
+      "es": "Incendios forestales",
+      "pt": "Incêndios florestais",
+      "en": "Wildfires"
+    },
+    "emergency.conaf.call": {
+      "es": "Llamar al 130, CONAF",
+      "pt": "Ligar para 130, CONAF",
+      "en": "Call 130, CONAF"
+    },
+    "rest.cat.restaurante": {
+      "es": "Restaurante",
+      "pt": "Restaurante",
+      "en": "Restaurant"
+    },
+    "rest.cat.café": {
+      "es": "Café",
+      "pt": "Café",
+      "en": "Café"
+    },
+    "rest.cat.bar": {
+      "es": "Bar",
+      "pt": "Bar",
+      "en": "Bar"
+    },
+    "rest.cat.dulce": {
+      "es": "Dulces",
+      "pt": "Doces",
+      "en": "Sweets"
+    },
+    "rest.cat.heladería": {
+      "es": "Heladería",
+      "pt": "Sorveteria",
+      "en": "Ice cream"
+    },
+    "rest.cat.panadería": {
+      "es": "Panadería",
+      "pt": "Padaria",
+      "en": "Bakery"
+    },
+    "rest.cat.cervecería": {
+      "es": "Cervecería",
+      "pt": "Cervejaria",
+      "en": "Brewery"
+    },
+    "rest.cat.compras-gourmet": {
+      "es": "Compras gourmet",
+      "pt": "Compras gourmet",
+      "en": "Gourmet shopping"
+    },
+    "rest.cat.supermercado": {
+      "es": "Supermercado",
+      "pt": "Supermercado",
+      "en": "Grocery"
+    },
+    "rest.source.google": {
+      "es": "Google",
+      "pt": "Google",
+      "en": "Google"
+    },
+    "rest.source.tripadvisor": {
+      "es": "Tripadvisor",
+      "pt": "Tripadvisor",
+      "en": "Tripadvisor"
+    },
+    "rest.source.other": {
+      "es": "Fuente pública",
+      "pt": "Fonte pública",
+      "en": "Public source"
+    },
+    "lang.selector": {
+      "es": "Selector de idioma",
+      "pt": "Seletor de idioma",
+      "en": "Language selector"
+    },
+    "home.preferences.aria": {
+      "es": "Preferencias de visualización",
+      "pt": "Preferências de visualização",
+      "en": "Display preferences"
+    },
+    "clima.units.aria": {
+      "es": "Cambiar entre unidades métricas e imperiales",
+      "pt": "Alternar entre unidades métricas e imperiais",
+      "en": "Toggle metric and imperial units"
+    },
+    "buggy.whatsapp.aria": {
+      "es": "Abrir WhatsApp para coordinar el buggy",
+      "pt": "Abrir o WhatsApp para coordenar o buggy",
+      "en": "Open WhatsApp to arrange the buggy"
     }
   },
   "urls": {
     "checkin.maps": "https://www.google.com/maps/search/?api=1&query=Condominio+Andes+Chill%C3%A1n",
     "clima.forecast": "https://www.snow-forecast.com/resorts/Nevados-de-Chillan",
     "tickets.buy": "https://www.nevadosdechillan.com/",
-    "quick.wa": "",
-    "emergency.tel": "tel:133"
+    "quick.wa": "https://wa.me/56990137732",
+    "emergency.tel": "tel:131"
+  },
+  "publicSupport": {
+    "whatsappUrl": "https://wa.me/56990137732"
   },
   "restaurants": [
     {
@@ -816,7 +1772,7 @@
       },
       "descripcion_corta": {
         "es": "Bar y pastelería; cócteles.",
-        "pt": "Bar e confeitaria; cocktails.",
+        "pt": "Bar e confeitaria; coquetéis.",
         "en": "Bar and pastry shop; cocktails."
       }
     },
@@ -1700,7 +2656,7 @@
       },
       "descripcion_corta": {
         "es": "Bar lounge con coctelería de autor, comida y música.",
-        "pt": "Bar lounge com cocktails de autor, comida e música.",
+        "pt": "Bar lounge com coquetéis de autor, comida e música.",
         "en": "Lounge bar with signature cocktails, food and music."
       }
     },
@@ -1989,7 +2945,7 @@
       },
       "edad_minima": {
         "es": "desde 5 años",
-        "pt": "a partir de 5 años",
+        "pt": "a partir de 5 anos",
         "en": "from 5 years old"
       },
       "precio_referencia": {
@@ -2084,7 +3040,7 @@
       },
       "edad_minima": {
         "es": "desde 5 años y 100 cm",
-        "pt": "a partir de 5 años e 100 cm",
+        "pt": "a partir de 5 anos e 100 cm",
         "en": "from 5 years old and 100 cm"
       },
       "precio_referencia": {
@@ -2168,7 +3124,7 @@
       "estrellas_airbnb": 4,
       "dificultad": {
         "es": "media",
-        "pt": "médía",
+        "pt": "média",
         "en": "medium"
       },
       "dificultad_key": "media",
@@ -2179,7 +3135,7 @@
       },
       "edad_minima": {
         "es": "desde 12 años, 120 cm, 40-100 kg",
-        "pt": "a partir de 12 años, 120 cm, 40-100 kg",
+        "pt": "a partir de 12 anos, 120 cm, 40-100 kg",
         "en": "from 12 years old, 120 cm, 40-100 kg"
       },
       "precio_referencia": {
@@ -2211,7 +3167,7 @@
       },
       "copy_card": {
         "es": "Recorrido corto en altura para sumar adrenalina sin dedicar medio día completo.",
-        "pt": "Trajeto curto em altura para somar adrenalina sem precisar de meio día inteiro.",
+        "pt": "Trajeto curto em altura para somar adrenalina sem precisar de meio dia inteiro.",
         "en": "A short high-altitude run for a burst of adrenaline without spending a full half day."
       },
       "prioridad_landing": 3,
@@ -2274,7 +3230,7 @@
       },
       "edad_minima": {
         "es": "desde 6 años y 120 cm",
-        "pt": "a partir de 6 años e 120 cm",
+        "pt": "a partir de 6 anos e 120 cm",
         "en": "from 6 years old and 120 cm"
       },
       "precio_referencia": {
@@ -2369,7 +3325,7 @@
       },
       "edad_minima": {
         "es": "desde 6 años pago, infantes según regla",
-        "pt": "a partir de 6 años pago, crianças conforme regra",
+        "pt": "a partir de 6 anos pago, crianças conforme regra",
         "en": "from 6 years old paid, infants per rule"
       },
       "precio_referencia": {
@@ -2459,12 +3415,12 @@
       "dificultad_key": "facil",
       "duracion": {
         "es": "medio día",
-        "pt": "meio día",
+        "pt": "meio dia",
         "en": "half day"
       },
       "edad_minima": {
         "es": "desde 6 años pago, infantes según regla",
-        "pt": "a partir de 6 años pago, crianças conforme regra",
+        "pt": "a partir de 6 anos pago, crianças conforme regra",
         "en": "from 6 years old paid, infants per rule"
       },
       "precio_referencia": {
@@ -2590,7 +3546,7 @@
       },
       "copy_card": {
         "es": "Opcion termal mas hotelera, comoda y directa para un día de relajo.",
-        "pt": "Opção termal mais hoteleira, confortável e direta para um día de descanso.",
+        "pt": "Opção termal mais hoteleira, confortável e direta para um dia de descanso.",
         "en": "A more hotel-style thermal option, comfortable and easy for a relaxing day."
       },
       "prioridad_landing": 5,
@@ -2743,7 +3699,7 @@
       "dificultad_key": "facil",
       "duracion": {
         "es": "medio día/día",
-        "pt": "meio día/día",
+        "pt": "meio dia/dia",
         "en": "half day/full day"
       },
       "edad_minima": {
@@ -2832,13 +3788,13 @@
       "estrellas_airbnb": 5,
       "dificultad": {
         "es": "media/alta",
-        "pt": "médía/alta",
+        "pt": "média/alta",
         "en": "medium/high"
       },
       "dificultad_key": "alta",
       "duracion": {
         "es": "medio día/día",
-        "pt": "meio día/día",
+        "pt": "meio dia/dia",
         "en": "half day/full day"
       },
       "edad_minima": {
@@ -2893,9 +3849,17 @@
         "estado": "verificado_publico",
         "primario_url": "https://www.nevadosdechillan.com/bike-park",
         "fallback_url": "https://www.trailforks.com/region/chillan/",
-        "cta_label": "Comprar/ver oficial"
+        "cta_label": {
+          "es": "Comprar/ver oficial",
+          "pt": "Comprar/ver site oficial",
+          "en": "Buy/view official site"
+        }
       },
-      "cta_label": "Comprar/ver oficial",
+      "cta_label": {
+        "es": "Comprar/ver oficial",
+        "pt": "Comprar/ver site oficial",
+        "en": "Buy/view official site"
+      },
       "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Bike%20Park%20Nevados%20Nevados%20de%20Chillan"
     },
     {
@@ -2935,7 +3899,7 @@
       "estrellas_airbnb": 4,
       "dificultad": {
         "es": "media/alta",
-        "pt": "médía/alta",
+        "pt": "média/alta",
         "en": "medium/high"
       },
       "dificultad_key": "alta",
@@ -3036,7 +4000,7 @@
       "dificultad_key": "alta",
       "duracion": {
         "es": "medio día/día",
-        "pt": "meio día/día",
+        "pt": "meio dia/dia",
         "en": "half day/full day"
       },
       "edad_minima": {
@@ -3091,9 +4055,17 @@
         "estado": "pendiente_strava",
         "primario_url": "https://www.turismovallelastrancas.com/actividades-en-las-trancas/",
         "fallback_url": "https://backchillan.com/es/conoce-el-valle-las-trancas/",
-        "cta_label": "Consultar guía"
+        "cta_label": {
+          "es": "Consultar guía",
+          "pt": "Consultar guia",
+          "en": "Contact a guide"
+        }
       },
-      "cta_label": "Consultar guía",
+      "cta_label": {
+        "es": "Consultar guía",
+        "pt": "Consultar guia",
+        "en": "Contact a guide"
+      },
       "ruta": {
         "seguridad_minima": "Avalanchas, clima, equipo técnico y guía local recomendado.",
         "requiere_login": "no"
@@ -3137,7 +4109,7 @@
       "estrellas_airbnb": 4,
       "dificultad": {
         "es": "media",
-        "pt": "médía",
+        "pt": "média",
         "en": "medium"
       },
       "dificultad_key": "media",
@@ -3231,7 +4203,7 @@
       "estrellas_airbnb": 3,
       "dificultad": {
         "es": "media",
-        "pt": "médía",
+        "pt": "média",
         "en": "medium"
       },
       "dificultad_key": "media",
@@ -3326,7 +4298,7 @@
       "estrellas_airbnb": 4,
       "dificultad": {
         "es": "facil/media",
-        "pt": "fácil/médía",
+        "pt": "fácil/média",
         "en": "easy/medium"
       },
       "dificultad_key": "media",
@@ -3420,7 +4392,7 @@
       "estrellas_airbnb": 4,
       "dificultad": {
         "es": "media",
-        "pt": "médía",
+        "pt": "média",
         "en": "medium"
       },
       "dificultad_key": "media",
@@ -3575,9 +4547,17 @@
         "estado": "pendiente_strava",
         "primario_url": "https://www.turismovallelastrancas.com/actividades-en-las-trancas/",
         "fallback_url": "https://www.tripadvisor.es/Attractions-g11848562-Activities-c61-t219-Valle_Las_Trancas_Biobio_Region.html",
-        "cta_label": "Consultar operador"
+        "cta_label": {
+          "es": "Consultar operador",
+          "pt": "Consultar operador",
+          "en": "Contact operator"
+        }
       },
-      "cta_label": "Consultar operador",
+      "cta_label": {
+        "es": "Consultar operador",
+        "pt": "Consultar operador",
+        "en": "Contact operator"
+      },
       "ruta": {
         "seguridad_minima": "Arnés, casco, guía y condiciones de agua obligatorios.",
         "requiere_login": "no"
@@ -3873,14 +4853,26 @@
         "estado": "verificado_publico",
         "primario_url": "https://www.wikiloc.com/hiking-trails/las-trancas-laguna-huemul-118598213",
         "fallback_url": "https://www.andeshandbook.org/senderismo/ruta/586/laguna_del_huemul",
-        "cta_label": "Abrir ruta"
+        "cta_label": {
+          "es": "Abrir ruta",
+          "pt": "Abrir rota",
+          "en": "Open route"
+        }
       },
-      "cta_label": "Abrir ruta",
+      "cta_label": {
+        "es": "Abrir ruta",
+        "pt": "Abrir rota",
+        "en": "Open route"
+      },
       "ruta": {
         "distancia_km": 11.7,
         "desnivel_m": 802,
         "ruta_tipo": "loop/ida-vuelta según track",
-        "acceso_inicio": "Sector Las Trancas; validar acceso de caballos o Shangri-La",
+        "acceso_inicio": {
+          "es": "Sector Las Trancas; validar acceso de caballos o Shangri-La",
+          "pt": "Setor Las Trancas; confirmar acesso por Caballos ou Shangri-La",
+          "en": "Las Trancas sector; confirm access via Caballos or Shangri-La"
+        },
         "seguridad_minima": "Registrar salida, partir temprano, agua, abrigo, GPS offline; evitar invierno sin equipo.",
         "requiere_login": "no"
       },
@@ -3923,7 +4915,7 @@
       "estrellas_airbnb": 4,
       "dificultad": {
         "es": "media",
-        "pt": "médía",
+        "pt": "média",
         "en": "medium"
       },
       "dificultad_key": "media",
@@ -3966,7 +4958,7 @@
       },
       "copy_card": {
         "es": "Atractivo natural clasico para una caminata de medio día.",
-        "pt": "Atrativo natural clássico para uma caminhada de meio día.",
+        "pt": "Atrativo natural clássico para uma caminhada de meio dia.",
         "en": "A classic natural attraction for a half-day walk."
       },
       "prioridad_landing": 5,
@@ -3984,14 +4976,26 @@
         "estado": "pendiente_strava",
         "primario_url": "https://www.turismovallelastrancas.com/atractivos/garganta-del-diablo/",
         "fallback_url": "https://www.google.com/maps/search/?api=1&query=Garganta%20del%20Diablo%20Las%20Trancas",
-        "cta_label": "Consultar acceso"
+        "cta_label": {
+          "es": "Consultar acceso",
+          "pt": "Consultar acesso",
+          "en": "Check access"
+        }
       },
-      "cta_label": "Consultar acceso",
+      "cta_label": {
+        "es": "Consultar acceso",
+        "pt": "Consultar acesso",
+        "en": "Check access"
+      },
       "ruta": {
         "distancia_km": null,
         "desnivel_m": null,
         "ruta_tipo": "ida/vuelta",
-        "acceso_inicio": "Valle Las Trancas, validar entrada vigente",
+        "acceso_inicio": {
+          "es": "Valle Las Trancas, validar entrada vigente",
+          "pt": "Valle Las Trancas; confirmar entrada atual",
+          "en": "Valle Las Trancas; confirm the current entrance"
+        },
         "seguridad_minima": "Confirmar estado del sendero, agua y calzado.",
         "requiere_login": "no"
       },
@@ -4034,7 +5038,7 @@
       "estrellas_airbnb": 3,
       "dificultad": {
         "es": "media",
-        "pt": "médía",
+        "pt": "média",
         "en": "medium"
       },
       "dificultad_key": "media",
@@ -4095,14 +5099,26 @@
         "estado": "pendiente_strava",
         "primario_url": "https://trancas.cl/que-hacer-pocos-dias-e-valle-de-las-trancas/",
         "fallback_url": "https://www.google.com/maps/search/?api=1&query=Gruta%20Los%20Pangues%20Las%20Trancas",
-        "cta_label": "Ver acceso"
+        "cta_label": {
+          "es": "Ver acceso",
+          "pt": "Ver acesso",
+          "en": "View access"
+        }
       },
-      "cta_label": "Ver acceso",
+      "cta_label": {
+        "es": "Ver acceso",
+        "pt": "Ver acesso",
+        "en": "View access"
+      },
       "ruta": {
         "distancia_km": null,
         "desnivel_m": null,
         "ruta_tipo": "sendero corto",
-        "acceso_inicio": "Valle Las Trancas",
+        "acceso_inicio": {
+          "es": "Valle Las Trancas",
+          "pt": "Valle Las Trancas",
+          "en": "Valle Las Trancas"
+        },
         "seguridad_minima": "Sendero con raíces y barro; supervisar niños.",
         "requiere_login": "no"
       },
@@ -4146,7 +5162,7 @@
       "estrellas_airbnb": 4,
       "dificultad": {
         "es": "facil/media",
-        "pt": "fácil/médía",
+        "pt": "fácil/média",
         "en": "easy/medium"
       },
       "dificultad_key": "media",
@@ -4206,9 +5222,17 @@
         "estado": "verificado_publico",
         "primario_url": "https://www.conaf.cl/parque_nacionales/reserva-nacional-nuble/",
         "fallback_url": "",
-        "cta_label": "Ver fuente oficial"
+        "cta_label": {
+          "es": "Ver fuente oficial",
+          "pt": "Ver fonte oficial",
+          "en": "View official source"
+        }
       },
-      "cta_label": "Ver fuente oficial",
+      "cta_label": {
+        "es": "Ver fuente oficial",
+        "pt": "Ver fonte oficial",
+        "en": "View official source"
+      },
       "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Reserva%20Nacional%20Nuble%20Acceso%20por%20Recinto%2FAtacalco"
     },
     {
@@ -4248,7 +5272,7 @@
       "estrellas_airbnb": 3,
       "dificultad": {
         "es": "facil/media",
-        "pt": "fácil/médía",
+        "pt": "fácil/média",
         "en": "easy/medium"
       },
       "dificultad_key": "media",
@@ -4309,14 +5333,26 @@
         "estado": "verificado_publico",
         "primario_url": "https://es.wikiloc.com/rutas/senderismo/chile/bio-bio/atacalco?page=2",
         "fallback_url": "https://www.turismovallelastrancas.com/atractivos/",
-        "cta_label": "Abrir rutas"
+        "cta_label": {
+          "es": "Abrir rutas",
+          "pt": "Abrir rotas",
+          "en": "Open routes"
+        }
       },
-      "cta_label": "Abrir rutas",
+      "cta_label": {
+        "es": "Abrir rutas",
+        "pt": "Abrir rotas",
+        "en": "Open routes"
+      },
       "ruta": {
         "distancia_km": 2.3,
         "desnivel_m": 75,
         "ruta_tipo": "ida/vuelta corta",
-        "acceso_inicio": "Sector Atacalco/Las Turbinas",
+        "acceso_inicio": {
+          "es": "Sector Atacalco/Las Turbinas",
+          "pt": "Setor Atacalco/Las Turbinas",
+          "en": "Atacalco/Las Turbinas sector"
+        },
         "seguridad_minima": "Verificar acceso y permisos antes de publicar como gratis.",
         "requiere_login": "no"
       },
@@ -4359,7 +5395,7 @@
       "estrellas_airbnb": 3,
       "dificultad": {
         "es": "media",
-        "pt": "médía",
+        "pt": "média",
         "en": "medium"
       },
       "dificultad_key": "media",
@@ -4453,7 +5489,7 @@
       "estrellas_airbnb": 3,
       "dificultad": {
         "es": "media",
-        "pt": "médía",
+        "pt": "média",
         "en": "medium"
       },
       "dificultad_key": "media",
@@ -4548,7 +5584,7 @@
       "estrellas_airbnb": 4,
       "dificultad": {
         "es": "media",
-        "pt": "médía",
+        "pt": "média",
         "en": "medium"
       },
       "dificultad_key": "media",
@@ -4609,14 +5645,26 @@
         "estado": "pendiente_strava",
         "primario_url": "https://www.turismovallelastrancas.com/atractivos/cascada-rucapiren/",
         "fallback_url": "https://www.google.com/maps/search/?api=1&query=Cascada%20Rucapiren%20Las%20Trancas",
-        "cta_label": "Consultar acceso"
+        "cta_label": {
+          "es": "Consultar acceso",
+          "pt": "Consultar acesso",
+          "en": "Check access"
+        }
       },
-      "cta_label": "Consultar acceso",
+      "cta_label": {
+        "es": "Consultar acceso",
+        "pt": "Consultar acesso",
+        "en": "Check access"
+      },
       "ruta": {
         "distancia_km": null,
         "desnivel_m": null,
         "ruta_tipo": "ida/vuelta corta",
-        "acceso_inicio": "Costado Cabañas Rucapiren, antes de Termas",
+        "acceso_inicio": {
+          "es": "Costado Cabañas Rucapiren, antes de Termas",
+          "pt": "Ao lado das Cabañas Rucapiren, antes de Termas",
+          "en": "Next to Cabañas Rucapiren, before Termas"
+        },
         "seguridad_minima": "Calzado con agarre, no ir con crecidas o lluvia fuerte.",
         "requiere_login": "no"
       },
@@ -4660,7 +5708,7 @@
       "estrellas_airbnb": 4,
       "dificultad": {
         "es": "media/alta",
-        "pt": "médía/alta",
+        "pt": "média/alta",
         "en": "medium/high"
       },
       "dificultad_key": "alta",
@@ -4721,14 +5769,26 @@
         "estado": "pendiente_strava",
         "primario_url": "https://www.turismovallelastrancas.com/atractivos/fumarolas/",
         "fallback_url": "https://trancas.cl/mi-atardecer-en-las-fumarolas/",
-        "cta_label": "Ver fuente oficial"
+        "cta_label": {
+          "es": "Ver fuente oficial",
+          "pt": "Ver fonte oficial",
+          "en": "View official source"
+        }
       },
-      "cta_label": "Ver fuente oficial",
+      "cta_label": {
+        "es": "Ver fuente oficial",
+        "pt": "Ver fonte oficial",
+        "en": "View official source"
+      },
       "ruta": {
         "distancia_km": null,
         "desnivel_m": null,
         "ruta_tipo": "ida/vuelta",
-        "acceso_inicio": "Cercano al centro de ski Nevados, validar estacionamiento",
+        "acceso_inicio": {
+          "es": "Cercano al centro de ski Nevados, validar estacionamiento",
+          "pt": "Próximo ao centro de esqui Nevados; confirmar estacionamento",
+          "en": "Near the Nevados ski resort; confirm parking"
+        },
         "seguridad_minima": "Zona volcánica; revisar alerta, clima, agua, GPS offline y retorno con luz.",
         "requiere_login": "no"
       },
@@ -4772,7 +5832,7 @@
       "estrellas_airbnb": 4,
       "dificultad": {
         "es": "facil/media",
-        "pt": "fácil/médía",
+        "pt": "fácil/média",
         "en": "easy/medium"
       },
       "dificultad_key": "media",
@@ -4833,14 +5893,26 @@
         "estado": "verificado_publico",
         "primario_url": "https://es.wikiloc.com/rutas/senderismo/chile/bio-bio/las-trancas?page=5",
         "fallback_url": "https://trancas.cl/trekking-en-valle-las-trancas-consejos-para-principiantes/",
-        "cta_label": "Abrir rutas"
+        "cta_label": {
+          "es": "Abrir rutas",
+          "pt": "Abrir rotas",
+          "en": "Open routes"
+        }
       },
-      "cta_label": "Abrir rutas",
+      "cta_label": {
+        "es": "Abrir rutas",
+        "pt": "Abrir rotas",
+        "en": "Open routes"
+      },
       "ruta": {
         "distancia_km": 7.6,
         "desnivel_m": 772,
         "ruta_tipo": "ida/vuelta",
-        "acceso_inicio": "Las Trancas",
+        "acceso_inicio": {
+          "es": "Las Trancas",
+          "pt": "Las Trancas",
+          "en": "Las Trancas"
+        },
         "seguridad_minima": "Subida fuerte para principiantes; llevar agua y GPS.",
         "requiere_login": "no"
       },
@@ -4883,7 +5955,7 @@
       "estrellas_airbnb": 3,
       "dificultad": {
         "es": "facil/media",
-        "pt": "fácil/médía",
+        "pt": "fácil/média",
         "en": "easy/medium"
       },
       "dificultad_key": "media",
@@ -4944,14 +6016,26 @@
         "estado": "pendiente_strava",
         "primario_url": "https://www.turismovallelastrancas.com/atractivos/page/2/",
         "fallback_url": "https://www.google.com/maps/search/?api=1&query=Mirador%20El%20Regalo%20Las%20Trancas",
-        "cta_label": "Ver acceso"
+        "cta_label": {
+          "es": "Ver acceso",
+          "pt": "Ver acesso",
+          "en": "View access"
+        }
       },
-      "cta_label": "Ver acceso",
+      "cta_label": {
+        "es": "Ver acceso",
+        "pt": "Ver acesso",
+        "en": "View access"
+      },
       "ruta": {
         "distancia_km": null,
         "desnivel_m": null,
         "ruta_tipo": "caminata corta",
-        "acceso_inicio": "Valle Las Trancas",
+        "acceso_inicio": {
+          "es": "Valle Las Trancas",
+          "pt": "Valle Las Trancas",
+          "en": "Valle Las Trancas"
+        },
         "seguridad_minima": "Confirmar acceso y clima.",
         "requiere_login": "no"
       },
@@ -5000,7 +6084,7 @@
       "dificultad_key": "alta",
       "duracion": {
         "es": "medio día/día",
-        "pt": "meio día/día",
+        "pt": "meio dia/dia",
         "en": "half day/full day"
       },
       "edad_minima": {
@@ -5055,14 +6139,26 @@
         "estado": "pendiente_strava",
         "primario_url": "https://trancas.cl/como-es-la-ruta-aguas-calientes-en-las-trancas/",
         "fallback_url": "https://www.wikiexplora.com/index.php?mobileaction=toggle_view_desktop&title=Aguas_Calientes-_Reserva_%C3%91uble",
-        "cta_label": "Ver ruta y seguridad"
+        "cta_label": {
+          "es": "Ver ruta y seguridad",
+          "pt": "Ver rota e segurança",
+          "en": "View route and safety"
+        }
       },
-      "cta_label": "Ver ruta y seguridad",
+      "cta_label": {
+        "es": "Ver ruta y seguridad",
+        "pt": "Ver rota e segurança",
+        "en": "View route and safety"
+      },
       "ruta": {
         "distancia_km": 10,
         "desnivel_m": null,
         "ruta_tipo": "ida/vuelta",
-        "acceso_inicio": "Sector Termas/Nevados; salir antes de 07:00 recomendado",
+        "acceso_inicio": {
+          "es": "Sector Termas/Nevados; salir antes de 07:00 recomendado",
+          "pt": "Setor Termas/Nevados; recomenda-se sair antes das 07:00",
+          "en": "Termas/Nevados sector; leaving before 7:00 a.m. is recommended"
+        },
         "seguridad_minima": "Registro, 2 L agua, traje de baño, GPS offline; invierno puede requerir raquetas/crampones.",
         "requiere_login": "no"
       },
@@ -5072,7 +6168,7 @@
       "id": "atr-banos-rafa",
       "nombre": {
         "es": "Banos del Rafa",
-        "pt": "Baños del Rafa",
+        "pt": "Banos del Rafa",
         "en": "Rafa's Baths"
       },
       "tipo": "atractivo",
@@ -5105,7 +6201,7 @@
       "estrellas_airbnb": 3,
       "dificultad": {
         "es": "media",
-        "pt": "médía",
+        "pt": "média",
         "en": "medium"
       },
       "dificultad_key": "media",
@@ -5201,7 +6297,7 @@
       "estrellas_airbnb": 5,
       "dificultad": {
         "es": "facil/media",
-        "pt": "fácil/médía",
+        "pt": "fácil/média",
         "en": "easy/medium"
       },
       "dificultad_key": "media",
@@ -5261,9 +6357,17 @@
         "estado": "pendiente_strava",
         "primario_url": "https://www.turismovallelastrancas.com/atractivos/cueva-de-los-pincheira/",
         "fallback_url": "",
-        "cta_label": "Consultar acceso"
+        "cta_label": {
+          "es": "Consultar acceso",
+          "pt": "Consultar acesso",
+          "en": "Check access"
+        }
       },
-      "cta_label": "Consultar acceso",
+      "cta_label": {
+        "es": "Consultar acceso",
+        "pt": "Consultar acesso",
+        "en": "Check access"
+      },
       "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Cueva%20de%20los%20Pincheira%20Camino%20a%20Las%20Trancas"
     },
     {
@@ -6119,14 +7223,26 @@
         "estado": "pendiente_strava",
         "primario_url": "https://trancas.cl/rio-diguillin/",
         "fallback_url": "https://www.google.com/maps/search/?api=1&query=Rio%20Diguillin%20Valle%20Las%20Trancas",
-        "cta_label": "Ver fuente"
+        "cta_label": {
+          "es": "Ver fuente",
+          "pt": "Ver fonte",
+          "en": "View source"
+        }
       },
-      "cta_label": "Ver fuente",
+      "cta_label": {
+        "es": "Ver fuente",
+        "pt": "Ver fonte",
+        "en": "View source"
+      },
       "ruta": {
         "distancia_km": null,
         "desnivel_m": null,
         "ruta_tipo": "acceso natural",
-        "acceso_inicio": "Cuenca Diguillin/Renegado, validar punto exacto",
+        "acceso_inicio": {
+          "es": "Cuenca Diguillin/Renegado, validar punto exacto",
+          "pt": "Bacia Diguillin/Renegado; confirmar o ponto exato",
+          "en": "Diguillin/Renegado basin; confirm the exact location"
+        },
         "seguridad_minima": "Confirmar acceso local, caudal y seguridad antes de recomendar baño.",
         "requiere_login": "no"
       },
@@ -6212,7 +7328,7 @@
       },
       "copy_card": {
         "es": "Variante directa y dura hacia Laguna Huemul; ideal como dato experto, no como paseo familiar.",
-        "pt": "Variante direta e dura hacia Laguna Huemul; ideal como dado experto, não como passeio familiar.",
+        "pt": "Variante direta e dura em direção a Laguna Huemul; ideal como dado experto, não como passeio familiar.",
         "en": "Direct and steep variant to Huemul Lagoon; ideal as expert tip, not a family outing."
       },
       "prioridad_landing": 7,
@@ -6230,14 +7346,26 @@
         "estado": "verificado_publico",
         "primario_url": "https://www.trailforks.com/trails/shangrila-laguna-heumul/",
         "fallback_url": "https://www.andeshandbook.org/senderismo/ruta/586/laguna_del_huemul",
-        "cta_label": "Ver mapa y seguridad"
+        "cta_label": {
+          "es": "Ver mapa y seguridad",
+          "pt": "Ver mapa e segurança",
+          "en": "View map and safety"
+        }
       },
-      "cta_label": "Ver mapa y seguridad",
+      "cta_label": {
+        "es": "Ver mapa y seguridad",
+        "pt": "Ver mapa e segurança",
+        "en": "View map and safety"
+      },
       "ruta": {
         "distancia_km": 3.9,
         "desnivel_m": 618,
         "ruta_tipo": "singletrack ida/vuelta",
-        "acceso_inicio": "Sector Shangri-La, Las Trancas",
+        "acceso_inicio": {
+          "es": "Sector Shangri-La, Las Trancas",
+          "pt": "Setor Shangri-La, Las Trancas",
+          "en": "Shangri-La sector, Las Trancas"
+        },
         "seguridad_minima": "Ruta exigente por pendiente; no recomendar a principiantes ni con nieve sin equipo.",
         "requiere_login": "no"
       },
@@ -6341,14 +7469,26 @@
         "estado": "verificado_publico",
         "primario_url": "https://www.trailforks.com/trails/ruta-de-los-caballos/",
         "fallback_url": "https://www.andeshandbook.org/senderismo/ruta/586/laguna_del_huemul",
-        "cta_label": "Abrir ruta"
+        "cta_label": {
+          "es": "Abrir ruta",
+          "pt": "Abrir rota",
+          "en": "Open route"
+        }
       },
-      "cta_label": "Abrir ruta",
+      "cta_label": {
+        "es": "Abrir ruta",
+        "pt": "Abrir rota",
+        "en": "Open route"
+      },
       "ruta": {
         "distancia_km": 4.9,
         "desnivel_m": 795,
         "ruta_tipo": "singletrack ida/vuelta",
-        "acceso_inicio": "Sector Las Trancas/Shangri-La",
+        "acceso_inicio": {
+          "es": "Sector Las Trancas/Shangri-La",
+          "pt": "Setor Las Trancas/Shangri-La",
+          "en": "Las Trancas/Shangri-La sector"
+        },
         "seguridad_minima": "Mucho desnivel; GPS offline, agua y retorno con luz.",
         "requiere_login": "no"
       },
@@ -6453,14 +7593,26 @@
         "estado": "verificado_publico",
         "primario_url": "https://www.trailforks.com/trails/las-trancas-palo-huacho/",
         "fallback_url": "https://www.trailforks.com/region/las-trancas-15702/trails/",
-        "cta_label": "Abrir Trailforks"
+        "cta_label": {
+          "es": "Abrir Trailforks",
+          "pt": "Abrir Trailforks",
+          "en": "Open Trailforks"
+        }
       },
-      "cta_label": "Abrir Trailforks",
+      "cta_label": {
+        "es": "Abrir Trailforks",
+        "pt": "Abrir Trailforks",
+        "en": "Open Trailforks"
+      },
       "ruta": {
         "distancia_km": 6.3,
         "desnivel_m": 191,
         "ruta_tipo": "singletrack one direction",
-        "acceso_inicio": "Las Trancas",
+        "acceso_inicio": {
+          "es": "Las Trancas",
+          "pt": "Las Trancas",
+          "en": "Las Trancas"
+        },
         "seguridad_minima": "Última bajada empinada con huellas; casco, protecciones y bici adecuada.",
         "requiere_login": "no"
       },
@@ -6563,14 +7715,26 @@
         "estado": "verificado_publico",
         "primario_url": "https://www.trailforks.com/trails/cerro-oculto-79732/",
         "fallback_url": "https://www.trailforks.com/region/las-trancas-15702/trails/",
-        "cta_label": "Abrir Trailforks"
+        "cta_label": {
+          "es": "Abrir Trailforks",
+          "pt": "Abrir Trailforks",
+          "en": "Open Trailforks"
+        }
       },
-      "cta_label": "Abrir Trailforks",
+      "cta_label": {
+        "es": "Abrir Trailforks",
+        "pt": "Abrir Trailforks",
+        "en": "Open Trailforks"
+      },
       "ruta": {
         "distancia_km": 0.9,
         "desnivel_m": 1,
         "ruta_tipo": "singletrack ambos sentidos",
-        "acceso_inicio": "Trailhead -36.90582, -71.48755",
+        "acceso_inicio": {
+          "es": "Inicio de ruta -36.90582, -71.48755",
+          "pt": "Início da trilha -36.90582, -71.48755",
+          "en": "Trailhead -36.90582, -71.48755"
+        },
         "seguridad_minima": "Revisar sentido, peatones y condiciones.",
         "requiere_login": "no"
       },
@@ -6602,7 +7766,7 @@
       "temporada_key": "anual",
       "zona": {
         "es": "Frente a Rucahue Market hacia Robledal Hotel",
-        "pt": "Frente a Rucahue Market hacia Robledal Hotel",
+        "pt": "Frente a Rucahue Market em direção a Robledal Hotel",
         "en": "Across from Rucahue Market towards Robledal Hotel"
       },
       "zona_key": "valle_las_trancas",
@@ -6675,14 +7839,26 @@
         "estado": "verificado_publico",
         "primario_url": "https://www.trailforks.com/trails/pumptrack-club-deportivo/",
         "fallback_url": "https://www.google.com/maps/search/?api=1&query=Pumptrack%20Club%20Deportivo%20Las%20Trancas",
-        "cta_label": "Abrir mapa"
+        "cta_label": {
+          "es": "Abrir mapa",
+          "pt": "Abrir mapa",
+          "en": "Open map"
+        }
       },
-      "cta_label": "Abrir mapa",
+      "cta_label": {
+        "es": "Abrir mapa",
+        "pt": "Abrir mapa",
+        "en": "Open map"
+      },
       "ruta": {
         "distancia_km": 0.18,
         "desnivel_m": 3,
         "ruta_tipo": "pumptrack one direction",
-        "acceso_inicio": "Frente a Rucahue Market hacia Robledal Hotel",
+        "acceso_inicio": {
+          "es": "Frente a Rucahue Market hacia Robledal Hotel",
+          "pt": "Em frente ao Rucahue Market, em direção ao Robledal Hotel",
+          "en": "Opposite Rucahue Market toward Robledal Hotel"
+        },
         "seguridad_minima": "Casco obligatorio; cuidar niños y mantener limpio.",
         "requiere_login": "no"
       },
@@ -6714,7 +7890,7 @@
       "temporada_key": "multi",
       "zona": {
         "es": "Las Trancas hacia Eco Parque Shangri-La",
-        "pt": "Las Trancas hacia Eco Parque Shangri-La",
+        "pt": "Las Trancas em direção a Eco Parque Shangri-La",
         "en": "Las Trancas towards Eco Parque Shangri-La"
       },
       "zona_key": "shangrila",
@@ -6736,7 +7912,7 @@
       },
       "edad_minima": {
         "es": "expertos",
-        "pt": "experts",
+        "pt": "especialistas",
         "en": "experts"
       },
       "precio_referencia": {
@@ -6768,7 +7944,7 @@
       },
       "copy_card": {
         "es": "Ruta MTB fuerte hacia Shangri-La, ruinas y pistas locales; buena para riders con experiencia.",
-        "pt": "Rota MTB forte hacia Shangri-La, ruínas e pistas locais; boa para riders com experiência.",
+        "pt": "Rota MTB forte em direção a Shangri-La, ruínas e pistas locais; boa para riders com experiência.",
         "en": "Strong MTB route towards Shangri-La, ruins and local trails; good for experienced riders."
       },
       "prioridad_landing": 6,
@@ -6786,14 +7962,26 @@
         "estado": "verificado_publico",
         "primario_url": "https://es.wikiloc.com/rutas-mountain-bike/las-trancas-shangri-la-ruinas-refugio-65999327",
         "fallback_url": "https://www.trailforks.com/region/las-trancas-15702/trails/",
-        "cta_label": "Abrir ruta"
+        "cta_label": {
+          "es": "Abrir ruta",
+          "pt": "Abrir rota",
+          "en": "Open route"
+        }
       },
-      "cta_label": "Abrir ruta",
+      "cta_label": {
+        "es": "Abrir ruta",
+        "pt": "Abrir rota",
+        "en": "Open route"
+      },
       "ruta": {
         "distancia_km": 16.7,
         "desnivel_m": 430,
         "ruta_tipo": "ruta MTB circular/mixta",
-        "acceso_inicio": "Las Trancas hacia Eco Parque Shangri-La",
+        "acceso_inicio": {
+          "es": "Las Trancas hacia Eco Parque Shangri-La",
+          "pt": "Las Trancas em direção ao Eco Parque Shangri-La",
+          "en": "Las Trancas toward Eco Parque Shangri-La"
+        },
         "seguridad_minima": "Ruta muy difícil; validar acceso, estado de pistas y clima.",
         "requiere_login": "no"
       },
@@ -6846,7 +8034,7 @@
       },
       "edad_minima": {
         "es": "expertos",
-        "pt": "experts",
+        "pt": "especialistas",
         "en": "experts"
       },
       "precio_referencia": {
@@ -6896,15 +8084,27 @@
         "estado": "requiere_verificacion_local",
         "primario_url": "https://es.wikiloc.com/rutas-mountain-bike/las-trancas-shangri-la-ruinas-refugio-65999327",
         "fallback_url": "https://www.trailforks.com/region/las-trancas-15702/trails/",
-        "cta_label": "Validar pista"
+        "cta_label": {
+          "es": "Validar pista",
+          "pt": "Validar trilha",
+          "en": "Validate trail"
+        }
       },
-      "cta_label": "Validar pista",
+      "cta_label": {
+        "es": "Validar pista",
+        "pt": "Validar trilha",
+        "en": "Validate trail"
+      },
       "validacion_local": true,
       "ruta": {
         "distancia_km": null,
         "desnivel_m": null,
         "ruta_tipo": "pista local",
-        "acceso_inicio": "Club Deportivo Las Trancas / Shangri-La según Wikiloc",
+        "acceso_inicio": {
+          "es": "Club Deportivo Las Trancas / Shangri-La según Wikiloc",
+          "pt": "Club Deportivo Las Trancas / Shangri-La, segundo o Wikiloc",
+          "en": "Club Deportivo Las Trancas / Shangri-La, according to Wikiloc"
+        },
         "seguridad_minima": "Confirmar nombre, trazado y permiso local antes de publicar como ficha independiente.",
         "requiere_login": "no"
       },
@@ -6957,7 +8157,7 @@
       },
       "edad_minima": {
         "es": "expertos",
-        "pt": "experts",
+        "pt": "especialistas",
         "en": "experts"
       },
       "precio_referencia": {
@@ -7007,15 +8207,27 @@
         "estado": "requiere_verificacion_local",
         "primario_url": "https://es.wikiloc.com/rutas-mountain-bike/las-trancas-shangri-la-ruinas-refugio-65999327",
         "fallback_url": "https://www.trailforks.com/region/las-trancas-15702/trails/",
-        "cta_label": "Validar pista"
+        "cta_label": {
+          "es": "Validar pista",
+          "pt": "Validar trilha",
+          "en": "Validate trail"
+        }
       },
-      "cta_label": "Validar pista",
+      "cta_label": {
+        "es": "Validar pista",
+        "pt": "Validar trilha",
+        "en": "Validate trail"
+      },
       "validacion_local": true,
       "ruta": {
         "distancia_km": null,
         "desnivel_m": null,
         "ruta_tipo": "pista local",
-        "acceso_inicio": "Club Deportivo Las Trancas / Shangri-La",
+        "acceso_inicio": {
+          "es": "Club Deportivo Las Trancas / Shangri-La",
+          "pt": "Club Deportivo Las Trancas / Shangri-La",
+          "en": "Club Deportivo Las Trancas / Shangri-La"
+        },
         "seguridad_minima": "Confirmar nombre exacto, trazado y estado con riders locales.",
         "requiere_login": "no"
       },
@@ -7047,7 +8259,7 @@
       "temporada_key": "multi",
       "zona": {
         "es": "Región Chillán/Las Trancas, validar trailhead",
-        "pt": "Região Chillán/Las Trancas, validar trailhead",
+        "pt": "Região Chillán/Las Trancas, validar início da trilha",
         "en": "Chillán/Las Trancas region, validate trailhead"
       },
       "zona_key": "valle_las_trancas",
@@ -7068,7 +8280,7 @@
       },
       "edad_minima": {
         "es": "expertos",
-        "pt": "experts",
+        "pt": "especialistas",
         "en": "experts"
       },
       "precio_referencia": {
@@ -7118,15 +8330,27 @@
         "estado": "requiere_verificacion_local",
         "primario_url": "https://www.trailforks.com/region/chillan/",
         "fallback_url": "https://www.trailforks.com/region/las-trancas-15702/map/",
-        "cta_label": "Ver mapa"
+        "cta_label": {
+          "es": "Ver mapa",
+          "pt": "Ver mapa",
+          "en": "View map"
+        }
       },
-      "cta_label": "Ver mapa",
+      "cta_label": {
+        "es": "Ver mapa",
+        "pt": "Ver mapa",
+        "en": "View map"
+      },
       "validacion_local": true,
       "ruta": {
         "distancia_km": 4.8,
         "desnivel_m": null,
         "ruta_tipo": "singletrack",
-        "acceso_inicio": "Región Chillan/Las Trancas, validar trailhead",
+        "acceso_inicio": {
+          "es": "Región Chillán/Las Trancas, validar inicio de ruta",
+          "pt": "Região de Chillán/Las Trancas; confirmar o início da trilha",
+          "en": "Chillán/Las Trancas region; confirm the trailhead"
+        },
         "seguridad_minima": "Trail negro/duro según Trailforks regional; no recomendar a principiantes.",
         "requiere_login": "no"
       },
@@ -7179,7 +8403,7 @@
       },
       "edad_minima": {
         "es": "expertos",
-        "pt": "experts",
+        "pt": "especialistas",
         "en": "experts"
       },
       "precio_referencia": {
@@ -7229,15 +8453,27 @@
         "estado": "requiere_verificacion_local",
         "primario_url": "https://www.trailforks.com/region/chillan/",
         "fallback_url": "https://www.trailforks.com/region/las-trancas-15702/map/",
-        "cta_label": "Ver mapa"
+        "cta_label": {
+          "es": "Ver mapa",
+          "pt": "Ver mapa",
+          "en": "View map"
+        }
       },
-      "cta_label": "Ver mapa",
+      "cta_label": {
+        "es": "Ver mapa",
+        "pt": "Ver mapa",
+        "en": "View map"
+      },
       "validacion_local": true,
       "ruta": {
         "distancia_km": null,
         "desnivel_m": null,
         "ruta_tipo": "enlace MTB",
-        "acceso_inicio": "Cercano a Garganta, validar en Trailforks/app",
+        "acceso_inicio": {
+          "es": "Cercano a Garganta, validar en Trailforks/app",
+          "pt": "Próximo a Garganta; confirmar no Trailforks/app",
+          "en": "Near Garganta; confirm in Trailforks/app"
+        },
         "seguridad_minima": "Confirmar permisos, sentido y condiciones antes de publicar.",
         "requiere_login": "no"
       },

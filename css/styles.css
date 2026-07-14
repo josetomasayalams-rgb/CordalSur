@@ -439,9 +439,7 @@ a.card:active { transform: scale(0.985); transition: transform var(--motion-snap
   gap: 16px;
 }
 
-/* ── Check-in card: main action + subtle WhatsApp accent ── */
-/* ponytail: WA href is a static placeholder (matches the hardcoded tel:133 pattern);
-   host swaps '#' for the real wa.me URL when the number is confirmed — no build wiring for one link */
+/* ── Check-in card: main action + localized WhatsApp accent ── */
 .checkin-card { flex-direction: row; align-items: center; gap: 0; }
 .checkin-card__main { flex: 1 1 auto; text-decoration: none; color: inherit; }
 /* WhatsApp glyph floats free — no divider, no background, no box; subtle lift on hover */
@@ -449,6 +447,8 @@ a.card:active { transform: scale(0.985); transition: transform var(--motion-snap
   flex: none;
   display: grid;
   place-items: center;
+  height: 44px;
+  min-height: 44px;
   width: 44px;
   margin-left: 8px;
   color: var(--forest);
@@ -546,7 +546,7 @@ a.card:active { transform: scale(0.985); transition: transform var(--motion-snap
 .text-center { text-align: center; }
 
 /* ============================================================
-   [NUEVO] Component library — casco Andes Chillán
+   [NUEVO] Component library — Cordal Sur
    Apple ADN aterrizado vía DESIGN.md / GRAPHIFY_MAESTRO.md
    ============================================================ */
 
@@ -2882,8 +2882,217 @@ html[data-theme="dark"] .site-credit__link { text-shadow: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .app-container, .hero-panel, .prefs-stack, .rest-filter-bar,
-  .rest-card, .card, .lang-selector button, .theme-selector button {
+  .rest-card, .card, .lang-selector button, .theme-selector button,
+  .checkin-card__wa, .checkin-card__wa svg,
+  .emergency-disclosure__chevron, .emergency-contact {
     animation: none !important;
     transition: none !important;
   }
+
+  .checkin-card__wa:hover svg,
+  .emergency-contact:hover {
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   Cordal Sur brand + guest support
+   ========================================================================== */
+.hero-panel__brand {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(8, 20, 29, 0.88), rgba(18, 52, 77, 0.72));
+  box-shadow: 0 14px 32px rgba(8, 20, 29, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+}
+
+.brand-mark img {
+  display: block;
+  width: clamp(72px, 18vw, 96px);
+  height: clamp(72px, 18vw, 96px);
+  object-fit: contain;
+}
+
+.hero-panel__brand .hero-panel__title {
+  margin: 0;
+}
+
+/* Calm emergency disclosure: colour is reserved for the callable numbers. */
+details.emergency-disclosure {
+  padding: 0;
+  border-color: rgba(91, 143, 169, 0.32);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(221, 234, 243, 0.52));
+}
+
+.emergency-disclosure__summary {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 12px;
+  min-height: 76px;
+  padding: 16px 18px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--night);
+}
+
+.emergency-disclosure__summary::-webkit-details-marker { display: none; }
+
+.emergency-disclosure__summary:focus-visible {
+  outline: 3px solid rgba(91, 143, 169, 0.62);
+  outline-offset: -3px;
+  border-radius: inherit;
+}
+
+.emergency-disclosure__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: rgba(91, 143, 169, 0.14);
+  color: var(--deep-blue);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.emergency-disclosure__heading {
+  display: grid;
+  gap: 3px;
+}
+
+.emergency-disclosure__heading strong { font-size: 1rem; }
+.emergency-disclosure__heading > span { color: var(--rock); font-size: 0.82rem; line-height: 1.35; }
+
+.emergency-disclosure__chevron {
+  color: var(--deep-blue);
+  font-size: 1.65rem;
+  line-height: 1;
+  transition: transform var(--motion-snap);
+}
+
+.emergency-disclosure[open] .emergency-disclosure__chevron { transform: rotate(90deg); }
+
+.emergency-disclosure__body {
+  padding: 0 18px 18px;
+  border-top: 1px solid rgba(91, 143, 169, 0.18);
+}
+
+.emergency-disclosure__intro {
+  margin: 14px 0 12px;
+  color: var(--rock);
+  font-size: 0.82rem;
+}
+
+.emergency-contact-list { display: grid; gap: 8px; }
+
+.emergency-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 58px;
+  padding: 10px 12px 10px 14px;
+  border: 1px solid rgba(91, 143, 169, 0.22);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--night);
+  text-decoration: none;
+  transition: transform var(--motion-snap), border-color var(--motion-snap), background var(--motion-snap);
+}
+
+.emergency-contact > span { display: grid; gap: 2px; min-width: 0; }
+.emergency-contact strong { font-size: 0.9rem; }
+.emergency-contact small { color: var(--rock); font-size: 0.75rem; line-height: 1.3; }
+.emergency-contact b {
+  flex: none;
+  min-width: 52px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: var(--deep-blue);
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+.emergency-contact:hover { transform: translateY(-1px); border-color: rgba(91, 143, 169, 0.5); background: rgba(255, 255, 255, 0.84); }
+.emergency-contact:focus-visible { outline: 3px solid rgba(91, 143, 169, 0.62); outline-offset: 2px; }
+
+.whatsapp-support-card {
+  gap: 16px;
+  border-color: rgba(31, 77, 58, 0.30);
+  background: linear-gradient(135deg, rgba(240, 248, 245, 0.86), rgba(255, 255, 255, 0.56));
+}
+
+.whatsapp-support-card__copy {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.whatsapp-support-card__copy > span:last-child { display: grid; gap: 3px; }
+.whatsapp-support-card__copy strong { color: var(--night); font-size: 0.95rem; }
+.whatsapp-support-card__copy small { color: var(--rock); font-size: 0.8rem; line-height: 1.4; }
+
+.whatsapp-support-card__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(31, 77, 58, 0.12);
+  color: var(--forest);
+}
+
+.whatsapp-support-card__action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  width: 100%;
+  background: var(--forest);
+  color: #fff;
+}
+
+html[data-theme="dark"] details.emergency-disclosure,
+html[data-theme="dark"] .whatsapp-support-card {
+  background: linear-gradient(135deg, rgba(13, 20, 31, 0.88), rgba(13, 20, 31, 0.64));
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+html[data-theme="dark"] .emergency-contact {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+html[data-theme="dark"] .emergency-contact:hover { background: rgba(255, 255, 255, 0.10); }
+
+html[data-theme="dark"] .emergency-contact b {
+  background: #254f65;
+  color: #fff;
+}
+
+html[data-theme="dark"] .whatsapp-support-card__action {
+  background: #1f4d3a;
+  color: #fff;
+}
+
+@media (max-width: 540px) {
+  .brand-mark { padding: 8px; border-radius: 24px; }
+  .emergency-disclosure__summary { grid-template-columns: 40px minmax(0, 1fr) 22px; padding: 14px; }
+  .emergency-disclosure__body { padding: 0 14px 14px; }
 }

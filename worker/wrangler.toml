@@ -1,0 +1,25 @@
+name = "cordal-sur-access"
+main = "src/index.js"
+compatibility_date = "2025-04-01"
+
+[vars]
+# Production must contain the exact GitHub Pages origin, with no trailing slash.
+# Add localhost only in a separate Wrangler environment or .dev.vars.
+ALLOWED_ORIGINS = "https://josetomasayalams-rgb.github.io"
+TOKEN_ISSUER = "cordal-sur-access"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "cordal-sur-access"
+database_id = "cc2078f8-fdda-4f23-b07d-fb5a3ae5461d"
+migrations_dir = "migrations"
+
+[env.dev.vars]
+ALLOWED_ORIGINS = "http://127.0.0.1:8765,http://localhost:8765"
+TOKEN_ISSUER = "cordal-sur-access-dev"
+
+[[env.dev.d1_databases]]
+binding = "DB"
+database_name = "cordal-sur-access-dev"
+database_id = "REPLACE_WITH_DEV_D1_DATABASE_ID"
+migrations_dir = "migrations"
