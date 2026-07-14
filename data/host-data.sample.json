@@ -3,64 +3,64 @@
   "_status": "SAMPLE",
   "scalar": {
     "brand": {
-      "es": "Cordal Sur",
-      "pt": "Cordal Sur",
-      "en": "Cordal Sur"
+      "es": "CordalSur",
+      "pt": "CordalSur",
+      "en": "CordalSur"
     },
     "page.home.title": {
-      "es": "Cordal Sur · Las Trancas",
-      "pt": "Cordal Sur · Las Trancas",
-      "en": "Cordal Sur · Las Trancas"
+      "es": "CordalSur · Las Trancas",
+      "pt": "CordalSur · Las Trancas",
+      "en": "CordalSur · Las Trancas"
     },
     "page.checkin.title": {
-      "es": "Check-in · Cordal Sur",
-      "pt": "Check-in · Cordal Sur",
-      "en": "Check-in · Cordal Sur"
+      "es": "Check-in · CordalSur",
+      "pt": "Check-in · CordalSur",
+      "en": "Check-in · CordalSur"
     },
     "page.checkout.title": {
-      "es": "Check-out · Cordal Sur",
-      "pt": "Check-out · Cordal Sur",
-      "en": "Check-out · Cordal Sur"
+      "es": "Check-out · CordalSur",
+      "pt": "Check-out · CordalSur",
+      "en": "Check-out · CordalSur"
     },
     "page.restaurants.title": {
-      "es": "Comida y provisiones · Cordal Sur",
-      "pt": "Comida e provisões · Cordal Sur",
-      "en": "Food and provisions · Cordal Sur"
+      "es": "Comida y provisiones · CordalSur",
+      "pt": "Comida e provisões · CordalSur",
+      "en": "Food and provisions · CordalSur"
     },
     "page.activities.title": {
-      "es": "Actividades · Cordal Sur",
-      "pt": "Atividades · Cordal Sur",
-      "en": "Activities · Cordal Sur"
+      "es": "Actividades · CordalSur",
+      "pt": "Atividades · CordalSur",
+      "en": "Activities · CordalSur"
     },
     "page.weather.title": {
-      "es": "Clima y nieve · Cordal Sur",
-      "pt": "Clima e neve · Cordal Sur",
-      "en": "Weather and snow · Cordal Sur"
+      "es": "Clima y nieve · CordalSur",
+      "pt": "Clima e neve · CordalSur",
+      "en": "Weather and snow · CordalSur"
     },
     "page.tickets.title": {
-      "es": "Tickets de ski · Cordal Sur",
-      "pt": "Ingressos de esqui · Cordal Sur",
-      "en": "Ski tickets · Cordal Sur"
+      "es": "Tickets de ski · CordalSur",
+      "pt": "Ingressos de esqui · CordalSur",
+      "en": "Ski tickets · CordalSur"
     },
     "page.manual.title": {
-      "es": "Manual · Cordal Sur",
-      "pt": "Manual · Cordal Sur",
-      "en": "Manual · Cordal Sur"
+      "es": "Manual · CordalSur",
+      "pt": "Manual · CordalSur",
+      "en": "Manual · CordalSur"
     },
     "page.firstaid.title": {
-      "es": "Botiquín · Cordal Sur",
-      "pt": "Kit de primeiros socorros · Cordal Sur",
-      "en": "First-aid kit · Cordal Sur"
+      "es": "Botiquín · CordalSur",
+      "pt": "Kit de primeiros socorros · CordalSur",
+      "en": "First-aid kit · CordalSur"
     },
     "page.buggy.title": {
-      "es": "Buggy a Plaza Tata · Cordal Sur",
-      "pt": "Buggy até a Plaza Tata · Cordal Sur",
-      "en": "Buggy to Plaza Tata · Cordal Sur"
+      "es": "Buggy a Plaza Tata · CordalSur",
+      "pt": "Buggy até a Plaza Tata · CordalSur",
+      "en": "Buggy to Plaza Tata · CordalSur"
     },
     "whatsapp.checkin.message": {
-      "es": "Hola, soy huésped de Cordal Sur. Necesito ayuda con mi check-in.",
-      "pt": "Olá, sou hóspede da Cordal Sur. Preciso de ajuda com meu check-in.",
-      "en": "Hello, I’m a guest at Cordal Sur. I need help with my check-in."
+      "es": "Hola, soy huésped de CordalSur. Necesito ayuda con mi check-in.",
+      "pt": "Olá, sou hóspede da CordalSur. Preciso de ajuda com meu check-in.",
+      "en": "Hello, I’m a guest at CordalSur. I need help with my check-in."
     }
   },
   "urls": {

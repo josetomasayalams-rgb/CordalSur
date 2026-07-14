@@ -84,7 +84,7 @@ for (const key of ['brand', 'act.filter.count', 'rest.filter.count']) {
   if (!baseKeys.includes(key)) fail(`missing required key ${key}`);
 }
 for (const lang of LANGS) {
-  if (dictionaries[lang].brand !== 'Cordal Sur') fail(`${lang}.brand must be Cordal Sur`);
+  if (dictionaries[lang].brand !== 'CordalSur') fail(`${lang}.brand must be CordalSur`);
   for (const key of ['act.filter.count', 'rest.filter.count']) {
     if (placeholders(dictionaries[lang][key]) !== 'shown,total') {
       fail(`${lang}.${key} must contain {shown} and {total}`);

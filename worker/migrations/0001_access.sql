@@ -1,4 +1,4 @@
--- Cordal Sur access control schema.
+-- CordalSur access control schema.
 -- Timestamps are Unix seconds in UTC. Admin inputs are interpreted in
 -- America/Santiago by the Worker before they are persisted.
 

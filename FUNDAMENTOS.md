@@ -1,4 +1,4 @@
-# Cordal Sur — Fundamentos
+# CordalSur — Fundamentos
 
 > Documento de fundamentos: qué es, cómo funciona, cómo mantenerlo, y por qué cada decisión técnica existe. Si solo querés abrir el proyecto, lee el [README.md](README.md) (quick start). Si querés entenderlo, seguí leyendo.
 
@@ -167,7 +167,7 @@ Reglas de uso (NO negociables):
 ## 5. Estructura del proyecto
 
 ```
-Cordal Sur/
+CordalSur/
 ├── README.md                    ← quick start (cómo regenerar, estructura)
 ├── index.html                   ← home / hub
 ├── admin.html                   ← calendario privado de estadías
@@ -311,7 +311,7 @@ Estos son nice-to-have, no requeridos. El proyecto está completo y funcional.
 
 ## 10. Cómo migrar esta carpeta a otro lugar
 
-La carpeta `Cordal Sur/` es **autocontenida**. No tiene referencias hardcoded a paths absolutos fuera de sí misma. Para migrar a otro lugar:
+La carpeta `CordalSur/` es **autocontenida**. No tiene referencias hardcoded a paths absolutos fuera de sí misma. Para migrar a otro lugar:
 
 1. **Copiar toda la carpeta** a otro directorio.
 2. **Verificar permisos**: que el script `apply-host-data.mjs` sea ejecutable (en Linux: `chmod +x`).

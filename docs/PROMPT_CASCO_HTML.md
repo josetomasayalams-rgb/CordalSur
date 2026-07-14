@@ -1,4 +1,4 @@
-# Cordal Sur — Prompt One-Shot: Generar el CASCO HTML de Diseño
+# CordalSur — Prompt One-Shot: Generar el CASCO HTML de Diseño
 
 > **Pega este prompt tal cual en una sesión nueva de Claude Code.** Produce SOLO el casco de diseño (shell + tokens + componentes vacíos + navegación esqueleto + placeholders tipados). **NUNCA rellena contenido real.**
 
@@ -6,7 +6,7 @@
 
 ## 1. ROL Y OBJETIVO
 
-Actúas como **Arquitecto de Información + Diseñador UX/UI premium** (registro: *product app shell*, no brand marketing). Tu único entregable es el **CASCO HTML de diseño** del Cordal Sur: el marco silencioso de una app a la que se accede por QR.
+Actúas como **Arquitecto de Información + Diseñador UX/UI premium** (registro: *product app shell*, no brand marketing). Tu único entregable es el **CASCO HTML de diseño** del CordalSur: el marco silencioso de una app a la que se accede por QR.
 
 - **Generas:** design tokens, app shell, biblioteca de componentes, layout y navegación esqueleto, sistema de placeholders tipados, esqueleto i18n ES/PT/EN.
 - **NO generas:** contenido real de módulos (textos, horarios, nombres, precios, links externos de producción, teléfonos, SSID). Los valores ausentes se representan como placeholders tipados, nunca como 0, vacío ni lorem.
@@ -18,7 +18,7 @@ Antes de escribir una sola línea, ejecuta la **secuencia de ejecución obligato
 
 ## 2. CONTEXTO
 
-**Cordal Sur** — un Airbnb en Las Trancas / Nevados de Chillán. Ecosistema de páginas HTML estáticas, cada una accesible por un **código QR físico** en el departamento. **Mobile-first** (el huésped llega por el celular), **multilenguaje ES/PT/EN**, estética de **refugio de montaña moderno 50/50 invierno/verano** (sutil, no literal, no folleto turístico).
+**CordalSur** — un Airbnb en Las Trancas / Nevados de Chillán. Ecosistema de páginas HTML estáticas, cada una accesible por un **código QR físico** en el departamento. **Mobile-first** (el huésped llega por el celular), **multilenguaje ES/PT/EN**, estética de **refugio de montaña moderno 50/50 invierno/verano** (sutil, no literal, no folleto turístico).
 
 - Acceso: `QR → index.html` (hub central). Cada módulo es una hoja a **1 nivel de profundidad**. Cero menús anidados.
 - Sin frameworks, sin build step, sin bundlers, sin preprocesadores, sin npm install. HTML + CSS vainilla + un `lang.js` plano para i18n. `maximum-scale=1` (QR/mobile).
@@ -156,8 +156,8 @@ Sigue este orden. Cada comando es copiable tal cual.
 5. `/ponytail:ponytail full` — activa la escalera YAGNI→stdlib→native→one-line→minimum antes de generar. Marca cada simplificación con comentario `// ponytail: <decisión, techo, upgrade path>`. *(Si el slash directo `/ponytail` funciona en tu sesión, es equivalente; si no resuelve, usa `/ponytail:ponytail`.)*
 
 **FASE 2 — Forma del shell (antes de escribir HTML):**
-6. `/impeccable teach` — **solo si** `PRODUCT.md`/contexto de producto falta o está vacío (el casco es diseño+estructura, sin contenido: registra marca Cordal Sur, registro Brand, anti-references). Si el loader ya carga `docs/DESIGN.md` y `docs/GRAPHIFY_MAESTRO.md`, sáltate este paso.
-7. `/impeccable shape "casco HTML Cordal Sur: shell + tokens + componentes vacíos + navegación esqueleto + placeholders tipados, mobile-first, ES/PT/EN"` — planea la UX/UI del app shell.
+6. `/impeccable teach` — **solo si** `PRODUCT.md`/contexto de producto falta o está vacío (el casco es diseño+estructura, sin contenido: registra marca CordalSur, registro Brand, anti-references). Si el loader ya carga `docs/DESIGN.md` y `docs/GRAPHIFY_MAESTRO.md`, sáltate este paso.
+7. `/impeccable shape "casco HTML CordalSur: shell + tokens + componentes vacíos + navegación esqueleto + placeholders tipados, mobile-first, ES/PT/EN"` — planea la UX/UI del app shell.
 
 **FASE 3 — Implementar el casco (orden topológico de §4):**
 8. Implementa siguiendo el orden de §4: extender `css/styles.css` (respeta existentes + añade `tabular-nums`, grilla 8px, motion tokens, clases `[NUEVO]`) → App Shell + i18n (`lang.js` con todas las keys como placeholders tipados) → biblioteca de componentes → `index.html` + 9 hojas HTML. **Aplica la regla de purga de §4 a TODO `[EXISTS]`**: preserva tokens/clases, vacía contenido real a placeholders y elimina handlers inline.
@@ -165,7 +165,7 @@ Sigue este orden. Cada comando es copiable tal cual.
 
 **FASE 4 — Gatekeeper de tells + refino:**
 10. **design-taste-frontend** *(carga por propósito, NO slash)* — aplica diales (`DESIGN_VARIANCE 7 / MOTION_INTENSITY 5 / VISUAL_DENSITY 3`, inferencia; referencia canónica más cercana `7/6/3` Premium consumer) y el Pre-Flight Check de ~60 casillas al HTML generado, **enfocado en tells/bans** (jerarquía, eyebrow ≤ ceil(sectionCount/3), bans: em-dash en copy, Inter default sin razón, 3 cards idénticas, paleta beige/cream/brass premium-consumer, gradient text, div-fake-screenshots). ⚠️ Recordatorio: su `SKILL.md §8` declara out-of-scope los *product UI / app shells*, así que aplica como gatekeeper de tells, no como prescript de landing/hero.
-11. `/impeccable craft "casco HTML Cordal Sur"` — shape-then-build end-to-end (tras confirmar el plan de `shape`).
+11. `/impeccable craft "casco HTML CordalSur"` — shape-then-build end-to-end (tras confirmar el plan de `shape`).
 12. `/impeccable audit` — a11y, perf, responsive, anti-patterns del casco.
 13. `/impeccable critique` — UX review con scoring heurístico (Nielsen).
 14. `/impeccable polish` — refino final (contraste, espaciado, alineación).

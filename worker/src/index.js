@@ -49,7 +49,7 @@ function errorResponse(error) {
   if (error instanceof ApiError) {
     return json({ error: { code: error.code, message: error.message, ...error.extra } }, error.status);
   }
-  console.error('Unhandled Cordal Sur access error', error);
+  console.error('Unhandled CordalSur access error', error);
   return json({ error: { code: 'internal_error', message: 'Unexpected server error.' } }, 500);
 }
 

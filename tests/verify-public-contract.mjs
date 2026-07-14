@@ -18,7 +18,7 @@ const expectedPages = [
 for (const file of expectedPages) {
   if (!htmlFiles.includes(file)) fail(`missing canonical page ${file}`);
   const html = read(file);
-  if (!/<title>[^<]*Cordal Sur[^<]*<\/title>/i.test(html)) fail(`${file}: static title must contain Cordal Sur`);
+  if (!/<title>[^<]*CordalSur[^<]*<\/title>/i.test(html)) fail(`${file}: static title must contain CordalSur`);
   if (!/<html\b[^>]*data-i18n-title="page\.[^"]+"/i.test(html)) fail(`${file}: <html> needs a localized page.* title key`);
   if (!html.includes('js/lang.js?v=5')) fail(`${file}: localized copy must use the current cache version`);
   if (!html.includes("document.documentElement.classList.add('access-pending')") ||
@@ -51,10 +51,10 @@ if (!index.includes('class="emergency-card') || !index.includes('<details')) {
 }
 
 const hostData = JSON.parse(read('data/host-data.json'));
-if (hostData.scalar?.brand?.es !== 'Cordal Sur' ||
-    hostData.scalar?.brand?.pt !== 'Cordal Sur' ||
-    hostData.scalar?.brand?.en !== 'Cordal Sur') {
-  fail('canonical brand must be Cordal Sur in all languages');
+if (hostData.scalar?.brand?.es !== 'CordalSur' ||
+    hostData.scalar?.brand?.pt !== 'CordalSur' ||
+    hostData.scalar?.brand?.en !== 'CordalSur') {
+  fail('canonical brand must be CordalSur in all languages');
 }
 if (hostData.publicSupport?.whatsappUrl !== `https://wa.me/${phone}`) {
   fail('canonical publicSupport.whatsappUrl is incorrect');
@@ -88,7 +88,7 @@ if (/Guest Hub/i.test(userFacing)) fail('legacy Guest Hub brand remains in user-
 if (/Andes Chill[aá]n\s*[-·|]\s*Guest Hub/i.test(userFacing)) fail('legacy Andes Chillán brand title remains');
 if (!/Las Trancas · Nevados de Chillán/.test(userFacing)) fail('location Las Trancas · Nevados de Chillán must remain');
 
-if (!index.includes(logoPath)) fail('home must render the copied Cordal Sur symbol');
+if (!index.includes(logoPath)) fail('home must render the copied CordalSur symbol');
 for (const file of htmlFiles.filter((file) => file !== 'index.html')) {
   if (read(file).includes(logoPath)) fail(`${file}: the symbol must appear visually only on home`);
 }

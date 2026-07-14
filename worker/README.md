@@ -1,4 +1,4 @@
-# Cordal Sur access service
+# CordalSur access service
 
 Cloudflare Worker + D1 service for the static GitHub Pages guest guide. It keeps
 the public site static while centralizing scheduled access and administrator

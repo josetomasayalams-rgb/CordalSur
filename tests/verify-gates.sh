@@ -13,7 +13,7 @@ echo "  PASS"
 echo "=== Gate 2: complete i18n contract ==="
 node tests/verify-i18n.mjs
 
-echo "=== Gate 3: public Cordal Sur contract ==="
+echo "=== Gate 3: public CordalSur contract ==="
 node tests/verify-public-contract.mjs
 node tests/verify-access-session.mjs
 

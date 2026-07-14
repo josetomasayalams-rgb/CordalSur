@@ -546,7 +546,7 @@ a.card:active { transform: scale(0.985); transition: transform var(--motion-snap
 .text-center { text-align: center; }
 
 /* ============================================================
-   [NUEVO] Component library — Cordal Sur
+   [NUEVO] Component library — CordalSur
    Apple ADN aterrizado vía DESIGN.md / GRAPHIFY_MAESTRO.md
    ============================================================ */
 
@@ -2898,7 +2898,7 @@ html[data-theme="dark"] .site-credit__link { text-shadow: none; }
 }
 
 /* ==========================================================================
-   Cordal Sur brand + guest support
+   CordalSur brand + guest support
    ========================================================================== */
 .hero-panel__brand {
   display: grid;

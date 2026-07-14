@@ -141,15 +141,15 @@
   function render() {
     if (!root) return;
     if (view === 'checking') {
-      root.innerHTML = '<section class="cs-gate" aria-labelledby="cs-access-title"><p class="cs-brand-word">Cordal Sur</p>' +
+      root.innerHTML = '<section class="cs-gate" aria-labelledby="cs-access-title"><p class="cs-brand-word">CordalSur</p>' +
         '<div class="cs-spinner" aria-hidden="true"></div><h1 id="cs-access-title">' + t('access.checking') + '</h1>' + footer() + '</section>';
     } else if (view === 'locked' || view === 'config') {
       var title = view === 'locked' ? t('access.locked.title') : t('access.config.error');
       var body = view === 'locked' ? t('access.locked.body') : '';
-      root.innerHTML = '<section class="cs-gate" aria-labelledby="cs-access-title"><p class="cs-brand-word">Cordal Sur</p>' +
+      root.innerHTML = '<section class="cs-gate" aria-labelledby="cs-access-title"><p class="cs-brand-word">CordalSur</p>' +
         '<h1 id="cs-access-title">' + title + '</h1>' + (body ? '<p class="cs-lead">' + body + '</p>' : '') + footer() + '</section>';
     } else {
-      root.innerHTML = '<section class="cs-gate" aria-labelledby="cs-access-title"><p class="cs-brand-word">Cordal Sur</p>' +
+      root.innerHTML = '<section class="cs-gate" aria-labelledby="cs-access-title"><p class="cs-brand-word">CordalSur</p>' +
         '<h1 id="cs-access-title">' + t('access.title') + '</h1><p class="cs-lead">' + t('access.subtitle') + '</p>' +
         (messageKey ? '<p class="cs-alert" role="alert">' + t(messageKey) + '</p>' : '') +
         '<form id="cs-access-form" novalidate><div class="cs-field"><label for="cs-access-pin">' + t('access.pin.label') + '</label>' +

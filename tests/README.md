@@ -18,7 +18,7 @@ Las puertas validan:
 - existencia de todas las claves usadas por texto, `aria-label`, `title` y
   `placeholder`;
 - ausencia de atributos accesibles congelados en un solo idioma;
-- contrato público de Cordal Sur: diez títulos, WhatsApp, Instagram, logo/marca
+- contrato público de CordalSur: diez títulos, WhatsApp, Instagram, logo/marca
   y cinco teléfonos de emergencia;
 - comportamiento de sesión administrador: entrada a la guía, validación de rol,
   fallback a huésped, expiración en segundo plano y conservación ante cortes de red;

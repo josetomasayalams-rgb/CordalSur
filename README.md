@@ -1,4 +1,4 @@
-# Cordal Sur
+# CordalSur
 
 Guía privada multilingüe (ES/PT/EN) para huéspedes en Las Trancas · Nevados de Chillán. La interfaz se publica como HTML/CSS/JavaScript estático en GitHub Pages; el calendario, las sesiones y las claves se centralizan en Cloudflare Worker + D1.
 
@@ -50,7 +50,7 @@ project-root/
 │
 ├── scripts/
 │   └── apply-host-data.mjs       ← propagates data/host-data.json → lang.js + HTML
-├── assets/brand/                ← Cordal Sur symbol copied into the project
+├── assets/brand/                ← CordalSur symbol copied into the project
 ├── worker/                      ← Cloudflare Worker, D1 migration and tests
 │
 ├── data/

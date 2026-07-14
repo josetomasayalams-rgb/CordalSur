@@ -2,7 +2,7 @@
 id: GH-GRAPHIFY-001
 type: information-architecture-map
 status: active
-project: Cordal Sur
+project: CordalSur
 location: Las Trancas / Nevados de Chillán
 design_dna: APPLE_LIKE_DESIGN_FOUNDATION.md  (→ adaptado en DESIGN.md)
 languages: [ES, PT, EN]
@@ -11,13 +11,13 @@ scope: carcasa base / blueprint — NO desarrollo de contenido final
 created: 2026-06-29
 ---
 
-# Graphify Maestro — Cordal Sur
+# Graphify Maestro — CordalSur
 
-Mapa lógico/visual del ecosistema HTML del Cordal Sur (acceso por QR). Define la **carcasa** (arquitectura, navegación, módulos, componentes, reglas) para construir después cada HTML. Es un plano, no contenido final.
+Mapa lógico/visual del ecosistema HTML del CordalSur (acceso por QR). Define la **carcasa** (arquitectura, navegación, módulos, componentes, reglas) para construir después cada HTML. Es un plano, no contenido final.
 
 > **ADN obligatorio:** `D_Fundamentos_Diseno_APPLE copy/APPLE_LIKE_DESIGN_FOUNDATION.md` (15 principios + tokens). **Adaptación canónica al territorio:** `docs/DESIGN.md`. Este mapa los respeta y aterriza; no los re-deriva.
 
-Leyenda de estado por módulo: `[EXISTS]` ya construido en Cordal Sur · `[TODO]` por construir.
+Leyenda de estado por módulo: `[EXISTS]` ya construido en CordalSur · `[TODO]` por construir.
 
 ---
 

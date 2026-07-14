@@ -1,9 +1,9 @@
-// Localized WhatsApp links for Cordal Sur. Requires js/lang.js when present.
+// Localized WhatsApp links for CordalSur. Requires js/lang.js when present.
 (function () {
   'use strict';
 
   var PHONE = '56990137732';
-  var DEFAULT_MESSAGE = 'Hola, soy huésped de Cordal Sur. Necesito ayuda con mi check-in.';
+  var DEFAULT_MESSAGE = 'Hola, soy huésped de CordalSur. Necesito ayuda con mi check-in.';
 
   function updateLinks(lang) {
     var i18n = window.GH_I18N;
