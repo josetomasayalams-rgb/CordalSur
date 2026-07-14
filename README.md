@@ -86,7 +86,7 @@ project-root/
 
 ## Canonical sources
 
-`data/host-data.json` is the source of truth for visible copy, titles, public WhatsApp support and listings. `apply-host-data.mjs` propagates it into the ten public pages and runtime JavaScript without language fallback.
+`data/host-data.json` is the source of truth for visible copy, titles, public WhatsApp/Instagram support and listings. `apply-host-data.mjs` propagates it into the ten public pages and runtime JavaScript without language fallback.
 
 | File | Purpose |
 |---|---|

@@ -674,6 +674,22 @@ for (const file of ['index.html', 'check-in.html']) {
   fs.writeFileSync(p, html);
 }
 
+const publicInstagram = data.publicSupport && data.publicSupport.instagramUrl;
+if (!/^https:\/\/(?:www\.)?instagram\.com\/(?:[A-Za-z0-9._-]+\/?)?$/.test(publicInstagram || '')) {
+  throw new Error('publicSupport.instagramUrl must be an https://instagram.com/ profile URL');
+}
+{
+  const p = `${projectDir}/check-in.html`;
+  let html = fs.readFileSync(p, 'utf8');
+  if (!/<a\b[^>]*\bdata-instagram-link\b[^>]*>/i.test(html)) {
+    throw new Error('check-in.html: data-instagram-link anchor missing');
+  }
+  html = html.replace(/<a\b[^>]*\bdata-instagram-link\b[^>]*>/g, (tag) =>
+    setAttribute(tag, 'href', publicInstagram)
+  );
+  fs.writeFileSync(p, html);
+}
+
 const whatsAppScriptPath = `${projectDir}/js/whatsapp.js`;
 let whatsAppScript = fs.readFileSync(whatsAppScriptPath, 'utf8');
 if (!/var PHONE = '\d+';/.test(whatsAppScript) ||

@@ -39,6 +39,7 @@ if (!index.includes(`src="${logoPath}"`) ||
   fail('index.html must render the official decorative logo with explicit dimensions and alt=""');
 }
 const phone = '56990137732';
+const instagram = 'https://www.instagram.com/';
 if (!index.includes(`wa.me/${phone}`) || !checkin.includes(`wa.me/${phone}`)) {
   fail('index and check-in must link to the configured WhatsApp number');
 }
@@ -57,6 +58,19 @@ if (hostData.scalar?.brand?.es !== 'Cordal Sur' ||
 }
 if (hostData.publicSupport?.whatsappUrl !== `https://wa.me/${phone}`) {
   fail('canonical publicSupport.whatsappUrl is incorrect');
+}
+if (hostData.publicSupport?.instagramUrl !== instagram) {
+  fail('canonical publicSupport.instagramUrl is incorrect');
+}
+const instagramLink = checkin.match(/<a\b[^>]*\bdata-instagram-link\b[^>]*>[\s\S]*?<\/a>/i)?.[0] || '';
+if (!instagramLink.includes(`href="${instagram}"`) ||
+    !instagramLink.includes('target="_blank"') ||
+    !instagramLink.includes('rel="noopener"') ||
+    !instagramLink.includes('<svg')) {
+  fail('check-in must show the safe, icon-based canonical Instagram action beside WhatsApp');
+}
+if (!checkin.includes('css/styles.css?v=5')) {
+  fail('check-in must use the cache-busted social action styles');
 }
 if (hostData.urls?.['quick.wa'] !== `https://wa.me/${phone}`) {
   fail('canonical urls.quick.wa is incorrect');
@@ -125,4 +139,4 @@ if (!enterSiteCopy || !enterSiteCopy.es || !enterSiteCopy.pt || !enterSiteCopy.e
   fail('admin.enterSite must be translated in ES/PT/EN');
 }
 
-if (!process.exitCode) console.log('  PASS (brand, WhatsApp, emergency, admin access and page-title contract)');
+if (!process.exitCode) console.log('  PASS (brand, WhatsApp, Instagram, emergency, admin access and page-title contract)');

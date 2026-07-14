@@ -2884,13 +2884,15 @@ html[data-theme="dark"] .site-credit__link { text-shadow: none; }
   .app-container, .hero-panel, .prefs-stack, .rest-filter-bar,
   .rest-card, .card, .lang-selector button, .theme-selector button,
   .checkin-card__wa, .checkin-card__wa svg,
-  .emergency-disclosure__chevron, .emergency-contact {
+  .emergency-disclosure__chevron, .emergency-contact,
+  .instagram-support-card__action {
     animation: none !important;
     transition: none !important;
   }
 
   .checkin-card__wa:hover svg,
-  .emergency-contact:hover {
+  .emergency-contact:hover,
+  .instagram-support-card__action:hover {
     transform: none !important;
   }
 }
@@ -3067,6 +3069,31 @@ details.emergency-disclosure {
   background: var(--forest);
   color: #fff;
 }
+
+.whatsapp-support-card__actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 50px;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.instagram-support-card__action {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  min-height: 46px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, #405de6 0%, #833ab4 35%, #c13584 58%, #e1306c 76%, #f77737 100%);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(131, 58, 180, 0.25);
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), filter var(--motion-snap);
+}
+
+.instagram-support-card__action svg { display: block; }
+.instagram-support-card__action:hover { transform: translateY(-2px); filter: saturate(1.08); box-shadow: 0 14px 28px rgba(131, 58, 180, 0.28); }
+.instagram-support-card__action:active { transform: scale(0.96); }
+.instagram-support-card__action:focus-visible { outline: 3px solid rgba(131, 58, 180, 0.48); outline-offset: 3px; }
 
 html[data-theme="dark"] details.emergency-disclosure,
 html[data-theme="dark"] .whatsapp-support-card {
