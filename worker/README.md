@@ -17,6 +17,8 @@ Current production resources:
   `ADMIN_PIN_DIGEST` Worker secret. The plaintext PIN is never stored in D1.
 - Tokens are signed with HMAC-SHA256. Administrator tokens last 30 minutes and
   guest tokens expire exactly at the stay checkout.
+- A valid administrator token may also open the protected guest interface in
+  the same browser tab; it is still revalidated through `/v1/auth/session`.
 - A guest token contains the stay revision. Editing, disabling, finishing or
   deleting that stay makes the prior token fail on the next session check.
 - Five failed attempts in 15 minutes lock that IP-derived rate key for 30

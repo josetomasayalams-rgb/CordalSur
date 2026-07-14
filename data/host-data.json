@@ -1139,6 +1139,11 @@
       "pt": "Voltar ao acesso",
       "en": "Back to access"
     },
+    "admin.enterSite": {
+      "es": "Ingresar a la plataforma",
+      "pt": "Entrar na plataforma",
+      "en": "Enter the platform"
+    },
     "admin.logout": {
       "es": "Cerrar sesión",
       "pt": "Sair",

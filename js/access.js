@@ -2,7 +2,8 @@
   'use strict';
 
   var script = document.currentScript;
-  var TOKEN_KEY = 'cordal-sur-guest-token-v1';
+  var GUEST_TOKEN_KEY = 'cordal-sur-guest-token-v1';
+  var ADMIN_TOKEN_KEY = 'cordal-sur-admin-token-v1';
   var LANG_KEY = 'gh-lang';
   var SUPPORTED = ['es', 'pt', 'en'];
   var root = null;
@@ -12,6 +13,7 @@
   var sessionTimer = null;
   var rechecking = false;
   var sessionExpiresAt = 0;
+  var sessionRole = '';
 
   document.documentElement.classList.add('access-pending');
 
@@ -51,16 +53,50 @@
     return /^https?:\/\//.test(configured) ? configured : '';
   }
 
+  function storedToken(role) {
+    try {
+      return role === 'admin'
+        ? sessionStorage.getItem(ADMIN_TOKEN_KEY) || ''
+        : localStorage.getItem(GUEST_TOKEN_KEY) || '';
+    } catch (error) { return ''; }
+  }
+
   function token() {
-    try { return localStorage.getItem(TOKEN_KEY) || ''; } catch (error) { return ''; }
+    return sessionRole ? storedToken(sessionRole) : '';
   }
 
   function saveToken(value) {
-    try { localStorage.setItem(TOKEN_KEY, value); } catch (error) {}
+    sessionRole = 'guest';
+    try { localStorage.setItem(GUEST_TOKEN_KEY, value); } catch (error) {}
   }
 
-  function removeToken() {
-    try { localStorage.removeItem(TOKEN_KEY); } catch (error) {}
+  function removeToken(role) {
+    var targetRole = role || sessionRole;
+    try {
+      if (targetRole === 'admin') sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+      else if (targetRole === 'guest') localStorage.removeItem(GUEST_TOKEN_KEY);
+    } catch (error) {}
+    if (sessionRole === targetRole) sessionRole = '';
+  }
+
+  function sessionCandidates() {
+    var candidates = [];
+    var admin = storedToken('admin');
+    var guest = storedToken('guest');
+    if (admin) candidates.push({ role: 'admin', token: admin });
+    if (guest) candidates.push({ role: 'guest', token: guest });
+    return candidates;
+  }
+
+  function wrongRoleError() {
+    var error = new Error('wrong_role');
+    error.code = 'session_revoked';
+    error.status = 401;
+    return error;
+  }
+
+  function isSessionFailure(error) {
+    return Boolean(error && (error.status === 401 || error.code === 'session_expired' || error.code === 'session_revoked'));
   }
 
   async function api(path, options) {
@@ -244,6 +280,7 @@
     removeToken();
     sessionExpiresAt = 0;
     document.documentElement.classList.remove('access-granted');
+    document.documentElement.removeAttribute('data-access-role');
     document.documentElement.classList.add('access-pending');
     ensureRoot();
     view = 'login';
@@ -252,25 +289,53 @@
     render();
   }
 
+  async function restoreGuestSession() {
+    var guestToken = storedToken('guest');
+    if (!guestToken) return false;
+    try {
+      var result = await api('/v1/auth/session', { headers: { Authorization: 'Bearer ' + guestToken } });
+      if (result.role !== 'guest') throw wrongRoleError();
+      sessionRole = 'guest';
+      unlock(result.expiresAt);
+      return true;
+    } catch (error) {
+      if (isSessionFailure(error)) removeToken('guest');
+      return false;
+    }
+  }
+
+  async function expireActiveSession(error) {
+    var failedRole = sessionRole;
+    removeToken(failedRole);
+    if (failedRole === 'admin' && await restoreGuestSession()) return true;
+    lockAccess(errorKey(error));
+    return false;
+  }
+
   async function revalidateSession() {
     if (rechecking) return;
     if (!token()) {
-      if (document.documentElement.classList.contains('access-granted')) lockAccess('access.sessionExpired');
+      if (document.documentElement.classList.contains('access-granted')) {
+        await expireActiveSession({ status: 401, code: 'session_expired' });
+      }
       return;
     }
     if (document.hidden) {
-      if (sessionExpiresAt && Date.now() >= sessionExpiresAt) lockAccess('access.sessionExpired');
+      if (sessionExpiresAt && Date.now() >= sessionExpiresAt) {
+        await expireActiveSession({ status: 401, code: 'session_expired' });
+      }
       else sessionTimer = setTimeout(revalidateSession, Math.min(60000, Math.max(1000, sessionExpiresAt - Date.now() + 100)));
       return;
     }
     rechecking = true;
     try {
       var result = await api('/v1/auth/session', { headers: { Authorization: 'Bearer ' + token() } });
+      if (result.role !== sessionRole) throw wrongRoleError();
       if (document.documentElement.classList.contains('access-granted')) scheduleCheck(result.expiresAt);
       else unlock(result.expiresAt);
     } catch (error) {
-      if ((error && error.status === 401) || (sessionExpiresAt && Date.now() >= sessionExpiresAt)) {
-        lockAccess(errorKey(error));
+      if (isSessionFailure(error) || (sessionExpiresAt && Date.now() >= sessionExpiresAt)) {
+        await expireActiveSession(error);
       } else {
         scheduleCheck(new Date(sessionExpiresAt || Date.now() + 60000).toISOString());
       }
@@ -282,9 +347,10 @@
   function unlock(expiresAt) {
     document.documentElement.classList.remove('access-pending');
     document.documentElement.classList.add('access-granted');
+    document.documentElement.setAttribute('data-access-role', sessionRole);
     if (root) root.remove();
     scheduleCheck(expiresAt);
-    window.dispatchEvent(new CustomEvent('cordal:access-granted'));
+    window.dispatchEvent(new CustomEvent('cordal:access-granted', { detail: { role: sessionRole } }));
   }
 
   async function boot() {
@@ -295,16 +361,32 @@
       render();
       return;
     }
-    var saved = token();
-    if (saved) {
+    var candidates = sessionCandidates();
+    var bootError = null;
+    for (var index = 0; index < candidates.length; index += 1) {
+      var candidate = candidates[index];
+      sessionRole = candidate.role;
       try {
-        var session = await api('/v1/auth/session', { headers: { Authorization: 'Bearer ' + saved } });
+        var session = await api('/v1/auth/session', { headers: { Authorization: 'Bearer ' + candidate.token } });
+        if (session.role !== candidate.role) throw wrongRoleError();
         unlock(session.expiresAt);
         return;
       } catch (error) {
-        removeToken();
-        if (error.code === 'session_expired' || error.code === 'session_revoked') messageKey = 'access.sessionExpired';
+        if (isSessionFailure(error)) {
+          removeToken(candidate.role);
+          messageKey = 'access.sessionExpired';
+        } else {
+          bootError = error;
+          break;
+        }
       }
+    }
+    sessionRole = '';
+    if (bootError) {
+      view = bootError.code === 'server_not_configured' ? 'config' : 'login';
+      messageKey = errorKey(bootError);
+      render();
+      return;
     }
     try {
       var status = await api('/v1/access/status');
@@ -326,11 +408,15 @@
     if (document.documentElement.classList.contains('access-granted')) revalidateSession();
     else if (view === 'locked') refreshAvailability();
   });
+  window.addEventListener('pageshow', function (event) {
+    if (event.persisted && document.documentElement.classList.contains('access-granted')) revalidateSession();
+  });
   window.addEventListener('storage', function (event) {
-    if (event.key !== TOKEN_KEY) return;
+    if (event.key !== GUEST_TOKEN_KEY || sessionRole === 'admin') return;
     if (!event.newValue) {
       if (document.documentElement.classList.contains('access-granted')) lockAccess('access.sessionExpired');
     } else {
+      sessionRole = 'guest';
       revalidateSession();
     }
   });

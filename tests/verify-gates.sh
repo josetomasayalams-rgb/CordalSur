@@ -15,6 +15,7 @@ node tests/verify-i18n.mjs
 
 echo "=== Gate 3: public Cordal Sur contract ==="
 node tests/verify-public-contract.mjs
+node tests/verify-access-session.mjs
 
 echo "=== Gate 4: generator idempotency (temporary copy) ==="
 tmp="$(mktemp -d)"
