@@ -94,6 +94,7 @@ check_snapshot js/restaurants.js data/.baseline/js/restaurants.js
 check_snapshot js/restaurants.js data/.baseline/restaurants.js
 check_snapshot js/nearby.js data/.baseline/js/nearby.js
 check_snapshot js/catalog-distance.js data/.baseline/js/catalog-distance.js
+check_snapshot js/study-condition.js data/.baseline/js/study-condition.js
 check_snapshot staff/README.md data/.baseline/staff/README.md
 echo "  PASS"
 

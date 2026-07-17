@@ -14,6 +14,17 @@ El estudio humano puede sostener una afirmación causal limitada: que la paleta 
 4. Recluta 80 participantes para buscar al menos 72 sesiones completas. La cifra incorpora margen operativo sobre un objetivo de potencia 0,80 para un efecto pareado estandarizado pequeño-moderado de 0,35.
 5. Usa `randomization.csv`: asigna en bloques de cuatro las secuencias `uniform-section-adaptive` y `section-adaptive-uniform`, con 40 participantes por secuencia. No reemplaces manualmente el orden.
 
+## Abrir las condiciones
+
+Las dos condiciones usan el mismo sitio, acceso y versión de contenido. La tabla entrega `period_1_code` y `period_2_code`; abre el código asignado sin explicar su significado al participante:
+
+```text
+https://josetomasayalams-rgb.github.io/CordalSur/?condition=a
+https://josetomasayalams-rgb.github.io/CordalSur/?condition=b
+```
+
+La aplicación conserva el código al navegar entre páginas, pero no lo guarda en `localStorage` ni `sessionStorage`. Abre cada período desde su enlace asignado y comprueba que la URL siga mostrando el mismo código. No mezcles pestañas de condiciones distintas durante una sesión.
+
 ## Aplicación
 
 - Cada participante completa las mismas nueve tareas en ambas condiciones: Wi-Fi, check-in, restaurante, actividad, servicio cercano, clima, tickets, check-out y emergencia.

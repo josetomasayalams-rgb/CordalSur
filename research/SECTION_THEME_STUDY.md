@@ -21,6 +21,7 @@ The accessibility floor follows WCAG 2.2 success criteria 1.4.3, 1.4.11 and 1.4.
 - **Design:** randomized, counterbalanced, within-participant comparison.
 - **Control:** the previous uniform CordalSur palette.
 - **Treatment:** the section-adaptive palette in `data/section-palettes.json`.
+- **Delivery:** opaque same-origin codes preserve access, content and behavior. `condition=a` applies the uniform control and `condition=b` applies the adaptive treatment; the code mapping is kept from participants.
 - **Tasks:** find Wi-Fi, identify check-in guidance, choose a restaurant, find an activity, locate a nearby service, read weather, locate ski tickets, review check-out and find emergency guidance.
 - **Primary outcome:** mean perceived visual-aesthetics score after completing all tasks.
 - **Secondary outcomes:** task success, time on task, error count, perceived usability and intention to reuse.

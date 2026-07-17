@@ -6,6 +6,10 @@
     "control": "uniform",
     "treatment": "section-adaptive"
   },
+  "conditionCodes": {
+    "uniform": "a",
+    "section-adaptive": "b"
+  },
   "alpha": 0.05,
   "targetPower": 0.8,
   "targetStandardizedPairedEffect": 0.35,

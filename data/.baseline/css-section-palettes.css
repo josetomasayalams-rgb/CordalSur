@@ -160,6 +160,20 @@ html[data-theme="dark"] body[data-section="buggy"] {
   --section-on-accent: #102c26;
 }
 
+html[data-study-condition="a"][data-theme="light"] body[data-section] {
+  --section-accent: #153b33;
+  --section-accent-alt: #24594b;
+  --section-accent-rgb: 21, 59, 51;
+  --section-on-accent: #f8f3e7;
+}
+
+html[data-study-condition="a"][data-theme="dark"] body[data-section] {
+  --section-accent: #d9a24f;
+  --section-accent-alt: #e8bd79;
+  --section-accent-rgb: 217, 162, 79;
+  --section-on-accent: #102c26;
+}
+
 body[data-section] {
   --section-border: rgba(var(--section-accent-rgb), 0.22);
   --section-surface: linear-gradient(135deg, rgba(var(--section-accent-rgb), 0.03), rgba(var(--section-accent-rgb), 0.08)), linear-gradient(135deg, rgba(250, 248, 240, 0.95), rgba(230, 239, 231, 0.84));

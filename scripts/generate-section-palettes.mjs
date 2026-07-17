@@ -58,6 +58,20 @@ export function renderSectionPalettes(data) {
     }
   }
 
+  const uniform = data.sections.home;
+  for (const theme of ['light', 'dark']) {
+    const palette = uniform[theme];
+    lines.push(
+      `html[data-study-condition="a"][data-theme="${theme}"] body[data-section] {`,
+      `  --section-accent: ${palette.accent};`,
+      `  --section-accent-alt: ${palette.accentAlt};`,
+      `  --section-accent-rgb: ${rgb(palette.accent)};`,
+      `  --section-on-accent: ${palette.onAccent};`,
+      '}',
+      ''
+    );
+  }
+
   lines.push(
     'body[data-section] {',
     '  --section-border: rgba(var(--section-accent-rgb), 0.22);',

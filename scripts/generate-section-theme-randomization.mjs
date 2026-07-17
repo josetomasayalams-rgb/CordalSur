@@ -37,10 +37,13 @@ export function renderRandomization(config) {
   if (new Set(tasks).size !== tasks.length || tasks.length < 2) {
     throw new Error('Randomization requires at least two unique tasks');
   }
+  if (config.conditionCodes?.uniform !== 'a' || config.conditionCodes?.['section-adaptive'] !== 'b') {
+    throw new Error('Randomization requires the preregistered opaque condition codes a and b');
+  }
 
   const baseTasks = shuffle(tasks, seed, 'task-base');
   const rows = [
-    'participant_id,block,sequence,period_1_condition,period_2_condition,period_1_task_order,period_2_task_order'
+    'participant_id,block,sequence,period_1_condition,period_2_condition,period_1_code,period_2_code,period_1_task_order,period_2_task_order'
   ];
   let participantNumber = 1;
 
@@ -64,6 +67,8 @@ export function renderRandomization(config) {
         sequence,
         period1,
         period2,
+        config.conditionCodes[period1],
+        config.conditionCodes[period2],
         firstOrder.join('|'),
         secondOrder.join('|')
       ].join(','));
