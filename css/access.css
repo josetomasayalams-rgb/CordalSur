@@ -1,17 +1,40 @@
+@font-face {
+  font-family: "Manrope";
+  src: url("../assets/brand/Manrope-Regular.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("../assets/brand/Manrope-SemiBold.woff") format("woff");
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("../assets/brand/Manrope-ExtraBold.woff") format("woff");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
 :root {
-  --cs-ink: #16251f;
-  --cs-muted: #627069;
-  --cs-surface: rgba(250, 252, 248, 0.94);
-  --cs-surface-solid: #fafcf8;
+  --cs-ink: #153b33;
+  --cs-muted: #536b64;
+  --cs-surface: rgba(247, 248, 243, 0.95);
+  --cs-surface-solid: #f7f8f3;
   --cs-line: rgba(22, 37, 31, 0.14);
-  --cs-brand: #245944;
-  --cs-brand-strong: #173f30;
-  --cs-focus: #0b6b4d;
+  --cs-brand: #153b33;
+  --cs-brand-strong: #0e2a24;
+  --cs-gold: #d9a24f;
+  --cs-focus: #9a641e;
   --cs-danger: #8a2f29;
   --cs-warning: #745000;
   --cs-success: #236143;
   --cs-shadow: 0 24px 70px rgba(13, 34, 26, 0.22);
-  --cs-radius: 24px;
+  --cs-radius: 8px;
 }
 
 html.access-pending {
@@ -25,7 +48,7 @@ html.access-pending body > :not(.cs-access-root) {
 .cs-access-root,
 .cs-admin-page {
   color: var(--cs-ink);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: Manrope, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .cs-access-root,
@@ -38,9 +61,8 @@ html.access-pending body > :not(.cs-access-root) {
 .cs-access-root {
   align-items: center;
   background:
-    radial-gradient(circle at 12% 14%, rgba(191, 224, 210, 0.55), transparent 36%),
-    radial-gradient(circle at 88% 86%, rgba(118, 158, 141, 0.28), transparent 38%),
-    linear-gradient(145deg, #e9f0eb 0%, #cbdacf 52%, #a6baad 100%);
+    linear-gradient(150deg, rgba(245, 241, 231, 0.96), rgba(220, 231, 226, 0.94)),
+    #dce7e2;
   display: flex;
   inset: 0;
   justify-content: center;
@@ -52,17 +74,7 @@ html.access-pending body > :not(.cs-access-root) {
   z-index: 2147483000;
 }
 
-.cs-access-root::before {
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 999px;
-  content: "";
-  height: min(68vw, 680px);
-  left: -18vw;
-  pointer-events: none;
-  position: fixed;
-  top: -30vw;
-  width: min(68vw, 680px);
-}
+.cs-access-root::before { display: none; }
 
 .cs-gate {
   backdrop-filter: blur(18px);
@@ -78,12 +90,25 @@ html.access-pending body > :not(.cs-access-root) {
 }
 
 .cs-brand-word {
+  align-items: center;
   color: var(--cs-brand-strong);
+  display: flex;
+  gap: 10px;
   font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   margin: 0 0 22px;
   text-transform: uppercase;
+}
+
+.cs-brand-word::before {
+  background: var(--cs-brand) url("../assets/brand/cordal-sur-symbol-reverse.svg") center / 27px 27px no-repeat;
+  border: 1px solid rgba(217, 162, 79, 0.52);
+  border-radius: 6px;
+  content: "";
+  flex: none;
+  height: 36px;
+  width: 36px;
 }
 
 .cs-gate h1,
@@ -466,7 +491,7 @@ html.access-pending body > :not(.cs-access-root) {
 
 @media (max-width: 680px) {
   .cs-access-root { align-items: flex-end; padding: 12px; }
-  .cs-gate { border-radius: 22px; padding: 24px 20px; }
+  .cs-gate { border-radius: 8px; padding: 24px 20px; }
   .cs-dashboard-head { align-items: stretch; flex-direction: column; }
   .cs-dashboard-head .cs-button { width: 100%; }
   .cs-stay-card { grid-template-columns: 1fr; }
@@ -484,14 +509,14 @@ html.access-pending body > :not(.cs-access-root) {
     --cs-surface: rgba(20, 34, 28, 0.94);
     --cs-surface-solid: #14221c;
     --cs-line: rgba(232, 243, 237, 0.14);
-    --cs-brand: #70b394;
-    --cs-brand-strong: #a5d7c0;
-    --cs-focus: #b4f4d6;
+    --cs-brand: #a9c7b4;
+    --cs-brand-strong: #f5f1e7;
+    --cs-focus: #d9a24f;
     --cs-danger: #ffb4ab;
     --cs-warning: #ffd18a;
     --cs-success: #9ee6c2;
   }
-  .cs-access-root { background: linear-gradient(145deg, #14251e, #253e33 58%, #152a22); }
+  .cs-access-root { background: linear-gradient(145deg, #0d241f, #153b33 58%, #0a1d19); }
   .cs-field input { background: rgba(7, 15, 12, 0.58); }
   .cs-alert { color: #f3aaa2; }
   .cs-alert--success { color: #a7dfc5; }

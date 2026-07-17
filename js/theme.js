@@ -1,21 +1,28 @@
 (function () {
   'use strict';
 
-  // Storage bumped so prior dark selections don't survive this deploy.
   var STORAGE_KEY = 'gh-theme-v3';
   var root = document.documentElement;
   var control = null;
+  var systemTheme = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+  function hasSavedTheme() {
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      return saved === 'light' || saved === 'dark';
+    } catch (e) {
+      return false;
+    }
+  }
 
   function readTheme() {
     try {
-      // Drop legacy keys; clean slate.
       localStorage.removeItem('gh-theme');
       localStorage.removeItem('gh-theme-v2');
       var saved = localStorage.getItem(STORAGE_KEY);
       if (saved === 'light' || saved === 'dark') return saved;
     } catch (e) {}
-    // Default: light. This is also the brand default and the home page rule.
-    return 'light';
+    return systemTheme && systemTheme.matches ? 'dark' : 'light';
   }
 
   function applyTheme(theme) {
@@ -91,8 +98,18 @@
     });
   }
 
-  // Apply once on load — readTheme() now honors the user's saved choice.
   applyTheme(readTheme());
+
+  if (systemTheme) {
+    var followSystemTheme = function (event) {
+      if (!hasSavedTheme()) applyTheme(event.matches ? 'dark' : 'light');
+    };
+    if (typeof systemTheme.addEventListener === 'function') {
+      systemTheme.addEventListener('change', followSystemTheme);
+    } else if (typeof systemTheme.addListener === 'function') {
+      systemTheme.addListener(followSystemTheme);
+    }
+  }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', buildControl);

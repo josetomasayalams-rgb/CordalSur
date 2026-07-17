@@ -7,13 +7,10 @@
  <script>document.documentElement.classList.add('access-pending');</script>
  <style>html.access-pending body{visibility:hidden}</style>
  <title>Check-out · CordalSur</title>
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
  <link rel="preload" as="image" type="image/webp" media="(min-width: 720px)" fetchpriority="high" href="css/bg/winter/checkout-bosque-atardecer.webp?v=2">
-  <script>(function(){try{var k="gh-theme-v3";try{localStorage.removeItem("gh-theme");localStorage.removeItem("gh-theme-v2")}catch(e){}var t=(localStorage.getItem(k)==="dark")?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){document.documentElement.setAttribute("data-theme","light")}})();</script>
- <link rel="stylesheet" href="css/styles.css?v=4">
- <link rel="stylesheet" href="css/access.css?v=1">
+  <script>(function(){var t="";try{t=localStorage.getItem("gh-theme-v3")||""}catch(e){}if(t!=="light"&&t!=="dark"){t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",t)})();</script>
+ <link rel="stylesheet" href="css/styles.css?v=6">
+ <link rel="stylesheet" href="css/access.css?v=2">
 </head>
 <body class="is-winter bg-checkout">
  <div class="app-container">
@@ -53,8 +50,8 @@
   </div>
 
  </div>
- <script src="js/lang.js?v=5"></script>
+ <script src="js/lang.js?v=6"></script>
  <script src="js/access.js?v=2" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
-  <script src="js/theme.js?v=3"></script>
+  <script src="js/theme.js?v=4"></script>
 </body>
 </html>

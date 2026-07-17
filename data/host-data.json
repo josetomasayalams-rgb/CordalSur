@@ -644,6 +644,76 @@
       "pt": "Perguntas frequentes",
       "en": "Frequently asked questions"
     },
+    "quick.access.aria": {
+      "es": "Accesos rápidos",
+      "pt": "Acessos rápidos",
+      "en": "Quick access"
+    },
+    "quick.wifi.title": {
+      "es": "Wi-Fi",
+      "pt": "Wi-Fi",
+      "en": "Wi-Fi"
+    },
+    "quick.wifi.detail": {
+      "es": "Ver contraseña",
+      "pt": "Ver senha",
+      "en": "View password"
+    },
+    "quick.instagram.title": {
+      "es": "Instagram",
+      "pt": "Instagram",
+      "en": "Instagram"
+    },
+    "quick.instagram.detail": {
+      "es": "Seguir a Cordal Sur",
+      "pt": "Seguir a Cordal Sur",
+      "en": "Follow Cordal Sur"
+    },
+    "wifi.card.aria": {
+      "es": "Wi-Fi del alojamiento",
+      "pt": "Wi-Fi da acomodação",
+      "en": "Accommodation Wi-Fi"
+    },
+    "wifi.card.title": {
+      "es": "Wi-Fi",
+      "pt": "Wi-Fi",
+      "en": "Wi-Fi"
+    },
+    "wifi.card.description": {
+      "es": "Conéctate durante tu estadía.",
+      "pt": "Conecte-se durante a sua estadia.",
+      "en": "Connect during your stay."
+    },
+    "wifi.password.label": {
+      "es": "Contraseña",
+      "pt": "Senha",
+      "en": "Password"
+    },
+    "wifi.password.value": {
+      "es": "Mateo123",
+      "pt": "Mateo123",
+      "en": "Mateo123"
+    },
+    "wifi.copy": {
+      "es": "Copiar",
+      "pt": "Copiar",
+      "en": "Copy"
+    },
+    "wifi.copied": {
+      "es": "Copiada",
+      "pt": "Copiada",
+      "en": "Copied"
+    },
+    "wifi.copy.success": {
+      "es": "Contraseña copiada.",
+      "pt": "Senha copiada.",
+      "en": "Password copied."
+    },
+    "wifi.copy.error": {
+      "es": "No se pudo copiar. Mantén presionada la contraseña.",
+      "pt": "Não foi possível copiar. Pressione e segure a senha.",
+      "en": "Could not copy. Press and hold the password."
+    },
     "info.q1": {
       "es": "¿Cómo me conecto al Wi-Fi?",
       "pt": "Como me conecto ao Wi-Fi?",
@@ -1564,7 +1634,7 @@
   },
   "publicSupport": {
     "whatsappUrl": "https://wa.me/56990137732",
-    "instagramUrl": "https://www.instagram.com/"
+    "instagramUrl": "https://www.instagram.com/cordal_sur/"
   },
   "restaurants": [
     {

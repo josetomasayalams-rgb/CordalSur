@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!-- Fase contenido: copy real vía i18n (FAQ genéricas). TODO(host): credenciales Wi-Fi, teléfonos.
-   Emergency Card absorbida del antiguo emergencias.html (subnodo módulo 8, GRAPHIFY §3). -->
+<!-- Manual de la estadía: credenciales públicas, calefacción y reglas. -->
 <html lang="es" data-i18n-title="page.manual.title">
 <head>
  <meta charset="UTF-8">
@@ -8,13 +7,10 @@
  <script>document.documentElement.classList.add('access-pending');</script>
  <style>html.access-pending body{visibility:hidden}</style>
  <title>Manual · CordalSur</title>
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
  <link rel="preload" as="image" type="image/webp" media="(min-width: 720px)" fetchpriority="high" href="css/bg/winter/instrucciones-termas-nieve.webp?v=2">
-  <script>(function(){try{var k="gh-theme-v3";try{localStorage.removeItem("gh-theme");localStorage.removeItem("gh-theme-v2")}catch(e){}var t=(localStorage.getItem(k)==="dark")?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){document.documentElement.setAttribute("data-theme","light")}})();</script>
- <link rel="stylesheet" href="css/styles.css?v=4">
- <link rel="stylesheet" href="css/access.css?v=1">
+ <script>(function(){var t="";try{t=localStorage.getItem("gh-theme-v3")||""}catch(e){}if(t!=="light"&&t!=="dark"){t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",t)})();</script>
+ <link rel="stylesheet" href="css/styles.css?v=6">
+ <link rel="stylesheet" href="css/access.css?v=2">
 </head>
 <body class="is-winter bg-instrucciones">
  <div class="app-container">
@@ -29,13 +25,30 @@
    <button type="button" data-lang="en" aria-pressed="false">EN</button>
   </div>
 
-  <!-- FAQ accordion — real generic answers (Wi-Fi/calefacción/normas). Native <details>. -->
+  <section class="wifi-card" id="wifi" data-i18n-aria="wifi.card.aria" aria-label="Wi-Fi del alojamiento">
+   <div class="wifi-card__heading">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/></svg>
+    <div>
+     <h3 data-i18n="wifi.card.title">Wi-Fi</h3>
+     <p data-i18n="wifi.card.description">Conéctate durante tu estadía.</p>
+    </div>
+   </div>
+   <div class="wifi-card__credential">
+    <div class="wifi-card__value">
+     <span class="wifi-card__label" data-i18n="wifi.password.label">Contraseña</span>
+     <strong class="wifi-card__password" data-wifi-password data-i18n="wifi.password.value">Mateo123</strong>
+    </div>
+    <button class="wifi-copy" type="button" data-wifi-copy>
+     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/></svg>
+     <span data-wifi-copy-label data-i18n="wifi.copy">Copiar</span>
+    </button>
+   </div>
+   <p class="wifi-card__status" data-wifi-status role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- FAQ accordion — calefacción y normas. Native <details>. -->
   <h3 class="section-title" data-i18n="info.faq.t">Preguntas frecuentes</h3>
   <div class="accordion mb-4">
-   <details>
-    <summary data-i18n="info.q1">[cargado vía i18n]</summary>
-    <div class="body" data-i18n="info.a1">[cargado vía i18n]</div>
-   </details>
    <details>
     <summary data-i18n="info.q2">[cargado vía i18n]</summary>
     <div class="body" data-i18n="info.a2">[cargado vía i18n]</div>
@@ -59,8 +72,9 @@
   </div>
 
  </div>
- <script src="js/lang.js?v=5"></script>
+ <script src="js/lang.js?v=6"></script>
  <script src="js/access.js?v=2" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
-  <script src="js/theme.js?v=3"></script>
+ <script src="js/manual.js?v=1"></script>
+ <script src="js/theme.js?v=4"></script>
 </body>
 </html>

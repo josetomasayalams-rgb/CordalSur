@@ -18,8 +18,8 @@ Las puertas validan:
 - existencia de todas las claves usadas por texto, `aria-label`, `title` y
   `placeholder`;
 - ausencia de atributos accesibles congelados en un solo idioma;
-- contrato público de CordalSur: diez títulos, WhatsApp, Instagram, logo/marca
-  y cinco teléfonos de emergencia;
+- contrato público de CordalSur: diez títulos, WhatsApp, Instagram, Wi-Fi,
+  assets de marca locales y cinco teléfonos de emergencia;
 - comportamiento de sesión administrador: entrada a la guía, validación de rol,
   fallback a huésped, expiración en segundo plano y conservación ante cortes de red;
 - fuente canónica estricta `{ es, pt, en }`, sin fallback silencioso;

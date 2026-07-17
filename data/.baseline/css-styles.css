@@ -1,16 +1,40 @@
-:root {
-  /* ❄️ Winter (Base & Structure) */
-  --snow: #F7FAFC;
-  --ice: #DDEAF3;
-  --deep-blue: #12344D;
-  --night: #0B2538;
+@font-face {
+  font-family: "Manrope";
+  src: url("../assets/brand/Manrope-Regular.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("../assets/brand/Manrope-SemiBold.woff") format("woff");
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("../assets/brand/Manrope-ExtraBold.woff") format("woff");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
 
-  /* 🌲 Summer (Accents & Warmth) */
-  --forest: #1F4D3A;
-  --wood: #B7793E;
-  --rock: #5A626C; /* darker, blue-tinted → AA contrast headroom on snow (~5.8:1) */
-  --rock-light: #E5E7EB;
-  --copper: #C46A3A;
+:root {
+  /* Official Cordal Sur palette. */
+  --ivory: #f5f1e7;
+  --sage: #9daf9f;
+  --glacial: #dce7e2;
+  --gold: #d9a24f;
+  --snow: #f7f8f3;
+  --ice: #dce7e2;
+  --deep-blue: #153b33;
+  --night: #102c26;
+  --forest: #153b33;
+  --wood: #9a641e;
+  --rock: #46665e;
+  --rock-light: #e3ebe6;
+  --copper: #d9a24f;
   --alert: #C84D4D;
   --alert-strong: #8F2A2A;
 
@@ -39,50 +63,46 @@
   --layer-base: 10; --layer-float: 30; --layer-modal: 50;
 
   /* Semantic tints @10-15% (Foundation §7.5 — never saturated full-area) */
-  --tint-forest: rgba(31, 77, 58, 0.12);
-  --tint-wood:   rgba(183, 121, 62, 0.12);
-  --tint-copper: rgba(196, 106, 58, 0.12);
-  --tint-ice:    rgba(221, 234, 243, 0.60);
-  --copper-strong: #8F3E17; /* 100% text on copper tint, WCAG-safe */
+  --tint-forest: rgba(21, 59, 51, 0.12);
+  --tint-wood: rgba(217, 162, 79, 0.16);
+  --tint-copper: rgba(217, 162, 79, 0.16);
+  --tint-ice: rgba(220, 231, 226, 0.68);
+  --copper-strong: #785018;
 }
 
-/* Winter season adjustments: cool down the look (more ice/snow, less copper) */
+/* Seasons affect content and imagery, never the brand palette. */
 body.is-winter {
-  --snow: #F3F7FA;
-  --copper: #5B8FA9;
-  --copper-strong: #254F65;
-  --tint-copper: rgba(91, 143, 169, 0.12);
-  --card-bg: rgba(255, 255, 255, 0.94); /* slightly more opaque for extra readability in winter */
+  --card-bg: rgba(255, 255, 255, 0.94);
 }
 
 html[data-theme="dark"] {
   color-scheme: dark;
 }
 html[data-theme="dark"] body {
-  --snow: #0b1220;
-  --ice: #182334;
-  --deep-blue: #dce7f2;
-  --night: #f6f8fc;
-  --forest: #9ed0b8;
-  --wood: #efb778;
-  --rock: #a6b5c3;
-  --rock-light: #233142;
-  --card-bg: rgba(13, 20, 31, 0.80);
+  --snow: #0d241f;
+  --ice: #173a31;
+  --deep-blue: #eef3ed;
+  --night: #fffaf0;
+  --forest: #a9c7b4;
+  --wood: #e4b86f;
+  --rock: #c0d1c8;
+  --rock-light: #25483f;
+  --card-bg: rgba(14, 39, 33, 0.86);
   --card-border: rgba(255, 255, 255, 0.12);
   --shadow-soft: 0 18px 44px rgba(0, 0, 0, 0.36);
   --shadow-lift: 0 22px 54px rgba(0, 0, 0, 0.46);
-  --tint-forest: rgba(158, 208, 184, 0.12);
-  --tint-wood: rgba(239, 183, 120, 0.12);
-  --tint-copper: rgba(120, 173, 206, 0.12);
+  --tint-forest: rgba(169, 199, 180, 0.14);
+  --tint-wood: rgba(217, 162, 79, 0.16);
+  --tint-copper: rgba(217, 162, 79, 0.16);
   --tint-ice: rgba(255, 255, 255, 0.06);
-  --copper: #8ab6d0;
-  --copper-strong: #c6dff0;
+  --copper: #d9a24f;
+  --copper-strong: #f0cc91;
 }
 html[data-theme="dark"] body {
-  background-color: #0b1220;
-  background-image: linear-gradient(180deg, #0f1724 0%, #0b1220 58%, #08101a 100%);
+  background-color: #0d241f;
+  background-image: linear-gradient(180deg, #153b33 0%, #0d241f 58%, #091a16 100%);
 }
-html[data-theme="dark"] ::selection { background: rgba(138, 182, 208, 0.28); color: #fff; }
+html[data-theme="dark"] ::selection { background: rgba(217, 162, 79, 0.3); color: #fff; }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; color-scheme: light; }
@@ -97,14 +117,14 @@ html { scroll-behavior: smooth; color-scheme: light; }
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
   color: var(--deep-blue);
   /* Base shell — neutral gradient. The per-page photo + fade overlay is set
      by the .bg-* modifier on each HTML <body>. The fade is built INTO the
      page-specific background-image stack, so cards always land on a calm
      surface regardless of which page they live on. */
   background-color: var(--snow);
-  background-image: linear-gradient(180deg, #F8FBFD 0%, #EEF4F8 58%, #E3ECF2 100%);
+  background-image: linear-gradient(180deg, #f8f7f0 0%, #edf2ec 58%, #dce7e2 100%);
   background-attachment: fixed;
   min-height: 100vh;
   min-height: 100dvh; /* Safari 15.4+ — iOS 100vh includes URL bar, 100dvh is the visible viewport */
@@ -3122,4 +3142,276 @@ html[data-theme="dark"] .whatsapp-support-card__action {
   .brand-mark { padding: 8px; border-radius: 24px; }
   .emergency-disclosure__summary { grid-template-columns: 40px minmax(0, 1fr) 22px; padding: 14px; }
   .emergency-disclosure__body { padding: 0 14px 14px; }
+}
+
+/* Official brand finish: forest, gold, ivory and sage across every season. */
+.brand-mark {
+  border-radius: 8px;
+  background: rgba(21, 59, 51, 0.94);
+  border-color: rgba(217, 162, 79, 0.42);
+  box-shadow: 0 16px 38px rgba(10, 35, 29, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.hero-panel__title,
+.header h2,
+.section-title {
+  letter-spacing: 0;
+}
+
+.bg-winter,
+.bg-summer {
+  background: linear-gradient(135deg, var(--forest), #2f6658);
+}
+
+.bg-warm,
+.bg-copper {
+  background: linear-gradient(135deg, var(--gold), #a66c22);
+}
+
+.card,
+.header,
+.section-title,
+.top-controls,
+.prefs-stack,
+.accordion details {
+  border-radius: 8px;
+}
+
+.quick-access {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.quick-access__item {
+  min-height: 104px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(245, 241, 231, 0.58));
+  box-shadow: 0 14px 36px rgba(21, 59, 51, 0.14);
+  color: var(--night);
+  text-decoration: none;
+  backdrop-filter: blur(18px) saturate(1.35);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+  transition: transform var(--motion-snap), border-color var(--motion-snap), box-shadow var(--motion-snap);
+}
+
+.quick-access__item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(217, 162, 79, 0.7);
+  box-shadow: 0 18px 42px rgba(21, 59, 51, 0.18);
+}
+
+.quick-access__item:focus-visible,
+.wifi-copy:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.quick-access__icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--forest);
+  color: #fff;
+}
+
+.quick-access__item--instagram .quick-access__icon {
+  background: var(--gold);
+  color: #153b33;
+}
+
+.quick-access__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.quick-access__copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.quick-access__copy strong {
+  color: var(--night);
+  font-size: 0.95rem;
+}
+
+.quick-access__copy small {
+  color: var(--rock);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.wifi-card {
+  scroll-margin-top: 18px;
+  margin-bottom: 24px;
+  padding: 22px;
+  border-radius: 8px;
+  border: 1px solid rgba(217, 162, 79, 0.48);
+  background: linear-gradient(145deg, rgba(21, 59, 51, 0.96), rgba(28, 77, 66, 0.92));
+  box-shadow: 0 20px 48px rgba(12, 42, 35, 0.25);
+  color: #fff;
+}
+
+.wifi-card__heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.wifi-card__heading svg {
+  flex: none;
+  color: var(--gold);
+}
+
+.wifi-card__heading h3,
+.wifi-card__heading p,
+.wifi-card__label,
+.wifi-card__status {
+  color: inherit;
+}
+
+.wifi-card__heading h3 {
+  margin: 0 0 2px;
+  font-size: 1.15rem;
+}
+
+.wifi-card__heading p {
+  margin: 0;
+  opacity: 0.78;
+  font-size: 0.82rem;
+}
+
+.wifi-card__credential {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.wifi-card__value {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.wifi-card__label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  opacity: 0.68;
+}
+
+.wifi-card__password {
+  overflow-wrap: anywhere;
+  font-size: clamp(1.5rem, 7vw, 2rem);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.wifi-copy {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--gold);
+  color: #153b33;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.wifi-copy svg {
+  width: 18px;
+  height: 18px;
+}
+
+.wifi-card__status {
+  min-height: 1.3em;
+  margin: 10px 0 0;
+  font-size: 0.78rem;
+  opacity: 0.82;
+}
+
+html[data-theme="dark"] .quick-access__item {
+  background: linear-gradient(135deg, rgba(18, 53, 45, 0.94), rgba(13, 36, 31, 0.84));
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .header,
+html[data-theme="dark"] .section-title,
+html[data-theme="dark"] .top-controls,
+html[data-theme="dark"] .prefs-stack,
+html[data-theme="dark"] .hero-panel,
+html[data-theme="dark"] .accordion details,
+html[data-theme="dark"] .rest-card,
+html[data-theme="dark"] .forecast-widget,
+html[data-theme="dark"] .forecast-day,
+html[data-theme="dark"] .filter-bar--multi,
+html[data-theme="dark"] .rest-filter-bar,
+html[data-theme="dark"] .field-block,
+html[data-theme="dark"] .modulo-toc {
+  background: linear-gradient(135deg, rgba(18, 53, 45, 0.94), rgba(13, 36, 31, 0.82));
+  border-color: rgba(217, 162, 79, 0.2);
+}
+
+html[data-theme="dark"] .top-controls .lang-selector,
+html[data-theme="dark"] .top-controls .theme-selector__buttons,
+html[data-theme="dark"] .prefs-stack .lang-selector,
+html[data-theme="dark"] .prefs-stack .theme-selector__buttons {
+  background: rgba(8, 29, 24, 0.52);
+}
+
+html[data-theme="dark"] details.emergency-disclosure,
+html[data-theme="dark"] .whatsapp-support-card {
+  background: linear-gradient(135deg, rgba(18, 53, 45, 0.94), rgba(13, 36, 31, 0.8));
+}
+
+html[data-theme="dark"] .emergency-contact b,
+html[data-theme="dark"] .whatsapp-support-card__action {
+  background: var(--forest);
+}
+
+@media (hover: none) {
+  .bg-home, .bg-checkin, .bg-checkout, .bg-clima, .bg-tickets,
+  .bg-instrucciones, .bg-restaurantes, .bg-actividades {
+    background-color: var(--ivory);
+  }
+}
+
+@media (max-width: 420px) {
+  .quick-access {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-access__item {
+    min-height: 82px;
+  }
+
+  .wifi-card__credential {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .wifi-copy {
+    width: 100%;
+  }
 }
