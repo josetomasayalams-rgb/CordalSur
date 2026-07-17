@@ -34,6 +34,11 @@
 <section class="canonical-catalog" data-canonical-catalog="provisions">
       <div class="catalog-heading"><div><span class="guide-eyebrow" data-i18n="catalog.eyebrow">Selección territorial verificada</span><h2 class="section-title" data-i18n="rest.title">Comida y provisiones en Las Trancas</h2><p data-i18n="catalog.provisions.intro">Comida, abastecimiento y servicios esenciales ordenados desde el departamento.</p></div><span class="catalog-total"><b>59</b><span data-i18n="guide.quality.places">lugares</span></span></div>
       <div class="catalog-toolbar" data-catalog-toolbar="provisions">
+        <div class="catalog-origin" role="group" data-i18n-aria="catalog.origin.aria" aria-label="Origen de la distancia">
+          <button type="button" class="catalog-origin__button is-active" data-catalog-origin="apartment" aria-pressed="true"><span class="catalog-origin__icon" aria-hidden="true">⌂</span><span data-i18n="catalog.origin.apartment">Departamento</span></button>
+          <button type="button" class="catalog-origin__button" data-catalog-origin="location" aria-pressed="false"><span class="catalog-origin__icon" aria-hidden="true">◎</span><span data-i18n="catalog.origin.location">Mi ubicación</span></button>
+          <span class="catalog-origin__status" data-catalog-location-status role="status" aria-live="polite" data-i18n="catalog.origin.private">GPS opcional · sólo en este dispositivo</span>
+        </div>
         <label class="catalog-search"><span data-i18n="catalog.search.label">Buscar</span><input type="search" data-catalog-search data-i18n-placeholder="catalog.search.placeholder" placeholder="Nombre, categoría o sector"></label>
         <label class="catalog-sort"><span data-i18n="guide.sort.label">Ordenar por</span><select data-catalog-sort><option value="distance" data-i18n="guide.sort.distance">Distancia</option><option value="alphabetical" data-i18n="guide.sort.alphabetical">A–Z</option></select></label>
         <div class="catalog-filters" role="group" data-i18n-aria="guide.categories.aria" aria-label="Categorías">
@@ -53,7 +58,7 @@
         <strong class="catalog-count" data-catalog-count aria-live="polite">59 lugares</strong>
       </div>
       <div class="rest-grid" data-catalog-grid>
-      <article class="rest-card catalog-card" data-id="editorial-gastronom-a-nevados-de-chill-n" data-category="convenience" data-distance="0" style="--catalog-color:#4d8f55">
+      <article class="rest-card catalog-card" data-id="editorial-gastronom-a-nevados-de-chill-n" data-category="convenience" data-distance="32.6" data-apartment-distance="32.6" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4d8f55">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -61,7 +66,7 @@
             <h3 class="rest-card__name">Gastronomía Nevados de Chillán</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>0.0 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -74,7 +79,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-cafeteria-tata" data-category="restaurant" data-distance="293.3" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="manual-cafeteria-tata" data-category="restaurant" data-distance="587.2" data-apartment-distance="587.2" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -82,7 +87,7 @@
             <h3 class="rest-card__name">Cafetería Tata</h3>
             <p>Nevados de Chillán</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>0.3 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -95,28 +100,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-observatorio-cafe" data-category="restaurant" data-distance="686.9" style="--catalog-color:#d45b3e">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
-            <h3 class="rest-card__name">Observatorio Café</h3>
-            <p>Centro de Ski</p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>0.7 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9059473%2C-71.4133902" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9059473%2C-71.4133902" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="manual-cafeteria-tio-willy" data-category="restaurant" data-distance="896.8" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="manual-cafeteria-tio-willy" data-category="restaurant" data-distance="2086.5" data-apartment-distance="2086.5" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -124,7 +108,7 @@
             <h3 class="rest-card__name">Cafetería Tío Willy</h3>
             <p>Centro de Ski</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>0.9 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -137,28 +121,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-6629435738-buena-vista-bar" data-category="restaurant" data-distance="2375.1" style="--catalog-color:#d45b3e">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
-            <h3 class="rest-card__name">Buena Vista Bar</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>2.4 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8903943%2C-71.4058539" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8903943%2C-71.4058539" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="manual-tenencia-las-trancas" data-category="emergency" data-distance="5268.4" style="--catalog-color:#bd2f3d">
+      <article class="rest-card catalog-card" data-id="manual-tenencia-las-trancas" data-category="emergency" data-distance="6757.3" data-apartment-distance="6757.3" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#bd2f3d">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -166,7 +129,7 @@
             <h3 class="rest-card__name">Tenencia Las Trancas</h3>
             <p>Valle Las Trancas</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>5.3 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -179,7 +142,7 @@
           <a class="catalog-action catalog-action--phone " href="tel:133" aria-label="Llamar" title="Llamar" data-i18n-aria="nearby.call" data-i18n-title="nearby.call"><span class="action-icon action-icon--phone" aria-hidden="true"></span><span class="sr-only" data-i18n="nearby.call">Llamar</span></a>
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-311431245-la-araucana-jamon-pan-y-vino" data-category="restaurant" data-distance="5401.2" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="osm-node-311431245-la-araucana-jamon-pan-y-vino" data-category="restaurant" data-distance="6873.8" data-apartment-distance="6873.8" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -187,7 +150,7 @@
             <h3 class="rest-card__name">La Araucana - Jamon Pan y Vino</h3>
             <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
           </div>
-          <strong class="catalog-distance" data-distance-label>5.4 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -200,7 +163,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-5843178085-riding" data-category="restaurant" data-distance="5474" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="osm-node-5843178085-riding" data-category="restaurant" data-distance="7024.3" data-apartment-distance="7024.3" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -208,7 +171,7 @@
             <h3 class="rest-card__name">Riding</h3>
             <p>Avenida Las Trancas</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>5.5 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -221,7 +184,7 @@
           <a class="catalog-action catalog-action--phone " href="tel:+56941792459" aria-label="Llamar" title="Llamar" data-i18n-aria="nearby.call" data-i18n-title="nearby.call"><span class="action-icon action-icon--phone" aria-hidden="true"></span><span class="sr-only" data-i18n="nearby.call">Llamar</span></a>
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-bomberos-las-trancas" data-category="emergency" data-distance="6336.3" style="--catalog-color:#bd2f3d">
+      <article class="rest-card catalog-card" data-id="manual-bomberos-las-trancas" data-category="emergency" data-distance="7931.1" data-apartment-distance="7931.1" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#bd2f3d">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -229,7 +192,7 @@
             <h3 class="rest-card__name">3ª Compañía Bomberos Las Trancas</h3>
             <p>Valle Las Trancas</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.3 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -242,7 +205,7 @@
           <a class="catalog-action catalog-action--phone " href="tel:132" aria-label="Llamar" title="Llamar" data-i18n-aria="nearby.call" data-i18n-title="nearby.call"><span class="action-icon action-icon--phone" aria-hidden="true"></span><span class="sr-only" data-i18n="nearby.call">Llamar</span></a>
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-rucahue" data-category="supermarket" data-distance="6657.1" style="--catalog-color:#2f7d5b">
+      <article class="rest-card catalog-card" data-id="manual-rucahue" data-category="supermarket" data-distance="8241.6" data-apartment-distance="8241.6" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#2f7d5b">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -250,7 +213,7 @@
             <h3 class="rest-card__name">Rucahue</h3>
             <p>Valle Las Trancas</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -263,7 +226,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-alto-las-trancas" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-alto-las-trancas" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -271,7 +234,7 @@
             <h3 class="rest-card__name">Alto Las Trancas</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -284,7 +247,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-bagual" data-category="coffee" data-distance="6718.9" style="--catalog-color:#8b5e3c">
+      <article class="rest-card catalog-card" data-id="editorial-bagual" data-category="coffee" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#8b5e3c">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -292,7 +255,7 @@
             <h3 class="rest-card__name">Bagual</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -305,7 +268,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-caramba-helados" data-category="coffee" data-distance="6718.9" style="--catalog-color:#8b5e3c">
+      <article class="rest-card catalog-card" data-id="editorial-caramba-helados" data-category="coffee" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#8b5e3c">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -313,7 +276,7 @@
             <h3 class="rest-card__name">Caramba Helados</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -326,7 +289,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-cervecer-a-garganta-del-diablo" data-category="other" data-distance="6718.9" style="--catalog-color:#66706c">
+      <article class="rest-card catalog-card" data-id="editorial-cervecer-a-garganta-del-diablo" data-category="other" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#66706c">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -334,7 +297,7 @@
             <h3 class="rest-card__name">Cervecería Garganta del Diablo</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -347,7 +310,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-cervecer-a-shangrila" data-category="other" data-distance="6718.9" style="--catalog-color:#66706c">
+      <article class="rest-card catalog-card" data-id="editorial-cervecer-a-shangrila" data-category="other" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#66706c">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -355,7 +318,7 @@
             <h3 class="rest-card__name">Cervecería Shangrila</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -368,7 +331,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-charcuter-a-las-cabras" data-category="convenience" data-distance="6718.9" style="--catalog-color:#4d8f55">
+      <article class="rest-card catalog-card" data-id="editorial-charcuter-a-las-cabras" data-category="convenience" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4d8f55">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -376,7 +339,7 @@
             <h3 class="rest-card__name">Charcutería Las Cabras</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -389,7 +352,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-charlie-bowl" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-charlie-bowl" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -397,7 +360,7 @@
             <h3 class="rest-card__name">Charlie Bowl</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -410,7 +373,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-che-cami" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+      <article class="rest-card catalog-card" data-id="editorial-che-cami" data-category="bakery" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#bd7f3f">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -418,7 +381,7 @@
             <h3 class="rest-card__name">Che Cami</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -431,7 +394,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-dulce-monta-a" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+      <article class="rest-card catalog-card" data-id="editorial-dulce-monta-a" data-category="bakery" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#bd7f3f">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -439,7 +402,7 @@
             <h3 class="rest-card__name">Dulce Montaña</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -452,7 +415,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-el-pared-n" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-el-pared-n" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -460,7 +423,7 @@
             <h3 class="rest-card__name">El Paredón</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -473,7 +436,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-fauna-lounge" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-fauna-lounge" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -481,7 +444,7 @@
             <h3 class="rest-card__name">Fauna Lounge</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -494,7 +457,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-koiwe-cafe-boutique" data-category="coffee" data-distance="6718.9" style="--catalog-color:#8b5e3c">
+      <article class="rest-card catalog-card" data-id="editorial-koiwe-cafe-boutique" data-category="coffee" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#8b5e3c">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -502,7 +465,7 @@
             <h3 class="rest-card__name">Koiwe Cafe &amp; Boutique</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -515,7 +478,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-la-cava-de-la-monta-a" data-category="convenience" data-distance="6718.9" style="--catalog-color:#4d8f55">
+      <article class="rest-card catalog-card" data-id="editorial-la-cava-de-la-monta-a" data-category="convenience" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4d8f55">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -523,7 +486,7 @@
             <h3 class="rest-card__name">La Cava de la Montaña</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -536,7 +499,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-las-bravas-cafe" data-category="coffee" data-distance="6718.9" style="--catalog-color:#8b5e3c">
+      <article class="rest-card catalog-card" data-id="editorial-las-bravas-cafe" data-category="coffee" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#8b5e3c">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -544,7 +507,7 @@
             <h3 class="rest-card__name">Las Bravas Cafe</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -557,7 +520,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-las-cacha-as" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+      <article class="rest-card catalog-card" data-id="editorial-las-cacha-as" data-category="bakery" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#bd7f3f">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -565,7 +528,7 @@
             <h3 class="rest-card__name">Las Cachañas</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -578,7 +541,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-los-hualles-restobar" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-los-hualles-restobar" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -586,7 +549,7 @@
             <h3 class="rest-card__name">Los Hualles Restobar</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -599,7 +562,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-lux-petit-club-cafe-bar" data-category="coffee" data-distance="6718.9" style="--catalog-color:#8b5e3c">
+      <article class="rest-card catalog-card" data-id="editorial-lux-petit-club-cafe-bar" data-category="coffee" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#8b5e3c">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -607,7 +570,7 @@
             <h3 class="rest-card__name">Lux / Petit Club Cafe Bar</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -620,7 +583,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-super-mcpato" data-category="supermarket" data-distance="6718.9" style="--catalog-color:#2f7d5b">
+      <article class="rest-card catalog-card" data-id="editorial-super-mcpato" data-category="supermarket" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#2f7d5b">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -628,7 +591,7 @@
             <h3 class="rest-card__name">McPato Supermercado</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -641,7 +604,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-miski-lirio" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-miski-lirio" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -649,7 +612,7 @@
             <h3 class="rest-card__name">Miski Lirio</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -662,7 +625,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-monte-carla-las-trancas" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-monte-carla-las-trancas" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -670,7 +633,7 @@
             <h3 class="rest-card__name">Monte Carla Las Trancas</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -683,7 +646,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-val-panaderia-bravas" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+      <article class="rest-card catalog-card" data-id="editorial-val-panaderia-bravas" data-category="bakery" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#bd7f3f">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -691,7 +654,7 @@
             <h3 class="rest-card__name">Panadería masa madre Las Bravas</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -704,7 +667,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-malcontenta-panader-a" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+      <article class="rest-card catalog-card" data-id="editorial-malcontenta-panader-a" data-category="bakery" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#bd7f3f">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -712,7 +675,7 @@
             <h3 class="rest-card__name">Panadería Valle Las Trancas</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -725,7 +688,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-patio-tranquino" data-category="other" data-distance="6718.9" style="--catalog-color:#66706c">
+      <article class="rest-card catalog-card" data-id="editorial-patio-tranquino" data-category="other" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#66706c">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -733,7 +696,7 @@
             <h3 class="rest-card__name">Patio Tranquino</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -746,7 +709,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-pizzas-and-beers-del-valle" data-category="fast_food" data-distance="6718.9" style="--catalog-color:#dd7b29">
+      <article class="rest-card catalog-card" data-id="editorial-pizzas-and-beers-del-valle" data-category="fast_food" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#dd7b29">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -754,7 +717,7 @@
             <h3 class="rest-card__name">Pizzas and Beers del Valle</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -767,7 +730,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-restaurant-borde-andino" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-restaurant-borde-andino" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -775,7 +738,7 @@
             <h3 class="rest-card__name">Restaurant Borde Andino</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -788,7 +751,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-restaurant-patrimonial-el-tren" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-restaurant-patrimonial-el-tren" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -796,7 +759,7 @@
             <h3 class="rest-card__name">Restaurant Patrimonial El Tren</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -809,7 +772,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-restaurante-pizzer-a-chil-in" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-restaurante-pizzer-a-chil-in" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -817,7 +780,7 @@
             <h3 class="rest-card__name">Restaurante Pizzería Chil'in</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -830,7 +793,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-restobar-shangrila" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-restobar-shangrila" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -838,7 +801,7 @@
             <h3 class="rest-card__name">Restobar Shangrila</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -851,7 +814,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-minimarket-rucahue" data-category="supermarket" data-distance="6718.9" style="--catalog-color:#2f7d5b">
+      <article class="rest-card catalog-card" data-id="editorial-minimarket-rucahue" data-category="supermarket" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#2f7d5b">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -859,7 +822,7 @@
             <h3 class="rest-card__name">Rucahue Minimarket</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -872,7 +835,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-sitari-tapas-y-brasas" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-sitari-tapas-y-brasas" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -880,7 +843,7 @@
             <h3 class="rest-card__name">Sitari Tapas y Brasas</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -893,7 +856,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-steak-house" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="editorial-steak-house" data-category="restaurant" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -901,7 +864,7 @@
             <h3 class="rest-card__name">Steak House</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -914,7 +877,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-super-el-refugio" data-category="supermarket" data-distance="6718.9" style="--catalog-color:#2f7d5b">
+      <article class="rest-card catalog-card" data-id="editorial-super-el-refugio" data-category="supermarket" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#2f7d5b">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -922,7 +885,7 @@
             <h3 class="rest-card__name">Supermercado El Refugio</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -935,7 +898,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="editorial-valdo" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+      <article class="rest-card catalog-card" data-id="editorial-valdo" data-category="bakery" data-distance="8296.4" data-apartment-distance="8296.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#bd7f3f">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -943,7 +906,7 @@
             <h3 class="rest-card__name">Valdo</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -956,7 +919,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-oliva-s-restaurant" data-category="restaurant" data-distance="6851.5" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="manual-oliva-s-restaurant" data-category="restaurant" data-distance="8441.3" data-apartment-distance="8441.3" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -964,7 +927,7 @@
             <h3 class="rest-card__name">Oliva's Restaurant</h3>
             <p>Valle Las Trancas</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.9 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -977,7 +940,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-snow-pub" data-category="restaurant" data-distance="7204.8" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="manual-snow-pub" data-category="restaurant" data-distance="8794.5" data-apartment-distance="8794.5" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -985,7 +948,7 @@
             <h3 class="rest-card__name">Snow Pub</h3>
             <p>Valle Las Trancas</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>7.2 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -998,7 +961,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-4088884738-condominio-patagonia" data-category="restaurant" data-distance="7695.2" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="osm-node-4088884738-condominio-patagonia" data-category="restaurant" data-distance="9755.6" data-apartment-distance="9755.6" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1006,7 +969,7 @@
             <h3 class="rest-card__name">Condominio Patagonia</h3>
             <p>Los Radales 47</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>7.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1019,7 +982,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1289135961-casita-de-te" data-category="coffee" data-distance="9951.3" style="--catalog-color:#8b5e3c">
+      <article class="rest-card catalog-card" data-id="osm-node-1289135961-casita-de-te" data-category="coffee" data-distance="12479" data-apartment-distance="12479" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#8b5e3c">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1027,7 +990,7 @@
             <h3 class="rest-card__name">Casita de Te</h3>
             <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
           </div>
-          <strong class="catalog-distance" data-distance-label>10.0 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1040,7 +1003,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-ferreteria-don-lalo" data-category="hardware" data-distance="20347.1" style="--catalog-color:#6f7680">
+      <article class="rest-card catalog-card" data-id="manual-ferreteria-don-lalo" data-category="hardware" data-distance="24278" data-apartment-distance="24278" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#6f7680">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1048,7 +1011,7 @@
             <h3 class="rest-card__name">Ferretería Don Lalo</h3>
             <p>Los Lleuques</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>20 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -1061,7 +1024,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-bomberos-los-lleuques" data-category="emergency" data-distance="20445.4" style="--catalog-color:#bd2f3d">
+      <article class="rest-card catalog-card" data-id="manual-bomberos-los-lleuques" data-category="emergency" data-distance="24416.6" data-apartment-distance="24416.6" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#bd2f3d">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1069,7 +1032,7 @@
             <h3 class="rest-card__name">Bomberos Los Lleuques</h3>
             <p>Los Lleuques</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>20 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1082,28 +1045,7 @@
           <a class="catalog-action catalog-action--phone " href="tel:132" aria-label="Llamar" title="Llamar" data-i18n-aria="nearby.call" data-i18n-title="nearby.call"><span class="action-icon action-icon--phone" aria-hidden="true"></span><span class="sr-only" data-i18n="nearby.call">Llamar</span></a>
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-minimarket-el-varon" data-category="supermarket" data-distance="20800.3" style="--catalog-color:#2f7d5b">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.supermarket">Supermercados</span>
-            <h3 class="rest-card__name">Minimarket El Varón</h3>
-            <p>Los Lleuques</p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>21 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8540055%2C-71.6443989" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8540055%2C-71.6443989" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="manual-la-pileta" data-category="supermarket" data-distance="20804.2" style="--catalog-color:#2f7d5b">
+      <article class="rest-card catalog-card" data-id="manual-la-pileta" data-category="supermarket" data-distance="24828" data-apartment-distance="24828" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#2f7d5b">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1111,7 +1053,7 @@
             <h3 class="rest-card__name">Supermercado La Pileta</h3>
             <p>Los Lleuques</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>21 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1124,7 +1066,28 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-rendez-vous" data-category="restaurant" data-distance="20823.9" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="manual-minimarket-el-varon" data-category="supermarket" data-distance="24862.8" data-apartment-distance="24862.8" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#2f7d5b">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.supermarket">Supermercados</span>
+            <h3 class="rest-card__name">Minimarket El Varón</h3>
+            <p>Los Lleuques</p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8540055%2C-71.6443989" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8540055%2C-71.6443989" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-rendez-vous" data-category="restaurant" data-distance="24864.9" data-apartment-distance="24864.9" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1132,7 +1095,7 @@
             <h3 class="rest-card__name">Rendez-vous</h3>
             <p>Los Lleuques</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>21 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1145,7 +1108,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-cumbres-restaurante" data-category="restaurant" data-distance="21656" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="manual-cumbres-restaurante" data-category="restaurant" data-distance="25886.8" data-apartment-distance="25886.8" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1153,7 +1116,7 @@
             <h3 class="rest-card__name">Cumbres Restaurante</h3>
             <p>Recinto km 48,5</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>22 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
 
@@ -1166,7 +1129,7 @@
           <a class="catalog-action catalog-action--phone " href="tel:+56951507951" aria-label="Llamar" title="Llamar" data-i18n-aria="nearby.call" data-i18n-title="nearby.call"><span class="action-icon action-icon--phone" aria-hidden="true"></span><span class="sr-only" data-i18n="nearby.call">Llamar</span></a>
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-quincho-del-valle" data-category="restaurant" data-distance="21685.4" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="manual-quincho-del-valle" data-category="restaurant" data-distance="25928.8" data-apartment-distance="25928.8" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1174,7 +1137,7 @@
             <h3 class="rest-card__name">Quincho del Valle</h3>
             <p>Recinto km 48,5</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>22 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1187,7 +1150,7 @@
           <a class="catalog-action catalog-action--phone " href="tel:+56958969259" aria-label="Llamar" title="Llamar" data-i18n-aria="nearby.call" data-i18n-title="nearby.call"><span class="action-icon action-icon--phone" aria-hidden="true"></span><span class="sr-only" data-i18n="nearby.call">Llamar</span></a>
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-reten-recinto" data-category="emergency" data-distance="22240.8" style="--catalog-color:#bd2f3d">
+      <article class="rest-card catalog-card" data-id="manual-reten-recinto" data-category="emergency" data-distance="26437.1" data-apartment-distance="26437.1" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#bd2f3d">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1195,7 +1158,7 @@
             <h3 class="rest-card__name">Retén Recinto</h3>
             <p>Recinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>22 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1208,28 +1171,7 @@
           <a class="catalog-action catalog-action--phone " href="tel:133" aria-label="Llamar" title="Llamar" data-i18n-aria="nearby.call" data-i18n-title="nearby.call"><span class="action-icon action-icon--phone" aria-hidden="true"></span><span class="sr-only" data-i18n="nearby.call">Llamar</span></a>
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-don-quelo" data-category="restaurant" data-distance="22280" style="--catalog-color:#d45b3e">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
-            <h3 class="rest-card__name">Don Quelo</h3>
-            <p>Recinto km 47,6</p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>22 km</strong>
-        </header>
-        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8439%2C-71.6578" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8439%2C-71.6578" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-          <a class="catalog-action catalog-action--phone " href="tel:+56986041204" aria-label="Llamar" title="Llamar" data-i18n-aria="nearby.call" data-i18n-title="nearby.call"><span class="action-icon action-icon--phone" aria-hidden="true"></span><span class="sr-only" data-i18n="nearby.call">Llamar</span></a>
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="manual-posta-recinto" data-category="medical" data-distance="22404.6" style="--catalog-color:#cf3f54">
+      <article class="rest-card catalog-card" data-id="manual-posta-recinto" data-category="medical" data-distance="26753.2" data-apartment-distance="26753.2" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#cf3f54">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1237,7 +1179,7 @@
             <h3 class="rest-card__name">Posta de Salud Rural Recinto</h3>
             <p>Recinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>22 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1250,7 +1192,28 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-copec-recinto" data-category="gas_station" data-distance="22508.2" style="--catalog-color:#4c5968">
+      <article class="rest-card catalog-card" data-id="manual-don-quelo" data-category="restaurant" data-distance="26775.4" data-apartment-distance="26775.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Don Quelo</h3>
+            <p>Recinto km 47,6</p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8439%2C-71.6578" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8439%2C-71.6578" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+          <a class="catalog-action catalog-action--phone " href="tel:+56986041204" aria-label="Llamar" title="Llamar" data-i18n-aria="nearby.call" data-i18n-title="nearby.call"><span class="action-icon action-icon--phone" aria-hidden="true"></span><span class="sr-only" data-i18n="nearby.call">Llamar</span></a>
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-copec-recinto" data-category="gas_station" data-distance="26897.3" data-apartment-distance="26897.3" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4c5968">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1258,7 +1221,7 @@
             <h3 class="rest-card__name">Copec Recinto</h3>
             <p>Recinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>23 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1271,7 +1234,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-los-pincheiras-restaurant" data-category="restaurant" data-distance="22628.8" style="--catalog-color:#d45b3e">
+      <article class="rest-card catalog-card" data-id="manual-los-pincheiras-restaurant" data-category="restaurant" data-distance="27095.5" data-apartment-distance="27095.5" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1279,7 +1242,7 @@
             <h3 class="rest-card__name">Restaurant Los Pincheira</h3>
             <p>Recinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>23 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1292,8 +1255,59 @@
 
         </div>
       </article>
+      <article class="rest-card catalog-card" data-id="osm-node-6629435738-buena-vista-bar" data-category="restaurant" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Buena Vista Bar</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8903943%2C-71.4058539" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8903943%2C-71.4058539" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-observatorio-cafe" data-category="restaurant" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Observatorio Café</h3>
+            <p>Centro de Ski</p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9059473%2C-71.4133902" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9059473%2C-71.4133902" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
       </div>
       <p class="catalog-empty" data-catalog-empty hidden data-i18n="catalog.empty">No hay lugares que coincidan con tu búsqueda.</p>
+      <dialog class="guide-location-dialog catalog-location-dialog" data-catalog-location-dialog aria-labelledby="catalog-location-title-provisions">
+        <form method="dialog" class="guide-location-dialog__panel">
+          <div class="guide-location-dialog__head"><div><span class="guide-eyebrow" data-i18n="guide.location.title">Tu ubicación es opcional</span><h2 id="catalog-location-title-provisions" data-i18n="guide.location.dialogTitle">¿Cómo quieres usar tu ubicación?</h2></div><button type="submit" class="guide-dialog-close" value="close" data-i18n-aria="guide.location.close" aria-label="Cerrar">×</button></div>
+          <p data-i18n="guide.location.dialogBody">Tu posición sólo se usa en este dispositivo para calcular distancias viales. Nunca se agrega a enlaces ni al catálogo.</p>
+          <button type="button" class="guide-location-choice" data-catalog-location-choice="once"><strong data-i18n="guide.location.once">Solo esta vez</strong><span data-i18n="guide.location.onceDetail">Toma una posición y deja de consultar.</span></button>
+          <button type="button" class="guide-location-choice" data-catalog-location-choice="session"><strong data-i18n="guide.location.session">Durante esta sesión</strong><span data-i18n="guide.location.sessionDetail">Actualiza mientras avanzas; se borra al salir.</span></button>
+          <button type="button" class="guide-location-choice" data-catalog-location-choice="none"><strong data-i18n="guide.location.none">Seguir sin ubicación</strong><span data-i18n="guide.location.noneDetail">Mantiene las distancias desde el departamento.</span></button>
+        </form>
+      </dialog>
     </section>
 
 
@@ -1337,7 +1351,8 @@
 <script src="js/lang.js?v=11"></script>
   <script src="js/access.js?v=4" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
 <script src="js/theme.js?v=8"></script>
-  <script src="js/catalog-guide.js?v=1" defer></script>
+  <script src="js/road-distance.js?v=1" defer></script>
+  <script src="js/catalog-guide.js?v=2" defer></script>
  <script src="js/study-condition.js?v=1"></script>
 </body>
 </html>

@@ -455,7 +455,7 @@ const ACTIVITY_CATEGORIES = new Set(['tourism', 'thermal_baths', 'ski', 'trail',
 const LODGING_CATEGORIES = new Set(['hotel', 'cabin']);
 const publicApartmentPlaces = destinationGuide.places
   .filter((place) => place.discovery && place.discovery.apartment && !LODGING_CATEGORIES.has(place.category))
-  .sort((left, right) => left.discovery.apartmentDistanceMeters - right.discovery.apartmentDistanceMeters || left.name.localeCompare(right.name));
+  .sort((left, right) => (left.discovery.apartmentRoadDistanceMeters ?? Infinity) - (right.discovery.apartmentRoadDistanceMeters ?? Infinity) || left.name.localeCompare(right.name));
 const activityPlaces = publicApartmentPlaces.filter((place) => ACTIVITY_CATEGORIES.has(place.category));
 const provisionPlaces = publicApartmentPlaces.filter((place) => !ACTIVITY_CATEGORIES.has(place.category));
 
@@ -475,9 +475,7 @@ function catalogAction(url, key, label, type, className = '') {
 
 function canonicalCard(place) {
   const category = categoryFor(place.category);
-  const distanceMeters = Number(place.discovery.apartmentDistanceMeters || 0);
-  const distanceKm = distanceMeters / 1000;
-  const distanceLabel = `${distanceKm < 10 ? distanceKm.toFixed(1) : Math.round(distanceKm)} km`;
+  const distanceMeters = Number.isFinite(place.discovery.apartmentRoadDistanceMeters) ? place.discovery.apartmentRoadDistanceMeters : null;
   const address = place.municipality || fieldValue(place.address) || '';
   const approximate = place.coordinateKind === 'center_candidate' || place.status === 'candidate_coordinate';
   const closed = place.operatingStatus === 'closed';
@@ -489,7 +487,7 @@ function canonicalCard(place) {
     ? `<span class="catalog-rating"><b>★ ${attrEsc(rating.value)}</b><span aria-hidden="true"> · </span>${attrEsc(rating.reviewCount || 0)} <span data-i18n="guide.reviews">reseñas</span></span>`
     : '';
   const phoneHref = phone ? `tel:${String(phone).replace(/[^+\d]/g, '')}` : '';
-  return `      <article class="rest-card catalog-card" data-id="${attrEsc(place.id)}" data-category="${attrEsc(place.category)}" data-distance="${distanceMeters}" style="--catalog-color:${attrEsc(category.color)}">
+  return `      <article class="rest-card catalog-card" data-id="${attrEsc(place.id)}" data-category="${attrEsc(place.category)}" data-distance="${distanceMeters ?? ''}" data-apartment-distance="${distanceMeters ?? ''}" data-apartment-access-nearby="${place.discovery.roadAccessNearby ? 'true' : 'false'}" data-road-access-nearby="${place.discovery.roadAccessNearby ? 'true' : 'false'}" style="--catalog-color:${attrEsc(category.color)}">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -497,7 +495,7 @@ function canonicalCard(place) {
             <h3 class="rest-card__name">${attrEsc(place.name)}</h3>
             <p>${address ? attrEsc(address) : '<span data-i18n="guide.location.unknown">Sector por confirmar</span>'}</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>${distanceLabel}</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
         ${approximate ? '<p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>' : ''}
         ${closed ? '<p class="catalog-warning catalog-warning--closed" data-i18n="guide.status.closed">Cerrado según la última verificación. Revisa el sitio oficial antes de viajar.</p>' : ''}
@@ -520,6 +518,11 @@ function catalogToolbar(kind, places) {
     `<button type="button" class="catalog-filter" data-catalog-filter="${attrEsc(category.id)}" aria-pressed="false"><i style="--filter-color:${attrEsc(category.color)}"></i><span data-i18n="guide.cat.${attrEsc(category.id)}">${attrEsc(category.label)}</span></button>`
   ).join('\n          ');
   return `      <div class="catalog-toolbar" data-catalog-toolbar="${kind}">
+        <div class="catalog-origin" role="group" data-i18n-aria="catalog.origin.aria" aria-label="Origen de la distancia">
+          <button type="button" class="catalog-origin__button is-active" data-catalog-origin="apartment" aria-pressed="true"><span class="catalog-origin__icon" aria-hidden="true">⌂</span><span data-i18n="catalog.origin.apartment">Departamento</span></button>
+          <button type="button" class="catalog-origin__button" data-catalog-origin="location" aria-pressed="false"><span class="catalog-origin__icon" aria-hidden="true">◎</span><span data-i18n="catalog.origin.location">Mi ubicación</span></button>
+          <span class="catalog-origin__status" data-catalog-location-status role="status" aria-live="polite" data-i18n="catalog.origin.private">GPS opcional · sólo en este dispositivo</span>
+        </div>
         <label class="catalog-search"><span data-i18n="catalog.search.label">Buscar</span><input type="search" data-catalog-search data-i18n-placeholder="catalog.search.placeholder" placeholder="Nombre, categoría o sector"></label>
         <label class="catalog-sort"><span data-i18n="guide.sort.label">Ordenar por</span><select data-catalog-sort><option value="distance" data-i18n="guide.sort.distance">Distancia</option><option value="alphabetical" data-i18n="guide.sort.alphabetical">A–Z</option></select></label>
         <div class="catalog-filters" role="group" data-i18n-aria="guide.categories.aria" aria-label="Categorías">
@@ -538,6 +541,15 @@ ${catalogToolbar(kind, places)}
 ${places.map(canonicalCard).join('\n')}
       </div>
       <p class="catalog-empty" data-catalog-empty hidden data-i18n="catalog.empty">No hay lugares que coincidan con tu búsqueda.</p>
+      <dialog class="guide-location-dialog catalog-location-dialog" data-catalog-location-dialog aria-labelledby="catalog-location-title-${kind}">
+        <form method="dialog" class="guide-location-dialog__panel">
+          <div class="guide-location-dialog__head"><div><span class="guide-eyebrow" data-i18n="guide.location.title">Tu ubicación es opcional</span><h2 id="catalog-location-title-${kind}" data-i18n="guide.location.dialogTitle">¿Cómo quieres usar tu ubicación?</h2></div><button type="submit" class="guide-dialog-close" value="close" data-i18n-aria="guide.location.close" aria-label="Cerrar">×</button></div>
+          <p data-i18n="guide.location.dialogBody">Tu posición sólo se usa en este dispositivo para calcular distancias viales. Nunca se agrega a enlaces ni al catálogo.</p>
+          <button type="button" class="guide-location-choice" data-catalog-location-choice="once"><strong data-i18n="guide.location.once">Solo esta vez</strong><span data-i18n="guide.location.onceDetail">Toma una posición y deja de consultar.</span></button>
+          <button type="button" class="guide-location-choice" data-catalog-location-choice="session"><strong data-i18n="guide.location.session">Durante esta sesión</strong><span data-i18n="guide.location.sessionDetail">Actualiza mientras avanzas; se borra al salir.</span></button>
+          <button type="button" class="guide-location-choice" data-catalog-location-choice="none"><strong data-i18n="guide.location.none">Seguir sin ubicación</strong><span data-i18n="guide.location.noneDetail">Mantiene las distancias desde el departamento.</span></button>
+        </form>
+      </dialog>
     </section>`;
 }
 

@@ -66,10 +66,10 @@ for (const page of ['actividades.html', 'restaurantes.html']) {
 }
 if (/[🔑📍🍽️🚵❄️🎿🚙📖🩹🚪]/u.test(home)) fail('home section icons must use generated raster artwork instead of emoji');
 const themeImages = [...home.matchAll(/<img\b[^>]*\bdata-theme-image\b[^>]*>/g)].map((match) => match[0]);
-if (themeImages.length !== 12 || themeImages.some((tag) => !/data-src-light="assets\/home-icons\/[a-z]+-light\.webp"/.test(tag) || !/data-src-dark="assets\/home-icons\/[a-z]+-dark\.webp"/.test(tag) || !/alt=""/.test(tag))) {
-  fail('home must use 12 decorative light/dark raster icon pairs');
+if (themeImages.length !== 13 || themeImages.some((tag) => !/data-src-light="assets\/home-icons\/[a-z]+-light\.webp"/.test(tag) || !/data-src-dark="assets\/home-icons\/[a-z]+-dark\.webp"/.test(tag) || !/alt=""/.test(tag))) {
+  fail('home must use 13 decorative light/dark raster icon pairs');
 }
-for (const name of ['checkin', 'wifi', 'valley', 'food', 'activities', 'weather', 'tickets', 'transport', 'manual', 'firstaid', 'checkout', 'emergency']) {
+for (const name of ['checkin', 'wifi', 'instagram', 'valley', 'food', 'activities', 'weather', 'tickets', 'transport', 'manual', 'firstaid', 'checkout', 'emergency']) {
   for (const themeName of ['light', 'dark']) {
     const asset = `assets/home-icons/${name}-${themeName}.webp`;
     if (!fs.existsSync(path.join(ROOT, asset))) fail(`missing generated home icon ${asset}`);
@@ -124,4 +124,4 @@ if (!nearby.includes("mapToggle.setAttribute('aria-pressed'") || !styles.include
   fail('map visibility control must expose state and retain strong contrast in both themes');
 }
 
-if (!process.exitCode) console.log('  PASS (24 premium raster icons, exact GPS, accessible map and scrollbar-free categories)');
+if (!process.exitCode) console.log('  PASS (26 premium raster icons, exact GPS, accessible map and scrollbar-free categories)');

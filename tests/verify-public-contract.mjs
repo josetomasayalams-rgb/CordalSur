@@ -49,7 +49,7 @@ const manual = read('instrucciones.html');
 const nearbyHtml = read('cerca-de-mi.html');
 const nearbyScript = read('js/nearby.js');
 const destinationGuide = JSON.parse(read('data/destination-guide.json'));
-if (!index.includes('href="cerca-de-mi.html"') || !nearbyHtml.includes('js/nearby.js?v=9')) {
+if (!index.includes('href="cerca-de-mi.html"') || !nearbyHtml.includes('js/nearby.js?v=10') || !nearbyHtml.includes('js/road-distance.js?v=1')) {
   fail('home must expose the protected nearby essentials tool');
 }
 if (!nearbyScript.includes('navigator.geolocation.getCurrentPosition') ||
@@ -126,7 +126,8 @@ if (publishedIds.some((id) => lodgingCategories.has(destinationGuide.places.find
     nearbyScript.includes("hotel: false") || nearbyHtml.includes('data-guide-category="hotel"')) {
   fail('lodging must remain outside every guest-facing guide surface');
 }
-if (!activityHtml.includes('js/catalog-guide.js?v=1') || !provisionsHtml.includes('js/catalog-guide.js?v=1')) {
+if (!activityHtml.includes('js/catalog-guide.js?v=2') || !provisionsHtml.includes('js/catalog-guide.js?v=2') ||
+    !activityHtml.includes('js/road-distance.js?v=1') || !provisionsHtml.includes('js/road-distance.js?v=1')) {
   fail('both canonical catalogs must use the shared filter and distance-order implementation');
 }
 const logoPath = 'assets/brand/cordal-sur-symbol-reverse-1024.png';
@@ -164,7 +165,7 @@ for (const [file, html] of [['index.html', index], ['check-in.html', checkin]]) 
   if (!instagramLink.includes(`href="${instagram}"`) ||
       !instagramLink.includes('target="_blank"') ||
       !instagramLink.includes('rel="noopener"') ||
-      !/(?:<svg|assets\/icons\/instagram\.svg|action-icon--instagram)/.test(instagramLink)) {
+      !/(?:<svg|assets\/icons\/instagram\.svg|action-icon--instagram|assets\/home-icons\/instagram-(?:light|dark)\.webp)/.test(instagramLink)) {
     fail(`${file} must show a safe, icon-based link to the canonical Instagram profile`);
   }
 }

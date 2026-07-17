@@ -32,6 +32,11 @@
 <section class="canonical-catalog" data-canonical-catalog="activities">
       <div class="catalog-heading"><div><span class="guide-eyebrow" data-i18n="catalog.eyebrow">Selección territorial verificada</span><h2 class="section-title" data-i18n="act.top.t">Qué hacer en Las Trancas</h2><p data-i18n="catalog.activities.intro">Turismo, naturaleza y experiencias dentro del radio del departamento.</p></div><span class="catalog-total"><b>57</b><span data-i18n="guide.quality.places">lugares</span></span></div>
       <div class="catalog-toolbar" data-catalog-toolbar="activities">
+        <div class="catalog-origin" role="group" data-i18n-aria="catalog.origin.aria" aria-label="Origen de la distancia">
+          <button type="button" class="catalog-origin__button is-active" data-catalog-origin="apartment" aria-pressed="true"><span class="catalog-origin__icon" aria-hidden="true">⌂</span><span data-i18n="catalog.origin.apartment">Departamento</span></button>
+          <button type="button" class="catalog-origin__button" data-catalog-origin="location" aria-pressed="false"><span class="catalog-origin__icon" aria-hidden="true">◎</span><span data-i18n="catalog.origin.location">Mi ubicación</span></button>
+          <span class="catalog-origin__status" data-catalog-location-status role="status" aria-live="polite" data-i18n="catalog.origin.private">GPS opcional · sólo en este dispositivo</span>
+        </div>
         <label class="catalog-search"><span data-i18n="catalog.search.label">Buscar</span><input type="search" data-catalog-search data-i18n-placeholder="catalog.search.placeholder" placeholder="Nombre, categoría o sector"></label>
         <label class="catalog-sort"><span data-i18n="guide.sort.label">Ordenar por</span><select data-catalog-sort><option value="distance" data-i18n="guide.sort.distance">Distancia</option><option value="alphabetical" data-i18n="guide.sort.alphabetical">A–Z</option></select></label>
         <div class="catalog-filters" role="group" data-i18n-aria="guide.categories.aria" aria-label="Categorías">
@@ -44,7 +49,7 @@
         <strong class="catalog-count" data-catalog-count aria-live="polite">57 lugares</strong>
       </div>
       <div class="rest-grid" data-catalog-grid>
-      <article class="rest-card catalog-card" data-id="manual-mtb-bike-park" data-category="tourism" data-distance="254.5" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="manual-mtb-bike-park" data-category="tourism" data-distance="576.3" data-apartment-distance="576.3" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -52,7 +57,7 @@
             <h3 class="rest-card__name">Bike Park Nevados</h3>
             <p>Nevados de Chillán</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>0.3 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
         <p class="catalog-warning catalog-warning--closed" data-i18n="guide.status.closed">Cerrado según la última verificación. Revisa el sitio oficial antes de viajar.</p>
@@ -65,7 +70,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1262100859-mirador-el-regalo" data-category="tourism" data-distance="994.5" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="osm-node-1262100859-mirador-el-regalo" data-category="tourism" data-distance="1280.3" data-apartment-distance="1280.3" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -73,7 +78,7 @@
             <h3 class="rest-card__name">Mirador El Regalo</h3>
             <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
           </div>
-          <strong class="catalog-distance" data-distance-label>1.0 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -86,7 +91,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-2471159073-centro-de-ski-nevados-de-chillan" data-category="ski" data-distance="1005.1" style="--catalog-color:#3677a8">
+      <article class="rest-card catalog-card" data-id="osm-node-2471159073-centro-de-ski-nevados-de-chillan" data-category="ski" data-distance="1952.2" data-apartment-distance="1952.2" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#3677a8">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -94,7 +99,7 @@
             <h3 class="rest-card__name">Centro de Ski Nevados de Chillán</h3>
             <p>Pinto</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>1.0 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -107,49 +112,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-way-28256625-valle-hermoso" data-category="tourism" data-distance="1008.7" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Valle Hermoso</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>1.0 km</strong>
-        </header>
-        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9172323%2C-71.421843" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9172323%2C-71.421843" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="manual-term-valle-hermoso" data-category="tourism" data-distance="1116.5" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Valle Hermoso</h3>
-            <p>Nevados de Chillán</p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>1.1 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9181858%2C-71.4220867" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9181858%2C-71.4220867" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-          <a class="catalog-action catalog-action--website " href="https://www.nevadosdechillan.com/experiencias-diarias" target="_blank" rel="noopener" aria-label="Sitio oficial" title="Sitio oficial" data-i18n-aria="guide.action.website" data-i18n-title="guide.action.website"><span class="action-icon action-icon--website" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.website">Sitio oficial</span></a>
-          <a class="catalog-action catalog-action--instagram " href="https://www.instagram.com/nevadosdechillan/" target="_blank" rel="noopener" aria-label="Abrir en Instagram" title="Abrir en Instagram" data-i18n-aria="guide.action.instagram" data-i18n-title="guide.action.instagram"><span class="action-icon action-icon--instagram" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.instagram">Abrir en Instagram</span></a>
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="manual-termas-de-chillan" data-category="tourism" data-distance="1197.3" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="manual-termas-de-chillan" data-category="tourism" data-distance="2030.5" data-apartment-distance="2030.5" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -157,7 +120,7 @@
             <h3 class="rest-card__name">Termas de Chillán</h3>
             <p>Nevados de Chillán</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>1.2 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -170,7 +133,49 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-fumarolas-olla-del-mote" data-category="tourism" data-distance="1730.9" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="osm-way-28256625-valle-hermoso" data-category="tourism" data-distance="2357.5" data-apartment-distance="2357.5" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Valle Hermoso</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9172323%2C-71.421843" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9172323%2C-71.421843" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-term-valle-hermoso" data-category="tourism" data-distance="2403.3" data-apartment-distance="2403.3" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Valle Hermoso</h3>
+            <p>Nevados de Chillán</p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9181858%2C-71.4220867" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9181858%2C-71.4220867" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+          <a class="catalog-action catalog-action--website " href="https://www.nevadosdechillan.com/experiencias-diarias" target="_blank" rel="noopener" aria-label="Sitio oficial" title="Sitio oficial" data-i18n-aria="guide.action.website" data-i18n-title="guide.action.website"><span class="action-icon action-icon--website" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.website">Sitio oficial</span></a>
+          <a class="catalog-action catalog-action--instagram " href="https://www.instagram.com/nevadosdechillan/" target="_blank" rel="noopener" aria-label="Abrir en Instagram" title="Abrir en Instagram" data-i18n-aria="guide.action.instagram" data-i18n-title="guide.action.instagram"><span class="action-icon action-icon--instagram" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.instagram">Abrir en Instagram</span></a>
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-fumarolas-olla-del-mote" data-category="tourism" data-distance="2508.5" data-apartment-distance="2508.5" data-apartment-access-nearby="true" data-road-access-nearby="true" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -178,7 +183,7 @@
             <h3 class="rest-card__name">Fumarolas Olla del Mote</h3>
             <p>Nevados de Chillán</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>1.7 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -191,154 +196,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-2220466858-cerro-el-gato" data-category="tourism" data-distance="2036.2" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro El Gato</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>2.0 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8993731%2C-71.4406258" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8993731%2C-71.4406258" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-way-1266965162-refugio-garganta-del-diablo" data-category="trail" data-distance="2257" style="--catalog-color:#4d7e45">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.trail">Senderos</span>
-            <h3 class="rest-card__name">Refugio Garganta del Diablo</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>2.3 km</strong>
-        </header>
-        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8895%2C-71.4303922" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8895%2C-71.4303922" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1202593438-cerro-coltrahue" data-category="tourism" data-distance="2595.3" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Coltrahue</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>2.6 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9281768%2C-71.4357077" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9281768%2C-71.4357077" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-5203403421-anfiteatro" data-category="tourism" data-distance="2865.5" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Anfiteatro</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>2.9 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8828684%2C-71.426374" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8828684%2C-71.426374" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-367739102-mirador-pino-huacho" data-category="tourism" data-distance="2944.4" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Mirador Pino Huacho</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>2.9 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9055209%2C-71.4535183" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9055209%2C-71.4535183" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-382037906-cerro-pirigallo" data-category="tourism" data-distance="3224.1" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Pirigallo</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>3.2 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8983118%2C-71.3864963" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8983118%2C-71.3864963" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-2282636000-cerro-purgatorio" data-category="tourism" data-distance="3606.1" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Purgatorio</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>3.6 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8879615%2C-71.4522447" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8879615%2C-71.4522447" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-13646131879-mirador-los-coltrahues" data-category="tourism" data-distance="3915" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="osm-node-13646131879-mirador-los-coltrahues" data-category="tourism" data-distance="5461.2" data-apartment-distance="5461.2" data-apartment-access-nearby="true" data-road-access-nearby="true" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -346,7 +204,7 @@
             <h3 class="rest-card__name">Mirador Los Coltrahues</h3>
             <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
           </div>
-          <strong class="catalog-distance" data-distance-label>3.9 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -359,7 +217,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-3463619787-informacion-turistica" data-category="tourism" data-distance="5268.2" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="osm-node-3463619787-informacion-turistica" data-category="tourism" data-distance="6738.8" data-apartment-distance="6738.8" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -367,7 +225,7 @@
             <h3 class="rest-card__name">Información Turística</h3>
             <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
           </div>
-          <strong class="catalog-distance" data-distance-label>5.3 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -380,7 +238,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-mirador-del-valle" data-category="tourism" data-distance="6595.7" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="manual-mirador-del-valle" data-category="tourism" data-distance="8572.4" data-apartment-distance="8572.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -388,7 +246,7 @@
             <h3 class="rest-card__name">Mirador del Valle</h3>
             <p>Valle Las Trancas</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>6.6 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -401,154 +259,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1202593309-cerro-las-cabras" data-category="tourism" data-distance="6902.7" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Las Cabras</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>6.9 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8741599%2C-71.4854681" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8741599%2C-71.4854681" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1202587653-cerro-las-canas" data-category="tourism" data-distance="7154.6" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Las Cañas</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>7.2 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9268131%2C-71.4976184" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9268131%2C-71.4976184" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-5918848485-sector-pared-blanca-y-pared-deportiva" data-category="tourism" data-distance="7617.6" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Sector Pared Blanca y Pared Deportiva</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>7.6 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9408113%2C-71.4959481" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9408113%2C-71.4959481" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1202592478-cerro-la-pila" data-category="tourism" data-distance="7913.6" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro La Pila</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>7.9 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9674042%2C-71.4700203" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9674042%2C-71.4700203" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-2282637066-cerro-pichi-minas" data-category="tourism" data-distance="8045.8" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Pichi Minas</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>8.0 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9187882%2C-71.331047" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9187882%2C-71.331047" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-2282637065-cerro-piramide" data-category="tourism" data-distance="8418.4" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Pirámide</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>8.4 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8325096%2C-71.4206397" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8325096%2C-71.4206397" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-501242961-cerro-las-minas" data-category="tourism" data-distance="8580.1" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Las Minas</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>8.6 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9199343%2C-71.3251846" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9199343%2C-71.3251846" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="manual-bosque-encantado" data-category="tourism" data-distance="8582.1" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="manual-bosque-encantado" data-category="tourism" data-distance="10970.3" data-apartment-distance="10970.3" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -556,7 +267,7 @@
             <h3 class="rest-card__name">Bosque Encantado</h3>
             <p>Valle Las Trancas</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>8.6 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -569,280 +280,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1202589759-picos-las-bravas" data-category="tourism" data-distance="9256.1" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Picos Las Bravas</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>9.3 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9348575%2C-71.5192211" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9348575%2C-71.5192211" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-5918847284-pared-mastodonde" data-category="tourism" data-distance="9269.7" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Pared Mastodonde</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>9.3 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9497169%2C-71.51102" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9497169%2C-71.51102" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-5314140516-cumbre-sur" data-category="tourism" data-distance="9436" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cumbre Sur</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>9.4 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9365132%2C-71.5206475" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9365132%2C-71.5206475" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-501243122-cerro-torrecilla" data-category="tourism" data-distance="10009.2" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Torrecilla</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>10 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8767003%2C-71.5260016" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8767003%2C-71.5260016" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-4342083113-cerro-consuelo" data-category="tourism" data-distance="10636.5" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Consuelo</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>11 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.814113%2C-71.4420238" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.814113%2C-71.4420238" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-13461557007-bienvenido-a-la-reserva-nacional-nuble" data-category="tourism" data-distance="10694.6" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Bienvenido a la Reserva Nacional Ñuble</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>11 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9774314%2C-71.5041307" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9774314%2C-71.5041307" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-5254437521-zona-de-merienda" data-category="tourism" data-distance="10804.2" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Zona de Merienda</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>11 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9786783%2C-71.504285" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9786783%2C-71.504285" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1202592790-cerro-colorado" data-category="tourism" data-distance="10833" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Colorado</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>11 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8115157%2C-71.4353644" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8115157%2C-71.4353644" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-11135357983-mirador-relbun" data-category="tourism" data-distance="10871.7" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Mirador Relbún</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>11 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.978493%2C-71.505625" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.978493%2C-71.505625" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-308136377-mirador-huella-huemul" data-category="tourism" data-distance="10964.5" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Mirador Huella Huemul</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>11 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9804717%2C-71.5045314" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9804717%2C-71.5045314" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-317670757-mirador-mariposa-del-chagual" data-category="tourism" data-distance="11207.4" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Mirador Mariposa del Chagual</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>11 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9817581%2C-71.5068138" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9817581%2C-71.5068138" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1115038017-austin" data-category="tourism" data-distance="11254.5" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Austin</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>11 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9700447%2C-71.5208348" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9700447%2C-71.5208348" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1350393964-cerro-los-metales" data-category="tourism" data-distance="11536.1" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Los Metales</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>12 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.917647%2C-71.2913549" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.917647%2C-71.2913549" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="manual-atr-cueva-pincheira" data-category="tourism" data-distance="11892.8" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="manual-atr-cueva-pincheira" data-category="tourism" data-distance="14791" data-apartment-distance="14791" data-apartment-access-nearby="true" data-road-access-nearby="true" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -850,7 +288,7 @@
             <h3 class="rest-card__name">Cueva de los Pincheira</h3>
             <p>Camino a Las Trancas</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>12 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -863,175 +301,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1350393957-cerro-el-feo" data-category="tourism" data-distance="12772" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro El Feo</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>13 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9091407%2C-71.27693" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9091407%2C-71.27693" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1202586063-cerro-las-miras" data-category="tourism" data-distance="13344.4" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Las Miras</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>13 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.7893856%2C-71.4415281" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.7893856%2C-71.4415281" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-way-30929847-termas-los-peucos" data-category="thermal_baths" data-distance="13685.5" style="--catalog-color:#2b8da0">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.thermal_baths">Termas</span>
-            <h3 class="rest-card__name">Termas Los Peucos</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>14 km</strong>
-        </header>
-        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0308486%2C-71.4074732" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0308486%2C-71.4074732" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-501242591-cerro-las-yeguas" data-category="tourism" data-distance="16071.5" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Las Yeguas</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>16 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9333225%2C-71.5986143" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9333225%2C-71.5986143" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-502735387-cerro-negro" data-category="tourism" data-distance="17015" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Negro</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>17 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0197278%2C-71.551721" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0197278%2C-71.551721" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-343576255-mirador-salto-el-blanquillo" data-category="tourism" data-distance="18644.2" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Mirador Salto El Blanquillo</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>19 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0758812%2C-71.4225804" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0758812%2C-71.4225804" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-498484311-cerro-las-aguilas" data-category="tourism" data-distance="19271.3" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Las Águilas</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>19 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9774353%2C-71.2217742" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9774353%2C-71.2217742" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-5808319559-cerro-arrayan" data-category="tourism" data-distance="20160.8" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Arrayán</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>20 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.7407411%2C-71.3337995" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.7407411%2C-71.3337995" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="manual-la-playita" data-category="tourism" data-distance="20204.6" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="manual-la-playita" data-category="tourism" data-distance="24125.1" data-apartment-distance="24125.1" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1039,7 +309,7 @@
             <h3 class="rest-card__name">La Playita</h3>
             <p>Los Lleuques</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>20 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1052,91 +322,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-7821351357-cerro-come-callao" data-category="tourism" data-distance="20313.8" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Come Callao</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>20 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0617882%2C-71.5444434" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0617882%2C-71.5444434" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1202584796-cerro-pelado" data-category="tourism" data-distance="20408.4" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Pelado</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>20 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9334597%2C-71.647967" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9334597%2C-71.647967" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-4463992989-mirador-los-lleuques" data-category="tourism" data-distance="20457.6" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Mirador Los Lleuques</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>20 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.852801%2C-71.6398989" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.852801%2C-71.6398989" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1350744475-cerro-el-planchon" data-category="tourism" data-distance="20679.2" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro El Planchón</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>21 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0068109%2C-71.6179097" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0068109%2C-71.6179097" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="manual-saltito-renegado" data-category="tourism" data-distance="21038.8" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="manual-saltito-renegado" data-category="tourism" data-distance="25926.5" data-apartment-distance="25926.5" data-apartment-access-nearby="true" data-road-access-nearby="true" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1144,7 +330,7 @@
             <h3 class="rest-card__name">Saltito del Renegado</h3>
             <p>Recinto / Los Lleuques</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>21 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1157,7 +343,28 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="manual-parque-las-turbinas" data-category="tourism" data-distance="21053" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="osm-node-4463992989-mirador-los-lleuques" data-category="tourism" data-distance="26019.4" data-apartment-distance="26019.4" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Mirador Los Lleuques</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.852801%2C-71.6398989" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.852801%2C-71.6398989" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-parque-las-turbinas" data-category="tourism" data-distance="27847.1" data-apartment-distance="27847.1" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1165,7 +372,7 @@
             <h3 class="rest-card__name">Parque Las Turbinas</h3>
             <p>Camino a Las Trancas</p>
           </div>
-          <strong class="catalog-distance" data-distance-label>21 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1178,7 +385,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-1251260272-mirador-recinto" data-category="tourism" data-distance="21073.4" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="osm-node-1251260272-mirador-recinto" data-category="tourism" data-distance="28823.7" data-apartment-distance="28823.7" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1186,7 +393,7 @@
             <h3 class="rest-card__name">Mirador Recinto</h3>
             <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
           </div>
-          <strong class="catalog-distance" data-distance-label>21 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1199,28 +406,7 @@
 
         </div>
       </article>
-      <article class="rest-card catalog-card" data-id="osm-node-501242743-cerro-las-mariposas" data-category="tourism" data-distance="21584.6" style="--catalog-color:#4f75a1">
-        <header class="catalog-card__head">
-          <span class="catalog-card__marker" aria-hidden="true"></span>
-          <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
-            <h3 class="rest-card__name">Cerro Las Mariposas</h3>
-            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
-          </div>
-          <strong class="catalog-distance" data-distance-label>22 km</strong>
-        </header>
-
-
-
-        <div class="catalog-actions">
-          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0983611%2C-71.3716614" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
-          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0983611%2C-71.3716614" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
-
-
-
-        </div>
-      </article>
-      <article class="rest-card catalog-card" data-id="osm-node-13207466680-mirador-casapiedra" data-category="tourism" data-distance="22307.4" style="--catalog-color:#4f75a1">
+      <article class="rest-card catalog-card" data-id="osm-node-13207466680-mirador-casapiedra" data-category="tourism" data-distance="30875.1" data-apartment-distance="30875.1" data-apartment-access-nearby="true" data-road-access-nearby="true" style="--catalog-color:#4f75a1">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -1228,7 +414,7 @@
             <h3 class="rest-card__name">Mirador Casapiedra</h3>
             <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
           </div>
-          <strong class="catalog-distance" data-distance-label>22 km</strong>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
         </header>
 
 
@@ -1241,8 +427,836 @@
 
         </div>
       </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1115038017-austin" data-category="tourism" data-distance="41200.2" data-apartment-distance="41200.2" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Austin</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9700447%2C-71.5208348" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9700447%2C-71.5208348" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-13461557007-bienvenido-a-la-reserva-nacional-nuble" data-category="tourism" data-distance="41890.2" data-apartment-distance="41890.2" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Bienvenido a la Reserva Nacional Ñuble</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9774314%2C-71.5041307" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9774314%2C-71.5041307" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-11135357983-mirador-relbun" data-category="tourism" data-distance="41941.1" data-apartment-distance="41941.1" data-apartment-access-nearby="true" data-road-access-nearby="true" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Mirador Relbún</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.978493%2C-71.505625" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.978493%2C-71.505625" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-5254437521-zona-de-merienda" data-category="tourism" data-distance="42044.9" data-apartment-distance="42044.9" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Zona de Merienda</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9786783%2C-71.504285" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9786783%2C-71.504285" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-308136377-mirador-huella-huemul" data-category="tourism" data-distance="42270.9" data-apartment-distance="42270.9" data-apartment-access-nearby="true" data-road-access-nearby="true" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Mirador Huella Huemul</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9804717%2C-71.5045314" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9804717%2C-71.5045314" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-317670757-mirador-mariposa-del-chagual" data-category="tourism" data-distance="42307.3" data-apartment-distance="42307.3" data-apartment-access-nearby="true" data-road-access-nearby="true" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Mirador Mariposa del Chagual</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9817581%2C-71.5068138" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9817581%2C-71.5068138" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-5203403421-anfiteatro" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Anfiteatro</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8828684%2C-71.426374" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8828684%2C-71.426374" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-5808319559-cerro-arrayan" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Arrayán</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.7407411%2C-71.3337995" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.7407411%2C-71.3337995" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1202592790-cerro-colorado" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Colorado</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8115157%2C-71.4353644" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8115157%2C-71.4353644" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1202593438-cerro-coltrahue" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Coltrahue</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9281768%2C-71.4357077" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9281768%2C-71.4357077" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-7821351357-cerro-come-callao" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Come Callao</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0617882%2C-71.5444434" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0617882%2C-71.5444434" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-4342083113-cerro-consuelo" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Consuelo</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.814113%2C-71.4420238" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.814113%2C-71.4420238" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1350393957-cerro-el-feo" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro El Feo</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9091407%2C-71.27693" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9091407%2C-71.27693" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-2220466858-cerro-el-gato" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro El Gato</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8993731%2C-71.4406258" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8993731%2C-71.4406258" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1350744475-cerro-el-planchon" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro El Planchón</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0068109%2C-71.6179097" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0068109%2C-71.6179097" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1202592478-cerro-la-pila" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro La Pila</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9674042%2C-71.4700203" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9674042%2C-71.4700203" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-498484311-cerro-las-aguilas" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Las Águilas</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9774353%2C-71.2217742" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9774353%2C-71.2217742" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1202593309-cerro-las-cabras" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Las Cabras</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8741599%2C-71.4854681" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8741599%2C-71.4854681" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1202587653-cerro-las-canas" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Las Cañas</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9268131%2C-71.4976184" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9268131%2C-71.4976184" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-501242743-cerro-las-mariposas" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Las Mariposas</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0983611%2C-71.3716614" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0983611%2C-71.3716614" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-501242961-cerro-las-minas" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Las Minas</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9199343%2C-71.3251846" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9199343%2C-71.3251846" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1202586063-cerro-las-miras" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Las Miras</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.7893856%2C-71.4415281" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.7893856%2C-71.4415281" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-501242591-cerro-las-yeguas" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Las Yeguas</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9333225%2C-71.5986143" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9333225%2C-71.5986143" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1350393964-cerro-los-metales" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Los Metales</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.917647%2C-71.2913549" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.917647%2C-71.2913549" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-502735387-cerro-negro" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Negro</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0197278%2C-71.551721" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0197278%2C-71.551721" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1202584796-cerro-pelado" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Pelado</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9334597%2C-71.647967" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9334597%2C-71.647967" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-2282637066-cerro-pichi-minas" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Pichi Minas</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9187882%2C-71.331047" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9187882%2C-71.331047" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-2282637065-cerro-piramide" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Pirámide</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8325096%2C-71.4206397" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8325096%2C-71.4206397" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-382037906-cerro-pirigallo" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Pirigallo</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8983118%2C-71.3864963" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8983118%2C-71.3864963" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-2282636000-cerro-purgatorio" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Purgatorio</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8879615%2C-71.4522447" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8879615%2C-71.4522447" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-501243122-cerro-torrecilla" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cerro Torrecilla</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8767003%2C-71.5260016" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8767003%2C-71.5260016" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-5314140516-cumbre-sur" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Cumbre Sur</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9365132%2C-71.5206475" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9365132%2C-71.5206475" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-367739102-mirador-pino-huacho" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Mirador Pino Huacho</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9055209%2C-71.4535183" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9055209%2C-71.4535183" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-343576255-mirador-salto-el-blanquillo" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Mirador Salto El Blanquillo</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0758812%2C-71.4225804" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0758812%2C-71.4225804" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-5918847284-pared-mastodonde" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Pared Mastodonde</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9497169%2C-71.51102" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9497169%2C-71.51102" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1202589759-picos-las-bravas" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Picos Las Bravas</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9348575%2C-71.5192211" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9348575%2C-71.5192211" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-way-1266965162-refugio-garganta-del-diablo" data-category="trail" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4d7e45">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.trail">Senderos</span>
+            <h3 class="rest-card__name">Refugio Garganta del Diablo</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8895%2C-71.4303922" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8895%2C-71.4303922" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-5918848485-sector-pared-blanca-y-pared-deportiva" data-category="tourism" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#4f75a1">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.tourism">Turismo</span>
+            <h3 class="rest-card__name">Sector Pared Blanca y Pared Deportiva</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9408113%2C-71.4959481" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9408113%2C-71.4959481" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-way-30929847-termas-los-peucos" data-category="thermal_baths" data-distance="" data-apartment-distance="" data-apartment-access-nearby="false" data-road-access-nearby="false" style="--catalog-color:#2b8da0">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.thermal_baths">Termas</span>
+            <h3 class="rest-card__name">Termas Los Peucos</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--navigation catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-37.0308486%2C-71.4074732" target="_blank" rel="noopener" aria-label="Navegar" title="Navegar" data-i18n-aria="guide.action.navigate" data-i18n-title="guide.action.navigate"><span class="action-icon action-icon--navigation" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.navigate">Navegar</span></a>
+          <a class="catalog-action catalog-action--maps " href="https://www.google.com/maps/search/?api=1&amp;query=-37.0308486%2C-71.4074732" target="_blank" rel="noopener" aria-label="Abrir en Google Maps" title="Abrir en Google Maps" data-i18n-aria="guide.action.maps" data-i18n-title="guide.action.maps"><span class="action-icon action-icon--maps" aria-hidden="true"></span><span class="sr-only" data-i18n="guide.action.maps">Abrir en Google Maps</span></a>
+
+
+
+        </div>
+      </article>
       </div>
       <p class="catalog-empty" data-catalog-empty hidden data-i18n="catalog.empty">No hay lugares que coincidan con tu búsqueda.</p>
+      <dialog class="guide-location-dialog catalog-location-dialog" data-catalog-location-dialog aria-labelledby="catalog-location-title-activities">
+        <form method="dialog" class="guide-location-dialog__panel">
+          <div class="guide-location-dialog__head"><div><span class="guide-eyebrow" data-i18n="guide.location.title">Tu ubicación es opcional</span><h2 id="catalog-location-title-activities" data-i18n="guide.location.dialogTitle">¿Cómo quieres usar tu ubicación?</h2></div><button type="submit" class="guide-dialog-close" value="close" data-i18n-aria="guide.location.close" aria-label="Cerrar">×</button></div>
+          <p data-i18n="guide.location.dialogBody">Tu posición sólo se usa en este dispositivo para calcular distancias viales. Nunca se agrega a enlaces ni al catálogo.</p>
+          <button type="button" class="guide-location-choice" data-catalog-location-choice="once"><strong data-i18n="guide.location.once">Solo esta vez</strong><span data-i18n="guide.location.onceDetail">Toma una posición y deja de consultar.</span></button>
+          <button type="button" class="guide-location-choice" data-catalog-location-choice="session"><strong data-i18n="guide.location.session">Durante esta sesión</strong><span data-i18n="guide.location.sessionDetail">Actualiza mientras avanzas; se borra al salir.</span></button>
+          <button type="button" class="guide-location-choice" data-catalog-location-choice="none"><strong data-i18n="guide.location.none">Seguir sin ubicación</strong><span data-i18n="guide.location.noneDetail">Mantiene las distancias desde el departamento.</span></button>
+        </form>
+      </dialog>
     </section>
 
 
@@ -1286,7 +1300,8 @@
 <script src="js/lang.js?v=11"></script>
   <script src="js/access.js?v=4" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
 <script src="js/theme.js?v=8"></script>
-  <script src="js/catalog-guide.js?v=1" defer></script>
+  <script src="js/road-distance.js?v=1" defer></script>
+  <script src="js/catalog-guide.js?v=2" defer></script>
  <script src="js/study-condition.js?v=1"></script>
 </body>
 </html>
