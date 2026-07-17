@@ -13,11 +13,14 @@ echo "  PASS"
 echo "=== Gate 2: complete i18n contract ==="
 node tests/verify-i18n.mjs
 
-echo "=== Gate 3: public CordalSur contract ==="
+echo "=== Gate 3: section palette evidence ==="
+node tests/verify-section-palettes.mjs
+
+echo "=== Gate 4: public CordalSur contract ==="
 node tests/verify-public-contract.mjs
 node tests/verify-access-session.mjs
 
-echo "=== Gate 4: generator idempotency (temporary copy) ==="
+echo "=== Gate 5: generator idempotency (temporary copy) ==="
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/site"
@@ -59,7 +62,7 @@ test "$first" = "$second"
 node "$tmp/site/scripts/apply-host-data.mjs" "$tmp/site" "$tmp/site/data/host-data.sample.json" >/dev/null
 echo "  PASS"
 
-echo "=== Gate 5: canonical snapshot parity ==="
+echo "=== Gate 6: canonical snapshot parity ==="
 check_snapshot() {
   if ! cmp -s "$1" "$2"; then
     echo "  FAIL: snapshot $2 differs from $1" >&2
@@ -77,6 +80,7 @@ check_snapshot tickets.html data/.baseline/tickets.html
 check_snapshot instrucciones.html data/.baseline/instrucciones.html
 check_snapshot restaurantes.html data/.baseline/restaurantes.html
 check_snapshot css/styles.css data/.baseline/css-styles.css
+check_snapshot css/section-palettes.css data/.baseline/css-section-palettes.css
 check_snapshot js/lang.js data/.baseline/js/lang.js
 check_snapshot js/lang.js data/.baseline/js-lang.js
 check_snapshot js/lang.js data/.baseline/lang.js

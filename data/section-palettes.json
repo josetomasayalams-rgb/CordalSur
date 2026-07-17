@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "contrastFloor": 6,
+  "sections": {
+    "home": {
+      "page": "index.html",
+      "label": "CordalSur",
+      "rationale": "Continuidad de marca y orientación general",
+      "light": { "accent": "#153b33", "accentAlt": "#24594b", "onAccent": "#f8f3e7" },
+      "dark": { "accent": "#d9a24f", "accentAlt": "#e8bd79", "onAccent": "#102c26" }
+    },
+    "checkin": {
+      "page": "check-in.html",
+      "label": "Check-in",
+      "rationale": "Eucalipto para calma y confirmación de llegada",
+      "light": { "accent": "#24614f", "accentAlt": "#174739", "onAccent": "#ffffff" },
+      "dark": { "accent": "#8fc5ae", "accentAlt": "#b4d8c8", "onAccent": "#102c26" }
+    },
+    "checkout": {
+      "page": "check-out.html",
+      "label": "Check-out",
+      "rationale": "Ámbar sobrio para cierre y finalización",
+      "light": { "accent": "#785018", "accentAlt": "#5f3b0d", "onAccent": "#ffffff" },
+      "dark": { "accent": "#e4b86f", "accentAlt": "#f0cc91", "onAccent": "#102c26" }
+    },
+    "restaurantes": {
+      "page": "restaurantes.html",
+      "label": "Comida y provisiones",
+      "rationale": "Terracota limitada a acentos para calidez gastronómica",
+      "light": { "accent": "#874b3a", "accentAlt": "#6f382b", "onAccent": "#ffffff" },
+      "dark": { "accent": "#d99a7f", "accentAlt": "#e8b49d", "onAccent": "#102c26" }
+    },
+    "actividades": {
+      "page": "actividades.html",
+      "label": "Actividades",
+      "rationale": "Verde alpino para movimiento y naturaleza",
+      "light": { "accent": "#285e52", "accentAlt": "#19483e", "onAccent": "#ffffff" },
+      "dark": { "accent": "#91cbb7", "accentAlt": "#b6dbc9", "onAccent": "#102c26" }
+    },
+    "clima": {
+      "page": "clima.html",
+      "label": "Clima y nieve",
+      "rationale": "Azul glacial desaturado para información meteorológica",
+      "light": { "accent": "#355f70", "accentAlt": "#274a58", "onAccent": "#ffffff" },
+      "dark": { "accent": "#a4c5d1", "accentAlt": "#c5dae1", "onAccent": "#102c26" }
+    },
+    "tickets": {
+      "page": "tickets.html",
+      "label": "Tickets de ski",
+      "rationale": "Índigo mineral para decisiones y servicios de montaña",
+      "light": { "accent": "#4d5979", "accentAlt": "#3c4562", "onAccent": "#ffffff" },
+      "dark": { "accent": "#b4bed7", "accentAlt": "#d0d6e7", "onAccent": "#102c26" }
+    },
+    "manual": {
+      "page": "instrucciones.html",
+      "label": "Manual",
+      "rationale": "Oliva salvia para lectura pausada y orientación doméstica",
+      "light": { "accent": "#596847", "accentAlt": "#465437", "onAccent": "#ffffff" },
+      "dark": { "accent": "#b7c7a5", "accentAlt": "#d0dbc3", "onAccent": "#102c26" }
+    },
+    "botiquin": {
+      "page": "botiquin.html",
+      "label": "Botiquín",
+      "rationale": "Rojo arcilla reservado para reconocimiento de seguridad",
+      "light": { "accent": "#8f3b3b", "accentAlt": "#743030", "onAccent": "#ffffff" },
+      "dark": { "accent": "#e6a09b", "accentAlt": "#f1bcb8", "onAccent": "#102c26" }
+    },
+    "buggy": {
+      "page": "buggy.html",
+      "label": "Buggy",
+      "rationale": "Oliva mineral para traslado y terreno",
+      "light": { "accent": "#5f6330", "accentAlt": "#494c24", "onAccent": "#ffffff" },
+      "dark": { "accent": "#c8c98e", "accentAlt": "#dcdda8", "onAccent": "#102c26" }
+    }
+  }
+}
