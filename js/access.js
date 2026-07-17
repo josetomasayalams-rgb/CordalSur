@@ -284,6 +284,9 @@
 
   function lockAccess(key) {
     if (sessionTimer) clearTimeout(sessionTimer);
+    if (document.documentElement.classList.contains('access-granted')) {
+      document.dispatchEvent(new CustomEvent('cordal:access-ended'));
+    }
     removeToken();
     sessionExpiresAt = 0;
     document.documentElement.classList.remove('access-granted');

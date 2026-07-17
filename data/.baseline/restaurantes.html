@@ -11,7 +11,7 @@
  <link rel="preload" as="image" type="image/webp" media="(min-width: 720px)" fetchpriority="high" href="css/bg/winter/restaurantes-atardecer-bosque.webp?v=2">
   <script>(function(){var t="";try{t=localStorage.getItem("gh-theme-v3")||""}catch(e){}if(t!=="light"&&t!=="dark"){t="dark"}document.documentElement.setAttribute("data-theme",t)})();</script>
   <script>(function(){var c=new URLSearchParams(location.search).get("condition");if(c==="a"||c==="b")document.documentElement.setAttribute("data-study-condition",c)})();</script>
-  <link rel="stylesheet" href="css/styles.css?v=10">
+  <link rel="stylesheet" href="css/styles.css?v=17">
   <link rel="stylesheet" href="css/section-palettes.css?v=3">
   <link rel="stylesheet" href="css/access.css?v=4">
 </head>
@@ -31,331 +31,1329 @@
 
 
   <!-- @LISTINGS START — el swarm regenera desde host-data.json: restaurants[]. NO editar a mano. -->
-<h2 class="section-title" data-i18n="rest.title">Comida y provisiones en Las Trancas</h2>
-      <div id="rest-filter-bar" class="rest-filter-bar">
-        <button type="button" class="rest-filter__btn rest-filter__btn--active" data-filter="all" data-i18n="rest.filter.all">Todos</button>
-        <button type="button" class="rest-filter__btn" data-filter="restaurante" data-i18n="rest.filter.restaurante">Restaurantes</button>
-        <button type="button" class="rest-filter__btn" data-filter="café" data-i18n="rest.filter.cafe">Café</button>
-        <button type="button" class="rest-filter__btn" data-filter="panadería" data-i18n="rest.filter.panaderia">Panadería</button>
-        <button type="button" class="rest-filter__btn" data-filter="heladería" data-i18n="rest.filter.heladeria">Heladería</button>
-        <button type="button" class="rest-filter__btn" data-filter="bar" data-i18n="rest.filter.bar">Bar</button>
-        <button type="button" class="rest-filter__btn" data-filter="cervecería" data-i18n="rest.filter.cerveceria">Cervecería</button>
-        <button type="button" class="rest-filter__btn" data-filter="supermercado" data-i18n="rest.filter.supermercado">Supermercado</button>
-        <button type="button" class="rest-filter__btn" data-filter="compras-gourmet" data-i18n="rest.filter.compras">Compras gourmet</button>
-        <button type="button" class="rest-filter__btn rest-filter__btn--sort" data-sort-distance data-i18n="nearby.sort">Más cerca primero</button>
-        <span class="rest-filter__count" id="rest-filter-count" aria-live="polite">28 / 28</span>
+<section class="canonical-catalog" data-canonical-catalog="provisions">
+      <div class="catalog-heading"><div><span class="guide-eyebrow" data-i18n="catalog.eyebrow">Selección territorial verificada</span><h2 class="section-title" data-i18n="rest.title">Comida y provisiones en Las Trancas</h2><p data-i18n="catalog.provisions.intro">Comida, abastecimiento y servicios esenciales ordenados desde el departamento.</p></div><span class="catalog-total"><b>59</b><span data-i18n="guide.quality.places">lugares</span></span></div>
+      <div class="catalog-toolbar" data-catalog-toolbar="provisions">
+        <label class="catalog-search"><span data-i18n="catalog.search.label">Buscar</span><input type="search" data-catalog-search data-i18n-placeholder="catalog.search.placeholder" placeholder="Nombre, categoría o sector"></label>
+        <label class="catalog-sort"><span data-i18n="guide.sort.label">Ordenar por</span><select data-catalog-sort><option value="distance" data-i18n="guide.sort.distance">Distancia</option><option value="alphabetical" data-i18n="guide.sort.alphabetical">A–Z</option></select></label>
+        <div class="catalog-filters" role="group" data-i18n-aria="guide.categories.aria" aria-label="Categorías">
+          <button type="button" class="catalog-filter is-active" data-catalog-filter="all" aria-pressed="true"><span data-i18n="nearby.cat.all">Todos</span></button>
+          <button type="button" class="catalog-filter" data-catalog-filter="gas_station" aria-pressed="false"><i style="--filter-color:#4c5968"></i><span data-i18n="guide.cat.gas_station">Bencina</span></button>
+          <button type="button" class="catalog-filter" data-catalog-filter="coffee" aria-pressed="false"><i style="--filter-color:#8b5e3c"></i><span data-i18n="guide.cat.coffee">Cafés</span></button>
+          <button type="button" class="catalog-filter" data-catalog-filter="fast_food" aria-pressed="false"><i style="--filter-color:#dd7b29"></i><span data-i18n="guide.cat.fast_food">Comida rápida</span></button>
+          <button type="button" class="catalog-filter" data-catalog-filter="emergency" aria-pressed="false"><i style="--filter-color:#bd2f3d"></i><span data-i18n="guide.cat.emergency">Emergencias</span></button>
+          <button type="button" class="catalog-filter" data-catalog-filter="hardware" aria-pressed="false"><i style="--filter-color:#6f7680"></i><span data-i18n="guide.cat.hardware">Ferreterías</span></button>
+          <button type="button" class="catalog-filter" data-catalog-filter="other" aria-pressed="false"><i style="--filter-color:#66706c"></i><span data-i18n="guide.cat.other">Otros</span></button>
+          <button type="button" class="catalog-filter" data-catalog-filter="bakery" aria-pressed="false"><i style="--filter-color:#bd7f3f"></i><span data-i18n="guide.cat.bakery">Panaderías</span></button>
+          <button type="button" class="catalog-filter" data-catalog-filter="restaurant" aria-pressed="false"><i style="--filter-color:#d45b3e"></i><span data-i18n="guide.cat.restaurant">Restaurantes</span></button>
+          <button type="button" class="catalog-filter" data-catalog-filter="medical" aria-pressed="false"><i style="--filter-color:#cf3f54"></i><span data-i18n="guide.cat.medical">Salud</span></button>
+          <button type="button" class="catalog-filter" data-catalog-filter="supermarket" aria-pressed="false"><i style="--filter-color:#2f7d5b"></i><span data-i18n="guide.cat.supermarket">Supermercados</span></button>
+          <button type="button" class="catalog-filter" data-catalog-filter="convenience" aria-pressed="false"><i style="--filter-color:#4d8f55"></i><span data-i18n="guide.cat.convenience">Tiendas de conveniencia</span></button>
+        </div>
+        <strong class="catalog-count" data-catalog-count aria-live="polite">59 lugares</strong>
       </div>
-      <script type="application/json" id="restaurants-data">[{"id":"sitari-tapas-y-brasas","name":"Sitari Tapas y Brasas","status":"publicar","category":"restaurante","tags":["tapas","brasas","cena"],"shortDescription":"Tapas y brasas con producto propio.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Sitari%20Tapas%20y%20Brasas%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/sitari_tapasbrasas","phone":"+56 9 3667 1106","confidence":"alta","categories":["Restaurante"],"nombre":{"es":"Sitari Tapas y Brasas","pt":"Sitari Tapas e Brasas","en":"Sitari Tapas and Brasas"},"descripcion_corta":{"es":"Tapas y brasas con producto propio.","pt":"Tapas e brasas com ingredientes próprios.","en":"Tapas and grilled dishes with house-made ingredients."}},{"id":"bagual","name":"Bagual","status":"publicar","category":"cafe_bar","tags":["crepes","cafe","bar","noche"],"shortDescription":"Crepería, café y bar.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Bagual%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":5,"ratingCount":7,"ratingSource":"Tripadvisor","instagramUrl":"https://www.instagram.com/bagual_lastrancas","phone":"+56 9 7749 8263","confidence":"alta","categories":["Café","Bar"],"nombre":{"es":"Bagual","pt":"Bagual","en":"Bagual"},"descripcion_corta":{"es":"Crepería, café y bar.","pt":"Creperia, café e bar.","en":"Creperie, coffee and bar."}},{"id":"restaurant-borde-andino","name":"Restaurant Borde Andino","status":"publicar","category":"restaurante","tags":["familias","carnes","salmon"],"shortDescription":"Cocina amplia para familia.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Restaurant%20Borde%20Andino%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":4.8,"ratingCount":8,"ratingSource":"Tripadvisor","instagramUrl":"https://www.instagram.com/hotel_bordeandino","phone":"+56 9 6688 2858","confidence":"alta","categories":["Restaurante"],"nombre":{"es":"Restaurant Borde Andino","pt":"Restaurante Borde Andino","en":"Borde Andino Restaurant"},"descripcion_corta":{"es":"Cocina amplia para familia.","pt":"Cozinha variada para a família.","en":"Wide-ranging menu for the family."}},{"id":"los-hualles-restobar","name":"Los Hualles Restobar","status":"publicar","category":"restobar","tags":["casero","pizza","hamburguesa","familias"],"shortDescription":"Platos caseros, pizzas y tragos.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Los%20Hualles%20Restobar%20Valle%20Las%20Trancas","googleRating":4.7,"googleReviewCount":198,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":"Google","instagramUrl":"https://www.instagram.com/cabanasloshualles","phone":"+56 9 3311 5584","confidence":"alta","categories":["Restaurante","Bar"],"nombre":{"es":"Los Hualles Restobar","pt":"Los Hualles Restobar","en":"Los Hualles Restobar"},"descripcion_corta":{"es":"Platos caseros, pizzas y tragos.","pt":"Pratos caseiros, pizzas e drinques.","en":"Home-style plates, pizzas and cocktails."}},{"id":"oliva-s-restaurant","name":"Oliva's Restaurant","status":"publicar","category":"restaurante","tags":["pastas","carnes","pet_friendly"],"shortDescription":"Carnes y pastas; pet friendly.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Oliva's%20Restaurant%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":2.9,"ratingCount":52,"ratingSource":"Tripadvisor","instagramUrl":"https://www.instagram.com/olivas.restaurant","phone":"+56 9 9789 9958","confidence":"alta","categories":["Restaurante"],"nombre":{"es":"Oliva's Restaurant","pt":"Oliva's Restaurant","en":"Oliva's Restaurant"},"descripcion_corta":{"es":"Carnes y pastas; pet friendly.","pt":"Carnes e massas; pet friendly.","en":"Meat and pasta; pet friendly."}},{"id":"miski-lirio","name":"Miski Lirio","status":"publicar","category":"restaurante_bar_pasteleria","tags":["bar","pasteleria","cocteles"],"shortDescription":"Bar y pastelería; cócteles.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Miski%20Lirio%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/miski_lirio_termas_de_chillan","phone":"+56 9 9286 2149","confidence":"alta","categories":["Restaurante","Bar"],"nombre":{"es":"Miski Lirio","pt":"Miski Lirio","en":"Miski Lirio"},"descripcion_corta":{"es":"Bar y pastelería; cócteles.","pt":"Bar e confeitaria; coquetéis.","en":"Bar and pastry shop; cocktails."}},{"id":"restaurante-pizzer-a-chil-in","name":"Restaurante Pizzería Chil'in","status":"publicar","category":"restaurante_pizzeria","tags":["pizza","cocina_internacional","grupos"],"shortDescription":"Fusión y pizzería.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Chil'in%20Valle%20Las%20Trancas","googleRating":4.6,"googleReviewCount":1311,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":"Google","instagramUrl":"https://www.instagram.com/chilin_lastrancas","phone":"+56 9 9368 2247","confidence":"alta","categories":["Restaurante"],"nombre":{"es":"Restaurante Pizzería Chil'in","pt":"Restaurante Pizzería Chil'in","en":"Restaurante Pizzería Chil'in"},"descripcion_corta":{"es":"Fusión y pizzería.","pt":"Fusão e pizzaria.","en":"Fusion food and pizzeria."}},{"id":"pizzas-and-beers-del-valle","name":"Pizzas and Beers del Valle","status":"publicar","category":"pizzeria_bar","tags":["pizza","cerveza_artesanal","bar"],"shortDescription":"Pizza y cerveza artesanal.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Pizzas%20and%20Beers%20del%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":5,"ratingCount":1,"ratingSource":"Tripadvisor","instagramUrl":"https://www.instagram.com/pizzasandbeers.delvalle","phone":"+56 9 7649 3671","confidence":"alta","categories":["Restaurante","Bar"],"nombre":{"es":"Pizzas and Beers del Valle","pt":"Pizzas and Beers del Valle","en":"Pizzas and Beers del Valle"},"descripcion_corta":{"es":"Pizza y cerveza artesanal.","pt":"Pizza e cerveja artesanal.","en":"Pizza and craft beer."}},{"id":"steak-house","name":"Steak House","status":"publicar","category":"restaurante","tags":["carnes","brasas","vinos","grupos"],"shortDescription":"Carnes a las brasas y vinos.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Steak%20House%20Alto%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/bar_restaurant_steakhouse","phone":"+56 9 8406 2003","confidence":"alta","categories":["Restaurante"],"nombre":{"es":"Steak House","pt":"Steak House","en":"Steak House"},"descripcion_corta":{"es":"Carnes a las brasas y vinos.","pt":"Carnes na brasa e vinhos.","en":"Grilled meats and wines."}},{"id":"restobar-shangrila","name":"Restobar Shangrila","status":"publicar","category":"restobar","tags":["bar","cerveza","noche"],"shortDescription":"Salida nocturna simple.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Restobar%20Shangrila%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/restobar_shangrila","phone":"+56 9 7125 5186","confidence":"alta","categories":["Restaurante","Bar"],"nombre":{"es":"Restobar Shangrila","pt":"Restobar Shangrila","en":"Restobar Shangrila"},"descripcion_corta":{"es":"Salida nocturna simple.","pt":"Programa noturno simples.","en":"Simple night out."}},{"id":"snow-pub","name":"Snow Pub","status":"publicar","category":"bar_restobar","tags":["pub","noche","cerveza"],"shortDescription":"Pub de montaña post-esquí.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Snow%20Pub%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/snow.pub","phone":"+56 9 6218 4340","confidence":"alta","categories":["Bar"],"nombre":{"es":"Snow Pub","pt":"Snow Pub","en":"Snow Pub"},"descripcion_corta":{"es":"Pub de montaña post-esquí.","pt":"Pub de montanha pós-esqui.","en":"Mountain pub for after-ski."}},{"id":"las-bravas-cafe","name":"Las Bravas Cafe","status":"publicar","category":"cafe_bar","tags":["desayuno","cafe","pizza","pasteleria"],"shortDescription":"Cafetería con desayuno y schop.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Las%20Bravas%20Cafe%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/lasbravasbar_cafe","phone":"+56 9 7779 4117","confidence":"alta","categories":["Café","Bar"],"nombre":{"es":"Las Bravas Cafe","pt":"Las Bravas Cafe","en":"Las Bravas Cafe"},"descripcion_corta":{"es":"Cafetería con desayuno y schop.","pt":"Cafeteria com café da manhã e chope.","en":"Coffee shop with breakfast and draft beer."}},{"id":"dulce-monta-a","name":"Dulce Montaña","status":"publicar","category":"pasteleria","tags":["dulce","cafe","familias"],"shortDescription":"Pastelería clásica de la zona.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Dulce%20Montana%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/dulcemontanalt","phone":"+56 9 5342 0800","confidence":"alta","categories":["Dulce"],"nombre":{"es":"Dulce Montaña","pt":"Dulce Montaña","en":"Dulce Montaña"},"descripcion_corta":{"es":"Pastelería clásica de la zona.","pt":"Confeitaria clássica da zona.","en":"Classic local pastry shop."}},{"id":"koiwe-cafe-boutique","name":"Koiwe Cafe \u0026 Boutique","status":"publicar","category":"cafe","tags":["cafe_especialidad","desayuno","dulce"],"shortDescription":"Café de especialidad.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Koiwe%20Cafe%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":5,"ratingCount":2,"ratingSource":"Tripadvisor","instagramUrl":"https://www.instagram.com/koiwecafe","phone":"+56 9 9969 9560","confidence":"alta","categories":["Café"],"nombre":{"es":"Koiwe Cafe \u0026 Boutique","pt":"Koiwe Cafe \u0026 Boutique","en":"Koiwe Cafe \u0026 Boutique"},"descripcion_corta":{"es":"Café de especialidad.","pt":"Café de especialidade.","en":"Specialty coffee."}},{"id":"lux-petit-club-cafe-bar","name":"Lux / Petit Club Cafe Bar","status":"publicar","category":"cafe_bar","tags":["sushi","ninos","cafe","bar","familias"],"shortDescription":"Cafe bar con sushi y área infantil.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Petit%20Club%20Cafe%20Bar%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/petitclub_cafebar","phone":"+56 9 5609 2979","confidence":"alta","categories":["Café","Bar"],"nombre":{"es":"Lux / Petit Club Cafe Bar","pt":"Lux / Petit Club Cafe Bar","en":"Lux / Petit Club Cafe Bar"},"descripcion_corta":{"es":"Cafe bar con sushi y área infantil.","pt":"Café-bar com sushi e área infantil.","en":"Cafe-bar with sushi and kids area."}},{"id":"las-cacha-as","name":"Las Cachañas","status":"publicar","category":"pasteleria_sandwicheria","tags":["pasteleria","sandwich"],"shortDescription":"Pastelería y sandwichería.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Las%20Cachanas%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/lascachanas_","phone":"+56 9 7194 5748","confidence":"alta","categories":["Dulce"],"nombre":{"es":"Las Cachañas","pt":"Las Cachañas","en":"Las Cachañas"},"descripcion_corta":{"es":"Pastelería y sandwichería.","pt":"Confeitaria e sanduíches.","en":"Pastry and sandwich shop."}},{"id":"caramba-helados","name":"Caramba Helados","status":"publicar","category":"heladeria","tags":["helados","ninos","dulce"],"shortDescription":"Helados artesanales.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Caramba%20Helados%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":5,"ratingCount":5,"ratingSource":"Tripadvisor","instagramUrl":"https://www.instagram.com/caramba_helados","phone":"+56 9 9323 0137","confidence":"alta","categories":["Heladería"],"nombre":{"es":"Caramba Helados","pt":"Caramba Helados","en":"Caramba Helados"},"descripcion_corta":{"es":"Helados artesanales.","pt":"Sorvetes artesanais.","en":"Handcrafted ice cream."}},{"id":"che-cami","name":"Che Cami","status":"publicar","category":"pasteleria","tags":["pasteleria","talleres","ninos","dulce"],"shortDescription":"Pastelería con talleres para niños.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Che%20Cami%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/che_cami_","phone":"+56 9 7194 5748","confidence":"alta","categories":["Dulce"],"nombre":{"es":"Che Cami","pt":"Che Cami","en":"Che Cami"},"descripcion_corta":{"es":"Pastelería con talleres para niños.","pt":"Confeitaria com oficinas para crianças.","en":"Pastry shop with kids workshops."}},{"id":"valdo","name":"Valdo","status":"publicar","category":"panaderia_pasteleria","tags":["empanadas","brownie","donuts","kombucha"],"shortDescription":"Empanadas, kombuchas y dulces.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Valdo%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/valdolastrancas","phone":"+56 9 8566 6937","confidence":"alta","categories":["Panadería"],"nombre":{"es":"Valdo","pt":"Valdo","en":"Valdo"},"descripcion_corta":{"es":"Empanadas, kombuchas y dulces.","pt":"Empanadas, kombuchas e doces.","en":"Empanadas, kombuchas and sweets."}},{"id":"malcontenta-panader-a","name":"Panadería Valle Las Trancas","aliases":["PANADERIA valle las trancas - chile","Panadería Las Trancas","Posible alias Tripadvisor: Malcontenta Panadería"],"status":"publicar","category":"panaderia","tags":["panaderia","masa_madre","pan_artesanal","bolleria","desayuno","dulce","pizza","plaza_olivas","para_llevar","compras_depto"],"shortDescription":"Micro panadería artesanal en Plaza Olivas, conocida por panes de fermentación natural, bollería y productos frescos del día.","whyGo":"Muy buena parada para comprar pan fresco, algo dulce y productos para llevar al departamento. Destaca por masa madre, bollería y horneados que suelen agotarse temprano.","addressOrKm":"Plaza Olivas, Ruta N-55 km 71,8, Valle Las Trancas, Pinto, Ñuble, Chile","sector":"Plaza Olivas / Los Olivas","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Panader%C3%ADa%20Valle%20Las%20Trancas%20Plaza%20Olivas%20Pinto%20%C3%91uble","googleRating":4.8,"googleReviewCount":22,"ratingCheckedAt":"2026-07-07","ratingSource":"Google","ratingNote":"El usuario reportó visualmente 4.8 con 22 reseñas en Google Maps. En una fuente pública que replica Google encontré 4.8 con 20 reseñas el mismo día. Conviene revalidar visualmente en Maps antes de publicar.","publicRatingFallback":"","ratingValue":null,"ratingCount":null,"instagramUrl":"https://www.instagram.com/goodmorninglastrancas/","instagramHandle":"@goodmorninglastrancas","phone":"+56 9 6342 3408","whatsappUrl":"https://wa.me/56963423408","hours":"Bio pública de Instagram al 2026-07-07: miércoles, sábado y domingo de 10:30 a 19:00. Confirmar porque en publicaciones aparecen horarios estacionales.","priceLevel":null,"bestFor":["desayuno","pan fresco","bolleria","llevar al depto","parada dulce"],"petFriendly":null,"openAllYear":null,"sourceUrls":["https://www.instagram.com/goodmorninglastrancas/","https://trancas.cl/plaza-oliva/","https://wanderlog.com/place/details/3680405/panaderia-valle-las-trancas-chile","https://www.tripadvisor.es/Restaurant_Review-g11848562-d19509563-Reviews-Malcontenta_Panaderia-Valle_Las_Trancas_Biobio_Region.html"],"confidence":"media-alta","notes":"La ficha de Tripadvisor no aparece con el nombre exacto 'Panadería Valle Las Trancas', pero 'Malcontenta Panadería' coincide en ubicación, teléfono, rubro y descripción, por lo que probablemente es la misma operación o un nombre comercial anterior.","categories":["Panadería"],"nombre":{"es":"Panadería Valle Las Trancas","pt":"Panadería Valle Las Trancas","en":"Panadería Valle Las Trancas"},"descripcion_corta":{"es":"Micro panadería artesanal en Plaza Olivas, conocida por panes de fermentación natural, bollería y productos frescos del día.","pt":"Micro padaria artesanal na Plaza Olivas, conhecida por pães de fermentação natural, bolos e produtos frescos do dia.","en":"Artisan micro bakery at Plaza Olivas, known for naturally leavened breads, pastries and fresh products of the day."}},{"id":"cervecer-a-garganta-del-diablo","name":"Cervecería Garganta del Diablo","status":"publicar","category":"cerveceria","tags":["cerveza_artesanal","compras_gourmet"],"shortDescription":"Cerveza local de montaña.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Cerveceria%20Garganta%20del%20Diablo%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/cervezagargantadeldiablo","phone":"+56 9 8576 5955","confidence":"alta","categories":["Cervecería"],"nombre":{"es":"Cervecería Garganta del Diablo","pt":"Cervecería Garganta del Diablo","en":"Cervecería Garganta del Diablo"},"descripcion_corta":{"es":"Cerveza local de montaña.","pt":"Cerveja local de montanha.","en":"Local mountain beer."}},{"id":"cervecer-a-shangrila","name":"Cervecería Shangrila","status":"publicar","category":"cerveceria","tags":["cerveza_artesanal","compras_gourmet"],"shortDescription":"Cerveza de Valle Shangrila.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Cerveceria%20Shangrila%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/cerveza_shangrila","phone":"+56 9 7125 5186","confidence":"alta","categories":["Cervecería"],"nombre":{"es":"Cervecería Shangrila","pt":"Cervecería Shangrila","en":"Cervecería Shangrila"},"descripcion_corta":{"es":"Cerveza de Valle Shangrila.","pt":"Cerveja do Vale Shangrila.","en":"Shangrila Valley beer."}},{"id":"la-cava-de-la-monta-a","name":"La Cava de la Montaña","status":"publicar","category":"cava","tags":["vinos","licores","compras_depto"],"shortDescription":"Vinos, licores y cervezas.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=La%20Cava%20de%20la%20Montana%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/lacavadelamontana","phone":"+56 9 3372 3919","confidence":"alta","categories":["Compras gourmet"],"nombre":{"es":"La Cava de la Montaña","pt":"La Cava de la Montaña","en":"La Cava de la Montaña"},"descripcion_corta":{"es":"Vinos, licores y cervezas.","pt":"Vinhos, licores e cervejas.","en":"Wines, spirits and beers."}},{"id":"charcuter-a-las-cabras","name":"Charcutería Las Cabras","status":"publicar","category":"charcuteria","tags":["tablas","embutidos","gourmet"],"shortDescription":"Embutidos artesanales y tablas.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Charcuteria%20Las%20Cabras%20Valle%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/lascabras_charcuteria","phone":"+56 9 6308 9239","confidence":"alta","categories":["Compras gourmet"],"nombre":{"es":"Charcutería Las Cabras","pt":"Charcutería Las Cabras","en":"Charcutería Las Cabras"},"descripcion_corta":{"es":"Embutidos artesanales y tablas.","pt":"Enchidos artesanais e tábuas.","en":"Artisan cured meats and boards."}},{"id":"fauna-lounge","name":"Fauna Lounge","status":"publicar","category":"bar_restobar","categories":["Bar"],"tags":["bar","cocteleria_autor","noche","dj","despues_de_esquiar"],"shortDescription":"Bar lounge con coctelería de autor, comida y música.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Fauna%20Lounge%20Alto%20Las%20Trancas%20Km%2070.5","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/faunalounge.cl/","phone":null,"confidence":"media","nombre":{"es":"Fauna Lounge","pt":"Fauna Lounge","en":"Fauna Lounge"},"descripcion_corta":{"es":"Bar lounge con coctelería de autor, comida y música.","pt":"Bar lounge com coquetéis de autor, comida e música.","en":"Lounge bar with signature cocktails, food and music."}},{"id":"super-el-refugio","name":"Supermercado El Refugio","status":"publicar","category":"supermercado","categories":["Supermercado"],"tags":["supermercado","abastecimiento","estacionamiento","compras_depto"],"shortDescription":"Abastecimiento de comestibles y bebestibles.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Supermercado%20El%20Refugio%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/el_refugio_supermercado/","websiteUrl":null,"phone":null,"confidence":"media","nombre":{"es":"Supermercado El Refugio","pt":"Supermercado El Refugio","en":"Supermercado El Refugio"},"descripcion_corta":{"es":"Abastecimiento de comestibles y bebestibles.","pt":"Mercearia e bebidas.","en":"Groceries and drinks."}},{"id":"minimarket-rucahue","name":"Rucahue Minimarket","status":"publicar","category":"supermercado","categories":["Supermercado"],"tags":["minimarket","panes","bebidas","lacteos","frutas_verduras","compras_depto"],"shortDescription":"Minimarket con panes, bebidas, lácteos y abarrotes.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=Rucahue%20Minimarket%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":null,"websiteUrl":"https://www.rucahueescalador.cl/servicios/minimarket","phone":null,"confidence":"media","nombre":{"es":"Rucahue Minimarket","pt":"Rucahue Minimarket","en":"Rucahue Minimarket"},"descripcion_corta":{"es":"Minimarket con panes, bebidas, lácteos y abarrotes.","pt":"Minimercado com pães, bebidas, laticínios e mercearia.","en":"Minimarket with bread, drinks, dairy and groceries."}},{"id":"super-mcpato","name":"McPato Supermercado","status":"publicar","category":"supermercado","categories":["Supermercado"],"tags":["supermercado","shangrila","humitas","pasteles","compras_depto"],"shortDescription":"Supermercado en Camino Shangri-La.","googleMapsUrl":"https://www.google.com/maps/search/?api=1\u0026query=McPato%20Supermercado%20Las%20Trancas","googleRating":null,"googleReviewCount":null,"publicRatingFallback":"","ratingValue":null,"ratingCount":null,"ratingSource":null,"instagramUrl":"https://www.instagram.com/mc.pato_supermercado/","websiteUrl":null,"phone":null,"confidence":"media","nombre":{"es":"McPato Supermercado","pt":"McPato Supermercado","en":"McPato Supermercado"},"descripcion_corta":{"es":"Supermercado en Camino Shangri-La.","pt":"Supermercado no Camino Shangri-La.","en":"Supermarket on Camino Shangri-La."}}]</script>
-    <div class="rest-grid">
-      <article class="rest-card" data-categories="restaurante" data-id="sitari-tapas-y-brasas">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="sitari-tapas-y-brasas.nombre">Sitari Tapas y Brasas</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--restaurante" data-i18n="rest.cat.restaurante">Restaurante</span></div>
+      <div class="rest-grid" data-catalog-grid>
+      <article class="rest-card catalog-card" data-id="editorial-gastronom-a-nevados-de-chill-n" data-category="convenience" data-distance="0" style="--catalog-color:#4d8f55">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.convenience">Tiendas de conveniencia</span>
+            <h3 class="rest-card__name">Gastronomía Nevados de Chillán</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>0.0 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="sitari-tapas-y-brasas.descripcion_corta">Tapas y brasas con producto propio.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Sitari%20Tapas%20y%20Brasas%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/sitari_tapasbrasas" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Nevados%20de%20Chillan%20restaurantes" target="_blank" rel="noopener">Host catalog · local verification pending</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Nevados%20de%20Chillan%20restaurantes" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Nevados%20de%20Chillan%20restaurantes" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="café bar" data-id="bagual">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="bagual.nombre">Bagual</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--cafe" data-i18n="rest.cat.café">Café</span> <span class="rr-cat rr-cat--bar" data-i18n="rest.cat.bar">Bar</span></div>
+      <article class="rest-card catalog-card" data-id="manual-cafeteria-tata" data-category="restaurant" data-distance="293.3" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Cafetería Tata</h3>
+            <p>Nevados de Chillán</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>0.3 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="bagual.descripcion_corta">Crepería, café y bar.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"><span class="rr-rating"><span class="rr-stars">★</span> <strong>5</strong> <small>(7) <span data-i18n="rest.source.tripadvisor">Tripadvisor</span></small></span></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Bagual%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/bagual_lastrancas" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/way/227394283" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9097103%2C-71.4232945" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9097103%2C-71.4232945" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="restaurante" data-id="restaurant-borde-andino">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="restaurant-borde-andino.nombre">Restaurant Borde Andino</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--restaurante" data-i18n="rest.cat.restaurante">Restaurante</span></div>
+      <article class="rest-card catalog-card" data-id="manual-observatorio-cafe" data-category="restaurant" data-distance="686.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Observatorio Café</h3>
+            <p>Centro de Ski</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>0.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="restaurant-borde-andino.descripcion_corta">Cocina amplia para familia.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"><span class="rr-rating"><span class="rr-stars">★</span> <strong>4.8</strong> <small>(8) <span data-i18n="rest.source.tripadvisor">Tripadvisor</span></small></span></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Restaurant%20Borde%20Andino%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/hotel_bordeandino" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/way/28945463" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9059473%2C-71.4133902" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9059473%2C-71.4133902" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="restaurante bar" data-id="los-hualles-restobar">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="los-hualles-restobar.nombre">Los Hualles Restobar</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--restaurante" data-i18n="rest.cat.restaurante">Restaurante</span> <span class="rr-cat rr-cat--bar" data-i18n="rest.cat.bar">Bar</span></div>
+      <article class="rest-card catalog-card" data-id="manual-cafeteria-tio-willy" data-category="restaurant" data-distance="896.8" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Cafetería Tío Willy</h3>
+            <p>Centro de Ski</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>0.9 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="los-hualles-restobar.descripcion_corta">Platos caseros, pizzas y tragos.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"><span class="rr-rating"><span class="rr-stars">★</span> <strong>4.7</strong> <small>(198) <span data-i18n="rest.source.google">Google</span></small></span></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Los%20Hualles%20Restobar%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/cabanasloshualles" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/way/110467377" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9040813%2C-71.411916" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9040813%2C-71.411916" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="restaurante" data-id="oliva-s-restaurant">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="oliva-s-restaurant.nombre">Oliva's Restaurant</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--restaurante" data-i18n="rest.cat.restaurante">Restaurante</span></div>
+      <article class="rest-card catalog-card" data-id="osm-node-6629435738-buena-vista-bar" data-category="restaurant" data-distance="2375.1" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Buena Vista Bar</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>2.4 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="oliva-s-restaurant.descripcion_corta">Carnes y pastas; pet friendly.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"><span class="rr-rating"><span class="rr-stars">★</span> <strong>2.9</strong> <small>(52) <span data-i18n="rest.source.tripadvisor">Tripadvisor</span></small></span></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Oliva's%20Restaurant%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/olivas.restaurant" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.openstreetmap.org/node/6629435738" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8903943%2C-71.4058539" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8903943%2C-71.4058539" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="restaurante bar" data-id="miski-lirio">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="miski-lirio.nombre">Miski Lirio</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--restaurante" data-i18n="rest.cat.restaurante">Restaurante</span> <span class="rr-cat rr-cat--bar" data-i18n="rest.cat.bar">Bar</span></div>
+      <article class="rest-card catalog-card" data-id="manual-tenencia-las-trancas" data-category="emergency" data-distance="5268.4" style="--catalog-color:#bd2f3d">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.emergency">Emergencias</span>
+            <h3 class="rest-card__name">Tenencia Las Trancas</h3>
+            <p>Valle Las Trancas</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>5.3 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="miski-lirio.descripcion_corta">Bar y pastelería; cócteles.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Miski%20Lirio%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/miski_lirio_termas_de_chillan" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/node/310318260" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9110413%2C-71.4797249" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9110413%2C-71.4797249" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+          <a class="catalog-action " href="tel:133" data-i18n="nearby.call">Llamar</a>
+        </div>
       </article>
-      <article class="rest-card" data-categories="restaurante" data-id="restaurante-pizzer-a-chil-in">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="restaurante-pizzer-a-chil-in.nombre">Restaurante Pizzería Chil'in</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--restaurante" data-i18n="rest.cat.restaurante">Restaurante</span></div>
+      <article class="rest-card catalog-card" data-id="osm-node-311431245-la-araucana-jamon-pan-y-vino" data-category="restaurant" data-distance="5401.2" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">La Araucana - Jamon Pan y Vino</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>5.4 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="restaurante-pizzer-a-chil-in.descripcion_corta">Fusión y pizzería.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"><span class="rr-rating"><span class="rr-stars">★</span> <strong>4.6</strong> <small>(1311) <span data-i18n="rest.source.google">Google</span></small></span></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Chil'in%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/chilin_lastrancas" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.openstreetmap.org/node/311431245" target="_blank" rel="noopener">OSM</a><a href="https://www.openstreetmap.org/node/1271274071" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9104966%2C-71.4812566" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9104966%2C-71.4812566" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+          <a class="catalog-action " href="http://www.paradorjamonpanyvino.cl/" data-i18n="guide.action.website">Sitio oficial</a>
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="restaurante bar" data-id="pizzas-and-beers-del-valle">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="pizzas-and-beers-del-valle.nombre">Pizzas and Beers del Valle</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--restaurante" data-i18n="rest.cat.restaurante">Restaurante</span> <span class="rr-cat rr-cat--bar" data-i18n="rest.cat.bar">Bar</span></div>
+      <article class="rest-card catalog-card" data-id="osm-node-5843178085-riding" data-category="restaurant" data-distance="5474" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Riding</h3>
+            <p>Avenida Las Trancas</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>5.5 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="pizzas-and-beers-del-valle.descripcion_corta">Pizza y cerveza artesanal.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"><span class="rr-rating"><span class="rr-stars">★</span> <strong>5</strong> <small>(1) <span data-i18n="rest.source.tripadvisor">Tripadvisor</span></small></span></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Pizzas%20and%20Beers%20del%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/pizzasandbeers.delvalle" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.openstreetmap.org/node/5843178085" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.911809%2C-71.4819785" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.911809%2C-71.4819785" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+          <a class="catalog-action " href="http://www.ridingchile.com" data-i18n="guide.action.website">Sitio oficial</a>
+
+          <a class="catalog-action " href="tel:+56941792459" data-i18n="nearby.call">Llamar</a>
+        </div>
       </article>
-      <article class="rest-card" data-categories="restaurante" data-id="steak-house">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="steak-house.nombre">Steak House</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--restaurante" data-i18n="rest.cat.restaurante">Restaurante</span></div>
+      <article class="rest-card catalog-card" data-id="manual-bomberos-las-trancas" data-category="emergency" data-distance="6336.3" style="--catalog-color:#bd2f3d">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.emergency">Emergencias</span>
+            <h3 class="rest-card__name">3ª Compañía Bomberos Las Trancas</h3>
+            <p>Valle Las Trancas</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.3 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="steak-house.descripcion_corta">Carnes a las brasas y vinos.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Steak%20House%20Alto%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/bar_restaurant_steakhouse" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/way/593911598" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9148225%2C-71.4913626" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9148225%2C-71.4913626" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+          <a class="catalog-action " href="tel:132" data-i18n="nearby.call">Llamar</a>
+        </div>
       </article>
-      <article class="rest-card" data-categories="restaurante bar" data-id="restobar-shangrila">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="restobar-shangrila.nombre">Restobar Shangrila</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--restaurante" data-i18n="rest.cat.restaurante">Restaurante</span> <span class="rr-cat rr-cat--bar" data-i18n="rest.cat.bar">Bar</span></div>
+      <article class="rest-card catalog-card" data-id="manual-rucahue" data-category="supermarket" data-distance="6657.1" style="--catalog-color:#2f7d5b">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.supermarket">Supermercados</span>
+            <h3 class="rest-card__name">Rucahue</h3>
+            <p>Valle Las Trancas</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="restobar-shangrila.descripcion_corta">Salida nocturna simple.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Restobar%20Shangrila%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/restobar_shangrila" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/node/310312759" target="_blank" rel="noopener">OSM</a><a href="https://www.rucahueescalador.cl/servicios/minimarket" target="_blank" rel="noopener">The official Rucahue website identifies its minimarket service.</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9147223%2C-71.4950079" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9147223%2C-71.4950079" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+          <a class="catalog-action " href="https://www.rucahueescalador.cl/servicios/minimarket" target="_blank" rel="noopener" data-i18n="guide.action.website">Sitio oficial</a>
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="bar" data-id="snow-pub">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="snow-pub.nombre">Snow Pub</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--bar" data-i18n="rest.cat.bar">Bar</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-alto-las-trancas" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Alto Las Trancas</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="snow-pub.descripcion_corta">Pub de montaña post-esquí.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Snow%20Pub%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/snow.pub" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Alto%20Las%20Trancas" target="_blank" rel="noopener">Host catalog · local verification pending</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Alto%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Alto%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="café bar" data-id="las-bravas-cafe">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="las-bravas-cafe.nombre">Las Bravas Cafe</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--cafe" data-i18n="rest.cat.café">Café</span> <span class="rr-cat rr-cat--bar" data-i18n="rest.cat.bar">Bar</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-bagual" data-category="coffee" data-distance="6718.9" style="--catalog-color:#8b5e3c">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.coffee">Cafés</span>
+            <h3 class="rest-card__name">Bagual</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="las-bravas-cafe.descripcion_corta">Cafetería con desayuno y schop.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Las%20Bravas%20Cafe%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/lasbravasbar_cafe" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Bagual%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Bagual%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Bagual%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="dulce" data-id="dulce-monta-a">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="dulce-monta-a.nombre">Dulce Montaña</h3>
-          <div class="rest-card__cats"><span class="rr-cat " data-i18n="rest.cat.dulce">Dulce</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-caramba-helados" data-category="coffee" data-distance="6718.9" style="--catalog-color:#8b5e3c">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.coffee">Cafés</span>
+            <h3 class="rest-card__name">Caramba Helados</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="dulce-monta-a.descripcion_corta">Pastelería clásica de la zona.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Dulce%20Montana%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/dulcemontanalt" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Caramba%20Helados%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Caramba%20Helados%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Caramba%20Helados%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="café" data-id="koiwe-cafe-boutique">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="koiwe-cafe-boutique.nombre">Koiwe Cafe &amp; Boutique</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--cafe" data-i18n="rest.cat.café">Café</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-cervecer-a-garganta-del-diablo" data-category="other" data-distance="6718.9" style="--catalog-color:#66706c">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.other">Otros</span>
+            <h3 class="rest-card__name">Cervecería Garganta del Diablo</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="koiwe-cafe-boutique.descripcion_corta">Café de especialidad.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"><span class="rr-rating"><span class="rr-stars">★</span> <strong>5</strong> <small>(2) <span data-i18n="rest.source.tripadvisor">Tripadvisor</span></small></span></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Koiwe%20Cafe%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/koiwecafe" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Cerveceria%20Garganta%20del%20Diablo%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Cerveceria%20Garganta%20del%20Diablo%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Cerveceria%20Garganta%20del%20Diablo%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="café bar" data-id="lux-petit-club-cafe-bar">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="lux-petit-club-cafe-bar.nombre">Lux / Petit Club Cafe Bar</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--cafe" data-i18n="rest.cat.café">Café</span> <span class="rr-cat rr-cat--bar" data-i18n="rest.cat.bar">Bar</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-cervecer-a-shangrila" data-category="other" data-distance="6718.9" style="--catalog-color:#66706c">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.other">Otros</span>
+            <h3 class="rest-card__name">Cervecería Shangrila</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="lux-petit-club-cafe-bar.descripcion_corta">Cafe bar con sushi y área infantil.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Petit%20Club%20Cafe%20Bar%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/petitclub_cafebar" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Cerveceria%20Shangrila%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Cerveceria%20Shangrila%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Cerveceria%20Shangrila%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="dulce" data-id="las-cacha-as">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="las-cacha-as.nombre">Las Cachañas</h3>
-          <div class="rest-card__cats"><span class="rr-cat " data-i18n="rest.cat.dulce">Dulce</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-charcuter-a-las-cabras" data-category="convenience" data-distance="6718.9" style="--catalog-color:#4d8f55">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.convenience">Tiendas de conveniencia</span>
+            <h3 class="rest-card__name">Charcutería Las Cabras</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="las-cacha-as.descripcion_corta">Pastelería y sandwichería.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Las%20Cachanas%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/lascachanas_" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Charcuteria%20Las%20Cabras%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Charcuteria%20Las%20Cabras%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Charcuteria%20Las%20Cabras%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="heladería" data-id="caramba-helados">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="caramba-helados.nombre">Caramba Helados</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--heladeria" data-i18n="rest.cat.heladería">Heladería</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-charlie-bowl" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Charlie Bowl</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="caramba-helados.descripcion_corta">Helados artesanales.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"><span class="rr-rating"><span class="rr-stars">★</span> <strong>5</strong> <small>(5) <span data-i18n="rest.source.tripadvisor">Tripadvisor</span></small></span></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Caramba%20Helados%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/caramba_helados" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Charlie%20Bowl%20Las%20Trancas" target="_blank" rel="noopener">Host catalog · local verification pending</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Charlie%20Bowl%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Charlie%20Bowl%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="dulce" data-id="che-cami">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="che-cami.nombre">Che Cami</h3>
-          <div class="rest-card__cats"><span class="rr-cat " data-i18n="rest.cat.dulce">Dulce</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-che-cami" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.bakery">Panaderías</span>
+            <h3 class="rest-card__name">Che Cami</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="che-cami.descripcion_corta">Pastelería con talleres para niños.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Che%20Cami%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/che_cami_" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Che%20Cami%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Che%20Cami%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Che%20Cami%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="panadería" data-id="valdo">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="valdo.nombre">Valdo</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--panaderia" data-i18n="rest.cat.panadería">Panadería</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-dulce-monta-a" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.bakery">Panaderías</span>
+            <h3 class="rest-card__name">Dulce Montaña</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="valdo.descripcion_corta">Empanadas, kombuchas y dulces.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Valdo%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/valdolastrancas" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Dulce%20Montana%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Dulce%20Montana%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Dulce%20Montana%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="panadería" data-id="malcontenta-panader-a">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="malcontenta-panader-a.nombre">Panadería Valle Las Trancas</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--panaderia" data-i18n="rest.cat.panadería">Panadería</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-el-pared-n" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">El Paredón</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="malcontenta-panader-a.descripcion_corta">Micro panadería artesanal en Plaza Olivas, conocida por panes de fermentación natural, bollería y productos frescos del día.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"><span class="rr-rating"><span class="rr-stars">★</span> <strong>4.8</strong> <small>(22) <span data-i18n="rest.source.google">Google</span></small></span></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Panader%C3%ADa%20Valle%20Las%20Trancas%20Plaza%20Olivas%20Pinto%20%C3%91uble" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/goodmorninglastrancas/" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=El%20Paredon%20Las%20Trancas" target="_blank" rel="noopener">Host catalog · local verification pending</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=El%20Paredon%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=El%20Paredon%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="cervecería" data-id="cervecer-a-garganta-del-diablo">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="cervecer-a-garganta-del-diablo.nombre">Cervecería Garganta del Diablo</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--cerveceria" data-i18n="rest.cat.cervecería">Cervecería</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-fauna-lounge" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Fauna Lounge</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="cervecer-a-garganta-del-diablo.descripcion_corta">Cerveza local de montaña.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Cerveceria%20Garganta%20del%20Diablo%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/cervezagargantadeldiablo" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Fauna%20Lounge%20Alto%20Las%20Trancas%20Km%2070.5" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Fauna%20Lounge%20Alto%20Las%20Trancas%20Km%2070.5" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Fauna%20Lounge%20Alto%20Las%20Trancas%20Km%2070.5" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="cervecería" data-id="cervecer-a-shangrila">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="cervecer-a-shangrila.nombre">Cervecería Shangrila</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--cerveceria" data-i18n="rest.cat.cervecería">Cervecería</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-koiwe-cafe-boutique" data-category="coffee" data-distance="6718.9" style="--catalog-color:#8b5e3c">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.coffee">Cafés</span>
+            <h3 class="rest-card__name">Koiwe Cafe &amp; Boutique</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="cervecer-a-shangrila.descripcion_corta">Cerveza de Valle Shangrila.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Cerveceria%20Shangrila%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/cerveza_shangrila" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Koiwe%20Cafe%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Koiwe%20Cafe%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Koiwe%20Cafe%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="compras-gourmet" data-id="la-cava-de-la-monta-a">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="la-cava-de-la-monta-a.nombre">La Cava de la Montaña</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--compras" data-i18n="rest.cat.compras-gourmet">Compras gourmet</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-la-cava-de-la-monta-a" data-category="convenience" data-distance="6718.9" style="--catalog-color:#4d8f55">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.convenience">Tiendas de conveniencia</span>
+            <h3 class="rest-card__name">La Cava de la Montaña</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="la-cava-de-la-monta-a.descripcion_corta">Vinos, licores y cervezas.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=La%20Cava%20de%20la%20Montana%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/lacavadelamontana" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=La%20Cava%20de%20la%20Montana%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=La%20Cava%20de%20la%20Montana%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=La%20Cava%20de%20la%20Montana%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="compras-gourmet" data-id="charcuter-a-las-cabras">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="charcuter-a-las-cabras.nombre">Charcutería Las Cabras</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--compras" data-i18n="rest.cat.compras-gourmet">Compras gourmet</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-las-bravas-cafe" data-category="coffee" data-distance="6718.9" style="--catalog-color:#8b5e3c">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.coffee">Cafés</span>
+            <h3 class="rest-card__name">Las Bravas Cafe</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="charcuter-a-las-cabras.descripcion_corta">Embutidos artesanales y tablas.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Charcuteria%20Las%20Cabras%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/lascabras_charcuteria" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Las%20Bravas%20Cafe%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Las%20Bravas%20Cafe%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Las%20Bravas%20Cafe%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="bar" data-id="fauna-lounge">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="fauna-lounge.nombre">Fauna Lounge</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--bar" data-i18n="rest.cat.bar">Bar</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-las-cacha-as" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.bakery">Panaderías</span>
+            <h3 class="rest-card__name">Las Cachañas</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="fauna-lounge.descripcion_corta">Bar lounge con coctelería de autor, comida y música.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Fauna%20Lounge%20Alto%20Las%20Trancas%20Km%2070.5" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/faunalounge.cl/" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Las%20Cachanas%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Las%20Cachanas%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Las%20Cachanas%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="supermercado" data-id="super-el-refugio">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="super-el-refugio.nombre">Supermercado El Refugio</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--supermercado" data-i18n="rest.cat.supermercado">Supermercado</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-los-hualles-restobar" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Los Hualles Restobar</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="super-el-refugio.descripcion_corta">Abastecimiento de comestibles y bebestibles.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Supermercado%20El%20Refugio%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/el_refugio_supermercado/" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Los%20Hualles%20Restobar%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Los%20Hualles%20Restobar%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Los%20Hualles%20Restobar%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="supermercado" data-id="minimarket-rucahue">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="minimarket-rucahue.nombre">Rucahue Minimarket</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--supermercado" data-i18n="rest.cat.supermercado">Supermercado</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-lux-petit-club-cafe-bar" data-category="coffee" data-distance="6718.9" style="--catalog-color:#8b5e3c">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.coffee">Cafés</span>
+            <h3 class="rest-card__name">Lux / Petit Club Cafe Bar</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="minimarket-rucahue.descripcion_corta">Minimarket con panes, bebidas, lácteos y abarrotes.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=Rucahue%20Minimarket%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Petit%20Club%20Cafe%20Bar%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Petit%20Club%20Cafe%20Bar%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Petit%20Club%20Cafe%20Bar%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-      <article class="rest-card" data-categories="supermercado" data-id="super-mcpato">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="super-mcpato.nombre">McPato Supermercado</h3>
-          <div class="rest-card__cats"><span class="rr-cat rr-cat--supermercado" data-i18n="rest.cat.supermercado">Supermercado</span></div>
+      <article class="rest-card catalog-card" data-id="editorial-super-mcpato" data-category="supermarket" data-distance="6718.9" style="--catalog-color:#2f7d5b">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.supermarket">Supermercados</span>
+            <h3 class="rest-card__name">McPato Supermercado</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
         </header>
-        <p class="rest-card__desc" data-i18n="super-mcpato.descripcion_corta">Supermercado en Camino Shangri-La.</p>
-        <footer class="rest-card__foot">
-          <div class="rest-card__rating"></div>
-          <div class="rest-card__links"><a class="rr-link" href="https://www.google.com/maps/search/?api=1&amp;query=McPato%20Supermercado%20Las%20Trancas" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg></a><a class="rr-link" href="https://www.instagram.com/mc.pato_supermercado/" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg></a></div>
-        </footer>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=McPato%20Supermercado%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=McPato%20Supermercado%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=McPato%20Supermercado%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
       </article>
-    </div>
+      <article class="rest-card catalog-card" data-id="editorial-miski-lirio" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Miski Lirio</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Miski%20Lirio%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Miski%20Lirio%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Miski%20Lirio%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-monte-carla-las-trancas" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Monte Carla Las Trancas</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Monte%20Carlo%20Las%20Trancas" target="_blank" rel="noopener">Host catalog · local verification pending</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Monte%20Carlo%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Monte%20Carlo%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-val-panaderia-bravas" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.bakery">Panaderías</span>
+            <h3 class="rest-card__name">Panadería masa madre Las Bravas</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Panaderia%20masa%20madre%20Las%20Bravas%20Las%20Trancas" target="_blank" rel="noopener">Host catalog · local verification pending</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Panaderia%20masa%20madre%20Las%20Bravas%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Panaderia%20masa%20madre%20Las%20Bravas%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-malcontenta-panader-a" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.bakery">Panaderías</span>
+            <h3 class="rest-card__name">Panadería Valle Las Trancas</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Panader%C3%ADa%20Valle%20Las%20Trancas%20Plaza%20Olivas%20Pinto%20%C3%91uble" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Panader%C3%ADa%20Valle%20Las%20Trancas%20Plaza%20Olivas%20Pinto%20%C3%91uble" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Panader%C3%ADa%20Valle%20Las%20Trancas%20Plaza%20Olivas%20Pinto%20%C3%91uble" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-patio-tranquino" data-category="other" data-distance="6718.9" style="--catalog-color:#66706c">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.other">Otros</span>
+            <h3 class="rest-card__name">Patio Tranquino</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Patio%20Tranquino%20Las%20Trancas" target="_blank" rel="noopener">Host catalog · local verification pending</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Patio%20Tranquino%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Patio%20Tranquino%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-pizzas-and-beers-del-valle" data-category="fast_food" data-distance="6718.9" style="--catalog-color:#dd7b29">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.fast_food">Comida rápida</span>
+            <h3 class="rest-card__name">Pizzas and Beers del Valle</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Pizzas%20and%20Beers%20del%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Pizzas%20and%20Beers%20del%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Pizzas%20and%20Beers%20del%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-restaurant-borde-andino" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Restaurant Borde Andino</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Restaurant%20Borde%20Andino%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Restaurant%20Borde%20Andino%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Restaurant%20Borde%20Andino%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-restaurant-patrimonial-el-tren" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Restaurant Patrimonial El Tren</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Restaurant%20Patrimonial%20El%20Tren%20Las%20Trancas" target="_blank" rel="noopener">Host catalog · local verification pending</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Restaurant%20Patrimonial%20El%20Tren%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Restaurant%20Patrimonial%20El%20Tren%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-restaurante-pizzer-a-chil-in" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Restaurante Pizzería Chil'in</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Chil'in%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Chil'in%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Chil'in%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-restobar-shangrila" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Restobar Shangrila</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Restobar%20Shangrila%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Restobar%20Shangrila%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Restobar%20Shangrila%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-minimarket-rucahue" data-category="supermarket" data-distance="6718.9" style="--catalog-color:#2f7d5b">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.supermarket">Supermercados</span>
+            <h3 class="rest-card__name">Rucahue Minimarket</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Rucahue%20Minimarket%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Rucahue%20Minimarket%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Rucahue%20Minimarket%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-sitari-tapas-y-brasas" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Sitari Tapas y Brasas</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Sitari%20Tapas%20y%20Brasas%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Sitari%20Tapas%20y%20Brasas%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Sitari%20Tapas%20y%20Brasas%20Valle%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-steak-house" data-category="restaurant" data-distance="6718.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Steak House</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Steak%20House%20Alto%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Steak%20House%20Alto%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Steak%20House%20Alto%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-super-el-refugio" data-category="supermarket" data-distance="6718.9" style="--catalog-color:#2f7d5b">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.supermarket">Supermercados</span>
+            <h3 class="rest-card__name">Supermercado El Refugio</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Supermercado%20El%20Refugio%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Supermercado%20El%20Refugio%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Supermercado%20El%20Refugio%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="editorial-valdo" data-category="bakery" data-distance="6718.9" style="--catalog-color:#bd7f3f">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.bakery">Panaderías</span>
+            <h3 class="rest-card__name">Valdo</h3>
+            <p>Pinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.7 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Valdo%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Valdo%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=Valdo%20Las%20Trancas" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-oliva-s-restaurant" data-category="restaurant" data-distance="6851.5" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Oliva's Restaurant</h3>
+            <p>Valle Las Trancas</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>6.9 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Oliva's%20Restaurant%20Valle%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a><a href="https://www.openstreetmap.org/node/988305632" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9151134%2C-71.497154" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9151134%2C-71.497154" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-snow-pub" data-category="restaurant" data-distance="7204.8" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Snow Pub</h3>
+            <p>Valle Las Trancas</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>7.2 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Snow%20Pub%20Las%20Trancas" target="_blank" rel="noopener">Host-curated catalog</a><a href="https://www.openstreetmap.org/node/988305682" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9150917%2C-71.501154" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9150917%2C-71.501154" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-4088884738-condominio-patagonia" data-category="restaurant" data-distance="7695.2" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Condominio Patagonia</h3>
+            <p>Los Radales 47</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>7.7 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.openstreetmap.org/node/4088884738" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9097223%2C-71.5071038" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9097223%2C-71.5071038" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="osm-node-1289135961-casita-de-te" data-category="coffee" data-distance="9951.3" style="--catalog-color:#8b5e3c">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.coffee">Cafés</span>
+            <h3 class="rest-card__name">Casita de Te</h3>
+            <p><span data-i18n="guide.location.unknown">Sector por confirmar</span></p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>10.0 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><a href="https://www.openstreetmap.org/node/1289135961" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.9057739%2C-71.5324549" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.9057739%2C-71.5324549" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-ferreteria-don-lalo" data-category="hardware" data-distance="20347.1" style="--catalog-color:#6f7680">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.hardware">Ferreterías</span>
+            <h3 class="rest-card__name">Ferretería Don Lalo</h3>
+            <p>Los Lleuques</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>20 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap / catastro territorial</span></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8578642%2C-71.6405143" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8578642%2C-71.6405143" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-bomberos-los-lleuques" data-category="emergency" data-distance="20445.4" style="--catalog-color:#bd2f3d">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.emergency">Emergencias</span>
+            <h3 class="rest-card__name">Bomberos Los Lleuques</h3>
+            <p>Los Lleuques</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>20 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/node/361740719" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.857018%2C-71.6413578" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.857018%2C-71.6413578" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+          <a class="catalog-action " href="tel:132" data-i18n="nearby.call">Llamar</a>
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-minimarket-el-varon" data-category="supermarket" data-distance="20800.3" style="--catalog-color:#2f7d5b">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.supermarket">Supermercados</span>
+            <h3 class="rest-card__name">Minimarket El Varón</h3>
+            <p>Los Lleuques</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>21 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap / catastro territorial</span></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8540055%2C-71.6443989" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8540055%2C-71.6443989" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-la-pileta" data-category="supermarket" data-distance="20804.2" style="--catalog-color:#2f7d5b">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.supermarket">Supermercados</span>
+            <h3 class="rest-card__name">Supermercado La Pileta</h3>
+            <p>Los Lleuques</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>21 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/node/6484823507" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.854283%2C-71.6445502" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.854283%2C-71.6445502" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-rendez-vous" data-category="restaurant" data-distance="20823.9" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Rendez-vous</h3>
+            <p>Los Lleuques</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>21 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/node/6484823508" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8539889%2C-71.6446708" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8539889%2C-71.6446708" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-cumbres-restaurante" data-category="restaurant" data-distance="21656" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Cumbres Restaurante</h3>
+            <p>Recinto km 48,5</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>22 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>Tripadvisor</span></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8487%2C-71.6524" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8487%2C-71.6524" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+          <a class="catalog-action " href="tel:+56951507951" data-i18n="nearby.call">Llamar</a>
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-quincho-del-valle" data-category="restaurant" data-distance="21685.4" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Quincho del Valle</h3>
+            <p>Recinto km 48,5</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>22 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>Google Maps / Tripadvisor</span></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.84846%2C-71.65265" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.84846%2C-71.65265" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+          <a class="catalog-action " href="tel:+56958969259" data-i18n="nearby.call">Llamar</a>
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-reten-recinto" data-category="emergency" data-distance="22240.8" style="--catalog-color:#bd2f3d">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.emergency">Emergencias</span>
+            <h3 class="rest-card__name">Retén Recinto</h3>
+            <p>Recinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>22 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/node/307548460" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8457358%2C-71.6581052" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8457358%2C-71.6581052" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+          <a class="catalog-action " href="tel:133" data-i18n="nearby.call">Llamar</a>
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-don-quelo" data-category="restaurant" data-distance="22280" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Don Quelo</h3>
+            <p>Recinto km 47,6</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>22 km</strong>
+        </header>
+        <p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>Tripadvisor / catastro territorial</span></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8439%2C-71.6578" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8439%2C-71.6578" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+          <a class="catalog-action " href="tel:+56986041204" data-i18n="nearby.call">Llamar</a>
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-posta-recinto" data-category="medical" data-distance="22404.6" style="--catalog-color:#cf3f54">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.medical">Salud</span>
+            <h3 class="rest-card__name">Posta de Salud Rural Recinto</h3>
+            <p>Recinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>22 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/node/11506324700" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8432188%2C-71.6589894" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8432188%2C-71.6589894" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-copec-recinto" data-category="gas_station" data-distance="22508.2" style="--catalog-color:#4c5968">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.gas_station">Bencina</span>
+            <h3 class="rest-card__name">Copec Recinto</h3>
+            <p>Recinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>23 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/node/307548419" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8417547%2C-71.6595886" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8417547%2C-71.6595886" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      <article class="rest-card catalog-card" data-id="manual-los-pincheiras-restaurant" data-category="restaurant" data-distance="22628.8" style="--catalog-color:#d45b3e">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.restaurant">Restaurantes</span>
+            <h3 class="rest-card__name">Restaurant Los Pincheira</h3>
+            <p>Recinto</p>
+          </div>
+          <strong class="catalog-distance" data-distance-label>23 km</strong>
+        </header>
+
+
+
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span><span>OpenStreetMap</span><a href="https://www.openstreetmap.org/node/5397096121" target="_blank" rel="noopener">OSM</a></div>
+        <div class="catalog-actions">
+          <a class="catalog-action catalog-action--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-36.8402926%2C-71.660382" target="_blank" rel="noopener" data-i18n="guide.action.navigate">Navegar</a>
+          <a class="catalog-action " href="https://www.google.com/maps/search/?api=1&amp;query=-36.8402926%2C-71.660382" target="_blank" rel="noopener" data-i18n="guide.action.maps">Abrir en Google Maps</a>
+
+
+
+        </div>
+      </article>
+      </div>
+      <p class="catalog-empty" data-catalog-empty hidden data-i18n="catalog.empty">No hay lugares que coincidan con tu búsqueda.</p>
+    </section>
 
 
 
@@ -395,11 +1393,10 @@
   <!-- @LISTINGS END -->
 
  </div>
-  <script src="js/lang.js?v=6"></script>
-  <script src="js/access.js?v=3" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
+  <script src="js/lang.js?v=7"></script>
+  <script src="js/access.js?v=4" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
   <script src="js/theme.js?v=5"></script>
-  <script src="js/catalog-distance.js?v=1" defer></script>
-  <script src="js/restaurants.js" defer></script>
+  <script src="js/catalog-guide.js?v=1" defer></script>
  <script src="js/study-condition.js?v=1"></script>
 </body>
 </html>

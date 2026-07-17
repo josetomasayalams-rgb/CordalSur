@@ -3,18 +3,17 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const serviceCandidates = [
+const SERVICE_ROOT = [
   path.resolve(ROOT, '../02-servicio-de-acceso'),
   path.resolve(ROOT, 'worker')
-];
-const SERVICE_ROOT = serviceCandidates.find((candidate) => fs.existsSync(path.join(candidate, 'src/index.js')));
+].find((candidate) => fs.existsSync(path.join(candidate, 'src/index.js')));
 const fail = (message) => {
   console.error(`  FAIL: ${message}`);
   process.exitCode = 1;
 };
 const read = (relative) => fs.readFileSync(path.join(ROOT, relative), 'utf8');
 const readService = (relative) => {
-  if (!SERVICE_ROOT) throw new Error('CordalSur access service source was not found');
+  if (!SERVICE_ROOT) throw new Error('access service source not found in split or published layout');
   return fs.readFileSync(path.join(SERVICE_ROOT, relative), 'utf8');
 };
 
@@ -29,10 +28,10 @@ for (const file of expectedPages) {
   const html = read(file);
   if (!/<title>[^<]*CordalSur[^<]*<\/title>/i.test(html)) fail(`${file}: static title must contain CordalSur`);
   if (!/<html\b[^>]*data-i18n-title="page\.[^"]+"/i.test(html)) fail(`${file}: <html> needs a localized page.* title key`);
-  if (!html.includes('js/lang.js?v=6')) fail(`${file}: localized copy must use the current cache version`);
-  if (!html.includes('css/styles.css?v=10')) fail(`${file}: shared sensory brand styles are stale`);
+  if (!html.includes('js/lang.js?v=7')) fail(`${file}: localized copy must use the current cache version`);
+  if (!html.includes('css/styles.css?v=17')) fail(`${file}: shared sensory brand styles are stale`);
   if (!html.includes("document.documentElement.classList.add('access-pending')") ||
-      !html.includes('css/access.css?v=4') || !html.includes('js/access.js?v=3')) {
+      !html.includes('css/access.css?v=4') || !html.includes('js/access.js?v=4')) {
     fail(`${file}: guest gate must load before protected content is shown`);
   }
   if (html.includes('fonts.googleapis.com') || html.includes('fonts.gstatic.com')) {
@@ -48,17 +47,15 @@ const checkin = read('check-in.html');
 const manual = read('instrucciones.html');
 const nearbyHtml = read('cerca-de-mi.html');
 const nearbyScript = read('js/nearby.js');
-const nearbyData = JSON.parse(read('data/nearby.json'));
 const destinationGuide = JSON.parse(read('data/destination-guide.json'));
-if (!index.includes('href="cerca-de-mi.html"') || !nearbyHtml.includes('js/nearby.js?v=3')) {
+if (!index.includes('href="cerca-de-mi.html"') || !nearbyHtml.includes('js/nearby.js?v=5')) {
   fail('home must expose the protected nearby essentials tool');
 }
 if (!nearbyScript.includes('navigator.geolocation.getCurrentPosition') ||
+    !nearbyScript.includes('navigator.geolocation.watchPosition') ||
+    !nearbyScript.includes('navigator.geolocation.clearWatch') ||
     /localStorage\.(?:getItem|setItem)/.test(nearbyScript)) {
-  fail('nearby tool must request location on demand without persisting it');
-}
-if (!Array.isArray(nearbyData.places) || nearbyData.places.length < 25) {
-  fail('nearby data must keep the researched corridor catalog');
+  fail('destination guide must support one-time/session location without persistence');
 }
 if (destinationGuide.schemaVersion !== 1 || !Array.isArray(destinationGuide.places) || destinationGuide.places.length < 200 ||
     !destinationGuide.geometry?.apartment?.radiusMeters || !destinationGuide.geometry?.corridor?.bufferGeometry) {
@@ -87,26 +84,46 @@ if (!destinationGuide.routes.every((route) => route.navigationAvailable === fals
 for (const mode of ['apartment', 'nearby', 'route']) {
   if (!nearbyHtml.includes(`data-guide-mode="${mode}"`)) fail(`destination guide missing ${mode} discovery mode`);
 }
-if (!nearbyHtml.includes('id="guide-route-featured"') || !nearbyHtml.includes('id="guide-map-svg"') ||
-    !nearbyScript.includes('lineProjection') || !nearbyScript.includes('clusters') ||
+if (!nearbyHtml.includes('id="guide-route-featured"') || !nearbyHtml.includes('id="guide-map-canvas"') ||
+    !nearbyHtml.includes('assets/vendor/leaflet/leaflet.js') || !nearbyHtml.includes('leaflet.markercluster.js') ||
+    !nearbyScript.includes('lineProjection') || !nearbyScript.includes('markerCluster') ||
     !nearbyScript.includes("sort.value === 'rating'") || !nearbyScript.includes("sort.value === 'popularity'")) {
   fail('destination guide must expose the featured complete route, clustered synchronized map and full sorting');
 }
 if (/origin\.lat|origin\.lon/.test(nearbyScript) && /maps\/(?:search|dir)/.test(nearbyScript)) {
   fail('live guest coordinates must not be embedded in external map URLs');
 }
-for (const place of nearbyData.places || []) {
-  if (!place.id || !place.name || !place.category || !Number.isFinite(place.lat) || !Number.isFinite(place.lon)) {
-    fail(`nearby place has an invalid contract: ${place.id || '(missing id)'}`);
-  }
+for (const choice of ['once', 'session', 'none']) {
+  if (!nearbyHtml.includes(`data-location-choice="${choice}"`)) fail(`location panel missing ${choice} mode`);
 }
-for (const category of ['food', 'groceries', 'fuel', 'health', 'hardware', 'police', 'fire', 'activities']) {
-  if (!nearbyData.places.some((place) => place.category === category)) fail(`nearby catalog missing ${category}`);
+for (const asset of ['assets/vendor/leaflet/leaflet.js', 'assets/vendor/leaflet/leaflet.css', 'assets/vendor/leaflet/LICENSE', 'assets/vendor/leaflet-markercluster/LICENSE']) {
+  if (!fs.existsSync(path.join(ROOT, asset))) fail(`missing vendored map asset ${asset}`);
 }
-if (!read('js/catalog-distance.js').includes("fetch('data/nearby.json')") ||
-    !read('restaurantes.html').includes('js/catalog-distance.js?v=1') ||
-    !read('actividades.html').includes('js/catalog-distance.js?v=1')) {
-  fail('restaurant and activity catalogs must support distance ordering from shared nearby data');
+const activityCategories = new Set(['tourism', 'thermal_baths', 'ski', 'trail', 'adventure']);
+const lodgingCategories = new Set(['hotel', 'cabin']);
+const apartmentPlaces = destinationGuide.places.filter((place) => place.discovery?.apartment);
+const publicApartmentPlaces = apartmentPlaces.filter((place) => !lodgingCategories.has(place.category));
+const expectedActivities = publicApartmentPlaces.filter((place) => activityCategories.has(place.category));
+const expectedProvisions = publicApartmentPlaces.filter((place) => !activityCategories.has(place.category));
+const activityHtml = read('actividades.html');
+const provisionsHtml = read('restaurantes.html');
+const activityIds = [...activityHtml.matchAll(/class="rest-card catalog-card" data-id="([^"]+)"/g)].map((match) => match[1]);
+const provisionIds = [...provisionsHtml.matchAll(/class="rest-card catalog-card" data-id="([^"]+)"/g)].map((match) => match[1]);
+const publishedIds = activityIds.concat(provisionIds);
+if (expectedActivities.length + expectedProvisions.length !== publicApartmentPlaces.length || publicApartmentPlaces.length < 110) {
+  fail('canonical partition must cover every public apartment place after excluding lodging');
+}
+if (activityIds.length !== expectedActivities.length || provisionIds.length !== expectedProvisions.length ||
+    new Set(publishedIds).size !== publishedIds.length ||
+    publicApartmentPlaces.some((place) => !publishedIds.includes(place.id))) {
+  fail('every public apartment place must appear exactly once in the two canonical catalogs');
+}
+if (publishedIds.some((id) => lodgingCategories.has(destinationGuide.places.find((place) => place.id === id)?.category)) ||
+    nearbyScript.includes("hotel: false") || nearbyHtml.includes('data-guide-category="hotel"')) {
+  fail('lodging must remain outside every guest-facing guide surface');
+}
+if (!activityHtml.includes('js/catalog-guide.js?v=1') || !provisionsHtml.includes('js/catalog-guide.js?v=1')) {
+  fail('both canonical catalogs must use the shared filter and distance-order implementation');
 }
 const logoPath = 'assets/brand/cordal-sur-symbol-reverse-1024.png';
 if (!fs.existsSync(path.join(ROOT, logoPath))) fail(`missing official logo asset ${logoPath}`);
@@ -274,7 +291,7 @@ if (!accessScript.includes('async function restoreGuestSession()') ||
   fail('administrator access must revalidate after history restores and safely fall back to a valid guest session');
 }
 if (!adminScript.includes('href="index.html"') || !adminScript.includes("t('admin.enterSite')") ||
-    !adminHtml.includes('js/lang.js?v=6') || !adminHtml.includes('js/admin.js?v=4')) {
+    !adminHtml.includes('js/lang.js?v=7') || !adminHtml.includes('js/admin.js?v=4')) {
   fail('Administration must expose the localized same-tab platform entry action');
 }
 const enterSiteCopy = hostData.scalar?.['admin.enterSite'];

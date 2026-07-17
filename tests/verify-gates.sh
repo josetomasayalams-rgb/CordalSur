@@ -90,12 +90,8 @@ check_snapshot css/section-palettes.css data/.baseline/css-section-palettes.css
 check_snapshot js/lang.js data/.baseline/js/lang.js
 check_snapshot js/lang.js data/.baseline/js-lang.js
 check_snapshot js/lang.js data/.baseline/lang.js
-check_snapshot js/activities.js data/.baseline/js/activities.js
-check_snapshot js/activities.js data/.baseline/activities.js
-check_snapshot js/restaurants.js data/.baseline/js/restaurants.js
-check_snapshot js/restaurants.js data/.baseline/restaurants.js
+check_snapshot js/catalog-guide.js data/.baseline/js/catalog-guide.js
 check_snapshot js/nearby.js data/.baseline/js/nearby.js
-check_snapshot js/catalog-distance.js data/.baseline/js/catalog-distance.js
 check_snapshot js/study-condition.js data/.baseline/js/study-condition.js
 check_snapshot staff/README.md data/.baseline/staff/README.md
 echo "  PASS"

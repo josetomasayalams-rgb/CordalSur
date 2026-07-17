@@ -19,6 +19,11 @@ if (!projectDir || !dataPath) {
 }
 
 const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+const destinationGuidePath = `${projectDir}/data/destination-guide.json`;
+if (!fs.existsSync(destinationGuidePath)) {
+  throw new Error('data/destination-guide.json is required to generate public catalogs');
+}
+const destinationGuide = JSON.parse(fs.readFileSync(destinationGuidePath, 'utf8'));
 const LANGS = ['es', 'pt', 'en'];
 
 // A plain string is never treated as a translation. The only exceptions are
@@ -428,7 +433,7 @@ function regenListings(file, sections) {
   let s = fs.readFileSync(p, 'utf8');
   const re = /(<!-- @LISTINGS START[\s\S]*?-->\r?\n)([\s\S]*?)(\r?\n\s*<!-- @LISTINGS END -->)/;
   if (!re.test(s)) throw new Error(`${file}: @LISTINGS markers not found`);
-  const body = sections.replace(/^\s+|\s+$/g, '');
+  const body = sections.replace(/^\s+|\s+$/g, '').replace(/[ \t]+$/gm, '');
   s = s.replace(re, (_m, g1, _g2, g3) => g1 + body + g3);
   fs.writeFileSync(p, s);
 }
@@ -438,188 +443,119 @@ function regenListings(file, sections) {
 // v9: lista única filtrable con filter bar. Misma estética que restaurantes.
 // (Definition moved below after SVG_WEB is defined.)
 
-// Restaurantes v6: lista compacta con logos SVG, categorias con colores, sin rating null.
-// Solo se muestran los "publicar". Sin recos, sin validar, sin disclaimer.
 const SVG_MAPS = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#4285F4"/></svg>`;
 const SVG_IG = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg>`;
 const SVG_WEB = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#4285F4" stroke-width="1.6" fill="none"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" stroke="#4285F4" stroke-width="1.6" fill="none"/></svg>`;
 
-// v9: actividades como lista única filtrable (mismo estética que restaurantes)
-const allActivities = (data.activities || []).filter(e => e.visible !== false);
-allActivities.sort((a, b) => (a.prioridad_landing || 99) - (b.prioridad_landing || 99));
+// Public catalog v10: every guest-facing card derives from the normalized
+// destination snapshot. host-data remains an editorial provider, but it no
+// longer creates a competing runtime catalog.
+const ACTIVITY_CATEGORIES = new Set(['tourism', 'thermal_baths', 'ski', 'trail', 'adventure']);
+const LODGING_CATEGORIES = new Set(['hotel', 'cabin']);
+const publicApartmentPlaces = destinationGuide.places
+  .filter((place) => place.discovery && place.discovery.apartment && !LODGING_CATEGORIES.has(place.category))
+  .sort((left, right) => left.discovery.apartmentDistanceMeters - right.discovery.apartmentDistanceMeters || left.name.localeCompare(right.name));
+const activityPlaces = publicApartmentPlaces.filter((place) => ACTIVITY_CATEGORIES.has(place.category));
+const provisionPlaces = publicApartmentPlaces.filter((place) => !ACTIVITY_CATEGORIES.has(place.category));
 
-// ponytail v3.10 — Restaurar actFilterBar con estética restaurantes (mismo .rest-filter-bar).
-// El user quería mantener UN filtro: el de la misma estética que restaurantes.html.
-// Removemos solo el viejo filter-bar--multi 4-dimensiones que era distinto.
-const actFilterBar = `      <div id="act-filter-bar" class="rest-filter-bar">
-        <button type="button" class="rest-filter__btn rest-filter__btn--active" data-filter="all" data-i18n="rest.filter.all">Todos</button>
-        <button type="button" class="rest-filter__btn" data-filter="nieve" data-i18n="act.filter.nieve">Nieve</button>
-        <button type="button" class="rest-filter__btn" data-filter="termas" data-i18n="act.filter.termas">Termas</button>
-        <button type="button" class="rest-filter__btn" data-filter="senderos" data-i18n="act.filter.senderos">Senderos</button>
-        <button type="button" class="rest-filter__btn" data-filter="bici" data-i18n="act.filter.bici">Bici</button>
-        <button type="button" class="rest-filter__btn" data-filter="aventura" data-i18n="act.filter.aventura">Aventura</button>
-        <button type="button" class="rest-filter__btn" data-filter="servicios" data-i18n="act.filter.servicios">Servicios</button>
-        <button type="button" class="rest-filter__btn rest-filter__btn--sort" data-sort-distance data-i18n="nearby.sort">Más cerca primero</button>
-        <span class="rest-filter__count" id="act-filter-count" aria-live="polite">${allActivities.length} / ${allActivities.length}</span>
-      </div>
-      <script type="application/json" id="activities-data">${JSON.stringify(allActivities).replace(/<\//g, '<\\/').replace(/&/g, '\\u0026')}</script>`;
+function fieldValue(field) {
+  return field && typeof field === 'object' && Object.prototype.hasOwnProperty.call(field, 'value') ? field.value : field;
+}
 
-function actCard(e) {
-  const id = e.id || '';
-  const name = e.name || tVal(e.nombre, 'es') || '';
-  const module = e.module_id || 'act';
-  const catBadge = `<span class="rr-cat rr-cat--${module}" data-i18n="act.filter.${module}">${attrEsc(module)}</span>`;
-  // ponytail v3.8 — icon grande en el header (representa la actividad)
-  const icon = e.icon || '📍';
-  const iconBg = e.iconBg || 'bg-warm';
-  const iconHtml = `<div class="rest-card__icon ${attrEsc(iconBg)}" aria-hidden="true">${icon}</div>`;
-  // Description: pick the first non-garbage value from copy_card / notas_seguridad / horario
-  let desc = '';
-  let descField = '';
-  for (const f of ['copy_card', 'notas_seguridad', 'horario']) {
-    const v = tVal(e[f], 'es');
-    if (v && v.length > 8 && !/^(n\/?a|por confirmar|segun actividad)/i.test(v)) { desc = v; descField = f; break; }
-  }
-  const descHtml = desc ? `<p class="rest-card__desc" data-i18n="${id}.${descField}">${attrEsc(simplifyCopyText(desc))}</p>` : '';
-  // ponytail v3.11 — CTAs claros al pie de la card. Botón principal "Ver info oficial" +
-  // link secundario "Cómo llegar" usando mapa.primario_url o fallback, o auto-gen desde nombre+zona.
-  const webUrl = e.link_oficial;
-  let mapsUrl = e.googleMapsUrl || null;
-  if (!mapsUrl && e.mapa && e.mapa.primario_url) {
-    mapsUrl = e.mapa.primario_url;
-  }
-  if (!mapsUrl && e.mapa && e.mapa.fallback_url && e.mapa.fallback_url.indexOf('google.com/maps') >= 0) {
-    mapsUrl = e.mapa.fallback_url;
-  }
-  if (!mapsUrl) {
-    // ponytail: auto-generar Google Maps URL desde nombre+zona (estilo v3.3)
-    const nombre = (e.nombre && typeof e.nombre === 'object') ? e.nombre.es : e.nombre;
-    const zona = (e.zona && typeof e.zona === 'object') ? e.zona.es : e.zona;
-    if (nombre && zona && !/^(por confirmar|n\/a)$/i.test(zona)) {
-      const query = encodeURIComponent((nombre + ' ' + zona).trim());
-      mapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
-    }
-  }
-  const ctaPrimary = webUrl
-    ? `<a class="rest-card__cta" href="${attrEsc(webUrl)}" target="_blank" rel="noopener" data-i18n="act.cta.ver">Ver info oficial</a>`
+function categoryFor(id) {
+  return destinationGuide.categories.find((category) => category.id === id) || { id, label: id, color: '#66706c' };
+}
+
+function catalogAction(url, key, label, className = '') {
+  if (!url) return '';
+  const external = /^https:\/\//.test(url) ? ' target="_blank" rel="noopener"' : '';
+  return `<a class="catalog-action ${className}" href="${attrEsc(url)}"${external} data-i18n="${key}">${attrEsc(label)}</a>`;
+}
+
+function canonicalCard(place) {
+  const category = categoryFor(place.category);
+  const distanceMeters = Number(place.discovery.apartmentDistanceMeters || 0);
+  const distanceKm = distanceMeters / 1000;
+  const distanceLabel = `${distanceKm < 10 ? distanceKm.toFixed(1) : Math.round(distanceKm)} km`;
+  const address = place.municipality || fieldValue(place.address) || '';
+  const approximate = place.coordinateKind === 'center_candidate' || place.status === 'candidate_coordinate';
+  const closed = place.operatingStatus === 'closed';
+  const phone = fieldValue(place.phone);
+  const website = fieldValue(place.website);
+  const instagram = fieldValue(place.instagram);
+  const sourceLinks = (place.sources || []).slice(0, 3).map((source) => {
+    const label = source.sourceLabel || String(source.provider || '').toUpperCase();
+    return source.url
+      ? `<a href="${attrEsc(source.url)}" target="_blank" rel="noopener">${attrEsc(label)}</a>`
+      : `<span>${attrEsc(label)}</span>`;
+  }).join('');
+  const rating = place.googleRating || place.tripadvisorRating;
+  const ratingProvider = place.googleRating ? 'Google' : (place.tripadvisorRating ? 'Tripadvisor' : '');
+  const ratingHtml = rating
+    ? `<span class="catalog-rating"><b>★ ${attrEsc(rating.value)}</b> · ${attrEsc(rating.reviewCount || 0)} <span data-i18n="guide.reviews">reseñas</span> · ${ratingProvider}</span>`
     : '';
-  const ctaMaps = mapsUrl
-    ? `<a class="rest-card__cta-maps" href="${attrEsc(mapsUrl)}" target="_blank" rel="noopener" data-i18n="act.maps.label">📍 Cómo llegar</a>`
-    : '';
-  const ctas = (ctaPrimary || ctaMaps)
-    ? `<div class="rest-card__ctas">${ctaPrimary}${ctaMaps}</div>`
-    : '';
-  return `      <article class="rest-card" data-module="${attrEsc(module)}" data-id="${attrEsc(e.id || '')}">
-        <header class="rest-card__head">
-          ${iconHtml}
-          <div class="rest-card__head-text">
-            <h3 class="rest-card__name" data-i18n="${id}.nombre">${attrEsc(name)}</h3>
-            <div class="rest-card__cats">${catBadge}</div>
+  const phoneHref = phone ? `tel:${String(phone).replace(/[^+\d]/g, '')}` : '';
+  return `      <article class="rest-card catalog-card" data-id="${attrEsc(place.id)}" data-category="${attrEsc(place.category)}" data-distance="${distanceMeters}" style="--catalog-color:${attrEsc(category.color)}">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="guide.cat.${attrEsc(place.category)}">${attrEsc(category.label)}</span>
+            <h3 class="rest-card__name">${attrEsc(place.name)}</h3>
+            <p>${address ? attrEsc(address) : '<span data-i18n="guide.location.unknown">Sector por confirmar</span>'}</p>
           </div>
+          <strong class="catalog-distance" data-distance-label>${distanceLabel}</strong>
         </header>
-        ${descHtml}
-        <footer class="rest-card__foot">
-          <span class="act-card__module" data-i18n="act.filter.${module}">${attrEsc(module)}</span>
-        </footer>
-        ${ctas}
+        ${approximate ? '<p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>' : ''}
+        ${closed ? '<p class="catalog-warning catalog-warning--closed" data-i18n="guide.status.closed">Cerrado según la última fuente verificada.</p>' : ''}
+        ${ratingHtml}
+        <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span>${sourceLinks}</div>
+        <div class="catalog-actions">
+          ${catalogAction(place.navigationUrl, 'guide.action.navigate', 'Navegar', 'catalog-action--primary')}
+          ${catalogAction(place.googleMapsUrl, 'guide.action.maps', 'Abrir en Google Maps')}
+          ${catalogAction(website, 'guide.action.website', 'Sitio oficial')}
+          ${instagram ? `<a class="catalog-action" href="${attrEsc(instagram)}" target="_blank" rel="noopener">Instagram</a>` : ''}
+          ${catalogAction(phoneHref, 'nearby.call', 'Llamar')}
+        </div>
       </article>`;
 }
 
-const actCards = allActivities.map(actCard).join('\n');
-regenListings('actividades.html', `    <h2 class="section-title" data-i18n="act.top.t">Qué hacer en Las Trancas</h2>
-${actFilterBar}
-    <div class="rest-grid">
-${actCards}
-    </div>`);
-
-// Category badge class mapping (8 categorías v7)
-const CAT_CLASS = {
-  'Restaurante':     'rr-cat--restaurante',
-  'Café':            'rr-cat--cafe',
-  'Panadería':       'rr-cat--panaderia',
-  'Heladería':       'rr-cat--heladeria',
-  'Bar':             'rr-cat--bar',
-  'Cervecería':      'rr-cat--cerveceria',
-  'Supermercado':    'rr-cat--supermercado',
-  'Compras gourmet': 'rr-cat--compras',
-};
-
-// ponytail v8: card con depth + description + rating, data-categories para el filter.
-function restCard(e) {
-  const id = e.id || '';
-  const name = e.name || tVal(e.nombre, 'es') || '';
-  const cats = (e.categories || []);
-  const catsAttr = cats.map(c => c.replace(/[^a-zA-Z0-9áéíóúñ ]/g, '').toLowerCase().replace(/ /g, '-')).join(' ');
-  const catsHtml = cats.map(c => {
-    const slug = c.replace(/[^a-zA-Z0-9áéíóúñ ]/g, '').toLowerCase().replace(/ /g, '-');
-    const key = `rest.cat.${slug}`;
-    return `<span class="rr-cat ${CAT_CLASS[c] || ''}" data-i18n="${key}">${attrEsc(c)}</span>`;
-  }).join(' ');
-  // Rating: Google primero, luego fallback. Si no hay rating, se renderiza un div vacío
-  // (para mantener la grid/flex con la columna de links a la derecha).
-  let ratingInner = '';
-  if (e.googleRating != null) {
-    ratingInner = `<span class="rr-rating"><span class="rr-stars">★</span> <strong>${e.googleRating}</strong> <small>(${e.googleReviewCount}) <span data-i18n="rest.source.google">Google</span></small></span>`;
-  } else if (e.ratingValue != null) {
-    const srcKey = (e.ratingSource || '').toLowerCase().indexOf('tripadvisor') >= 0 ? 'rest.source.tripadvisor' : 'rest.source.other';
-    ratingInner = `<span class="rr-rating"><span class="rr-stars">★</span> <strong>${e.ratingValue}</strong> <small>(${e.ratingCount}) <span data-i18n="${srcKey}">${attrEsc(e.ratingSource || '')}</span></small></span>`;
-  }
-  const rating = `<div class="rest-card__rating">${ratingInner}</div>`;
-  // Description — pull from i18n field so lang.js can swap by language.
-  const descInitial = tVal(e.descripcion_corta || e.shortDescription, 'es');
-  const descKey = (e.descripcion_corta || e.shortDescription) ? `${id}.descripcion_corta` : '';
-  const desc = descKey
-    ? `<p class="rest-card__desc" data-i18n="${descKey}">${attrEsc(descInitial)}</p>`
-    : '';
-  // Links — SVG logos
-  const maps = e.googleMapsUrl
-    ? `<a class="rr-link" href="${attrEsc(e.googleMapsUrl)}" target="_blank" rel="noopener" data-i18n-title="ficha.maps" data-i18n-aria="ficha.maps" title="Cómo llegar" aria-label="Cómo llegar">${SVG_MAPS}</a>`
-    : '';
-  const ig = e.instagramUrl
-    ? `<a class="rr-link" href="${attrEsc(e.instagramUrl)}" target="_blank" rel="noopener" data-i18n-title="ficha.open" data-i18n-aria="ficha.open" title="Ver Instagram" aria-label="Ver Instagram">${SVG_IG}</a>`
-    : '';
-  const links = [maps, ig].filter(Boolean).join('');
-  return `      <article class="rest-card" data-categories="${attrEsc(catsAttr)}" data-id="${attrEsc(e.id || '')}">
-        <header class="rest-card__head">
-          <h3 class="rest-card__name" data-i18n="${id}.nombre">${attrEsc(name)}</h3>
-          <div class="rest-card__cats">${catsHtml}</div>
-        </header>
-        ${desc}
-        <footer class="rest-card__foot">
-          ${rating}
-          <div class="rest-card__links">${links}</div>
-        </footer>
-      </article>`;
+function catalogToolbar(kind, places) {
+  const categories = [...new Set(places.map((place) => place.category))]
+    .map(categoryFor)
+    .sort((left, right) => left.label.localeCompare(right.label));
+  const buttons = categories.map((category) =>
+    `<button type="button" class="catalog-filter" data-catalog-filter="${attrEsc(category.id)}" aria-pressed="false"><i style="--filter-color:${attrEsc(category.color)}"></i><span data-i18n="guide.cat.${attrEsc(category.id)}">${attrEsc(category.label)}</span></button>`
+  ).join('\n          ');
+  return `      <div class="catalog-toolbar" data-catalog-toolbar="${kind}">
+        <label class="catalog-search"><span data-i18n="catalog.search.label">Buscar</span><input type="search" data-catalog-search data-i18n-placeholder="catalog.search.placeholder" placeholder="Nombre, categoría o sector"></label>
+        <label class="catalog-sort"><span data-i18n="guide.sort.label">Ordenar por</span><select data-catalog-sort><option value="distance" data-i18n="guide.sort.distance">Distancia</option><option value="alphabetical" data-i18n="guide.sort.alphabetical">A–Z</option></select></label>
+        <div class="catalog-filters" role="group" data-i18n-aria="guide.categories.aria" aria-label="Categorías">
+          <button type="button" class="catalog-filter is-active" data-catalog-filter="all" aria-pressed="true"><span data-i18n="nearby.cat.all">Todos</span></button>
+          ${buttons}
+        </div>
+        <strong class="catalog-count" data-catalog-count aria-live="polite">${places.length} lugares</strong>
+      </div>`;
 }
 
-const publicar = (data.restaurants || []).filter(r => r.status === 'publicar');
-// Order by prioridad_landing asc (cards with rating first, but keep simple for now)
-publicar.sort((a, b) => (a.prioridad_landing || 99) - (b.prioridad_landing || 99));
-const restCards = publicar.map(restCard).join('\n');
-// Build the JSON data block for the filter JS.
-// Escape </ and & so JSON-in-script survives the HTML parser.
-const safeJson = JSON.stringify(publicar)
-  .replace(/<\//g, '<\\/')
-  .replace(/&/g, '\\u0026');
-const filterBar = `      <div id="rest-filter-bar" class="rest-filter-bar">
-        <button type="button" class="rest-filter__btn rest-filter__btn--active" data-filter="all" data-i18n="rest.filter.all">Todos</button>
-        <button type="button" class="rest-filter__btn" data-filter="restaurante" data-i18n="rest.filter.restaurante">Restaurantes</button>
-        <button type="button" class="rest-filter__btn" data-filter="café" data-i18n="rest.filter.cafe">Café</button>
-        <button type="button" class="rest-filter__btn" data-filter="panadería" data-i18n="rest.filter.panaderia">Panadería</button>
-        <button type="button" class="rest-filter__btn" data-filter="heladería" data-i18n="rest.filter.heladeria">Heladería</button>
-        <button type="button" class="rest-filter__btn" data-filter="bar" data-i18n="rest.filter.bar">Bar</button>
-        <button type="button" class="rest-filter__btn" data-filter="cervecería" data-i18n="rest.filter.cerveceria">Cervecería</button>
-        <button type="button" class="rest-filter__btn" data-filter="supermercado" data-i18n="rest.filter.supermercado">Supermercado</button>
-        <button type="button" class="rest-filter__btn" data-filter="compras-gourmet" data-i18n="rest.filter.compras">Compras gourmet</button>
-        <button type="button" class="rest-filter__btn rest-filter__btn--sort" data-sort-distance data-i18n="nearby.sort">Más cerca primero</button>
-        <span class="rest-filter__count" id="rest-filter-count" aria-live="polite">${publicar.length} / ${publicar.length}</span>
+function canonicalCatalog(kind, titleKey, title, introKey, intro, places) {
+  return `    <section class="canonical-catalog" data-canonical-catalog="${kind}">
+      <div class="catalog-heading"><div><span class="guide-eyebrow" data-i18n="catalog.eyebrow">Selección territorial verificada</span><h2 class="section-title" data-i18n="${titleKey}">${title}</h2><p data-i18n="${introKey}">${intro}</p></div><span class="catalog-total"><b>${places.length}</b><span data-i18n="guide.quality.places">lugares</span></span></div>
+${catalogToolbar(kind, places)}
+      <div class="rest-grid" data-catalog-grid>
+${places.map(canonicalCard).join('\n')}
       </div>
-      <script type="application/json" id="restaurants-data">${safeJson}</script>`;
-regenListings('restaurantes.html', `    <h2 class="section-title" data-i18n="rest.title">Comida y provisiones en Las Trancas</h2>
-${filterBar}
-    <div class="rest-grid">
-${restCards}
-    </div>`);
+      <p class="catalog-empty" data-catalog-empty hidden data-i18n="catalog.empty">No hay lugares que coincidan con tu búsqueda.</p>
+    </section>`;
+}
+
+regenListings('actividades.html', canonicalCatalog(
+  'activities', 'act.top.t', 'Qué hacer en Las Trancas', 'catalog.activities.intro',
+  'Turismo, naturaleza y experiencias dentro del radio del departamento.', activityPlaces
+));
+regenListings('restaurantes.html', canonicalCatalog(
+  'provisions', 'rest.title', 'Comida y provisiones en Las Trancas', 'catalog.provisions.intro',
+  'Comida, abastecimiento y servicios esenciales ordenados desde el departamento.', provisionPlaces
+));
 
 // ---------- 3. Canonical page titles + public support ----------
 // These small patches keep a later data regeneration from restoring the legacy
