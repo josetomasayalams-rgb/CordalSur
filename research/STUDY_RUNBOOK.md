@@ -8,11 +8,12 @@ El estudio humano puede sostener una afirmación causal limitada: que la paleta 
 
 ## Antes de reclutar
 
-1. Registra públicamente `study-config.json`, `SECTION_THEME_STUDY.md`, este documento y el hash SHA-256 de la configuración en un servicio de preregistro con fecha verificable.
-2. No cambies resultados, márgenes, exclusiones ni tamaño muestral después de abrir los datos observados.
-3. Obtén la revisión ética o consentimiento que exija tu institución. No recolectes nombres, correo, teléfono, PIN, dirección IP ni contenido libre identificable.
-4. Recluta 80 participantes para buscar al menos 72 sesiones completas. La cifra incorpora margen operativo sobre un objetivo de potencia 0,80 para un efecto pareado estandarizado pequeño-moderado de 0,35.
-5. Usa `randomization.csv`: asigna en bloques de cuatro las secuencias `uniform-section-adaptive` y `section-adaptive-uniform`, con 40 participantes por secuencia. No reemplaces manualmente el orden.
+1. Completa `INSTRUMENT_ADAPTATION.md` con personas que no integrarán la muestra principal. Solo entonces cambia `confirmatoryReady` a `true`, incrementa la versión y congela la redacción final.
+2. Registra públicamente `study-config.json`, `SECTION_THEME_STUDY.md`, este documento y el hash SHA-256 de la configuración en un servicio de preregistro con fecha verificable.
+3. No cambies ítems, resultados, márgenes, exclusiones ni tamaño muestral después de abrir los datos observados.
+4. Obtén la revisión ética o consentimiento que exija tu institución. No recolectes nombres, correo, teléfono, PIN, dirección IP ni contenido libre identificable.
+5. Recluta 80 participantes para buscar al menos 72 sesiones completas. La cifra incorpora margen operativo sobre un objetivo de potencia 0,80 para detectar frente a cero un efecto pareado estandarizado pequeño-moderado de 0,35.
+6. Usa `randomization.csv`: asigna en bloques de cuatro las secuencias `uniform-section-adaptive` y `section-adaptive-uniform`, con 40 participantes por secuencia. No reemplaces manualmente el orden.
 
 ## Abrir las condiciones
 
@@ -50,7 +51,7 @@ La sesión participante no usa analítica, cookies, formularios externos ni back
 - Aplica exactamente `period_1_task_order` y `period_2_task_order` de la fila anónima asignada. La lista se genera de forma determinista desde la semilla preregistrada.
 - Mantén el mismo dispositivo y tema claro/oscuro para las dos condiciones de una persona.
 - Registra éxito binario por tarea, duración desde la presentación hasta la respuesta y errores observables definidos antes de comenzar.
-- Después de cada condición registra el promedio de estética visual, la intención de reutilización y las escalas autorizadas. No reproduzcas ítems protegidos sin comprobar sus permisos.
+- Después de cada condición registra los cuatro ítems estéticos y la intención de reutilización. El promedio estético se calcula automáticamente; no lo reemplaces manualmente.
 - Separa al moderador del análisis siempre que sea posible y conserva un registro de todas las exclusiones.
 
 ## Archivo de datos
@@ -58,7 +59,7 @@ La sesión participante no usa analítica, cookies, formularios externos ni back
 Usa CSV UTF-8 con una fila por participante y condición. Las columnas exactas son:
 
 ```text
-dataset_kind,participant_id,sequence,period,condition,device,theme,visual_aesthetics,task_success_rate,error_count,duration_seconds,reuse_intention,included,exclusion_reason
+dataset_kind,participant_id,sequence,period,condition,device,theme,aesthetics_coherence,aesthetics_variety,aesthetics_color,aesthetics_craftsmanship,visual_aesthetics,task_success_rate,error_count,duration_seconds,reuse_intention,included,exclusion_reason
 ```
 
 - `dataset_kind`: `observed` para datos reales o `synthetic` para ensayos del proceso.
@@ -66,6 +67,7 @@ dataset_kind,participant_id,sequence,period,condition,device,theme,visual_aesthe
 - `sequence`: una de las dos secuencias declaradas en la configuración.
 - `period`: `1` o `2`.
 - `condition`: `uniform` o `section-adaptive`.
+- Los cuatro campos `aesthetics_*` conservan las respuestas 1–7 y `visual_aesthetics` es su promedio exacto.
 - `duration_seconds`: suma de los nueve cronómetros de tarea para ese período.
 - `included`: `yes` o `no`; toda exclusión necesita motivo.
 
@@ -82,14 +84,15 @@ node scripts/analyze-section-theme-study.mjs research/datos-observados.csv --jso
 
 El analizador:
 
-1. valida esquema, rangos, secuencias, pares y exclusiones;
-2. calcula la diferencia tratamiento menos control por persona;
-3. ajusta el efecto de período mediante la secuencia contrabalanceada;
-4. entrega intervalo de confianza 95 %, valor p y efecto pareado `dz`;
-5. aplica Holm a los resultados secundarios;
-6. impide una conclusión positiva con datos sintéticos o con menos de 72 participantes completos.
+1. valida esquema, promedio de los cuatro ítems, rangos, secuencias, pares y exclusiones;
+2. calcula alfa de Cronbach por condición y bloquea el veredicto si alguna queda bajo .70;
+3. calcula la diferencia tratamiento menos control por persona;
+4. ajusta el efecto de período mediante la secuencia contrabalanceada;
+5. entrega intervalo de confianza 95 %, valor p y efecto pareado `dz`;
+6. aplica Holm a los resultados secundarios;
+7. impide una conclusión positiva con instrumento pendiente, datos sintéticos o menos de 72 participantes completos.
 
-La conclusión `improves-attraction` aparece únicamente si el intervalo primario queda completamente sobre 0,35, el éxito no cae más de 5 puntos porcentuales y el aumento de errores queda bajo 0,25 por sesión. Cualquier otro resultado se informa como insuficiente, inconcluso o negativo.
+La conclusión `improves-attraction` aparece si el intervalo primario queda sobre cero, el instrumento y la confiabilidad pasan, el éxito no cae más de 5 puntos porcentuales y el aumento de errores queda bajo 0,25 por sesión. `meaningful-improvement` exige además que todo el intervalo supere 0,35 puntos brutos. Cualquier otro resultado se informa como pendiente, insuficiente, inconcluso o negativo.
 
 ## Informe
 

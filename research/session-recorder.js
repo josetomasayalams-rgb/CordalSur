@@ -1,5 +1,6 @@
 import {
   buildStudyRows,
+  calculateAestheticComposite,
   createBackup,
   mergePeriodRecord,
   parseCsv,
@@ -9,7 +10,7 @@ import {
   validatePeriodRecord
 } from './session-recorder-core.mjs';
 
-const STORAGE_KEY = 'cordalsur-study-recorder-v1';
+const STORAGE_KEY = 'cordalsur-study-recorder-v2';
 const TASK_LABELS = {
   wifi: 'Encontrar Wi-Fi',
   checkin: 'Revisar check-in',
@@ -34,8 +35,7 @@ const elements = {
   sessionLinkValue: document.querySelector('#session-link-value'),
   tasks: document.querySelector('#task-list'),
   totalDuration: document.querySelector('#total-duration'),
-  aesthetics: document.querySelector('#aesthetics-input'),
-  aestheticsOutput: document.querySelector('#aesthetics-output'),
+  aestheticsFields: [...document.querySelectorAll('[data-aesthetics-item]')],
   reuse: document.querySelector('#reuse-input'),
   reuseOutput: document.querySelector('#reuse-output'),
   included: document.querySelector('#included-select'),
@@ -69,9 +69,9 @@ let toastTimer = null;
 function loadState() {
   try {
     const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-    if (parsed?.version === 1 && Array.isArray(parsed.records) && parsed.drafts) return parsed;
+    if (parsed?.version === 2 && Array.isArray(parsed.records) && parsed.drafts) return parsed;
   } catch (error) {}
-  return { version: 1, records: [], drafts: {} };
+  return { version: 2, records: [], drafts: {} };
 }
 
 function persistState() {
@@ -95,12 +95,16 @@ function taskOrder(participantId = currentParticipant, period = currentPeriod) {
 }
 
 function defaultDraft() {
+  const visualAestheticsItems = Object.fromEntries(
+    config.primary.instrument.items.map((item) => [item.id, 4])
+  );
   return {
     participantId: currentParticipant,
     period: currentPeriod,
     device: 'mobile',
     theme: 'light',
     visualAesthetics: 4,
+    visualAestheticsItems,
     reuseIntention: 4,
     included: 'yes',
     exclusionReason: '',
@@ -311,10 +315,14 @@ function renderForm() {
   const locked = Boolean(findOtherRecord());
   elements.device.disabled = locked;
   elements.theme.disabled = locked;
-  elements.aesthetics.value = draft.visualAesthetics;
-  elements.aestheticsOutput.value = Number(draft.visualAesthetics).toFixed(1);
+  elements.aestheticsFields.forEach((field) => {
+    const input = field.querySelector('input');
+    const output = field.querySelector('output');
+    input.value = draft.visualAestheticsItems[field.dataset.aestheticsItem];
+    output.value = input.value;
+  });
   elements.reuse.value = draft.reuseIntention;
-  elements.reuseOutput.value = Number(draft.reuseIntention).toFixed(1);
+  elements.reuseOutput.value = String(draft.reuseIntention);
   elements.included.value = draft.included;
   elements.exclusion.value = draft.exclusionReason || '';
   elements.exclusionField.hidden = draft.included !== 'no';
@@ -346,7 +354,8 @@ function changePeriod(period) {
 
 function savePeriod() {
   stopTimer();
-  const errors = validatePeriodRecord(draft, config.randomization.tasks);
+  draft.visualAesthetics = calculateAestheticComposite(draft, config.primary.instrument.items);
+  const errors = validatePeriodRecord(draft, config.randomization.tasks, config.primary.instrument.items);
   const other = findOtherRecord();
   if (other && (other.device !== draft.device || other.theme !== draft.theme)) {
     errors.push('Dispositivo y tema deben coincidir en ambos períodos');
@@ -374,7 +383,12 @@ function resetDraft() {
 }
 
 function currentCsv() {
-  return toCsv(buildStudyRows(state.records, scheduleRows, config.randomization.tasks));
+  return toCsv(buildStudyRows(
+    state.records,
+    scheduleRows,
+    config.randomization.tasks,
+    config.primary.instrument.items
+  ));
 }
 
 function download(filename, content, type) {
@@ -465,7 +479,7 @@ function exportBackup() {
 async function importBackup(file) {
   try {
     const records = readBackup(await file.text());
-    buildStudyRows(records, scheduleRows, config.randomization.tasks);
+    buildStudyRows(records, scheduleRows, config.randomization.tasks, config.primary.instrument.items);
     state.records = records;
     state.drafts = {};
     persistState();
@@ -481,7 +495,7 @@ async function importBackup(file) {
 async function importSessionResult(file) {
   try {
     const record = readSessionResult(await file.text());
-    const validation = validatePeriodRecord(record, config.randomization.tasks);
+    const validation = validatePeriodRecord(record, config.randomization.tasks, config.primary.instrument.items);
     if (validation.length) throw new Error(validation[0]);
     const existing = state.records.find((candidate) => (
       candidate.participantId === record.participantId &&
@@ -490,7 +504,7 @@ async function importSessionResult(file) {
     if (existing && !window.confirm(`${record.participantId} · período ${record.period} ya existe. ¿Reemplazarlo?`)) return;
 
     const nextRecords = mergePeriodRecord(state.records, record);
-    buildStudyRows(nextRecords, scheduleRows, config.randomization.tasks);
+    buildStudyRows(nextRecords, scheduleRows, config.randomization.tasks, config.primary.instrument.items);
     state.records = nextRecords;
     delete state.drafts[keyFor(record.participantId, record.period)];
     currentParticipant = record.participantId;
@@ -507,7 +521,7 @@ async function importSessionResult(file) {
 
 function clearData() {
   if (!window.confirm('¿Borrar todos los períodos y borradores de este navegador?')) return;
-  state = { version: 1, records: [], drafts: {} };
+  state = { version: 2, records: [], drafts: {} };
   persistState();
   renderForm();
   showStatus('Datos locales eliminados');
@@ -520,14 +534,19 @@ function bindEvents() {
   });
   elements.device.addEventListener('change', () => { draft.device = elements.device.value; saveDraft(); });
   elements.theme.addEventListener('change', () => { draft.theme = elements.theme.value; saveDraft(); });
-  elements.aesthetics.addEventListener('input', () => {
-    draft.visualAesthetics = Number(elements.aesthetics.value);
-    elements.aestheticsOutput.value = Number(elements.aesthetics.value).toFixed(1);
-    saveDraft();
+  elements.aestheticsFields.forEach((field) => {
+    const input = field.querySelector('input');
+    const output = field.querySelector('output');
+    input.addEventListener('input', () => {
+      draft.visualAestheticsItems[field.dataset.aestheticsItem] = Number(input.value);
+      draft.visualAesthetics = calculateAestheticComposite(draft, config.primary.instrument.items);
+      output.value = input.value;
+      saveDraft();
+    });
   });
   elements.reuse.addEventListener('input', () => {
     draft.reuseIntention = Number(elements.reuse.value);
-    elements.reuseOutput.value = Number(elements.reuse.value).toFixed(1);
+    elements.reuseOutput.value = elements.reuse.value;
     saveDraft();
   });
   elements.included.addEventListener('change', () => {

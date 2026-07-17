@@ -14,6 +14,10 @@ const REQUIRED_COLUMNS = [
   'condition',
   'device',
   'theme',
+  'aesthetics_coherence',
+  'aesthetics_variety',
+  'aesthetics_color',
+  'aesthetics_craftsmanship',
   'visual_aesthetics',
   'task_success_rate',
   'error_count',
@@ -191,6 +195,22 @@ function sampleDeviation(values) {
   return Math.sqrt(variance);
 }
 
+function sampleVariance(values) {
+  return sampleDeviation(values) ** 2;
+}
+
+function cronbachAlpha(rows, columns) {
+  if (rows.length < 2 || columns.length < 2) return null;
+  const itemVariance = columns.reduce(
+    (total, column) => total + sampleVariance(rows.map((row) => row[column])),
+    0
+  );
+  const totals = rows.map((row) => columns.reduce((total, column) => total + row[column], 0));
+  const totalVariance = sampleVariance(totals);
+  if (totalVariance === 0) return null;
+  return (columns.length / (columns.length - 1)) * (1 - itemVariance / totalVariance);
+}
+
 function adjustedCrossover(pairs, metric, alpha) {
   const observations = pairs.map((pair) => ({
     difference: pair.treatment[metric] - pair.control[metric],
@@ -266,6 +286,8 @@ function prepareRows(csvRows, config) {
     throw new Error('All rows must share dataset_kind synthetic or observed');
   }
 
+  const aestheticItems = config.primary?.instrument?.items || [];
+  if (aestheticItems.length !== 4) throw new Error('Primary instrument must contain four aesthetic items');
   const candidateIncluded = [];
   const excluded = [];
   for (const [index, row] of csvRows.entries()) {
@@ -282,7 +304,14 @@ function prepareRows(csvRows, config) {
       period
     };
     if (row.included === 'yes') {
+      for (const item of aestheticItems) {
+        normalized[item.column] = numeric(row[item.column], `${label} ${item.column}`, 1, 7);
+      }
       normalized.visual_aesthetics = numeric(row.visual_aesthetics, `${label} visual_aesthetics`, 1, 7);
+      const composite = mean(aestheticItems.map((item) => normalized[item.column]));
+      if (Math.abs(normalized.visual_aesthetics - composite) > 1e-6) {
+        throw new Error(`${label} visual_aesthetics must equal the four-item mean`);
+      }
       normalized.task_success_rate = numeric(row.task_success_rate, `${label} task_success_rate`, 0, 1);
       normalized.error_count = numeric(row.error_count, `${label} error_count`, 0);
       normalized.duration_seconds = numeric(row.duration_seconds, `${label} duration_seconds`, 0);
@@ -350,6 +379,15 @@ export function analyzeStudyCsv(csvText, configText) {
   if (Object.values(sequenceCounts).some((count) => count === 0)) {
     throw new Error('Both counterbalanced sequences need at least one complete participant');
   }
+  const aestheticColumns = config.primary.instrument.items.map((item) => item.column);
+  const reliability = Object.fromEntries(['uniform', 'section-adaptive'].map((condition) => {
+    const rows = prepared.included.filter((row) => row.condition === condition);
+    return [condition, cronbachAlpha(rows, aestheticColumns)];
+  }));
+  const measurementReliable = Object.values(reliability).every((alpha) => (
+    alpha !== null && alpha >= config.primary.minimumCronbachAlpha
+  ));
+  const instrumentReady = config.primary.instrument.confirmatoryReady === true;
 
   const metricNames = [
     'visual_aesthetics',
@@ -368,16 +406,23 @@ export function analyzeStudyCsv(csvText, configText) {
   });
 
   const primaryPass = analyzed.visual_aesthetics.confidenceInterval[0]
+    > config.primary.superiorityNull;
+  const primaryMeaningfulPass = analyzed.visual_aesthetics.confidenceInterval[0]
     > config.primary.smallestEffectOfInterest;
   const successPass = analyzed.task_success_rate.confidenceInterval[0]
     > config.secondary.task_success_rate.nonInferiorityLowerBound;
   const errorsPass = analyzed.error_count.confidenceInterval[1]
     < config.secondary.error_count.nonInferiorityUpperBound;
   const eligible = prepared.datasetKind === 'observed'
-    && pairs.length >= config.plannedCompletedParticipants;
+    && pairs.length >= config.plannedCompletedParticipants
+    && measurementReliable
+    && instrumentReady;
   let verdict = 'inconclusive-or-negative';
   if (prepared.datasetKind === 'synthetic') verdict = 'simulation-only';
   else if (pairs.length < config.plannedCompletedParticipants) verdict = 'insufficient-sample';
+  else if (!instrumentReady) verdict = 'instrument-not-ready';
+  else if (!measurementReliable) verdict = 'measurement-unreliable';
+  else if (primaryMeaningfulPass && successPass && errorsPass) verdict = 'meaningful-improvement';
   else if (primaryPass && successPass && errorsPass) verdict = 'improves-attraction';
 
   return roundDeep({
@@ -395,10 +440,18 @@ export function analyzeStudyCsv(csvText, configText) {
       excludedParticipants: prepared.excludedParticipantIds.size,
       sequenceCounts
     },
+    measurement: {
+      instrument: config.primary.instrument.id,
+      minimumCronbachAlpha: config.primary.minimumCronbachAlpha,
+      instrumentReady,
+      cronbachAlphaByCondition: reliability,
+      reliable: measurementReliable
+    },
     metrics: analyzed,
     decision: {
       eligible,
       primaryPass,
+      primaryMeaningfulPass,
       taskSuccessNonInferior: successPass,
       errorsNonInferior: errorsPass,
       verdict
@@ -415,6 +468,8 @@ function formatResult(result) {
     `Dataset: ${result.sample.datasetKind}`,
     `Complete participants: ${result.sample.completeParticipants}`,
     `Protocol SHA-256: ${result.protocol.configSha256}`,
+    `Instrument ready: ${result.measurement.instrumentReady ? 'yes' : 'no'}`,
+    `Aesthetic reliability: ${JSON.stringify(result.measurement.cronbachAlphaByCondition)}`,
     ...metricLines,
     `Eligible for confirmatory claim: ${result.decision.eligible ? 'yes' : 'no'}`,
     `Verdict: ${result.decision.verdict}`

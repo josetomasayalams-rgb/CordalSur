@@ -6,7 +6,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; connect-src 'self'">
   <title>Registro de estudio A/B · CordalSur</title>
-  <link rel="stylesheet" href="session-recorder.css?v=2">
+  <link rel="stylesheet" href="session-recorder.css?v=3">
 </head>
 <body>
   <header class="study-header">
@@ -102,16 +102,29 @@
         <span id="period-state" class="state-badge">Borrador</span>
       </div>
 
-      <div class="score-grid">
-        <label class="score-field">
-          <span>Estética visual <output id="aesthetics-output">4.0</output></span>
-          <input id="aesthetics-input" type="range" min="1" max="7" step="0.1" value="4">
+      <p class="instrument-note">Escala estética v2 · cuatro respuestas obligatorias por condición.</p>
+      <div class="aesthetics-grid">
+        <label class="score-field" data-aesthetics-item="coherence">
+          <span>Los elementos combinan entre sí <output>4</output></span>
+          <input type="range" min="1" max="7" step="1" value="4">
         </label>
-        <label class="score-field">
-          <span>Intención de reutilización <output id="reuse-output">4.0</output></span>
-          <input id="reuse-input" type="range" min="1" max="7" step="0.1" value="4">
+        <label class="score-field" data-aesthetics-item="variety">
+          <span>Diseño agradablemente variado <output>4</output></span>
+          <input type="range" min="1" max="7" step="1" value="4">
+        </label>
+        <label class="score-field" data-aesthetics-item="color">
+          <span>Composición de colores atractiva <output>4</output></span>
+          <input type="range" min="1" max="7" step="1" value="4">
+        </label>
+        <label class="score-field" data-aesthetics-item="craftsmanship">
+          <span>Diseño profesional <output>4</output></span>
+          <input type="range" min="1" max="7" step="1" value="4">
         </label>
       </div>
+      <label class="score-field reuse-score-field">
+        <span>Intención de reutilización <output id="reuse-output">4</output></span>
+        <input id="reuse-input" type="range" min="1" max="7" step="1" value="4">
+      </label>
 
       <div class="inclusion-row">
         <label class="field">
@@ -158,6 +171,6 @@
   </main>
 
   <div class="toast" id="status" role="status" aria-live="polite"></div>
-  <script type="module" src="session-recorder.js?v=2"></script>
+  <script type="module" src="session-recorder.js?v=3"></script>
 </body>
 </html>

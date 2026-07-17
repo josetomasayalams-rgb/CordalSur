@@ -6,6 +6,10 @@ export const STUDY_COLUMNS = [
   'condition',
   'device',
   'theme',
+  'aesthetics_coherence',
+  'aesthetics_variety',
+  'aesthetics_color',
+  'aesthetics_craftsmanship',
   'visual_aesthetics',
   'task_success_rate',
   'error_count',
@@ -77,7 +81,13 @@ function finiteInRange(value, minimum, maximum = Infinity) {
   return Number.isFinite(Number(value)) && Number(value) >= minimum && Number(value) <= maximum;
 }
 
-export function validatePeriodRecord(record, taskNames) {
+export function calculateAestheticComposite(record, aestheticItems) {
+  const values = aestheticItems.map((item) => Number(record?.visualAestheticsItems?.[item.id]));
+  if (values.some((value) => !Number.isFinite(value))) return NaN;
+  return values.reduce((total, value) => total + value, 0) / values.length;
+}
+
+export function validatePeriodRecord(record, taskNames, aestheticItems = []) {
   const errors = [];
   if (!record || !/^P\d{3}$/.test(record.participantId || '')) errors.push('Participante inválido');
   if (![1, 2].includes(Number(record.period))) errors.push('Período inválido');
@@ -90,7 +100,21 @@ export function validatePeriodRecord(record, taskNames) {
     return errors;
   }
 
-  if (!finiteInRange(record.visualAesthetics, 1, 7)) errors.push('Estética debe estar entre 1 y 7');
+  if (aestheticItems.length) {
+    for (const item of aestheticItems) {
+      if (!finiteInRange(record?.visualAestheticsItems?.[item.id], 1, 7)) {
+        errors.push(`${item.label}: respuesta entre 1 y 7 obligatoria`);
+      }
+    }
+    const composite = calculateAestheticComposite(record, aestheticItems);
+    if (!finiteInRange(composite, 1, 7)) {
+      errors.push('La escala estética está incompleta');
+    } else if (Math.abs(Number(record.visualAesthetics) - composite) > 1e-6) {
+      errors.push('El promedio estético no coincide con sus ítems');
+    }
+  } else if (!finiteInRange(record.visualAesthetics, 1, 7)) {
+    errors.push('Estética debe estar entre 1 y 7');
+  }
   if (!finiteInRange(record.reuseIntention, 1, 7)) errors.push('Reutilización debe estar entre 1 y 7');
   if (!Array.isArray(record.taskResults) || record.taskResults.length !== taskNames.length) {
     errors.push('Faltan tareas');
@@ -111,13 +135,13 @@ export function validatePeriodRecord(record, taskNames) {
   return errors;
 }
 
-export function buildStudyRows(records, scheduleRows, taskNames) {
+export function buildStudyRows(records, scheduleRows, taskNames, aestheticItems = []) {
   const schedule = new Map(scheduleRows.map((row) => [row.participant_id, row]));
   const keys = new Set();
   const rows = [];
 
   for (const record of records) {
-    const validation = validatePeriodRecord(record, taskNames);
+    const validation = validatePeriodRecord(record, taskNames, aestheticItems);
     if (validation.length) throw new Error(validation.join('; '));
     const assignment = schedule.get(record.participantId);
     if (!assignment) throw new Error(`No existe asignación para ${record.participantId}`);
@@ -142,6 +166,10 @@ export function buildStudyRows(records, scheduleRows, taskNames) {
       ? assignedTasks.reduce((total, task) => total + Number(taskByName.get(task).durationSeconds), 0)
       : null;
 
+    const aestheticColumns = Object.fromEntries(aestheticItems.map((item) => [
+      item.column,
+      record.included === 'yes' ? Number(record.visualAestheticsItems[item.id]) : ''
+    ]));
     rows.push({
       dataset_kind: 'observed',
       participant_id: record.participantId,
@@ -150,6 +178,7 @@ export function buildStudyRows(records, scheduleRows, taskNames) {
       condition,
       device: record.device,
       theme: record.theme,
+      ...aestheticColumns,
       visual_aesthetics: record.included === 'yes' ? Number(record.visualAesthetics) : '',
       task_success_rate: record.included === 'yes' ? Number((successes / taskNames.length).toFixed(9)) : '',
       error_count: record.included === 'yes' ? errors : '',
@@ -179,19 +208,19 @@ export function buildStudyRows(records, scheduleRows, taskNames) {
 }
 
 export function createBackup(records) {
-  return JSON.stringify({ version: 1, records }, null, 2);
+  return JSON.stringify({ version: 2, records }, null, 2);
 }
 
 export function readBackup(text) {
   const parsed = JSON.parse(text);
-  if (parsed?.version !== 1 || !Array.isArray(parsed.records)) throw new Error('Respaldo incompatible');
+  if (parsed?.version !== 2 || !Array.isArray(parsed.records)) throw new Error('Respaldo incompatible con el instrumento v2');
   return parsed.records;
 }
 
 export function createSessionResult(record) {
   return JSON.stringify({
     kind: 'cordalsur-study-period',
-    version: 1,
+    version: 2,
     consentConfirmed: true,
     record
   }, null, 2);
@@ -201,7 +230,7 @@ export function readSessionResult(text) {
   const parsed = JSON.parse(text);
   if (
     parsed?.kind !== 'cordalsur-study-period' ||
-    parsed?.version !== 1 ||
+    parsed?.version !== 2 ||
     parsed?.consentConfirmed !== true ||
     !parsed.record ||
     Array.isArray(parsed.record)

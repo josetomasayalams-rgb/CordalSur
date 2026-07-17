@@ -212,8 +212,15 @@ p { color: var(--muted); line-height: 1.65; }
 
 .score-field { display: grid; gap: 10px; margin-top: 24px; }
 .score-field output { float: right; color: var(--teal); font-size: 1rem; }
+.rating-instruction { margin: 12px 0 4px; }
+.reuse-field {
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
 input[type="range"] { width: 100%; accent-color: var(--teal); }
-.scale-ends { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.7rem; font-weight: 700; }
+.scale-ends { display: flex; justify-content: space-between; gap: 16px; color: var(--muted); font-size: 0.7rem; font-weight: 700; }
+.scale-ends span:last-child { text-align: right; }
 .rating-card .button { margin-top: 28px; }
 
 .done-card { text-align: center; }

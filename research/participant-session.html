@@ -6,7 +6,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; connect-src 'self'">
   <title>Sesión de experiencia · CordalSur</title>
-  <link rel="stylesheet" href="participant-session.css?v=1">
+  <link rel="stylesheet" href="participant-session.css?v=2">
 </head>
 <body>
   <header class="session-header">
@@ -76,17 +76,36 @@
     <section class="session-card rating-card" id="rating-screen" aria-labelledby="rating-title" hidden>
       <span class="step-label">Evaluación final</span>
       <h2 id="rating-title">¿Cómo se sintió esta presentación?</h2>
+      <p class="rating-instruction">Indica cuánto estás de acuerdo con cada afirmación sobre la guía que acabas de usar.</p>
 
-      <label class="score-field">
-        <span>Estética visual <output id="aesthetics-output">4.0</output></span>
-        <input id="aesthetics-input" type="range" min="1" max="7" step="0.1" value="4">
-        <span class="scale-ends"><span>Muy baja</span><span>Muy alta</span></span>
+      <label class="score-field" data-aesthetics-item="coherence">
+        <span>Todos los elementos de esta guía combinan entre sí. <output>4</output></span>
+        <input type="range" min="1" max="7" step="1" value="4">
+        <span class="scale-ends"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></span>
       </label>
 
-      <label class="score-field">
-        <span>Intención de volver a usarla <output id="reuse-output">4.0</output></span>
-        <input id="reuse-input" type="range" min="1" max="7" step="0.1" value="4">
-        <span class="scale-ends"><span>Ninguna</span><span>Muy alta</span></span>
+      <label class="score-field" data-aesthetics-item="variety">
+        <span>El diseño de esta guía es agradablemente variado. <output>4</output></span>
+        <input type="range" min="1" max="7" step="1" value="4">
+        <span class="scale-ends"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></span>
+      </label>
+
+      <label class="score-field" data-aesthetics-item="color">
+        <span>La composición de colores de esta guía es atractiva. <output>4</output></span>
+        <input type="range" min="1" max="7" step="1" value="4">
+        <span class="scale-ends"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></span>
+      </label>
+
+      <label class="score-field" data-aesthetics-item="craftsmanship">
+        <span>Esta guía parece diseñada profesionalmente. <output>4</output></span>
+        <input type="range" min="1" max="7" step="1" value="4">
+        <span class="scale-ends"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></span>
+      </label>
+
+      <label class="score-field reuse-field">
+        <span>Intención de volver a usarla <output id="reuse-output">4</output></span>
+        <input id="reuse-input" type="range" min="1" max="7" step="1" value="4">
+        <span class="scale-ends"><span>Muy baja</span><span>Muy alta</span></span>
       </label>
 
       <button class="button button-primary button-wide" id="finish-session" type="button">Preparar resultado</button>
@@ -109,6 +128,6 @@
   </main>
 
   <div class="toast" id="status" role="status" aria-live="polite"></div>
-  <script type="module" src="participant-session.js?v=1"></script>
+  <script type="module" src="participant-session.js?v=2"></script>
 </body>
 </html>

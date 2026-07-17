@@ -1,4 +1,5 @@
 import {
+  calculateAestheticComposite,
   createSessionResult,
   parseCsv,
   validatePeriodRecord
@@ -71,8 +72,7 @@ const elements = {
   taskErrors: document.querySelector('#task-errors'),
   taskSuccess: document.querySelector('#task-success'),
   taskFailure: document.querySelector('#task-failure'),
-  aesthetics: document.querySelector('#aesthetics-input'),
-  aestheticsOutput: document.querySelector('#aesthetics-output'),
+  aestheticsFields: [...document.querySelectorAll('[data-aesthetics-item]')],
   reuse: document.querySelector('#reuse-input'),
   reuseOutput: document.querySelector('#reuse-output'),
   finish: document.querySelector('#finish-session'),
@@ -116,12 +116,16 @@ function formatDuration(milliseconds) {
 }
 
 function storageKey() {
-  return `cordalsur-participant-session-v1:${participantId}:${period}`;
+  return `cordalsur-participant-session-v2:${participantId}:${period}`;
+}
+
+function defaultAestheticItems() {
+  return Object.fromEntries(config.primary.instrument.items.map((item) => [item.id, 4]));
 }
 
 function defaultState() {
   return {
-    version: 1,
+    version: 2,
     participantId,
     period,
     started: false,
@@ -129,6 +133,7 @@ function defaultState() {
     currentTask: 0,
     activeTaskStartedAt: null,
     visualAesthetics: 4,
+    visualAestheticsItems: defaultAestheticItems(),
     reuseIntention: 4,
     taskResults: taskOrder.map((task) => ({ task, success: null, errors: 0, durationSeconds: 0 }))
   };
@@ -138,7 +143,7 @@ function loadState() {
   try {
     const parsed = JSON.parse(sessionStorage.getItem(storageKey()) || 'null');
     if (
-      parsed?.version === 1 &&
+      parsed?.version === 2 &&
       parsed.participantId === participantId &&
       Number(parsed.period) === period &&
       Array.isArray(parsed.taskResults)
@@ -173,10 +178,14 @@ function startTicker() {
 function renderTask() {
   if (state.currentTask >= taskOrder.length) {
     stopTicker();
-    elements.aesthetics.value = state.visualAesthetics;
-    elements.aestheticsOutput.value = Number(state.visualAesthetics).toFixed(1);
+    elements.aestheticsFields.forEach((field) => {
+      const input = field.querySelector('input');
+      const output = field.querySelector('output');
+      input.value = state.visualAestheticsItems[field.dataset.aestheticsItem];
+      output.value = input.value;
+    });
     elements.reuse.value = state.reuseIntention;
-    elements.reuseOutput.value = Number(state.reuseIntention).toFixed(1);
+    elements.reuseOutput.value = String(state.reuseIntention);
     showOnly(elements.rating);
     return;
   }
@@ -244,12 +253,14 @@ function completeTask(success) {
 }
 
 function currentRecord() {
+  const visualAesthetics = calculateAestheticComposite(state, config.primary.instrument.items);
   return {
     participantId,
     period,
     device,
     theme,
-    visualAesthetics: Number(state.visualAesthetics),
+    visualAesthetics,
+    visualAestheticsItems: state.visualAestheticsItems,
     reuseIntention: Number(state.reuseIntention),
     included: 'yes',
     exclusionReason: '',
@@ -259,7 +270,7 @@ function currentRecord() {
 
 function resultJson() {
   const record = currentRecord();
-  const errors = validatePeriodRecord(record, config.randomization.tasks);
+  const errors = validatePeriodRecord(record, config.randomization.tasks, config.primary.instrument.items);
   if (errors.length) throw new Error(errors[0]);
   return createSessionResult(record);
 }
@@ -287,7 +298,7 @@ function downloadResult() {
 }
 
 function finishSession() {
-  state.visualAesthetics = Number(elements.aesthetics.value);
+  state.visualAesthetics = calculateAestheticComposite(state, config.primary.instrument.items);
   state.reuseIntention = Number(elements.reuse.value);
   try {
     resultJson();
@@ -314,14 +325,19 @@ function bindEvents() {
   elements.startTask.addEventListener('click', startTask);
   elements.taskSuccess.addEventListener('click', () => completeTask(true));
   elements.taskFailure.addEventListener('click', () => completeTask(false));
-  elements.aesthetics.addEventListener('input', () => {
-    state.visualAesthetics = Number(elements.aesthetics.value);
-    elements.aestheticsOutput.value = Number(elements.aesthetics.value).toFixed(1);
-    persistState();
+  elements.aestheticsFields.forEach((field) => {
+    const input = field.querySelector('input');
+    const output = field.querySelector('output');
+    input.addEventListener('input', () => {
+      state.visualAestheticsItems[field.dataset.aestheticsItem] = Number(input.value);
+      state.visualAesthetics = calculateAestheticComposite(state, config.primary.instrument.items);
+      output.value = input.value;
+      persistState();
+    });
   });
   elements.reuse.addEventListener('input', () => {
     state.reuseIntention = Number(elements.reuse.value);
-    elements.reuseOutput.value = Number(elements.reuse.value).toFixed(1);
+    elements.reuseOutput.value = elements.reuse.value;
     persistState();
   });
   elements.finish.addEventListener('click', finishSession);

@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "status": "preregister-before-data-collection",
   "design": "two-period randomized counterbalanced within-participant crossover",
   "conditions": {
@@ -32,10 +32,43 @@
   },
   "primary": {
     "column": "visual_aesthetics",
-    "label": "Perceived visual aesthetics",
+    "label": "Perceived visual aesthetics composite",
     "range": [1, 7],
     "favorableDirection": "higher",
-    "smallestEffectOfInterest": 0.35
+    "superiorityNull": 0,
+    "smallestEffectOfInterest": 0.35,
+    "smallestEffectUnit": "raw 1-7 scale points",
+    "minimumCronbachAlpha": 0.7,
+    "instrument": {
+      "id": "visawi-s-es-working-translation-v1",
+      "source": "Moshagen and Thielsch (2013), DOI 10.1080/0144929X.2012.694910",
+      "language": "es-CL",
+      "translationStatus": "pilot-required",
+      "confirmatoryReady": false,
+      "responseAnchors": ["Totalmente en desacuerdo", "Totalmente de acuerdo"],
+      "items": [
+        {
+          "id": "coherence",
+          "column": "aesthetics_coherence",
+          "label": "Todos los elementos de esta guía combinan entre sí."
+        },
+        {
+          "id": "variety",
+          "column": "aesthetics_variety",
+          "label": "El diseño de esta guía es agradablemente variado."
+        },
+        {
+          "id": "color",
+          "column": "aesthetics_color",
+          "label": "La composición de colores de esta guía es atractiva."
+        },
+        {
+          "id": "craftsmanship",
+          "column": "aesthetics_craftsmanship",
+          "label": "Esta guía parece diseñada profesionalmente."
+        }
+      ]
+    }
   },
   "secondary": {
     "task_success_rate": {
