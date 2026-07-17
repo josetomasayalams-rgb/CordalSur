@@ -9,11 +9,29 @@ El estudio humano puede sostener una afirmación causal limitada: que la paleta 
 ## Antes de reclutar
 
 1. Completa `INSTRUMENT_ADAPTATION.md` con personas que no integrarán la muestra principal. Solo entonces cambia `confirmatoryReady` a `true`, incrementa la versión y congela la redacción final.
-2. Registra públicamente `study-config.json`, `SECTION_THEME_STUDY.md`, este documento y el hash SHA-256 de la configuración en un servicio de preregistro con fecha verificable.
+2. Genera el manifiesto final descrito abajo y regístralo públicamente junto con `study-config.json`, `SECTION_THEME_STUDY.md` y este documento en un servicio de preregistro con fecha verificable.
 3. No cambies ítems, resultados, márgenes, exclusiones ni tamaño muestral después de abrir los datos observados.
 4. Obtén la revisión ética o consentimiento que exija tu institución. No recolectes nombres, correo, teléfono, PIN, dirección IP ni contenido libre identificable.
 5. Recluta 80 participantes para buscar al menos 72 sesiones completas. La cifra incorpora margen operativo sobre un objetivo de potencia 0,80 para detectar frente a cero un efecto pareado estandarizado pequeño-moderado de 0,35.
 6. Usa `randomization.csv`: asigna en bloques de cuatro las secuencias `uniform-section-adaptive` y `section-adaptive-uniform`, con 40 participantes por secuencia. No reemplaces manualmente el orden.
+
+### Paquete reproducible
+
+Mientras el instrumento siga pendiente, inspecciona el borrador sin crear un artefacto final:
+
+```sh
+node scripts/build-study-preregistration.mjs --draft > /tmp/cordalsur-preregistration-draft.json
+```
+
+El manifiesto incluye hashes individuales y un hash de árbol para todos los HTML, fotografías, fuentes, CSS, JavaScript, contenido editorial, instrumento, asignación y analizador que pueden afectar el estudio. La salida es determinista y no contiene una fecha local inventada; la fecha verificable debe provenir del servicio externo de preregistro.
+
+Después de completar la adaptación, incrementar la versión y establecer `confirmatoryReady: true`, genera el archivo final:
+
+```sh
+node scripts/build-study-preregistration.mjs > research/preregistration-manifest.json
+```
+
+La orden final falla deliberadamente mientras el instrumento no esté listo o si `randomization.csv` ya no coincide con la configuración.
 
 ## Abrir las condiciones
 

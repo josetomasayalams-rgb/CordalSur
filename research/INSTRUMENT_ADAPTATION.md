@@ -16,7 +16,7 @@ Por esa razón `confirmatoryReady` permanece en `false`. El analizador devuelve 
 6. Haz entrevistas cognitivas con usuarios objetivo que no integrarán la muestra principal. Pídeles explicar cada ítem con sus propias palabras y señalar términos ambiguos.
 7. Corrige una sola vez, repite la comprobación de comprensión y congela la redacción final.
 8. Registra versión, fecha, responsables, decisiones y evidencia de comprensión en este documento.
-9. Incrementa la versión de `study-config.json`, establece `confirmatoryReady: true`, regenera su hash y preregistra todos los archivos antes de aceptar el primer dato observado.
+9. Incrementa la versión de `study-config.json`, establece `confirmatoryReady: true`, genera `research/preregistration-manifest.json` con el comando del runbook y preregistra todos los archivos antes de aceptar el primer dato observado.
 
 ## Registro de cierre
 

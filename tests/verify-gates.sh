@@ -19,6 +19,7 @@ node tests/verify-section-palettes.mjs
 echo "=== Gate 4: preregistered section-theme study ==="
 node tests/verify-section-study.mjs
 node tests/verify-session-recorder.mjs
+node tests/verify-study-preregistration.mjs
 
 echo "=== Gate 5: public CordalSur contract ==="
 node tests/verify-public-contract.mjs
