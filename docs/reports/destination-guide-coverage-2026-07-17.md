@@ -16,6 +16,17 @@
 - **51 coordenadas candidatas** permanecen visibles con advertencia; no se presentan como entradas exactas.
 - El radio del departamento es **22.63 km**, calculado por Haversine WGS84 hasta Restaurant Los Pincheira. La línea central N-55 mide **52.52 km** y usa un buffer de **3.0 km**.
 
+## Auditoría de experiencia de huésped
+
+- La vista **Explora el Valle** permite mostrar u ocultar el mapa con un control `aria-expanded`/`aria-controls`. Al ocultarlo, el mapa queda fuera del layout y la lista ocupa el ancho completo sin recargar ni perder modo, categoría, búsqueda u orden.
+- En pantallas de hasta 760 px la primera visita de la sesión parte con la lista visible y el mapa colapsado. La preferencia se conserva sólo en `sessionStorage`; no se persiste entre sesiones.
+- Se eliminó de esta vista la franja de emergencias y se conservó el módulo progresivo de contactos oficiales en Inicio.
+- La cabecera de la guía usa una única superficie continua, sin bandas decorativas verdes o amarillas. Idioma y tema permanecen en flujo y no se superponen con el contenido.
+- Las acciones de navegación, Google Maps, sitio, Instagram y teléfono usan recursos SVG locales, nombre accesible localizado, ayuda contextual y `noopener` para enlaces externos. El logo de Google Maps proviene de los [recursos oficiales de atribución](https://developers.google.com/maps/documentation/javascript/policies#google-maps-attribution-requirements).
+- La auditoría interactiva cubrió **320, 360, 390, 430, 768, 1024 y 1280 px** en ES/PT/EN y claro/oscuro. No se detectó desbordamiento horizontal; los controles de acción mantienen al menos 44 × 44 px.
+- Inicio, Explora el Valle, Actividades y Comida/provisiones se verificaron en móvil y escritorio. El selector de idioma actualiza texto visible y nombres accesibles sin estados mixtos; el selector de tema no vuelve a ejecutar la traducción completa.
+- Los estados de carga, vacío y error de datos están anunciados; el diálogo de ubicación cabe en 390 px, explica el uso local y ofrece uso único, durante la sesión o sin ubicación.
+
 ## Estrategia de descubrimiento
 
 1. Se obtuvo la geometría real de Ruta N-55 desde OpenStreetMap/Overpass y se conectó al departamento.

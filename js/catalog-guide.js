@@ -63,7 +63,6 @@
 
   if (search) search.addEventListener('input', update);
   if (sort) sort.addEventListener('change', update);
-  window.addEventListener('gh:language-changed', update);
-  document.addEventListener('cordal:language-changed', update);
+  if (window.GH_I18N && typeof window.GH_I18N.subscribe === 'function') window.GH_I18N.subscribe(update);
   update();
 }());

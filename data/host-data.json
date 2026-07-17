@@ -1836,11 +1836,6 @@
       "pt": "Não há locais cadastrados nesta categoria. Use a busca no Maps.",
       "en": "No mapped places in this category. Use the Maps search."
     },
-    "nearby.emergency": {
-      "es": "En una emergencia llama de inmediato: SAMU 131 · Bomberos 132 · Carabineros 133.",
-      "pt": "Em uma emergência, ligue imediatamente: SAMU 131 · Bombeiros 132 · Carabineros 133.",
-      "en": "In an emergency call immediately: SAMU 131 · Fire 132 · Police 133."
-    },
     "nearby.cat.all": {
       "es": "Todo",
       "pt": "Tudo",

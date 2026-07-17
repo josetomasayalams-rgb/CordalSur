@@ -121,6 +121,7 @@ function writeBlock(L, newBody) {
     'botiquin.intro', 'buggy.intro',
     'info.intro', 'act.intro', 'rest.intro',
     'home.welcome',
+    'nearby.emergency',
     'act.atr-laguna-huemul.copy_card',
     'act.atr-garganta-diablo.nombre',
     'act.atr-banos-rafa.nombre'
@@ -466,10 +467,18 @@ function categoryFor(id) {
   return destinationGuide.categories.find((category) => category.id === id) || { id, label: id, color: '#66706c' };
 }
 
-function catalogAction(url, key, label, className = '') {
+const CATALOG_ACTION_ASSETS = {
+  navigation: 'assets/icons/navigation.svg',
+  maps: 'assets/icons/google-maps.svg',
+  website: 'assets/icons/website.svg',
+  instagram: 'assets/icons/instagram.svg',
+  phone: 'assets/icons/phone.svg'
+};
+
+function catalogAction(url, key, label, type, className = '') {
   if (!url) return '';
-  const external = /^https:\/\//.test(url) ? ' target="_blank" rel="noopener"' : '';
-  return `<a class="catalog-action ${className}" href="${attrEsc(url)}"${external} data-i18n="${key}">${attrEsc(label)}</a>`;
+  const external = /^https?:\/\//.test(url) ? ' target="_blank" rel="noopener"' : '';
+  return `<a class="catalog-action catalog-action--${type} ${className}" href="${attrEsc(url)}"${external} aria-label="${attrEsc(label)}" title="${attrEsc(label)}" data-i18n-aria="${key}" data-i18n-title="${key}"><img src="${CATALOG_ACTION_ASSETS[type]}" alt="" aria-hidden="true"><span class="sr-only" data-i18n="${key}">${attrEsc(label)}</span></a>`;
 }
 
 function canonicalCard(place) {
@@ -510,11 +519,11 @@ function canonicalCard(place) {
         ${ratingHtml}
         <div class="catalog-sources"><span data-i18n="guide.sources">Fuentes</span>${sourceLinks}</div>
         <div class="catalog-actions">
-          ${catalogAction(place.navigationUrl, 'guide.action.navigate', 'Navegar', 'catalog-action--primary')}
-          ${catalogAction(place.googleMapsUrl, 'guide.action.maps', 'Abrir en Google Maps')}
-          ${catalogAction(website, 'guide.action.website', 'Sitio oficial')}
-          ${instagram ? `<a class="catalog-action" href="${attrEsc(instagram)}" target="_blank" rel="noopener">Instagram</a>` : ''}
-          ${catalogAction(phoneHref, 'nearby.call', 'Llamar')}
+          ${catalogAction(place.navigationUrl, 'guide.action.navigate', 'Navegar', 'navigation', 'catalog-action--primary')}
+          ${catalogAction(place.googleMapsUrl, 'guide.action.maps', 'Abrir en Google Maps', 'maps')}
+          ${catalogAction(website, 'guide.action.website', 'Sitio oficial', 'website')}
+          ${catalogAction(instagram, 'guide.action.instagram', 'Abrir en Instagram', 'instagram')}
+          ${catalogAction(phoneHref, 'nearby.call', 'Llamar', 'phone')}
         </div>
       </article>`;
 }

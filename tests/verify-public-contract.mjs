@@ -28,8 +28,9 @@ for (const file of expectedPages) {
   const html = read(file);
   if (!/<title>[^<]*CordalSur[^<]*<\/title>/i.test(html)) fail(`${file}: static title must contain CordalSur`);
   if (!/<html\b[^>]*data-i18n-title="page\.[^"]+"/i.test(html)) fail(`${file}: <html> needs a localized page.* title key`);
-  if (!html.includes('js/lang.js?v=7')) fail(`${file}: localized copy must use the current cache version`);
-  if (!html.includes('css/styles.css?v=17')) fail(`${file}: shared sensory brand styles are stale`);
+  if (!html.includes('js/lang.js?v=8')) fail(`${file}: localized copy must use the current cache version`);
+  if (!html.includes('js/theme.js?v=6')) fail(`${file}: theme control must use the current cache version`);
+  if (!html.includes('css/styles.css?v=18')) fail(`${file}: shared sensory brand styles are stale`);
   if (!html.includes("document.documentElement.classList.add('access-pending')") ||
       !html.includes('css/access.css?v=4') || !html.includes('js/access.js?v=4')) {
     fail(`${file}: guest gate must load before protected content is shown`);
@@ -48,7 +49,7 @@ const manual = read('instrucciones.html');
 const nearbyHtml = read('cerca-de-mi.html');
 const nearbyScript = read('js/nearby.js');
 const destinationGuide = JSON.parse(read('data/destination-guide.json'));
-if (!index.includes('href="cerca-de-mi.html"') || !nearbyHtml.includes('js/nearby.js?v=5')) {
+if (!index.includes('href="cerca-de-mi.html"') || !nearbyHtml.includes('js/nearby.js?v=6')) {
   fail('home must expose the protected nearby essentials tool');
 }
 if (!nearbyScript.includes('navigator.geolocation.getCurrentPosition') ||
@@ -98,6 +99,9 @@ for (const choice of ['once', 'session', 'none']) {
 }
 for (const asset of ['assets/vendor/leaflet/leaflet.js', 'assets/vendor/leaflet/leaflet.css', 'assets/vendor/leaflet/LICENSE', 'assets/vendor/leaflet-markercluster/LICENSE']) {
   if (!fs.existsSync(path.join(ROOT, asset))) fail(`missing vendored map asset ${asset}`);
+}
+for (const asset of ['assets/icons/google-maps.svg', 'assets/icons/instagram.svg', 'assets/icons/navigation.svg', 'assets/icons/website.svg', 'assets/icons/phone.svg']) {
+  if (!fs.existsSync(path.join(ROOT, asset))) fail(`missing local action icon ${asset}`);
 }
 const activityCategories = new Set(['tourism', 'thermal_baths', 'ski', 'trail', 'adventure']);
 const lodgingCategories = new Set(['hotel', 'cabin']);
@@ -160,7 +164,7 @@ for (const [file, html] of [['index.html', index], ['check-in.html', checkin]]) 
   if (!instagramLink.includes(`href="${instagram}"`) ||
       !instagramLink.includes('target="_blank"') ||
       !instagramLink.includes('rel="noopener"') ||
-      !instagramLink.includes('<svg')) {
+      !/(?:<svg|assets\/icons\/instagram\.svg)/.test(instagramLink)) {
     fail(`${file} must show a safe, icon-based link to the canonical Instagram profile`);
   }
 }
@@ -195,7 +199,7 @@ if (!styles.includes("font-family: 'Manrope'") || !accessStyles.includes('font-f
 }
 if (!read('js/theme.js').includes("return 'dark';") ||
     !index.includes('if(t!=="light"&&t!=="dark"){t="dark"}') ||
-    !index.includes('js/theme.js?v=5')) {
+    !index.includes('js/theme.js?v=6')) {
   fail('the first visit must default to dark while preserving manual selection');
 }
 if (!styles.includes('--photo-overlay-home') || !styles.includes('--photo-overlay-inner') ||
@@ -291,7 +295,7 @@ if (!accessScript.includes('async function restoreGuestSession()') ||
   fail('administrator access must revalidate after history restores and safely fall back to a valid guest session');
 }
 if (!adminScript.includes('href="index.html"') || !adminScript.includes("t('admin.enterSite')") ||
-    !adminHtml.includes('js/lang.js?v=7') || !adminHtml.includes('js/admin.js?v=4')) {
+    !adminHtml.includes('js/lang.js?v=8') || !adminHtml.includes('js/admin.js?v=4')) {
   fail('Administration must expose the localized same-tab platform entry action');
 }
 const enterSiteCopy = hostData.scalar?.['admin.enterSite'];
