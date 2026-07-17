@@ -79,9 +79,9 @@
     return 6371.0088 * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
   }
 
-  function formatDistance(kilometres) {
+  function formatRoadDistance(meters) {
     var lang = window.GH_I18N ? window.GH_I18N.getLang() : 'es';
-    return new Intl.NumberFormat(lang === 'pt' ? 'pt-BR' : lang, { maximumFractionDigits: kilometres < 10 ? 1 : 0 }).format(kilometres) + ' km';
+    return window.CordalRoadDistances.formatMeters(meters, lang);
   }
 
   function ratingValue(place) {
@@ -144,21 +144,20 @@
       if (mode === 'route' && !place.discovery.corridor) return false;
       if (mode === 'route' && !showBehind.checked && place.discovery.routeProgressMeters < userProgress) return false;
       if (activeCategory !== 'all' && place.category !== activeCategory) return false;
-      var directDistance = distanceKm(origin, place.location);
-      if (maximumDistance && directDistance > maximumDistance) return false;
+      var roadDistance = Number(place._roadDistanceMeters);
+      if (maximumDistance && Number.isFinite(roadDistance) && roadDistance > maximumDistance * 1000) return false;
       if (minimumRating && ratingValue(place) < minimumRating) return false;
       if (query) {
         var haystack = normalize([place.name, categoryLabel(place.category), place.municipality, value(place.address)].filter(Boolean).join(' '));
         if (haystack.indexOf(query) < 0) return false;
       }
-      place._distanceKm = directDistance;
       return true;
     });
     list.sort(function (left, right) {
       if (sort.value === 'rating') return ratingValue(right) - ratingValue(left) || left.name.localeCompare(right.name);
       if (sort.value === 'popularity') return popularity(right) - popularity(left) || ratingValue(right) - ratingValue(left);
       if (sort.value === 'alphabetical') return left.name.localeCompare(right.name);
-      return left._distanceKm - right._distanceKm || left.name.localeCompare(right.name);
+      return (Number.isFinite(left._roadDistanceMeters) ? left._roadDistanceMeters : Infinity) - (Number.isFinite(right._roadDistanceMeters) ? right._roadDistanceMeters : Infinity) || left.name.localeCompare(right.name);
     });
     return list;
   }
@@ -184,8 +183,11 @@
       var phone = value(place.phone);
       var address = value(place.address);
       var addressLabel = [address, place.municipality && place.municipality !== address ? place.municipality : ''].filter(Boolean).join(' · ') || t('guide.location.unknown');
+      var hasRoadDistance = Number.isFinite(place._roadDistanceMeters);
+      var roadLabel = hasRoadDistance ? formatRoadDistance(place._roadDistanceMeters) : t('guide.road.unavailable');
+      var roadNote = hasRoadDistance ? t('guide.road.approx') + (place._roadAccessNearby ? ' · ' + t('guide.road.access') : '') : '';
       return '<article class="nearby-card guide-place" data-place-id="' + escapeHtml(place.id) + '" tabindex="0" style="--place-color:' + escapeHtml(categoryColor(place.category)) + '">' +
-        '<div class="nearby-card__top"><span class="guide-place__dot" aria-hidden="true"></span><div class="guide-place__heading"><span class="guide-place__category">' + escapeHtml(categoryLabel(place.category)) + '</span><h3>' + escapeHtml(place.name) + '</h3><p class="guide-place__address">' + escapeHtml(addressLabel) + '</p></div><strong class="nearby-card__distance">≈ ' + escapeHtml(formatDistance(place._distanceKm)) + '<small>' + escapeHtml(t('guide.straightLine')) + '</small></strong></div>' +
+        '<div class="nearby-card__top"><span class="guide-place__dot" aria-hidden="true"></span><div class="guide-place__heading"><span class="guide-place__category">' + escapeHtml(categoryLabel(place.category)) + '</span><h3>' + escapeHtml(place.name) + '</h3><p class="guide-place__address">' + escapeHtml(addressLabel) + '</p></div><strong class="nearby-card__distance">' + escapeHtml(roadLabel) + '<small>' + escapeHtml(roadNote) + '</small></strong></div>' +
         (approximate ? '<p class="guide-place__warning">' + escapeHtml(t('guide.coordinate.warning')) + '</p>' : '') +
         (closed ? '<p class="guide-place__warning guide-place__warning--closed">' + escapeHtml(t('guide.status.closed')) + '</p>' : '') +
         '<div class="guide-place__ratings">' + ratingHtml(place) + '</div>' +
@@ -287,9 +289,8 @@
   }
 
   function popupHtml(place) {
-    var origin = currentOrigin();
-    var placeDistance = Number.isFinite(place._distanceKm) ? place._distanceKm : (origin ? distanceKm(origin, place.location) : null);
-    return '<div class="guide-map-popup"><span style="--popup-color:' + escapeHtml(categoryColor(place.category)) + '">' + escapeHtml(categoryLabel(place.category)) + '</span><strong>' + escapeHtml(place.name) + '</strong>' + (placeDistance === null ? '' : '<small>≈ ' + escapeHtml(formatDistance(placeDistance)) + '</small>') + '</div>';
+    var distanceLabel = Number.isFinite(place._roadDistanceMeters) ? formatRoadDistance(place._roadDistanceMeters) + ' · ' + t('guide.road.approx') : t('guide.road.unavailable');
+    return '<div class="guide-map-popup"><span style="--popup-color:' + escapeHtml(categoryColor(place.category)) + '">' + escapeHtml(categoryLabel(place.category)) + '</span><strong>' + escapeHtml(place.name) + '</strong><small>' + escapeHtml(distanceLabel) + '</small></div>';
   }
 
   function renderMapPlaces() {
@@ -389,6 +390,12 @@
       button.classList.toggle('is-active', active);
       button.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
+    if (mode === 'apartment') {
+      publicPlaces.forEach(function (place) {
+        place._roadDistanceMeters = Number.isFinite(place.discovery.apartmentRoadDistanceMeters) ? place.discovery.apartmentRoadDistanceMeters : NaN;
+        place._roadAccessNearby = Boolean(place.discovery.roadAccessNearby);
+      });
+    }
     renderGeometry();
     render(true);
     if (requestedByUser && mode !== 'apartment' && !userPosition) openLocationDialog();
@@ -459,12 +466,27 @@
     lastAcceptedAt = timestamp;
     locationMode = nextMode;
     locationStatusKey = null;
+    locationStatusKey = 'guide.road.calculating';
     updateLocationStatus();
     locate.disabled = false;
     updateLocationReadout();
     updateUserMarker();
-    if (mode === 'apartment') setMode('nearby', false);
-    else render(true);
+    window.CordalRoadDistances.routeFrom(nextPosition).then(function (message) {
+      publicPlaces.forEach(function (place) {
+        var route = message.distances[place.id];
+        place._roadDistanceMeters = route ? route.meters : NaN;
+        place._roadAccessNearby = Boolean(route && route.accessNearby);
+      });
+      locationStatusKey = null;
+      updateLocationStatus();
+      if (mode === 'apartment') setMode('nearby', false);
+      else render(true);
+    }).catch(function (error) {
+      if (error && error.stale) return;
+      locationStatusKey = 'guide.road.error';
+      updateLocationStatus();
+      render(true);
+    });
   }
 
   function locationFailure(error) {
@@ -495,7 +517,7 @@
       updateLocationStatus();
       updateLocationReadout();
       updateUserMarker();
-      render(true);
+      setMode('apartment', false);
       return;
     }
     if (!navigator.geolocation) { locationFailure(); return; }
@@ -547,8 +569,8 @@
   document.getElementById('guide-map-in').addEventListener('click', function () { if (map) map.zoomIn(); });
   document.getElementById('guide-map-out').addEventListener('click', function () { if (map) map.zoomOut(); });
   window.addEventListener('resize', function () { if (map) map.invalidateSize(); });
-  window.addEventListener('pagehide', function () { stopLocationWatch(); userPosition = null; locationMode = 'none'; });
-  document.addEventListener('cordal:access-ended', function () { stopLocationWatch(); userPosition = null; locationMode = 'none'; updateUserMarker(); });
+  window.addEventListener('pagehide', function () { stopLocationWatch(); userPosition = null; locationMode = 'none'; if (window.CordalRoadDistances) window.CordalRoadDistances.destroy(); });
+  document.addEventListener('cordal:access-ended', function () { stopLocationWatch(); userPosition = null; locationMode = 'none'; if (window.CordalRoadDistances) window.CordalRoadDistances.destroy(); updateUserMarker(); });
 
   if (window.GH_I18N) window.GH_I18N.subscribe(function () { renderQuality(); renderGeometry(); render(false); updateLocationReadout(); updateLocationStatus(); setMapVisible(mapVisible, false); });
 
@@ -561,6 +583,10 @@
     if (loading) loading.hidden = true;
     if (resultsRegion) resultsRegion.setAttribute('aria-busy', 'false');
     publicPlaces = data.places.filter(function (place) { return !LODGING[place.category]; });
+    publicPlaces.forEach(function (place) {
+      place._roadDistanceMeters = Number.isFinite(place.discovery.apartmentRoadDistanceMeters) ? place.discovery.apartmentRoadDistanceMeters : NaN;
+      place._roadAccessNearby = Boolean(place.discovery.roadAccessNearby);
+    });
     data._centerline = data.geometry.corridor.geometry.coordinates.map(function (point) { return { lon: point[0], lat: point[1] }; });
     renderQuality();
     initializeMap();

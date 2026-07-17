@@ -54,7 +54,13 @@
       "Google Places was queried only when a server-side credential was available.",
       "Tripadvisor content was queried only with credentials and explicit confirmation that combined display is licensed.",
       "Opening hours, ratings and review counts may change after the recorded provider check."
-    ]
+    ],
+    "drivingNetwork": {
+      "schemaVersion": 1,
+      "generatedAt": "2026-07-17T23:19:24.617Z",
+      "osmBaseTimestamp": "2026-07-17T23:17:29Z",
+      "responseSha256": "1fc2a46902fca7286ee8b8ed16694c325f910e35518fba94183a9d29bcac9dbf"
+    }
   },
   "geometry": {
     "apartment": {
@@ -3517,7 +3523,11 @@
         "apartmentDistanceMeters": 22628.8,
         "corridorDistanceMeters": 14.6,
         "routeProgressMeters": 25412.7,
-        "routeLengthMeters": 52517.8
+        "routeLengthMeters": 52517.8,
+        "apartmentRoadDistanceMeters": 27095.5,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 17.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -3574,7 +3584,11 @@
         "apartmentDistanceMeters": 21685.4,
         "corridorDistanceMeters": 76,
         "routeProgressMeters": 26624,
-        "routeLengthMeters": 52514.1
+        "routeLengthMeters": 52514.1,
+        "apartmentRoadDistanceMeters": 25928.8,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 78.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -3631,7 +3645,11 @@
         "apartmentDistanceMeters": 22280,
         "corridorDistanceMeters": 98.9,
         "routeProgressMeters": 25892.2,
-        "routeLengthMeters": 52516.2
+        "routeLengthMeters": 52516.2,
+        "apartmentRoadDistanceMeters": 26775.4,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 72.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -3688,7 +3706,11 @@
         "apartmentDistanceMeters": 21656,
         "corridorDistanceMeters": 69,
         "routeProgressMeters": 26658,
-        "routeLengthMeters": 52514
+        "routeLengthMeters": 52514,
+        "apartmentRoadDistanceMeters": 25886.8,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 65.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -3761,7 +3783,11 @@
         "apartmentDistanceMeters": 20823.9,
         "corridorDistanceMeters": 8.8,
         "routeProgressMeters": 27610.4,
-        "routeLengthMeters": 52511.5
+        "routeLengthMeters": 52511.5,
+        "apartmentRoadDistanceMeters": 24864.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 8.6,
+        "roadAccessNearby": false
       }
     },
     {
@@ -3848,7 +3874,11 @@
         "apartmentDistanceMeters": 6851.5,
         "corridorDistanceMeters": 25.6,
         "routeProgressMeters": 43929.4,
-        "routeLengthMeters": 52483.4
+        "routeLengthMeters": 52483.4,
+        "apartmentRoadDistanceMeters": 8441.3,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 25.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -3933,7 +3963,11 @@
         "apartmentDistanceMeters": 7204.8,
         "corridorDistanceMeters": 21.4,
         "routeProgressMeters": 43573.8,
-        "routeLengthMeters": 52483.4
+        "routeLengthMeters": 52483.4,
+        "apartmentRoadDistanceMeters": 8794.5,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 23.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4008,7 +4042,11 @@
         "apartmentDistanceMeters": 293.3,
         "corridorDistanceMeters": 293.3,
         "routeProgressMeters": 52485.8,
-        "routeLengthMeters": 52485.8
+        "routeLengthMeters": 52485.8,
+        "apartmentRoadDistanceMeters": 587.2,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 89,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4081,7 +4119,11 @@
         "apartmentDistanceMeters": 896.8,
         "corridorDistanceMeters": 861.6,
         "routeProgressMeters": 52239.6,
-        "routeLengthMeters": 52488.4
+        "routeLengthMeters": 52488.4,
+        "apartmentRoadDistanceMeters": 2086.5,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 20.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4156,7 +4198,11 @@
         "apartmentDistanceMeters": 686.9,
         "corridorDistanceMeters": 620.5,
         "routeProgressMeters": 52193,
-        "routeLengthMeters": 52487.6
+        "routeLengthMeters": 52487.6,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 36.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4231,7 +4277,11 @@
         "apartmentDistanceMeters": 20804.2,
         "corridorDistanceMeters": 7.4,
         "routeProgressMeters": 27644.7,
-        "routeLengthMeters": 52511.4
+        "routeLengthMeters": 52511.4,
+        "apartmentRoadDistanceMeters": 24828,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 6.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4283,7 +4333,11 @@
         "apartmentDistanceMeters": 20800.3,
         "corridorDistanceMeters": 14,
         "routeProgressMeters": 27618.8,
-        "routeLengthMeters": 52511.5
+        "routeLengthMeters": 52511.5,
+        "apartmentRoadDistanceMeters": 24862.8,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 14.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4368,7 +4422,11 @@
         "apartmentDistanceMeters": 6657.1,
         "corridorDistanceMeters": 17,
         "routeProgressMeters": 44120.6,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8241.6,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 17,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4443,7 +4501,11 @@
         "apartmentDistanceMeters": 22508.2,
         "corridorDistanceMeters": 12.1,
         "routeProgressMeters": 25592.6,
-        "routeLengthMeters": 52517.2
+        "routeLengthMeters": 52517.2,
+        "apartmentRoadDistanceMeters": 26897.3,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 1.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4495,7 +4557,11 @@
         "apartmentDistanceMeters": 20347.1,
         "corridorDistanceMeters": 26.1,
         "routeProgressMeters": 28216.4,
-        "routeLengthMeters": 52509.7
+        "routeLengthMeters": 52509.7,
+        "apartmentRoadDistanceMeters": 24278,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 10.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4568,7 +4634,11 @@
         "apartmentDistanceMeters": 22404.6,
         "corridorDistanceMeters": 41,
         "routeProgressMeters": 25761.1,
-        "routeLengthMeters": 52516.5
+        "routeLengthMeters": 52516.5,
+        "apartmentRoadDistanceMeters": 26753.2,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 41.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4646,7 +4716,11 @@
         "apartmentDistanceMeters": 22240.8,
         "corridorDistanceMeters": 21.6,
         "routeProgressMeters": 26058.8,
-        "routeLengthMeters": 52515.3
+        "routeLengthMeters": 52515.3,
+        "apartmentRoadDistanceMeters": 26437.1,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 14.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4724,7 +4798,11 @@
         "apartmentDistanceMeters": 5268.4,
         "corridorDistanceMeters": 48.8,
         "routeProgressMeters": 45606.3,
-        "routeLengthMeters": 52485.2
+        "routeLengthMeters": 52485.2,
+        "apartmentRoadDistanceMeters": 6757.3,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 17.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4802,7 +4880,11 @@
         "apartmentDistanceMeters": 20445.4,
         "corridorDistanceMeters": 44.3,
         "routeProgressMeters": 28097.7,
-        "routeLengthMeters": 52510.1
+        "routeLengthMeters": 52510.1,
+        "apartmentRoadDistanceMeters": 24416.6,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 11.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4882,7 +4964,11 @@
         "apartmentDistanceMeters": 6336.3,
         "corridorDistanceMeters": 28.1,
         "routeProgressMeters": 44443.2,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 7931.1,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 27.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -4957,7 +5043,11 @@
         "apartmentDistanceMeters": 20204.6,
         "corridorDistanceMeters": 42.2,
         "routeProgressMeters": 28372.6,
-        "routeLengthMeters": 52509.5
+        "routeLengthMeters": 52509.5,
+        "apartmentRoadDistanceMeters": 24125.1,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 36.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -5030,7 +5120,11 @@
         "apartmentDistanceMeters": 21038.8,
         "corridorDistanceMeters": 681.3,
         "routeProgressMeters": 27888,
-        "routeLengthMeters": 52508.6
+        "routeLengthMeters": 52508.6,
+        "apartmentRoadDistanceMeters": 25926.5,
+        "roadSnapStatus": "access_nearby",
+        "roadSnapMeters": 159.7,
+        "roadAccessNearby": true
       }
     },
     {
@@ -5107,7 +5201,11 @@
         "apartmentDistanceMeters": 21053,
         "corridorDistanceMeters": 1905.9,
         "routeProgressMeters": 28287.4,
-        "routeLengthMeters": 52503.1
+        "routeLengthMeters": 52503.1,
+        "apartmentRoadDistanceMeters": 27847.1,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 26.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -5192,7 +5290,11 @@
         "apartmentDistanceMeters": 11892.8,
         "corridorDistanceMeters": 239.4,
         "routeProgressMeters": 37855.6,
-        "routeLengthMeters": 52491.6
+        "routeLengthMeters": 52491.6,
+        "apartmentRoadDistanceMeters": 14791,
+        "roadSnapStatus": "access_nearby",
+        "roadSnapMeters": 239.3,
+        "roadAccessNearby": true
       }
     },
     {
@@ -5270,7 +5372,11 @@
         "apartmentDistanceMeters": 8582.1,
         "corridorDistanceMeters": 4.3,
         "routeProgressMeters": 41415.3,
-        "routeLengthMeters": 52486.4
+        "routeLengthMeters": 52486.4,
+        "apartmentRoadDistanceMeters": 10970.3,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 6.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -5343,7 +5449,11 @@
         "apartmentDistanceMeters": 6595.7,
         "corridorDistanceMeters": 281.3,
         "routeProgressMeters": 44188.3,
-        "routeLengthMeters": 52482.3
+        "routeLengthMeters": 52482.3,
+        "apartmentRoadDistanceMeters": 8572.4,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 124.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -5441,7 +5551,11 @@
         "apartmentDistanceMeters": 1116.5,
         "corridorDistanceMeters": 402.7,
         "routeProgressMeters": 51131.1,
-        "routeLengthMeters": 52481.9
+        "routeLengthMeters": 52481.9,
+        "apartmentRoadDistanceMeters": 2403.3,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 44.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -5550,7 +5664,11 @@
         "apartmentDistanceMeters": 254.5,
         "corridorDistanceMeters": 254.5,
         "routeProgressMeters": 52486,
-        "routeLengthMeters": 52486
+        "routeLengthMeters": 52486,
+        "apartmentRoadDistanceMeters": 576.3,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 78.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -5628,7 +5746,11 @@
         "apartmentDistanceMeters": 1197.3,
         "corridorDistanceMeters": 1106.5,
         "routeProgressMeters": 52148.3,
-        "routeLengthMeters": 52488.5
+        "routeLengthMeters": 52488.5,
+        "apartmentRoadDistanceMeters": 2030.5,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 57.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -5713,7 +5835,11 @@
         "apartmentDistanceMeters": 1730.9,
         "corridorDistanceMeters": 1553.3,
         "routeProgressMeters": 52147.6,
-        "routeLengthMeters": 52487.8
+        "routeLengthMeters": 52487.8,
+        "apartmentRoadDistanceMeters": 2508.5,
+        "roadSnapStatus": "access_nearby",
+        "roadSnapMeters": 643,
+        "roadAccessNearby": true
       }
     },
     {
@@ -5770,7 +5896,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -5827,7 +5957,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -5884,7 +6018,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -5941,7 +6079,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -5998,7 +6140,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6055,7 +6201,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6112,7 +6262,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6169,7 +6323,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6226,7 +6384,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6283,7 +6445,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6340,7 +6506,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6397,7 +6567,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6454,7 +6628,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6511,7 +6689,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6568,7 +6750,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6625,7 +6811,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6682,7 +6872,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6739,7 +6933,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6796,7 +6994,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6853,7 +7055,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6910,7 +7116,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -6967,7 +7177,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7020,7 +7234,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7073,7 +7291,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7126,7 +7348,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7179,7 +7405,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7232,7 +7462,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7285,7 +7519,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7338,7 +7576,11 @@
         "apartmentDistanceMeters": 0,
         "corridorDistanceMeters": 0,
         "routeProgressMeters": 52486.5,
-        "routeLengthMeters": 52486.5
+        "routeLengthMeters": 52486.5,
+        "apartmentRoadDistanceMeters": 32.6,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 16.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7395,7 +7637,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7452,7 +7698,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7509,7 +7759,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7566,7 +7820,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7619,7 +7877,11 @@
         "apartmentDistanceMeters": 6718.9,
         "corridorDistanceMeters": 9.5,
         "routeProgressMeters": 44059.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8296.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7672,7 +7934,11 @@
         "apartmentDistanceMeters": 18644.2,
         "corridorDistanceMeters": 17497.9,
         "routeProgressMeters": 50698.1,
-        "routeLengthMeters": 52409.1
+        "routeLengthMeters": 52409.1,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7728,7 +7994,11 @@
         "apartmentDistanceMeters": 21584.6,
         "corridorDistanceMeters": 20621.2,
         "routeProgressMeters": 50688,
-        "routeLengthMeters": 52398.7
+        "routeLengthMeters": 52398.7,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7782,7 +8052,11 @@
         "apartmentDistanceMeters": 20313.8,
         "corridorDistanceMeters": 16578.7,
         "routeProgressMeters": 42824.9,
-        "routeLengthMeters": 52415.6
+        "routeLengthMeters": 52415.6,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7835,7 +8109,11 @@
         "apartmentDistanceMeters": 13685.5,
         "corridorDistanceMeters": 12624.5,
         "routeProgressMeters": 50718.4,
-        "routeLengthMeters": 52429.9
+        "routeLengthMeters": 52429.9,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 59.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7889,7 +8167,11 @@
         "apartmentDistanceMeters": 20679.2,
         "corridorDistanceMeters": 13327.8,
         "routeProgressMeters": 38576.2,
-        "routeLengthMeters": 52441
+        "routeLengthMeters": 52441,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -7943,7 +8225,11 @@
         "apartmentDistanceMeters": 11207.4,
         "corridorDistanceMeters": 7380.2,
         "routeProgressMeters": 42853.8,
-        "routeLengthMeters": 52452.6
+        "routeLengthMeters": 52452.6,
+        "apartmentRoadDistanceMeters": 42307.3,
+        "roadSnapStatus": "access_nearby",
+        "roadSnapMeters": 530.7,
+        "roadAccessNearby": true
       }
     },
     {
@@ -7997,7 +8283,11 @@
         "apartmentDistanceMeters": 17015,
         "corridorDistanceMeters": 12191.2,
         "routeProgressMeters": 42610.9,
-        "routeLengthMeters": 52435.1
+        "routeLengthMeters": 52435.1,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8050,7 +8340,11 @@
         "apartmentDistanceMeters": 10964.5,
         "corridorDistanceMeters": 7245.4,
         "routeProgressMeters": 42854.3,
-        "routeLengthMeters": 52453.2
+        "routeLengthMeters": 52453.2,
+        "apartmentRoadDistanceMeters": 42270.9,
+        "roadSnapStatus": "access_nearby",
+        "roadSnapMeters": 340.4,
+        "roadAccessNearby": true
       }
     },
     {
@@ -8103,7 +8397,11 @@
         "apartmentDistanceMeters": 10804.2,
         "corridorDistanceMeters": 7047.5,
         "routeProgressMeters": 42854.9,
-        "routeLengthMeters": 52454
+        "routeLengthMeters": 52454,
+        "apartmentRoadDistanceMeters": 42044.9,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 142.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8157,7 +8455,11 @@
         "apartmentDistanceMeters": 10871.7,
         "corridorDistanceMeters": 7021,
         "routeProgressMeters": 42855,
-        "routeLengthMeters": 52454.1
+        "routeLengthMeters": 52454.1,
+        "apartmentRoadDistanceMeters": 41941.1,
+        "roadSnapStatus": "access_nearby",
+        "roadSnapMeters": 154.8,
+        "roadAccessNearby": true
       }
     },
     {
@@ -8215,7 +8517,11 @@
         "apartmentDistanceMeters": 10694.6,
         "corridorDistanceMeters": 6910,
         "routeProgressMeters": 42855.4,
-        "routeLengthMeters": 52454.6
+        "routeLengthMeters": 52454.6,
+        "apartmentRoadDistanceMeters": 41890.2,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8271,7 +8577,11 @@
         "apartmentDistanceMeters": 19271.3,
         "corridorDistanceMeters": 18943.8,
         "routeProgressMeters": 52114.6,
-        "routeLengthMeters": 52454.6
+        "routeLengthMeters": 52454.6,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8333,7 +8643,11 @@
         "apartmentDistanceMeters": 20408.4,
         "corridorDistanceMeters": 7518.1,
         "routeProgressMeters": 31086.7,
-        "routeLengthMeters": 52474.9
+        "routeLengthMeters": 52474.9,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8394,7 +8708,11 @@
         "apartmentDistanceMeters": 16071.5,
         "corridorDistanceMeters": 5778.2,
         "routeProgressMeters": 36395.3,
-        "routeLengthMeters": 52475
+        "routeLengthMeters": 52475,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8447,7 +8765,11 @@
         "apartmentDistanceMeters": 11254.5,
         "corridorDistanceMeters": 6166.4,
         "routeProgressMeters": 42858,
-        "routeLengthMeters": 52458
+        "routeLengthMeters": 52458,
+        "apartmentRoadDistanceMeters": 41200.2,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 111.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8508,7 +8830,11 @@
         "apartmentDistanceMeters": 9256.1,
         "corridorDistanceMeters": 2323,
         "routeProgressMeters": 42641.2,
-        "routeLengthMeters": 52474.2
+        "routeLengthMeters": 52474.2,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8569,7 +8895,11 @@
         "apartmentDistanceMeters": 9436,
         "corridorDistanceMeters": 2537.4,
         "routeProgressMeters": 42640.6,
-        "routeLengthMeters": 52473.5
+        "routeLengthMeters": 52473.5,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8622,7 +8952,11 @@
         "apartmentDistanceMeters": 9269.7,
         "corridorDistanceMeters": 3819.4,
         "routeProgressMeters": 42865.3,
-        "routeLengthMeters": 52467.4
+        "routeLengthMeters": 52467.4,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8678,7 +9012,11 @@
         "apartmentDistanceMeters": 7913.6,
         "corridorDistanceMeters": 5729.2,
         "routeProgressMeters": 48189.5,
-        "routeLengthMeters": 52459.2
+        "routeLengthMeters": 52459.2,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8738,7 +9076,11 @@
         "apartmentDistanceMeters": 7617.6,
         "corridorDistanceMeters": 2883.6,
         "routeProgressMeters": 44013,
-        "routeLengthMeters": 52471.5
+        "routeLengthMeters": 52471.5,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8798,7 +9140,11 @@
         "apartmentDistanceMeters": 13309.5,
         "corridorDistanceMeters": 79.5,
         "routeProgressMeters": 36044.6,
-        "routeLengthMeters": 52495.8
+        "routeLengthMeters": 52495.8,
+        "apartmentRoadDistanceMeters": 16444.5,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 69.6,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8864,7 +9210,11 @@
         "apartmentDistanceMeters": 8167.1,
         "corridorDistanceMeters": 10.1,
         "routeProgressMeters": 42574.5,
-        "routeLengthMeters": 52483.6
+        "routeLengthMeters": 52483.6,
+        "apartmentRoadDistanceMeters": 9787,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 15.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8930,7 +9280,11 @@
         "apartmentDistanceMeters": 7905,
         "corridorDistanceMeters": 36.4,
         "routeProgressMeters": 42877.6,
-        "routeLengthMeters": 52483.1
+        "routeLengthMeters": 52483.1,
+        "apartmentRoadDistanceMeters": 9504.3,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 36.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -8996,7 +9350,11 @@
         "apartmentDistanceMeters": 7721.7,
         "corridorDistanceMeters": 22.1,
         "routeProgressMeters": 43054.1,
-        "routeLengthMeters": 52483.4
+        "routeLengthMeters": 52483.4,
+        "apartmentRoadDistanceMeters": 9346.3,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 14.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9062,7 +9420,11 @@
         "apartmentDistanceMeters": 8116.5,
         "corridorDistanceMeters": 52.3,
         "routeProgressMeters": 42663.9,
-        "routeLengthMeters": 52483.2
+        "routeLengthMeters": 52483.2,
+        "apartmentRoadDistanceMeters": 9769.8,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 21.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9128,7 +9490,11 @@
         "apartmentDistanceMeters": 8033.6,
         "corridorDistanceMeters": 81.4,
         "routeProgressMeters": 42705.5,
-        "routeLengthMeters": 52483.7
+        "routeLengthMeters": 52483.7,
+        "apartmentRoadDistanceMeters": 9800.9,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 40.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9188,7 +9554,11 @@
         "apartmentDistanceMeters": 9507,
         "corridorDistanceMeters": 62,
         "routeProgressMeters": 40394.4,
-        "routeLengthMeters": 52487.4
+        "routeLengthMeters": 52487.4,
+        "apartmentRoadDistanceMeters": 12058.1,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 62.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9255,7 +9625,11 @@
         "apartmentDistanceMeters": 8608.2,
         "corridorDistanceMeters": 44.2,
         "routeProgressMeters": 41405.9,
-        "routeLengthMeters": 52486.6
+        "routeLengthMeters": 52486.6,
+        "apartmentRoadDistanceMeters": 11011,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 43,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9321,7 +9695,11 @@
         "apartmentDistanceMeters": 9083.3,
         "corridorDistanceMeters": 44.9,
         "routeProgressMeters": 40882.8,
-        "routeLengthMeters": 52486.6
+        "routeLengthMeters": 52486.6,
+        "apartmentRoadDistanceMeters": 11543,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 46,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9387,7 +9765,11 @@
         "apartmentDistanceMeters": 12751.8,
         "corridorDistanceMeters": 50.9,
         "routeProgressMeters": 36602.6,
-        "routeLengthMeters": 52495.1
+        "routeLengthMeters": 52495.1,
+        "apartmentRoadDistanceMeters": 15859.8,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 51.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9447,7 +9829,11 @@
         "apartmentDistanceMeters": 9360.8,
         "corridorDistanceMeters": 81.3,
         "routeProgressMeters": 40576.7,
-        "routeLengthMeters": 52487.1
+        "routeLengthMeters": 52487.1,
+        "apartmentRoadDistanceMeters": 11881,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 75.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9507,7 +9893,11 @@
         "apartmentDistanceMeters": 9951.3,
         "corridorDistanceMeters": 22.1,
         "routeProgressMeters": 39936.8,
-        "routeLengthMeters": 52487.7
+        "routeLengthMeters": 52487.7,
+        "apartmentRoadDistanceMeters": 12479,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 21.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9573,7 +9963,11 @@
         "apartmentDistanceMeters": 12102,
         "corridorDistanceMeters": 42.3,
         "routeProgressMeters": 37264.1,
-        "routeLengthMeters": 52494
+        "routeLengthMeters": 52494,
+        "apartmentRoadDistanceMeters": 15192.4,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 41.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9639,7 +10033,11 @@
         "apartmentDistanceMeters": 8847.9,
         "corridorDistanceMeters": 63.1,
         "routeProgressMeters": 41148.6,
-        "routeLengthMeters": 52485.9
+        "routeLengthMeters": 52485.9,
+        "apartmentRoadDistanceMeters": 11286.3,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 49.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9718,7 +10116,11 @@
         "apartmentDistanceMeters": 12134.8,
         "corridorDistanceMeters": 40.3,
         "routeProgressMeters": 37269.4,
-        "routeLengthMeters": 52493.7
+        "routeLengthMeters": 52493.7,
+        "apartmentRoadDistanceMeters": 15178,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 39.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9784,7 +10186,11 @@
         "apartmentDistanceMeters": 8173,
         "corridorDistanceMeters": 30.9,
         "routeProgressMeters": 42347.7,
-        "routeLengthMeters": 52484.4
+        "routeLengthMeters": 52484.4,
+        "apartmentRoadDistanceMeters": 10030.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 19.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9853,7 +10259,11 @@
         "apartmentDistanceMeters": 7695.2,
         "corridorDistanceMeters": 575.3,
         "routeProgressMeters": 42305.3,
-        "routeLengthMeters": 52485.8
+        "routeLengthMeters": 52485.8,
+        "apartmentRoadDistanceMeters": 9755.6,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 13.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -9920,7 +10330,11 @@
         "apartmentDistanceMeters": 9257.7,
         "corridorDistanceMeters": 13.6,
         "routeProgressMeters": 40709,
-        "routeLengthMeters": 52486.7
+        "routeLengthMeters": 52486.7,
+        "apartmentRoadDistanceMeters": 11687,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 12.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10008,7 +10422,11 @@
         "apartmentDistanceMeters": 9334.4,
         "corridorDistanceMeters": 27.8,
         "routeProgressMeters": 40622.8,
-        "routeLengthMeters": 52486.9
+        "routeLengthMeters": 52486.9,
+        "apartmentRoadDistanceMeters": 11784.3,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 23,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10080,7 +10498,11 @@
         "apartmentDistanceMeters": 8235.5,
         "corridorDistanceMeters": 221,
         "routeProgressMeters": 41551.5,
-        "routeLengthMeters": 52486.6
+        "routeLengthMeters": 52486.6,
+        "apartmentRoadDistanceMeters": 11069.7,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 33.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10160,7 +10582,11 @@
         "apartmentDistanceMeters": 9204.8,
         "corridorDistanceMeters": 12.9,
         "routeProgressMeters": 40765.3,
-        "routeLengthMeters": 52486.6
+        "routeLengthMeters": 52486.6,
+        "apartmentRoadDistanceMeters": 11632.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 14.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10226,7 +10652,11 @@
         "apartmentDistanceMeters": 6626.1,
         "corridorDistanceMeters": 457.5,
         "routeProgressMeters": 44122,
-        "routeLengthMeters": 52485.4
+        "routeLengthMeters": 52485.4,
+        "apartmentRoadDistanceMeters": 8584.5,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 23.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10292,7 +10722,11 @@
         "apartmentDistanceMeters": 6459.8,
         "corridorDistanceMeters": 608.7,
         "routeProgressMeters": 44352,
-        "routeLengthMeters": 52486.1
+        "routeLengthMeters": 52486.1,
+        "apartmentRoadDistanceMeters": 8772.3,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 13.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10358,7 +10792,11 @@
         "apartmentDistanceMeters": 6560.9,
         "corridorDistanceMeters": 622.2,
         "routeProgressMeters": 44251.8,
-        "routeLengthMeters": 52486.1
+        "routeLengthMeters": 52486.1,
+        "apartmentRoadDistanceMeters": 8807.6,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 12.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10424,7 +10862,11 @@
         "apartmentDistanceMeters": 7590.5,
         "corridorDistanceMeters": 21.3,
         "routeProgressMeters": 43185.4,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 9182.1,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 22.6,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10490,7 +10932,11 @@
         "apartmentDistanceMeters": 6152.6,
         "corridorDistanceMeters": 520,
         "routeProgressMeters": 44741.1,
-        "routeLengthMeters": 52486
+        "routeLengthMeters": 52486,
+        "apartmentRoadDistanceMeters": 8460.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 10.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10577,7 +11023,11 @@
         "apartmentDistanceMeters": 5401.2,
         "corridorDistanceMeters": 31.1,
         "routeProgressMeters": 45480.7,
-        "routeLengthMeters": 52485.5
+        "routeLengthMeters": 52485.5,
+        "apartmentRoadDistanceMeters": 6873.8,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 15.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10637,7 +11087,11 @@
         "apartmentDistanceMeters": 2944.4,
         "corridorDistanceMeters": 1169.5,
         "routeProgressMeters": 47613.2,
-        "routeLengthMeters": 52487.8
+        "routeLengthMeters": 52487.8,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10703,7 +11157,11 @@
         "apartmentDistanceMeters": 6921.2,
         "corridorDistanceMeters": 25.6,
         "routeProgressMeters": 43859.3,
-        "routeLengthMeters": 52483.4
+        "routeLengthMeters": 52483.4,
+        "apartmentRoadDistanceMeters": 8511.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 26.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10769,7 +11227,11 @@
         "apartmentDistanceMeters": 7250,
         "corridorDistanceMeters": 23.8,
         "routeProgressMeters": 43524.1,
-        "routeLengthMeters": 52483.5
+        "routeLengthMeters": 52483.5,
+        "apartmentRoadDistanceMeters": 8843.1,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 21.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10835,7 +11297,11 @@
         "apartmentDistanceMeters": 6769.4,
         "corridorDistanceMeters": 26.7,
         "routeProgressMeters": 44012.1,
-        "routeLengthMeters": 52483.3
+        "routeLengthMeters": 52483.3,
+        "apartmentRoadDistanceMeters": 8359.2,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 26.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10901,7 +11367,11 @@
         "apartmentDistanceMeters": 7035.2,
         "corridorDistanceMeters": 21.9,
         "routeProgressMeters": 43744.3,
-        "routeLengthMeters": 52483.4
+        "routeLengthMeters": 52483.4,
+        "apartmentRoadDistanceMeters": 8624.1,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 23.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -10967,7 +11437,11 @@
         "apartmentDistanceMeters": 6574,
         "corridorDistanceMeters": 31.6,
         "routeProgressMeters": 44205.5,
-        "routeLengthMeters": 52483.4
+        "routeLengthMeters": 52483.4,
+        "apartmentRoadDistanceMeters": 8166,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 27.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11053,7 +11527,11 @@
         "apartmentDistanceMeters": 5867,
         "corridorDistanceMeters": 39.7,
         "routeProgressMeters": 44912.7,
-        "routeLengthMeters": 52484
+        "routeLengthMeters": 52484,
+        "apartmentRoadDistanceMeters": 7461,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 27.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11119,7 +11597,11 @@
         "apartmentDistanceMeters": 7322.1,
         "corridorDistanceMeters": 30,
         "routeProgressMeters": 43451.1,
-        "routeLengthMeters": 52483.6
+        "routeLengthMeters": 52483.6,
+        "apartmentRoadDistanceMeters": 8907.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 26.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11179,7 +11661,11 @@
         "apartmentDistanceMeters": 7154.6,
         "corridorDistanceMeters": 1326.3,
         "routeProgressMeters": 43877.4,
-        "routeLengthMeters": 52478
+        "routeLengthMeters": 52478,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11272,7 +11758,11 @@
         "apartmentDistanceMeters": 5917.1,
         "corridorDistanceMeters": 166.9,
         "routeProgressMeters": 44900.7,
-        "routeLengthMeters": 52484.8
+        "routeLengthMeters": 52484.8,
+        "apartmentRoadDistanceMeters": 7953.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 14.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11338,7 +11828,11 @@
         "apartmentDistanceMeters": 5884.4,
         "corridorDistanceMeters": 323.8,
         "routeProgressMeters": 44968.8,
-        "routeLengthMeters": 52485.5
+        "routeLengthMeters": 52485.5,
+        "apartmentRoadDistanceMeters": 8054.2,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 20.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11404,7 +11898,11 @@
         "apartmentDistanceMeters": 6654.2,
         "corridorDistanceMeters": 51.3,
         "routeProgressMeters": 44120.2,
-        "routeLengthMeters": 52483.7
+        "routeLengthMeters": 52483.7,
+        "apartmentRoadDistanceMeters": 8276,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 51.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11490,7 +11988,11 @@
         "apartmentDistanceMeters": 5574.1,
         "corridorDistanceMeters": 93.7,
         "routeProgressMeters": 45177.6,
-        "routeLengthMeters": 52484.1
+        "routeLengthMeters": 52484.1,
+        "apartmentRoadDistanceMeters": 7251.6,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 23.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11556,7 +12058,11 @@
         "apartmentDistanceMeters": 5803.8,
         "corridorDistanceMeters": 302.1,
         "routeProgressMeters": 45046.6,
-        "routeLengthMeters": 52485.5
+        "routeLengthMeters": 52485.5,
+        "apartmentRoadDistanceMeters": 8202.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 20.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11622,7 +12128,11 @@
         "apartmentDistanceMeters": 5631.9,
         "corridorDistanceMeters": 257.8,
         "routeProgressMeters": 45117,
-        "routeLengthMeters": 52483.3
+        "routeLengthMeters": 52483.3,
+        "apartmentRoadDistanceMeters": 7445.7,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 20.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11688,7 +12198,11 @@
         "apartmentDistanceMeters": 7367.1,
         "corridorDistanceMeters": 163.5,
         "routeProgressMeters": 43395.3,
-        "routeLengthMeters": 52484.1
+        "routeLengthMeters": 52484.1,
+        "apartmentRoadDistanceMeters": 9077.4,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 32.6,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11774,7 +12288,11 @@
         "apartmentDistanceMeters": 7368.5,
         "corridorDistanceMeters": 364.3,
         "routeProgressMeters": 43382.6,
-        "routeLengthMeters": 52485
+        "routeLengthMeters": 52485,
+        "apartmentRoadDistanceMeters": 9173.2,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 9.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11834,7 +12352,11 @@
         "apartmentDistanceMeters": 3606.1,
         "corridorDistanceMeters": 3043.8,
         "routeProgressMeters": 47441.9,
-        "routeLengthMeters": 52495.9
+        "routeLengthMeters": 52495.9,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11895,7 +12417,11 @@
         "apartmentDistanceMeters": 5268.2,
         "corridorDistanceMeters": 17.6,
         "routeProgressMeters": 45613,
-        "routeLengthMeters": 52485.5
+        "routeLengthMeters": 52485.5,
+        "apartmentRoadDistanceMeters": 6738.8,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 10.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -11956,7 +12482,11 @@
         "apartmentDistanceMeters": 7203.1,
         "corridorDistanceMeters": 816.8,
         "routeProgressMeters": 43542.5,
-        "routeLengthMeters": 52486.8
+        "routeLengthMeters": 52486.8,
+        "apartmentRoadDistanceMeters": 9773.8,
+        "roadSnapStatus": "access_nearby",
+        "roadSnapMeters": 163,
+        "roadAccessNearby": true
       }
     },
     {
@@ -12016,7 +12546,11 @@
         "apartmentDistanceMeters": 7444.7,
         "corridorDistanceMeters": 237.8,
         "routeProgressMeters": 43329.8,
-        "routeLengthMeters": 52482.5
+        "routeLengthMeters": 52482.5,
+        "apartmentRoadDistanceMeters": 9183.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 10.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12077,7 +12611,11 @@
         "apartmentDistanceMeters": 6355.2,
         "corridorDistanceMeters": 1579.8,
         "routeProgressMeters": 45482.9,
-        "routeLengthMeters": 52490.8
+        "routeLengthMeters": 52490.8,
+        "apartmentRoadDistanceMeters": 10245.5,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 2.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12165,7 +12703,11 @@
         "apartmentDistanceMeters": 5474,
         "corridorDistanceMeters": 17,
         "routeProgressMeters": 45346.3,
-        "routeLengthMeters": 52484.9
+        "routeLengthMeters": 52484.9,
+        "apartmentRoadDistanceMeters": 7024.3,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 25.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12241,7 +12783,11 @@
         "apartmentDistanceMeters": 5449.7,
         "corridorDistanceMeters": 1871.1,
         "routeProgressMeters": 45751,
-        "routeLengthMeters": 52493.3
+        "routeLengthMeters": 52493.3,
+        "apartmentRoadDistanceMeters": 10483.4,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 146.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12302,7 +12848,11 @@
         "apartmentDistanceMeters": 3915,
         "corridorDistanceMeters": 357.4,
         "routeProgressMeters": 47234.8,
-        "routeLengthMeters": 52482.2
+        "routeLengthMeters": 52482.2,
+        "apartmentRoadDistanceMeters": 5461.2,
+        "roadSnapStatus": "access_nearby",
+        "roadSnapMeters": 354.4,
+        "roadAccessNearby": true
       }
     },
     {
@@ -12369,7 +12919,11 @@
         "apartmentDistanceMeters": 6804.5,
         "corridorDistanceMeters": 204.9,
         "routeProgressMeters": 43997.9,
-        "routeLengthMeters": 52482.6
+        "routeLengthMeters": 52482.6,
+        "apartmentRoadDistanceMeters": 8534.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 29.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12436,7 +12990,11 @@
         "apartmentDistanceMeters": 6174.9,
         "corridorDistanceMeters": 1302,
         "routeProgressMeters": 45482.1,
-        "routeLengthMeters": 52489.8
+        "routeLengthMeters": 52489.8,
+        "apartmentRoadDistanceMeters": 10042.6,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 18.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12497,7 +13055,11 @@
         "apartmentDistanceMeters": 5180.8,
         "corridorDistanceMeters": 21.3,
         "routeProgressMeters": 45696.9,
-        "routeLengthMeters": 52485.4
+        "routeLengthMeters": 52485.4,
+        "apartmentRoadDistanceMeters": 6683.3,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 22.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12558,7 +13120,11 @@
         "apartmentDistanceMeters": 6032.3,
         "corridorDistanceMeters": 53.1,
         "routeProgressMeters": 44761.2,
-        "routeLengthMeters": 52484.2
+        "routeLengthMeters": 52484.2,
+        "apartmentRoadDistanceMeters": 7650.8,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 15.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12619,7 +13185,11 @@
         "apartmentDistanceMeters": 2595.3,
         "corridorDistanceMeters": 1095.3,
         "routeProgressMeters": 49764.6,
-        "routeLengthMeters": 52477.3
+        "routeLengthMeters": 52477.3,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12679,7 +13249,11 @@
         "apartmentDistanceMeters": 994.5,
         "corridorDistanceMeters": 80.4,
         "routeProgressMeters": 51166.7,
-        "routeLengthMeters": 52483.1
+        "routeLengthMeters": 52483.1,
+        "apartmentRoadDistanceMeters": 1280.3,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 76.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12740,7 +13314,11 @@
         "apartmentDistanceMeters": 2036.2,
         "corridorDistanceMeters": 2036.2,
         "routeProgressMeters": 52490.6,
-        "routeLengthMeters": 52490.6
+        "routeLengthMeters": 52490.6,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12809,7 +13387,11 @@
         "apartmentDistanceMeters": 1005.1,
         "corridorDistanceMeters": 939.5,
         "routeProgressMeters": 52148.2,
-        "routeLengthMeters": 52488.4
+        "routeLengthMeters": 52488.4,
+        "apartmentRoadDistanceMeters": 1952.2,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 17.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12881,7 +13463,11 @@
         "apartmentDistanceMeters": 1593.1,
         "corridorDistanceMeters": 51.1,
         "routeProgressMeters": 50010.3,
-        "routeLengthMeters": 52481.8
+        "routeLengthMeters": 52481.8,
+        "apartmentRoadDistanceMeters": 2346.4,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 47,
+        "roadAccessNearby": false
       }
     },
     {
@@ -12941,7 +13527,11 @@
         "apartmentDistanceMeters": 2375.1,
         "corridorDistanceMeters": 2375.2,
         "routeProgressMeters": 52494.7,
-        "routeLengthMeters": 52494.7
+        "routeLengthMeters": 52494.7,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "access_nearby",
+        "roadSnapMeters": 735.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13001,7 +13591,11 @@
         "apartmentDistanceMeters": 1008.7,
         "corridorDistanceMeters": 377.8,
         "routeProgressMeters": 51164,
-        "routeLengthMeters": 52482.4
+        "routeLengthMeters": 52482.4,
+        "apartmentRoadDistanceMeters": 2357.5,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 43.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13068,7 +13662,11 @@
         "apartmentDistanceMeters": 1181.8,
         "corridorDistanceMeters": 1119.8,
         "routeProgressMeters": 52148.6,
-        "routeLengthMeters": 52488.8
+        "routeLengthMeters": 52488.8,
+        "apartmentRoadDistanceMeters": 2062.7,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 76.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13137,7 +13735,11 @@
         "apartmentDistanceMeters": 126.5,
         "corridorDistanceMeters": 126.5,
         "routeProgressMeters": 52486.9,
-        "routeLengthMeters": 52486.9
+        "routeLengthMeters": 52486.9,
+        "apartmentRoadDistanceMeters": 174.3,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 49.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13211,7 +13813,11 @@
         "apartmentDistanceMeters": 253.9,
         "corridorDistanceMeters": 3.6,
         "routeProgressMeters": 52231.9,
-        "routeLengthMeters": 52485.8
+        "routeLengthMeters": 52485.8,
+        "apartmentRoadDistanceMeters": 622.1,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 26.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13272,7 +13878,11 @@
         "apartmentDistanceMeters": 2257,
         "corridorDistanceMeters": 2257,
         "routeProgressMeters": 52495.2,
-        "routeLengthMeters": 52495.2
+        "routeLengthMeters": 52495.2,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13333,7 +13943,11 @@
         "apartmentDistanceMeters": 3224.1,
         "corridorDistanceMeters": 3084.8,
         "routeProgressMeters": 52150.9,
-        "routeLengthMeters": 52491.1
+        "routeLengthMeters": 52491.1,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "access_nearby",
+        "roadSnapMeters": 324.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13389,7 +14003,11 @@
         "apartmentDistanceMeters": 8580.1,
         "corridorDistanceMeters": 8300.7,
         "routeProgressMeters": 52141,
-        "routeLengthMeters": 52481.1
+        "routeLengthMeters": 52481.1,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13443,7 +14061,11 @@
         "apartmentDistanceMeters": 11536.1,
         "corridorDistanceMeters": 11268.7,
         "routeProgressMeters": 52142,
-        "routeLengthMeters": 52482.2
+        "routeLengthMeters": 52482.2,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13496,7 +14118,11 @@
         "apartmentDistanceMeters": 8045.8,
         "corridorDistanceMeters": 7767.8,
         "routeProgressMeters": 52141.5,
-        "routeLengthMeters": 52481.7
+        "routeLengthMeters": 52481.7,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13549,7 +14175,11 @@
         "apartmentDistanceMeters": 12772,
         "corridorDistanceMeters": 12523.5,
         "routeProgressMeters": 52145.9,
-        "routeLengthMeters": 52486.1
+        "routeLengthMeters": 52486.1,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13609,7 +14239,11 @@
         "apartmentDistanceMeters": 21619.9,
         "corridorDistanceMeters": 88.2,
         "routeProgressMeters": 26719.8,
-        "routeLengthMeters": 52513.3
+        "routeLengthMeters": 52513.3,
+        "apartmentRoadDistanceMeters": 25849.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 27.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13669,7 +14303,11 @@
         "apartmentDistanceMeters": 21843,
         "corridorDistanceMeters": 157.9,
         "routeProgressMeters": 26544.6,
-        "routeLengthMeters": 52513.5
+        "routeLengthMeters": 52513.5,
+        "apartmentRoadDistanceMeters": 26075.8,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 28.6,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13729,7 +14367,11 @@
         "apartmentDistanceMeters": 21073.4,
         "corridorDistanceMeters": 918.9,
         "routeProgressMeters": 26905,
-        "routeLengthMeters": 52516.2
+        "routeLengthMeters": 52516.2,
+        "apartmentRoadDistanceMeters": 28823.7,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 51.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13790,7 +14432,11 @@
         "apartmentDistanceMeters": 20749.9,
         "corridorDistanceMeters": 34,
         "routeProgressMeters": 27680.7,
-        "routeLengthMeters": 52511.3
+        "routeLengthMeters": 52511.3,
+        "apartmentRoadDistanceMeters": 24820.8,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 14.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13851,7 +14497,11 @@
         "apartmentDistanceMeters": 20457.6,
         "corridorDistanceMeters": 435.8,
         "routeProgressMeters": 27600.1,
-        "routeLengthMeters": 52512.1
+        "routeLengthMeters": 52512.1,
+        "apartmentRoadDistanceMeters": 26019.4,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 75.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13935,7 +14585,11 @@
         "apartmentDistanceMeters": 20218.4,
         "corridorDistanceMeters": 621.1,
         "routeProgressMeters": 28481.6,
-        "routeLengthMeters": 52506.8
+        "routeLengthMeters": 52506.8,
+        "apartmentRoadDistanceMeters": 24738.5,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 27.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -13995,7 +14649,11 @@
         "apartmentDistanceMeters": 21669.2,
         "corridorDistanceMeters": 20.2,
         "routeProgressMeters": 26662.4,
-        "routeLengthMeters": 52513.8
+        "routeLengthMeters": 52513.8,
+        "apartmentRoadDistanceMeters": 25836.7,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 21.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14056,7 +14714,11 @@
         "apartmentDistanceMeters": 22307.4,
         "corridorDistanceMeters": 3218.8,
         "routeProgressMeters": 27884.3,
-        "routeLengthMeters": 52500.7
+        "routeLengthMeters": 52500.7,
+        "apartmentRoadDistanceMeters": 30875.1,
+        "roadSnapStatus": "access_nearby",
+        "roadSnapMeters": 796.5,
+        "roadAccessNearby": true
       }
     },
     {
@@ -14122,7 +14784,11 @@
         "apartmentDistanceMeters": 13946,
         "corridorDistanceMeters": 21,
         "routeProgressMeters": 35075.2,
-        "routeLengthMeters": 52499.1
+        "routeLengthMeters": 52499.1,
+        "apartmentRoadDistanceMeters": 17390.6,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 38.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14182,7 +14848,11 @@
         "apartmentDistanceMeters": 15382.9,
         "corridorDistanceMeters": 64,
         "routeProgressMeters": 33459.4,
-        "routeLengthMeters": 52503.5
+        "routeLengthMeters": 52503.5,
+        "apartmentRoadDistanceMeters": 19035.4,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 55.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14242,7 +14912,11 @@
         "apartmentDistanceMeters": 16123,
         "corridorDistanceMeters": 64.8,
         "routeProgressMeters": 32707,
-        "routeLengthMeters": 52503.6
+        "routeLengthMeters": 52503.6,
+        "apartmentRoadDistanceMeters": 19793.5,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 62.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14302,7 +14976,11 @@
         "apartmentDistanceMeters": 15875.9,
         "corridorDistanceMeters": 51.8,
         "routeProgressMeters": 32986.8,
-        "routeLengthMeters": 52504.1
+        "routeLengthMeters": 52504.1,
+        "apartmentRoadDistanceMeters": 19497.5,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 47.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14383,7 +15061,11 @@
         "apartmentDistanceMeters": 16638.2,
         "corridorDistanceMeters": 18.6,
         "routeProgressMeters": 32180.2,
-        "routeLengthMeters": 52503.7
+        "routeLengthMeters": 52503.7,
+        "apartmentRoadDistanceMeters": 20277.2,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 18.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14443,7 +15125,11 @@
         "apartmentDistanceMeters": 15750.7,
         "corridorDistanceMeters": 10.9,
         "routeProgressMeters": 33109,
-        "routeLengthMeters": 52503.7
+        "routeLengthMeters": 52503.7,
+        "apartmentRoadDistanceMeters": 19338.2,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14504,7 +15190,11 @@
         "apartmentDistanceMeters": 10009.2,
         "corridorDistanceMeters": 3092.5,
         "routeProgressMeters": 37776.2,
-        "routeLengthMeters": 52501.1
+        "routeLengthMeters": 52501.1,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14566,7 +15256,11 @@
         "apartmentDistanceMeters": 6902.7,
         "corridorDistanceMeters": 4082.9,
         "routeProgressMeters": 45715.8,
-        "routeLengthMeters": 52502.2
+        "routeLengthMeters": 52502.2,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14628,7 +15322,11 @@
         "apartmentDistanceMeters": 2865.5,
         "corridorDistanceMeters": 2865.5,
         "routeProgressMeters": 52498.2,
-        "routeLengthMeters": 52498.2
+        "routeLengthMeters": 52498.2,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14681,7 +15379,11 @@
         "apartmentDistanceMeters": 10833,
         "corridorDistanceMeters": 10833.1,
         "routeProgressMeters": 52531.1,
-        "routeLengthMeters": 52531.1
+        "routeLengthMeters": 52531.1,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14735,7 +15437,11 @@
         "apartmentDistanceMeters": 8418.4,
         "corridorDistanceMeters": 8418.4,
         "routeProgressMeters": 52521.4,
-        "routeLengthMeters": 52521.4
+        "routeLengthMeters": 52521.4,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14788,7 +15494,11 @@
         "apartmentDistanceMeters": 10636.5,
         "corridorDistanceMeters": 10636.8,
         "routeProgressMeters": 52529.9,
-        "routeLengthMeters": 52529.9
+        "routeLengthMeters": 52529.9,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14841,7 +15551,11 @@
         "apartmentDistanceMeters": 13344.4,
         "corridorDistanceMeters": 13344.6,
         "routeProgressMeters": 52541.3,
-        "routeLengthMeters": 52541.3
+        "routeLengthMeters": 52541.3,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14895,7 +15609,11 @@
         "apartmentDistanceMeters": 20160.8,
         "corridorDistanceMeters": 20164,
         "routeProgressMeters": 52563.6,
-        "routeLengthMeters": 52563.6
+        "routeLengthMeters": 52563.6,
+        "apartmentRoadDistanceMeters": null,
+        "roadSnapStatus": "unavailable",
+        "roadSnapMeters": null,
+        "roadAccessNearby": false
       }
     },
     {
@@ -14948,7 +15666,11 @@
         "apartmentDistanceMeters": 25277.3,
         "corridorDistanceMeters": 405.6,
         "routeProgressMeters": 22926.8,
-        "routeLengthMeters": 52522.2
+        "routeLengthMeters": 52522.2,
+        "apartmentRoadDistanceMeters": 30310.3,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 63.6,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15001,7 +15723,11 @@
         "apartmentDistanceMeters": 28570.4,
         "corridorDistanceMeters": 16,
         "routeProgressMeters": 19291.4,
-        "routeLengthMeters": 52528.7
+        "routeLengthMeters": 52528.7,
+        "apartmentRoadDistanceMeters": 33221.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 15.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15055,7 +15781,11 @@
         "apartmentDistanceMeters": 38643,
         "corridorDistanceMeters": 1741.5,
         "routeProgressMeters": 9461.7,
-        "routeLengthMeters": 52549
+        "routeLengthMeters": 52549,
+        "apartmentRoadDistanceMeters": 48414.7,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 11.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15118,7 +15848,11 @@
         "apartmentDistanceMeters": 33937.6,
         "corridorDistanceMeters": 428.8,
         "routeProgressMeters": 13655.4,
-        "routeLengthMeters": 52539.9
+        "routeLengthMeters": 52539.9,
+        "apartmentRoadDistanceMeters": 39222.8,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 102.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15179,7 +15913,11 @@
         "apartmentDistanceMeters": 40950.3,
         "corridorDistanceMeters": 1158.2,
         "routeProgressMeters": 5296.5,
-        "routeLengthMeters": 52570.1
+        "routeLengthMeters": 52570.1,
+        "apartmentRoadDistanceMeters": 63652.6,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 25.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15248,7 +15986,11 @@
         "apartmentDistanceMeters": 47843.7,
         "corridorDistanceMeters": 1345.2,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.6
+        "routeLengthMeters": 52580.6,
+        "apartmentRoadDistanceMeters": 53917.2,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 21.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15308,7 +16050,11 @@
         "apartmentDistanceMeters": 47856.5,
         "corridorDistanceMeters": 1353.3,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52581
+        "routeLengthMeters": 52581,
+        "apartmentRoadDistanceMeters": 54014.7,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 11.8,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15361,7 +16107,11 @@
         "apartmentDistanceMeters": 47370.3,
         "corridorDistanceMeters": 868.7,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52579.9
+        "routeLengthMeters": 52579.9,
+        "apartmentRoadDistanceMeters": 53430.6,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 6.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15414,7 +16164,11 @@
         "apartmentDistanceMeters": 45089.3,
         "corridorDistanceMeters": 9.6,
         "routeProgressMeters": 1427.5,
-        "routeLengthMeters": 52576.1
+        "routeLengthMeters": 52576.1,
+        "apartmentRoadDistanceMeters": 51121.1,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 13,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15473,7 +16227,11 @@
         "apartmentDistanceMeters": 44349.8,
         "corridorDistanceMeters": 29,
         "routeProgressMeters": 2166,
-        "routeLengthMeters": 52574.6
+        "routeLengthMeters": 52574.6,
+        "apartmentRoadDistanceMeters": 50401.5,
+        "roadSnapStatus": "near",
+        "roadSnapMeters": 35.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15531,7 +16289,11 @@
         "apartmentDistanceMeters": 47853.6,
         "corridorDistanceMeters": 1351.5,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.8
+        "routeLengthMeters": 52580.8,
+        "apartmentRoadDistanceMeters": 53975.1,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 18.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15598,7 +16360,11 @@
         "apartmentDistanceMeters": 47649.8,
         "corridorDistanceMeters": 1154.8,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.1
+        "routeLengthMeters": 52580.1,
+        "apartmentRoadDistanceMeters": 53782.5,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 16.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15667,7 +16433,11 @@
         "apartmentDistanceMeters": 47738.7,
         "corridorDistanceMeters": 1236.3,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52581
+        "routeLengthMeters": 52581,
+        "apartmentRoadDistanceMeters": 53917.7,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 14.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15730,7 +16500,11 @@
         "apartmentDistanceMeters": 47852.1,
         "corridorDistanceMeters": 1349.4,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.9
+        "routeLengthMeters": 52580.9,
+        "apartmentRoadDistanceMeters": 53984.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 14.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15784,7 +16558,11 @@
         "apartmentDistanceMeters": 47678.4,
         "corridorDistanceMeters": 1176.4,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.9
+        "routeLengthMeters": 52580.9,
+        "apartmentRoadDistanceMeters": 53851.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 9.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15854,7 +16632,11 @@
         "apartmentDistanceMeters": 47759.9,
         "corridorDistanceMeters": 1262.7,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.4
+        "routeLengthMeters": 52580.4,
+        "apartmentRoadDistanceMeters": 53819.2,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 4.6,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15908,7 +16690,11 @@
         "apartmentDistanceMeters": 47001.5,
         "corridorDistanceMeters": 500.3,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52579.5
+        "routeLengthMeters": 52579.5,
+        "apartmentRoadDistanceMeters": 53048.9,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 11.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -15962,7 +16748,11 @@
         "apartmentDistanceMeters": 47502,
         "corridorDistanceMeters": 1001.5,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.1
+        "routeLengthMeters": 52580.1,
+        "apartmentRoadDistanceMeters": 53557.3,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 5.6,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16025,7 +16815,11 @@
         "apartmentDistanceMeters": 47858.7,
         "corridorDistanceMeters": 1355.9,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.9
+        "routeLengthMeters": 52580.9,
+        "apartmentRoadDistanceMeters": 53994.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 20.1,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16079,7 +16873,11 @@
         "apartmentDistanceMeters": 48183.6,
         "corridorDistanceMeters": 1706.7,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52582.8
+        "routeLengthMeters": 52582.8,
+        "apartmentRoadDistanceMeters": 54619.7,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 15.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16133,7 +16931,11 @@
         "apartmentDistanceMeters": 47648.5,
         "corridorDistanceMeters": 1146.8,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.8
+        "routeLengthMeters": 52580.8,
+        "apartmentRoadDistanceMeters": 53821.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 9.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16187,7 +16989,11 @@
         "apartmentDistanceMeters": 47685.9,
         "corridorDistanceMeters": 1188.1,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.3
+        "routeLengthMeters": 52580.3,
+        "apartmentRoadDistanceMeters": 53749.6,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 9.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16248,7 +17054,11 @@
         "apartmentDistanceMeters": 47879.2,
         "corridorDistanceMeters": 1382.2,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.6
+        "routeLengthMeters": 52580.6,
+        "apartmentRoadDistanceMeters": 54399.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 10.7,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16309,7 +17119,11 @@
         "apartmentDistanceMeters": 47892.5,
         "corridorDistanceMeters": 1395.9,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.6
+        "routeLengthMeters": 52580.6,
+        "apartmentRoadDistanceMeters": 54384.2,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 9.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16363,7 +17177,11 @@
         "apartmentDistanceMeters": 47809.3,
         "corridorDistanceMeters": 1311.4,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.5
+        "routeLengthMeters": 52580.5,
+        "apartmentRoadDistanceMeters": 53895.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 11.2,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16416,7 +17234,11 @@
         "apartmentDistanceMeters": 47647.5,
         "corridorDistanceMeters": 1150.3,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.2
+        "routeLengthMeters": 52580.2,
+        "apartmentRoadDistanceMeters": 53724.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 21,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16479,7 +17301,11 @@
         "apartmentDistanceMeters": 47699.7,
         "corridorDistanceMeters": 1196.5,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.7
+        "routeLengthMeters": 52580.7,
+        "apartmentRoadDistanceMeters": 53835.5,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 3.4,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16541,7 +17367,11 @@
         "apartmentDistanceMeters": 47234.6,
         "corridorDistanceMeters": 732.9,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52579.6
+        "routeLengthMeters": 52579.6,
+        "apartmentRoadDistanceMeters": 53332.4,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 6.9,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16599,7 +17429,11 @@
         "apartmentDistanceMeters": 47781.5,
         "corridorDistanceMeters": 1290.1,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52580.2
+        "routeLengthMeters": 52580.2,
+        "apartmentRoadDistanceMeters": 53948.6,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 25.5,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16661,7 +17495,11 @@
         "apartmentDistanceMeters": 47391.1,
         "corridorDistanceMeters": 898.2,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52579.6
+        "routeLengthMeters": 52579.6,
+        "apartmentRoadDistanceMeters": 53544.1,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 19.3,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16721,7 +17559,11 @@
         "apartmentDistanceMeters": 47261.3,
         "corridorDistanceMeters": 759,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52579.7
+        "routeLengthMeters": 52579.7,
+        "apartmentRoadDistanceMeters": 53328.7,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 17.6,
+        "roadAccessNearby": false
       }
     },
     {
@@ -16784,7 +17626,11 @@
         "apartmentDistanceMeters": 47229.5,
         "corridorDistanceMeters": 726.9,
         "routeProgressMeters": 0,
-        "routeLengthMeters": 52579.7
+        "routeLengthMeters": 52579.7,
+        "apartmentRoadDistanceMeters": 53324.3,
+        "roadSnapStatus": "on_road",
+        "roadSnapMeters": 15.2,
+        "roadAccessNearby": false
       }
     }
   ],
