@@ -187,3 +187,34 @@ export function readBackup(text) {
   if (parsed?.version !== 1 || !Array.isArray(parsed.records)) throw new Error('Respaldo incompatible');
   return parsed.records;
 }
+
+export function createSessionResult(record) {
+  return JSON.stringify({
+    kind: 'cordalsur-study-period',
+    version: 1,
+    consentConfirmed: true,
+    record
+  }, null, 2);
+}
+
+export function readSessionResult(text) {
+  const parsed = JSON.parse(text);
+  if (
+    parsed?.kind !== 'cordalsur-study-period' ||
+    parsed?.version !== 1 ||
+    parsed?.consentConfirmed !== true ||
+    !parsed.record ||
+    Array.isArray(parsed.record)
+  ) {
+    throw new Error('Resultado de sesión incompatible');
+  }
+  return parsed.record;
+}
+
+export function mergePeriodRecord(records, record) {
+  const key = `${record?.participantId}:${Number(record?.period)}`;
+  const withoutCurrent = records.filter((candidate) => (
+    `${candidate.participantId}:${Number(candidate.period)}` !== key
+  ));
+  return [...withoutCurrent, record];
+}

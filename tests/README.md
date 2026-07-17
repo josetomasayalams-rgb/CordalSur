@@ -15,7 +15,7 @@ Las puertas validan:
 
 - sintaxis de JavaScript y módulos Node;
 - integridad del instrumento A/B, preregistración, análisis cruzado e impedimento de usar datos sintéticos como evidencia;
-- registrador local, cronometraje, respaldo y exportación CSV compatible con el analizador;
+- registrador local y autocontenido, consentimiento, transferencia de resultados individuales, cronometraje, respaldo y exportación CSV compatible con el analizador;
 - paridad exacta de claves y placeholders en ES, PT-BR y EN;
 - existencia de todas las claves usadas por texto, `aria-label`, `title` y
   `placeholder`;

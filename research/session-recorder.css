@@ -140,6 +140,31 @@ select, input[type="text"], input[type="number"] {
   text-decoration: none;
   font-weight: 800;
 }
+.remote-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+.remote-actions .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 8px 10px;
+  text-align: center;
+  font-size: .72rem;
+}
+.session-link-fallback {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 800;
+}
+.session-link-fallback[hidden] { display: none; }
+.session-link-fallback input { font-size: .78rem; }
 
 .task-columns, .task-row {
   display: grid;
@@ -237,6 +262,7 @@ input[type="range"] { width: 100%; accent-color: var(--teal); }
   .study-shell { padding: 14px 12px 54px; }
   .panel { padding: 16px; }
   .setup-grid, .score-grid, .inclusion-row { grid-template-columns: 1fr; }
+  .remote-actions { grid-template-columns: 1fr; }
   .task-columns { display: none; }
   .task-row { grid-template-columns: minmax(0, 1fr) 92px 68px; gap: 7px; padding: 12px 2px; }
   .task-name { grid-column: 1 / -1; }

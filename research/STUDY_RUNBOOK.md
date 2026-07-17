@@ -31,6 +31,18 @@ Registra la sesión desde:
 
 El registrador carga la asignación, abre la condición correcta, cronometra las nueve tareas y conserva borradores solo en el navegador del investigador. Exporta un respaldo JSON después de cada jornada y el CSV observado al cerrar la muestra. No ingreses nombres, correos, teléfonos ni texto identificable en el motivo de exclusión.
 
+### Sesiones autocontenidas
+
+Para una aplicación remota o sin moderador:
+
+1. En el registrador selecciona participante, período, dispositivo y tema.
+2. Pulsa **Copiar enlace para participante** y entrega solamente ese enlace a la persona asignada.
+3. La persona confirma el consentimiento, completa las nueve tareas en el orden preregistrado y descarga `cordalsur-P000-periodo-0.json`.
+4. Recibe el archivo por el canal autorizado por tu institución y usa **Importar resultado individual**. El registrador valida asignación, período, tareas, rangos y coincidencia de dispositivo/tema antes de incorporarlo.
+5. Elimina del canal de transferencia cualquier mensaje o adjunto que permita identificar a la persona, según tu protocolo de retención.
+
+La sesión participante no usa analítica, cookies, formularios externos ni backend. El borrador permanece en `sessionStorage`; el único cambio compartido con la guía es el tema asignado. El archivo individual no contiene nombre, contacto, PIN, IP, respuestas libres ni el significado de los códigos A/B.
+
 ## Aplicación
 
 - Cada participante completa las mismas nueve tareas en ambas condiciones: Wi-Fi, check-in, restaurante, actividad, servicio cercano, clima, tickets, check-out y emergencia.

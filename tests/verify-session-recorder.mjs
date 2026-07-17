@@ -7,8 +7,11 @@ import {
   STUDY_COLUMNS,
   buildStudyRows,
   createBackup,
+  createSessionResult,
+  mergePeriodRecord,
   parseCsv,
   readBackup,
+  readSessionResult,
   toCsv,
   validatePeriodRecord
 } from '../research/session-recorder-core.mjs';
@@ -18,19 +21,35 @@ const read = (relative) => fs.readFileSync(path.join(ROOT, relative), 'utf8');
 const html = read('research/session-recorder.html');
 const css = read('research/session-recorder.css');
 const browserScript = read('research/session-recorder.js');
+const participantHtml = read('research/participant-session.html');
+const participantCss = read('research/participant-session.css');
+const participantScript = read('research/participant-session.js');
 const configText = read('research/study-config.json');
 const config = JSON.parse(configText);
 const schedule = parseCsv(read('research/randomization.csv'));
 
 assert.match(html, /Content-Security-Policy/);
-assert.match(html, /session-recorder\.js\?v=1/);
+assert.match(html, /session-recorder\.js\?v=2/);
 assert.match(html, /id="task-list"/);
 assert.match(html, /id="export-csv"/);
 assert.match(html, /id="import-backup"/);
+assert.match(html, /id="copy-session-link"/);
+assert.match(html, /id="import-session-result"/);
+assert.match(html, /id="session-link-fallback"/);
 assert.match(css, /prefers-color-scheme: dark/);
 assert.match(browserScript, /fetch\('study-config\.json'\)/);
 assert.match(browserScript, /fetch\('randomization\.csv'\)/);
+assert.match(browserScript, /participant-session\.html/);
+assert.match(browserScript, /Promise\.race/);
+assert.match(browserScript, /execCommand\('copy'\)/);
 assert.doesNotMatch(browserScript, /https?:\/\/|sendBeacon|WebSocket|XMLHttpRequest/);
+assert.match(participantHtml, /Content-Security-Policy/);
+assert.match(participantHtml, /id="consent-input"/);
+assert.match(participantHtml, /participant-session\.js\?v=1/);
+assert.match(participantCss, /:root\[data-theme="dark"\]/);
+assert.match(participantScript, /sessionStorage/);
+assert.match(participantScript, /localStorage\.setItem\('gh-theme-v3'/);
+assert.doesNotMatch(participantScript, /https?:\/\/|sendBeacon|WebSocket|XMLHttpRequest/);
 assert.ok(STUDY_COLUMNS.includes('duration_seconds'));
 
 const records = [];
@@ -75,6 +94,17 @@ assert.equal(analysis.decision.verdict, 'insufficient-sample');
 assert.ok(analysis.metrics.duration_seconds);
 
 assert.deepEqual(readBackup(createBackup(records)), records);
+const sessionResult = createSessionResult(records[0]);
+assert.deepEqual(readSessionResult(sessionResult), records[0]);
+assert.throws(
+  () => readSessionResult(JSON.stringify({ version: 1, records })),
+  /Resultado de sesión incompatible/
+);
+const merged = mergePeriodRecord(records, { ...records[0], visualAesthetics: 6.2 });
+assert.equal(merged.length, records.length);
+assert.equal(merged.find((record) => (
+  record.participantId === records[0].participantId && record.period === records[0].period
+)).visualAesthetics, 6.2);
 const invalid = structuredClone(records[0]);
 invalid.taskResults[0].success = null;
 invalid.taskResults[1].durationSeconds = 0;
@@ -95,4 +125,4 @@ const excludedRow = buildStudyRows([excluded], schedule, config.randomization.ta
 assert.equal(excludedRow.duration_seconds, '');
 assert.equal(excludedRow.included, 'no');
 
-console.log('  PASS (local recorder, duration outcome, CSV analysis and privacy contract)');
+console.log('  PASS (local/remote recorder, individual transfer, duration, CSV analysis and privacy contract)');

@@ -1,8 +1,10 @@
 import {
   buildStudyRows,
   createBackup,
+  mergePeriodRecord,
   parseCsv,
   readBackup,
+  readSessionResult,
   toCsv,
   validatePeriodRecord
 } from './session-recorder-core.mjs';
@@ -26,6 +28,10 @@ const elements = {
   theme: document.querySelector('#theme-select'),
   code: document.querySelector('#condition-code'),
   launch: document.querySelector('#launch-condition'),
+  copySessionLink: document.querySelector('#copy-session-link'),
+  importSessionResult: document.querySelector('#import-session-result'),
+  sessionLinkFallback: document.querySelector('#session-link-fallback'),
+  sessionLinkValue: document.querySelector('#session-link-value'),
   tasks: document.querySelector('#task-list'),
   totalDuration: document.querySelector('#total-duration'),
   aesthetics: document.querySelector('#aesthetics-input'),
@@ -398,6 +404,59 @@ async function copyCsv() {
   }
 }
 
+function participantSessionUrl() {
+  const url = new URL('participant-session.html', window.location.href);
+  url.searchParams.set('participant', currentParticipant);
+  url.searchParams.set('period', String(currentPeriod));
+  url.searchParams.set('device', draft.device);
+  url.searchParams.set('theme', draft.theme);
+  return url.href;
+}
+
+function copyWithSelection(text) {
+  const field = document.createElement('textarea');
+  field.value = text;
+  field.setAttribute('readonly', '');
+  field.style.position = 'fixed';
+  field.style.opacity = '0';
+  document.body.append(field);
+  field.select();
+  const copied = document.execCommand('copy');
+  field.remove();
+  if (!copied) throw new Error('Copia no disponible');
+}
+
+async function writeClipboardText(text) {
+  if (!navigator.clipboard?.writeText) {
+    copyWithSelection(text);
+    return;
+  }
+  try {
+    await Promise.race([
+      navigator.clipboard.writeText(text),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Portapapeles sin respuesta')), 1200))
+    ]);
+  } catch (error) {
+    copyWithSelection(text);
+  }
+}
+
+async function copySessionLink() {
+  const url = participantSessionUrl();
+  elements.sessionLinkFallback.hidden = true;
+  try {
+    saveDraft();
+    await writeClipboardText(url);
+    showStatus(`${currentParticipant} · enlace del período ${currentPeriod} copiado`);
+  } catch (error) {
+    elements.sessionLinkValue.value = url;
+    elements.sessionLinkFallback.hidden = false;
+    elements.sessionLinkValue.focus();
+    elements.sessionLinkValue.select();
+    showStatus('Copia manualmente el enlace seleccionado', true);
+  }
+}
+
 function exportBackup() {
   download(`cordalsur-study-backup-${new Date().toISOString().slice(0, 10)}.json`, createBackup(state.records), 'application/json');
   showStatus('Respaldo exportado');
@@ -416,6 +475,33 @@ async function importBackup(file) {
     showStatus(error.message, true);
   } finally {
     elements.importBackup.value = '';
+  }
+}
+
+async function importSessionResult(file) {
+  try {
+    const record = readSessionResult(await file.text());
+    const validation = validatePeriodRecord(record, config.randomization.tasks);
+    if (validation.length) throw new Error(validation[0]);
+    const existing = state.records.find((candidate) => (
+      candidate.participantId === record.participantId &&
+      Number(candidate.period) === Number(record.period)
+    ));
+    if (existing && !window.confirm(`${record.participantId} · período ${record.period} ya existe. ¿Reemplazarlo?`)) return;
+
+    const nextRecords = mergePeriodRecord(state.records, record);
+    buildStudyRows(nextRecords, scheduleRows, config.randomization.tasks);
+    state.records = nextRecords;
+    delete state.drafts[keyFor(record.participantId, record.period)];
+    currentParticipant = record.participantId;
+    currentPeriod = Number(record.period);
+    persistState();
+    renderForm();
+    showStatus(`${record.participantId} · período ${record.period} importado`);
+  } catch (error) {
+    showStatus(error.message, true);
+  } finally {
+    elements.importSessionResult.value = '';
   }
 }
 
@@ -454,10 +540,15 @@ function bindEvents() {
   elements.reset.addEventListener('click', resetDraft);
   elements.exportCsv.addEventListener('click', exportCsv);
   elements.copyCsv.addEventListener('click', copyCsv);
+  elements.copySessionLink.addEventListener('click', copySessionLink);
   elements.exportBackup.addEventListener('click', exportBackup);
   elements.importBackup.addEventListener('change', () => {
     const file = elements.importBackup.files[0];
     if (file) importBackup(file);
+  });
+  elements.importSessionResult.addEventListener('change', () => {
+    const file = elements.importSessionResult.files[0];
+    if (file) importSessionResult(file);
   });
   elements.clear.addEventListener('click', clearData);
   window.addEventListener('beforeunload', stopTimer);
