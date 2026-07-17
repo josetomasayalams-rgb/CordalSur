@@ -24,6 +24,7 @@ node tests/verify-study-preregistration.mjs
 echo "=== Gate 5: public CordalSur contract ==="
 node tests/verify-public-contract.mjs
 node tests/verify-access-session.mjs
+node tests/verify-guide-experience.mjs
 
 echo "=== Gate 6: generator idempotency (temporary copy) ==="
 tmp="$(mktemp -d)"

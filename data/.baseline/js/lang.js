@@ -1806,7 +1806,6 @@
       'nearby.call': 'Llamar',
       'nearby.search': 'Buscar más cerca en Maps',
       'nearby.empty': 'No hay lugares catastrados en esta categoría. Usa la búsqueda en Maps.',
-      'nearby.emergency': 'En una emergencia llama de inmediato: SAMU 131 · Bomberos 132 · Carabineros 133.',
       'nearby.cat.all': 'Todo',
       'nearby.cat.food': 'Restaurantes',
       'nearby.cat.groceries': 'Supermercados',
@@ -1850,8 +1849,13 @@
       'guide.sort.popularity': 'Popularidad',
       'guide.sort.alphabetical': 'A–Z',
       'guide.categories.aria': 'Categorías de lugares',
+      'guide.display.aria': 'Vista de resultados',
+      'guide.display.title': 'Elige cómo explorar',
+      'guide.display.detail': 'La lista conserva tus filtros aunque ocultes el mapa.',
       'guide.map.eyebrow': 'Geometría real N-55',
       'guide.map.title': 'Mapa del corredor',
+      'guide.map.show': 'Mostrar mapa',
+      'guide.map.hide': 'Ocultar mapa',
       'guide.map.fit': 'Ajustar mapa',
       'guide.map.out': 'Alejar',
       'guide.map.in': 'Acercar',
@@ -1861,6 +1865,7 @@
       'guide.legend.user': 'Tu ubicación',
       'guide.results.title': 'Lugares encontrados',
       'guide.empty': 'No hay lugares que coincidan con estos filtros.',
+      'guide.loading': 'Cargando lugares verificados…',
       'guide.reviews': 'reseñas',
       'guide.straightLine': 'en línea recta',
       'guide.coordinate.warning': 'Coordenada aproximada: confirma la entrada antes de viajar.',
@@ -1868,6 +1873,7 @@
       'guide.action.navigate': 'Navegar',
       'guide.action.maps': 'Abrir en Google Maps',
       'guide.action.website': 'Sitio oficial',
+      'guide.action.instagram': 'Abrir en Instagram',
       'guide.quality.places': 'lugares',
       'guide.quality.merged': 'duplicados fusionados',
       'guide.quality.providers': 'proveedores activos',
@@ -3756,7 +3762,6 @@
       'nearby.call': 'Ligar',
       'nearby.search': 'Buscar mais perto no Maps',
       'nearby.empty': 'Não há locais cadastrados nesta categoria. Use a busca no Maps.',
-      'nearby.emergency': 'Em uma emergência, ligue imediatamente: SAMU 131 · Bombeiros 132 · Carabineros 133.',
       'nearby.cat.all': 'Tudo',
       'nearby.cat.food': 'Restaurantes',
       'nearby.cat.groceries': 'Mercados',
@@ -3800,8 +3805,13 @@
       'guide.sort.popularity': 'Popularidade',
       'guide.sort.alphabetical': 'A–Z',
       'guide.categories.aria': 'Categorias de lugares',
+      'guide.display.aria': 'Visualização dos resultados',
+      'guide.display.title': 'Escolha como explorar',
+      'guide.display.detail': 'A lista mantém seus filtros mesmo quando o mapa está oculto.',
       'guide.map.eyebrow': 'Geometria real N-55',
       'guide.map.title': 'Mapa do corredor',
+      'guide.map.show': 'Mostrar mapa',
+      'guide.map.hide': 'Ocultar mapa',
       'guide.map.fit': 'Ajustar mapa',
       'guide.map.out': 'Afastar',
       'guide.map.in': 'Aproximar',
@@ -3811,6 +3821,7 @@
       'guide.legend.user': 'Sua localização',
       'guide.results.title': 'Lugares encontrados',
       'guide.empty': 'Não há lugares que correspondam a estes filtros.',
+      'guide.loading': 'Carregando lugares verificados…',
       'guide.reviews': 'avaliações',
       'guide.straightLine': 'em linha reta',
       'guide.coordinate.warning': 'Coordenada aproximada: confirme a entrada antes de viajar.',
@@ -3818,6 +3829,7 @@
       'guide.action.navigate': 'Navegar',
       'guide.action.maps': 'Abrir no Google Maps',
       'guide.action.website': 'Site oficial',
+      'guide.action.instagram': 'Abrir no Instagram',
       'guide.quality.places': 'lugares',
       'guide.quality.merged': 'duplicados unidos',
       'guide.quality.providers': 'provedores ativos',
@@ -5706,7 +5718,6 @@
       'nearby.call': 'Call',
       'nearby.search': 'Search nearby in Maps',
       'nearby.empty': 'No mapped places in this category. Use the Maps search.',
-      'nearby.emergency': 'In an emergency call immediately: SAMU 131 · Fire 132 · Police 133.',
       'nearby.cat.all': 'All',
       'nearby.cat.food': 'Restaurants',
       'nearby.cat.groceries': 'Groceries',
@@ -5750,8 +5761,13 @@
       'guide.sort.popularity': 'Popularity',
       'guide.sort.alphabetical': 'A–Z',
       'guide.categories.aria': 'Place categories',
+      'guide.display.aria': 'Results view',
+      'guide.display.title': 'Choose how to explore',
+      'guide.display.detail': 'The list keeps your filters when the map is hidden.',
       'guide.map.eyebrow': 'Real N-55 geometry',
       'guide.map.title': 'Corridor map',
+      'guide.map.show': 'Show map',
+      'guide.map.hide': 'Hide map',
       'guide.map.fit': 'Fit map',
       'guide.map.out': 'Zoom out',
       'guide.map.in': 'Zoom in',
@@ -5761,6 +5777,7 @@
       'guide.legend.user': 'Your location',
       'guide.results.title': 'Places found',
       'guide.empty': 'No places match these filters.',
+      'guide.loading': 'Loading verified places…',
       'guide.reviews': 'reviews',
       'guide.straightLine': 'straight line',
       'guide.coordinate.warning': 'Approximate coordinate: confirm the entrance before travelling.',
@@ -5768,6 +5785,7 @@
       'guide.action.navigate': 'Navigate',
       'guide.action.maps': 'Open in Google Maps',
       'guide.action.website': 'Official website',
+      'guide.action.instagram': 'Open in Instagram',
       'guide.quality.places': 'places',
       'guide.quality.merged': 'duplicates merged',
       'guide.quality.providers': 'active providers',
@@ -5918,9 +5936,9 @@
     for (var pi = 0; pi < placeholders.length; pi++) {
       placeholders[pi].setAttribute('placeholder', lookup(lang, placeholders[pi].getAttribute('data-i18n-placeholder')));
     }
-    var sel = document.querySelector('.lang-selector');
-    if (sel) {
-      var btns = sel.querySelectorAll('button');
+    var selectors = document.querySelectorAll('.lang-selector');
+    for (var si = 0; si < selectors.length; si++) {
+      var btns = selectors[si].querySelectorAll('button');
       for (var k = 0; k < btns.length; k++) {
         btns[k].setAttribute('aria-pressed', btns[k].getAttribute('data-lang') === lang ? 'true' : 'false');
       }
@@ -5932,8 +5950,10 @@
 
   function setLang(lang) {
     if (SUPPORTED.indexOf(lang) < 0) lang = FALLBACK;
+    if (lang === getLang()) return;
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
     apply(lang);
+    document.dispatchEvent(new CustomEvent('cordal:language-changed', { detail: { lang: lang } }));
   }
 
   function t(key, lang) {
@@ -5964,9 +5984,9 @@
   // the FOUC guard (CSS hides [data-i18n] until this flag, via @media scripting).
   apply(getLang());
   document.documentElement.classList.add('i18n-ready');
-  var sel = document.querySelector('.lang-selector');
-  if (sel) {
-    sel.addEventListener('click', function (e) {
+  var selectors = document.querySelectorAll('.lang-selector');
+  for (var si = 0; si < selectors.length; si++) {
+    selectors[si].addEventListener('click', function (e) {
       var b = e.target.closest('button[data-lang]');
       if (b) setLang(b.getAttribute('data-lang'));
     });

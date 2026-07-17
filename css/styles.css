@@ -469,7 +469,6 @@ html[data-theme="dark"] .guide-route-featured { box-shadow: 0 14px 34px rgba(0,0
 .nearby-locate { grid-column: 1 / -1; min-height: 48px; border: 0; border-radius: var(--radius-md); padding: 12px 18px; background: linear-gradient(145deg, #1d5145, #153b33); color: #fff; font: 700 0.95rem/1.2 Manrope, sans-serif; cursor: pointer; }
 .nearby-locate:disabled { opacity: 0.62; cursor: wait; }
 .nearby-status { grid-column: 1 / -1; font-size: 0.8rem; }
-.nearby-emergency { margin: 0 0 14px; padding: 12px 14px; border: 1px solid rgba(196, 106, 58, 0.36); border-radius: var(--radius-md); background: rgba(196, 106, 58, 0.1); color: var(--night); font-size: 0.82rem; font-weight: 650; line-height: 1.45; }
 .nearby-filters { margin-top: 0; }
 .rest-filter__btn--sort { margin-left: auto; border-color: var(--gold); }
 .catalog-distance { margin-left: auto; align-self: flex-start; padding: 4px 8px; border-radius: var(--radius-pill); background: var(--tint-forest); color: var(--forest); font-size: 0.72rem; font-weight: 750; white-space: nowrap; }
@@ -495,7 +494,6 @@ html[data-theme="dark"] .nearby-card { background: rgba(9, 33, 27, 0.84); }
 html[data-theme="dark"] .nearby-card__distance { color: #e8bd79; }
 html[data-theme="dark"] .catalog-distance { background: rgba(217, 162, 79, 0.18); color: #e8bd79; }
 html[data-theme="dark"] .nearby-card__call { color: #e8bd79; border-color: #e8bd79; }
-html[data-theme="dark"] .nearby-emergency { color: #f5f1e7; }
 @media (max-width: 420px) {
   .nearby-card__top { grid-template-columns: auto minmax(0, 1fr); }
   .nearby-card__distance { grid-column: 2; }
@@ -3996,4 +3994,338 @@ body[data-page="restaurantes"] .app-container { max-width: 1040px; }
   .guide-layout[data-mobile-view="map"] .guide-results { display: none; }
   .guide-layout[data-mobile-view="list"] .guide-map-shell { display: none; }
   .guide-map { min-height: 390px; }
+}
+
+/* ==========================================================================
+   Guest experience 2026 — semantic surfaces, responsive guide and icon actions
+   ========================================================================== */
+:root {
+  --ui-surface-raised: rgba(255, 253, 247, .96);
+  --ui-surface-muted: #eef3ee;
+  --ui-control-bg: #f6f8f4;
+  --ui-control-active: #153b33;
+  --ui-control-active-text: #fffdf7;
+  --ui-icon-surface: #e6eee8;
+  --ui-icon-ink: #153b33;
+  --ui-border: rgba(21, 59, 51, .19);
+  --ui-copy-muted: #52645e;
+  --ui-shadow: 0 16px 38px rgba(21, 59, 51, .12);
+}
+
+html[data-theme="dark"] body {
+  --ui-surface-raised: rgba(12, 37, 31, .97);
+  --ui-surface-muted: #112f28;
+  --ui-control-bg: #173a31;
+  --ui-control-active: #e8bd79;
+  --ui-control-active-text: #102c26;
+  --ui-icon-surface: #183e34;
+  --ui-icon-ink: #f0c881;
+  --ui-border: rgba(232, 189, 121, .25);
+  --ui-copy-muted: #b7c8c1;
+  --ui-shadow: 0 18px 44px rgba(0, 0, 0, .34);
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.prefs-stack,
+.prefs-stack--inline,
+.top-controls {
+  min-width: 0;
+}
+
+body[data-section="nearby"] .prefs-stack--inline {
+  position: static;
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) auto;
+  gap: 8px;
+  width: min(100%, 340px);
+  margin: 0 0 12px auto;
+  padding: 0;
+}
+
+body[data-section="nearby"] .prefs-stack--inline .lang-selector,
+body[data-section="nearby"] .prefs-stack--inline .theme-selector,
+.top-controls .theme-selector {
+  position: static;
+  width: auto;
+  margin: 0;
+  padding: 3px;
+  border: 1px solid var(--ui-border);
+  background: var(--ui-surface-raised);
+  box-shadow: none;
+}
+
+.theme-selector__buttons { gap: 3px; }
+.theme-selector button,
+.lang-selector button {
+  min-width: 42px;
+  min-height: 42px;
+  color: inherit;
+}
+.theme-selector__icon {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.theme-selector__icon path:first-child:last-child { fill: currentColor; stroke: none; }
+
+html[data-theme] .lang-selector button[aria-pressed="true"],
+html[data-theme] .theme-selector button[aria-pressed="true"] {
+  border-color: transparent;
+  background: var(--ui-control-active);
+  color: var(--ui-control-active-text);
+  box-shadow: none;
+}
+
+.icon-box {
+  background: var(--ui-icon-surface) !important;
+  color: var(--ui-icon-ink) !important;
+}
+.section-glyph {
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.quick-access__icon { background: var(--ui-icon-surface); color: var(--ui-icon-ink); }
+.quick-access__item--instagram .quick-access__icon { background: transparent; }
+.quick-access__item--instagram .quick-access__icon img { width: 100%; height: 100%; display: block; }
+
+body[data-section="nearby"] .guide-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+  border: 1px solid var(--ui-border);
+  background: var(--ui-surface-raised) !important;
+  background-image: none !important;
+  box-shadow: var(--ui-shadow);
+}
+body[data-section="nearby"] .guide-hero::before,
+body[data-section="nearby"] .guide-hero::after,
+body[data-section="nearby"] .guide-hero.card::before,
+body[data-section="nearby"] .guide-hero.card::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+.guide-hero__copy,
+.guide-hero__actions,
+.guide-location > *,
+.guide-results,
+.guide-map-shell,
+.nearby-card__top > * { min-width: 0; }
+.guide-hero__copy p,
+.guide-display-bar span,
+.guide-place__address { overflow-wrap: anywhere; }
+
+.guide-display-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 12px 0;
+  padding: 12px 14px;
+  border: 1px solid var(--ui-border);
+  border-radius: 16px;
+  background: var(--ui-surface-raised);
+  box-shadow: 0 8px 22px rgba(21, 59, 51, .08);
+}
+.guide-display-bar > div { display: grid; gap: 2px; }
+.guide-display-bar strong { font-size: .86rem; }
+.guide-display-bar span { color: var(--ui-copy-muted); font-size: .74rem; }
+.guide-map-toggle {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 9px 13px;
+  border: 1px solid var(--ui-border);
+  border-radius: 12px;
+  background: var(--ui-control-bg);
+  color: var(--forest);
+  font: 800 .76rem/1.2 Manrope, sans-serif;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), background-color 160ms ease, border-color 160ms ease;
+}
+html[data-theme="dark"] .guide-map-toggle { color: #f4d295; }
+.guide-map-toggle svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.guide-map-toggle span { color: inherit; }
+.guide-map-toggle[aria-expanded="true"] { background: var(--ui-control-active); color: var(--ui-control-active-text); }
+@media (hover: hover) { .guide-map-toggle:hover { transform: translateY(-1px); } }
+.guide-map-toggle:active { transform: translateY(1px) scale(.98); }
+
+.guide-layout[data-map-visible="false"] { grid-template-columns: minmax(0, 1fr); }
+.guide-layout[data-map-visible="false"] .guide-results { width: 100%; }
+.guide-map-shell[hidden] { display: none !important; }
+.guide-map-shell:not([hidden]) { animation: cs-map-reveal 180ms var(--ease-out) both; }
+@keyframes cs-map-reveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (min-width: 901px) {
+  .guide-layout[data-map-visible="false"] .nearby-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+.nearby-card,
+.catalog-card { background: var(--ui-surface-raised); border-color: var(--ui-border); }
+.nearby-card:nth-child(-n+12),
+.catalog-card:nth-child(-n+12) { animation: cs-card-arrive 220ms var(--ease-out) both; }
+.nearby-card:nth-child(2n), .catalog-card:nth-child(2n) { animation-delay: 28ms; }
+.nearby-card:nth-child(3n), .catalog-card:nth-child(3n) { animation-delay: 52ms; }
+@keyframes cs-card-arrive {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.guide-place__address { color: var(--ui-copy-muted); }
+.nearby-loading {
+  margin: 8px 0;
+  padding: 14px;
+  border: 1px solid var(--ui-border);
+  border-radius: 13px;
+  background: var(--ui-surface-muted);
+  color: var(--ui-copy-muted);
+  font-size: .78rem;
+}
+
+.nearby-card__actions,
+.catalog-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+.nearby-card__actions .guide-action,
+.catalog-action {
+  position: relative;
+  flex: 0 0 auto;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 9px;
+  border: 1px solid var(--ui-border);
+  border-radius: 12px;
+  background: var(--ui-control-bg);
+  color: var(--forest);
+  box-shadow: none;
+  transition: transform 150ms var(--ease-out), border-color 150ms ease, background-color 150ms ease;
+}
+.nearby-card__actions .guide-action img,
+.catalog-action img { display: block; width: 22px; height: 22px; object-fit: contain; }
+.nearby-card__actions .guide-action--maps,
+.catalog-action--maps { width: 96px; min-width: 96px; padding: 8px 9px; background: #fff; }
+.nearby-card__actions .guide-action--maps img,
+.catalog-action--maps img { width: 78px; height: auto; }
+.nearby-card__actions .guide-action--instagram img,
+.catalog-action--instagram img { width: 25px; height: 25px; border-radius: 7px; }
+.nearby-card__actions .guide-action--primary,
+.catalog-action--primary { border-color: var(--ui-control-active); background: var(--ui-control-active); color: var(--ui-control-active-text); }
+.nearby-card__actions .guide-action--primary img,
+.catalog-action--primary img { filter: brightness(0) invert(1); }
+html[data-theme="dark"] .nearby-card__actions .guide-action--primary img,
+html[data-theme="dark"] .catalog-action--primary img { filter: brightness(0) saturate(100%) invert(13%) sepia(17%) saturate(1328%) hue-rotate(112deg) brightness(92%); }
+@media (hover: hover) {
+  .nearby-card__actions .guide-action:hover,
+  .catalog-action:hover { transform: translateY(-2px); border-color: var(--brand-accent-line); }
+}
+
+@media (max-width: 1024px) {
+  body[data-section="nearby"] .app-container { max-width: 100%; }
+  .guide-layout { grid-template-columns: minmax(0, 1fr) minmax(330px, .82fr); gap: 12px; }
+  .guide-map { min-height: 500px; }
+}
+
+@media (max-width: 768px) {
+  body[data-section="nearby"] .app-container { padding-inline: max(14px, env(safe-area-inset-left)); }
+  body[data-section="nearby"] .prefs-stack--inline { width: 100%; margin-left: 0; }
+  .guide-hero { flex-direction: column; padding: 17px; gap: 14px; }
+  .guide-hero__actions { flex-basis: auto; width: 100%; }
+  .guide-mode { grid-template-columns: repeat(3, minmax(138px, 1fr)); overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 4px; }
+  .guide-mode__button { scroll-snap-align: start; }
+  .guide-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-layout { grid-template-columns: minmax(0, 1fr); }
+  .guide-map { min-height: 410px; }
+  .guide-display-bar { margin-block: 10px; }
+}
+
+@media (max-width: 430px) {
+  body[data-section="nearby"] .app-container { padding-inline: max(12px, env(safe-area-inset-left)); }
+  body[data-section="nearby"] .header { padding: 10px 0; }
+  body[data-section="nearby"] .header::after { width: 29px; height: 29px; }
+  body[data-section="nearby"] .prefs-stack--inline { grid-template-columns: minmax(0, 1fr) auto; gap: 6px; }
+  .lang-selector button, .theme-selector button { min-width: 40px; min-height: 40px; }
+  .guide-hero { padding: 15px; border-radius: 18px; }
+  .guide-hero h1 { font-size: clamp(1.28rem, 7vw, 1.58rem); }
+  .guide-hero__copy p { font-size: .86rem; line-height: 1.48; }
+  .guide-route-featured { width: 100%; min-height: 44px; }
+  .guide-hero__facts { flex-wrap: wrap; }
+  .guide-location { padding: 13px; }
+  .guide-tools { grid-template-columns: 1fr; }
+  .guide-categories { margin-inline: -2px; padding-inline: 2px; }
+  .guide-display-bar { align-items: stretch; padding: 11px; gap: 10px; }
+  .guide-display-bar > div { align-self: center; }
+  .guide-display-bar span { font-size: .69rem; }
+  .guide-map-toggle { align-self: center; padding-inline: 11px; }
+  .guide-map-toggle span { max-width: 64px; color: inherit; }
+  .guide-map { min-height: 350px; }
+  .guide-map-head { gap: 8px; }
+  .guide-map-controls button { min-width: 40px; min-height: 40px; }
+  .nearby-card { padding: 14px; }
+  .nearby-card__top { grid-template-columns: auto minmax(0, 1fr); }
+  .nearby-card__distance { grid-column: 2; justify-self: start; text-align: left; }
+  .guide-location-dialog__panel { width: calc(100vw - 24px); max-height: calc(100dvh - 24px); overflow-y: auto; }
+}
+
+@media (max-width: 390px) {
+  .guide-mode { grid-template-columns: repeat(3, minmax(130px, 1fr)); }
+  .guide-display-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+  .nearby-card__actions, .catalog-actions { gap: 6px; }
+}
+
+@media (max-width: 360px) {
+  body[data-section="nearby"] .prefs-stack--inline { grid-template-columns: 1fr; }
+  body[data-section="nearby"] .prefs-stack--inline .theme-selector { width: 100%; }
+  body[data-section="nearby"] .prefs-stack--inline .theme-selector__buttons { grid-template-columns: 1fr 1fr; }
+  .guide-display-bar { grid-template-columns: 1fr; }
+  .guide-map-toggle { width: 100%; }
+  .guide-map-toggle span { max-width: none; }
+  .guide-map { min-height: 320px; }
+}
+
+@media (max-width: 320px) {
+  body[data-section="nearby"] .app-container { padding-inline: 10px; }
+  body[data-section="nearby"] .header h2 { font-size: 1rem; }
+  body[data-section="nearby"] .header::after { display: none; }
+  .guide-hero { padding: 13px; }
+  .guide-mode { grid-template-columns: repeat(3, minmax(124px, 1fr)); }
+  .nearby-card__actions .guide-action--maps,
+  .catalog-action--maps { width: 90px; min-width: 90px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-map-shell:not([hidden]),
+  .nearby-card,
+  .catalog-card { animation: none !important; }
+  .guide-map-toggle,
+  .guide-action,
+  .catalog-action { transition: none !important; }
 }

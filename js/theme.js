@@ -24,6 +24,7 @@
         btn.setAttribute('aria-pressed', btn.getAttribute('data-theme-option') === theme ? 'true' : 'false');
       }
     }
+    document.dispatchEvent(new CustomEvent('cordal:theme-changed', { detail: { theme: theme } }));
   }
 
   function setTheme(theme) {
@@ -43,11 +44,11 @@
     control.setAttribute('aria-label', 'Theme');
     control.innerHTML = [
       '<div class="theme-selector__buttons">',
-      '  <button type="button" data-theme-option="light" data-i18n-aria="theme.light" aria-label="Light" aria-pressed="false">',
-      '    <span class="theme-selector__icon" aria-hidden="true">☀</span>',
+      '  <button type="button" data-theme-option="light" data-i18n-aria="theme.light" data-i18n-title="theme.light" aria-label="Light" title="Light" aria-pressed="false">',
+      '    <svg class="theme-selector__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
       '  </button>',
-      '  <button type="button" data-theme-option="dark" data-i18n-aria="theme.dark" aria-label="Dark" aria-pressed="false">',
-      '    <span class="theme-selector__icon" aria-hidden="true">🌙</span>',
+      '  <button type="button" data-theme-option="dark" data-i18n-aria="theme.dark" data-i18n-title="theme.dark" aria-label="Dark" title="Dark" aria-pressed="false">',
+      '    <svg class="theme-selector__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.2 15.5A8.7 8.7 0 0 1 8.5 3.8a8.8 8.8 0 1 0 11.7 11.7Z"/></svg>',
       '  </button>',
       '</div>'
     ].join('');
@@ -75,9 +76,18 @@
       inlineStack.appendChild(control);
     }
 
-    if (window.GH_I18N && typeof window.GH_I18N.apply === 'function' && typeof window.GH_I18N.getLang === 'function') {
-      window.GH_I18N.apply(window.GH_I18N.getLang());
+    function localizeControl() {
+      if (!window.GH_I18N || typeof window.GH_I18N.t !== 'function') return;
+      control.setAttribute('aria-label', window.GH_I18N.t('theme.label'));
+      control.querySelectorAll('[data-theme-option]').forEach(function (button) {
+        var key = button.getAttribute('data-i18n-aria');
+        var label = window.GH_I18N.t(key);
+        button.setAttribute('aria-label', label);
+        button.setAttribute('title', label);
+      });
     }
+    localizeControl();
+    if (window.GH_I18N && typeof window.GH_I18N.subscribe === 'function') window.GH_I18N.subscribe(localizeControl);
 
     applyTheme(root.getAttribute('data-theme') || 'light');
 

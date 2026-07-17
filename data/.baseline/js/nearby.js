@@ -6,6 +6,8 @@
   var status = document.getElementById('nearby-status');
   var count = document.getElementById('nearby-count');
   var empty = document.getElementById('nearby-empty');
+  var loading = document.getElementById('nearby-loading');
+  var resultsRegion = document.getElementById('guide-results-region');
   var categories = document.getElementById('guide-categories');
   var search = document.getElementById('guide-search');
   var rating = document.getElementById('guide-rating');
@@ -19,6 +21,9 @@
   var quality = document.getElementById('guide-quality');
   var mapCanvas = document.getElementById('guide-map-canvas');
   var mapFallback = document.getElementById('guide-map-fallback');
+  var mapShell = document.getElementById('guide-map-shell');
+  var mapToggle = document.getElementById('guide-map-toggle');
+  var mapToggleLabel = document.getElementById('guide-map-toggle-label');
   var locationDialog = document.getElementById('guide-location-dialog');
   var layout = document.querySelector('.guide-layout');
   var total = document.getElementById('guide-place-total');
@@ -39,6 +44,8 @@
   var markerCluster = null;
   var markers = new Map();
   var userMarker = null;
+  var MAP_VISIBILITY_KEY = 'cordal-guide-map-visible';
+  var mapVisible = true;
 
   function t(key) { return window.GH_I18N ? window.GH_I18N.t(key) : key; }
 
@@ -157,10 +164,19 @@
     return chunks.join('');
   }
 
-  function action(href, label, primary) {
+  var ACTION_ASSETS = {
+    navigation: 'assets/icons/navigation.svg',
+    maps: 'assets/icons/google-maps.svg',
+    website: 'assets/icons/website.svg',
+    instagram: 'assets/icons/instagram.svg',
+    phone: 'assets/icons/phone.svg'
+  };
+
+  function action(href, key, type, primary) {
     if (!href) return '';
-    var external = /^https:\/\//.test(href) ? ' target="_blank" rel="noopener"' : '';
-    return '<a class="guide-action' + (primary ? ' guide-action--primary' : '') + '" href="' + escapeHtml(href) + '"' + external + '>' + escapeHtml(label) + '</a>';
+    var label = t(key);
+    var external = /^https?:\/\//.test(href) ? ' target="_blank" rel="noopener"' : '';
+    return '<a class="guide-action guide-action--' + escapeHtml(type) + (primary ? ' guide-action--primary' : '') + '" href="' + escapeHtml(href) + '"' + external + ' aria-label="' + escapeHtml(label) + '" title="' + escapeHtml(label) + '" data-i18n-aria="' + escapeHtml(key) + '" data-i18n-title="' + escapeHtml(key) + '"><img src="' + ACTION_ASSETS[type] + '" alt="" aria-hidden="true"><span class="sr-only" data-i18n="' + escapeHtml(key) + '">' + escapeHtml(label) + '</span></a>';
   }
 
   function renderCards() {
@@ -169,17 +185,19 @@
       var approximate = place.coordinateKind === 'center_candidate' || place.status === 'candidate_coordinate';
       var closed = place.operatingStatus === 'closed';
       var phone = value(place.phone);
+      var address = value(place.address);
+      var addressLabel = [address, place.municipality && place.municipality !== address ? place.municipality : ''].filter(Boolean).join(' · ') || t('guide.location.unknown');
       var sources = (place.sources || []).slice(0, 3).map(function (source) {
         var label = source.sourceLabel || source.provider;
         return source.url ? '<a href="' + escapeHtml(source.url) + '" target="_blank" rel="noopener">' + escapeHtml(label) + '</a>' : '<span>' + escapeHtml(label) + '</span>';
       }).join('');
       return '<article class="nearby-card guide-place" data-place-id="' + escapeHtml(place.id) + '" tabindex="0" style="--place-color:' + escapeHtml(categoryColor(place.category)) + '">' +
-        '<div class="nearby-card__top"><span class="guide-place__dot" aria-hidden="true"></span><div class="guide-place__heading"><span class="guide-place__category">' + escapeHtml(categoryLabel(place.category)) + '</span><h3>' + escapeHtml(place.name) + '</h3><p>' + escapeHtml(place.municipality || value(place.address) || t('guide.location.unknown')) + '</p></div><strong class="nearby-card__distance">≈ ' + escapeHtml(formatDistance(place._distanceKm)) + '<small>' + escapeHtml(t('guide.straightLine')) + '</small></strong></div>' +
+        '<div class="nearby-card__top"><span class="guide-place__dot" aria-hidden="true"></span><div class="guide-place__heading"><span class="guide-place__category">' + escapeHtml(categoryLabel(place.category)) + '</span><h3>' + escapeHtml(place.name) + '</h3><p class="guide-place__address">' + escapeHtml(addressLabel) + '</p></div><strong class="nearby-card__distance">≈ ' + escapeHtml(formatDistance(place._distanceKm)) + '<small>' + escapeHtml(t('guide.straightLine')) + '</small></strong></div>' +
         (approximate ? '<p class="guide-place__warning">' + escapeHtml(t('guide.coordinate.warning')) + '</p>' : '') +
         (closed ? '<p class="guide-place__warning guide-place__warning--closed">' + escapeHtml(t('guide.status.closed')) + '</p>' : '') +
         '<div class="guide-place__ratings">' + ratingHtml(place) + '</div>' +
         '<div class="guide-place__sources"><span>' + escapeHtml(t('guide.sources')) + '</span>' + sources + '</div>' +
-        '<div class="nearby-card__actions">' + action(place.navigationUrl, t('guide.action.navigate'), !closed) + action(place.googleMapsUrl, t('guide.action.maps')) + action(value(place.website), t('guide.action.website')) + action(value(place.instagram), 'Instagram') + (phone ? action('tel:' + String(phone).replace(/[^+\d]/g, ''), t('nearby.call')) : '') + '</div></article>';
+        '<div class="nearby-card__actions">' + action(place.navigationUrl, 'guide.action.navigate', 'navigation', !closed) + action(place.googleMapsUrl, 'guide.action.maps', 'maps') + action(value(place.website), 'guide.action.website', 'website') + action(value(place.instagram), 'guide.action.instagram', 'instagram') + (phone ? action('tel:' + String(phone).replace(/[^+\d]/g, ''), 'nearby.call', 'phone') : '') + '</div></article>';
     }).join('');
     count.textContent = String(filteredPlaces.length);
     empty.hidden = filteredPlaces.length !== 0;
@@ -295,13 +313,28 @@
     setTimeout(function () { map.invalidateSize(); }, 50);
   }
 
-  function setMobileView(next) {
-    if (!layout) return;
-    layout.setAttribute('data-mobile-view', next);
-    document.querySelectorAll('[data-guide-view]').forEach(function (button) {
-      button.setAttribute('aria-pressed', button.getAttribute('data-guide-view') === next ? 'true' : 'false');
-    });
-    if (next === 'map' && map) setTimeout(function () { map.invalidateSize(); }, 80);
+  function preferredMapVisibility() {
+    try {
+      var stored = sessionStorage.getItem(MAP_VISIBILITY_KEY);
+      if (stored === 'true' || stored === 'false') return stored === 'true';
+    } catch (e) {}
+    return !window.matchMedia('(max-width: 760px)').matches;
+  }
+
+  function setMapVisible(next, persist) {
+    mapVisible = !!next;
+    if (mapShell) mapShell.hidden = !mapVisible;
+    if (layout) layout.setAttribute('data-map-visible', mapVisible ? 'true' : 'false');
+    if (mapToggle) mapToggle.setAttribute('aria-expanded', mapVisible ? 'true' : 'false');
+    var key = mapVisible ? 'guide.map.hide' : 'guide.map.show';
+    if (mapToggleLabel) {
+      mapToggleLabel.setAttribute('data-i18n', key);
+      mapToggleLabel.textContent = t(key);
+    }
+    if (persist !== false) {
+      try { sessionStorage.setItem(MAP_VISIBILITY_KEY, mapVisible ? 'true' : 'false'); } catch (e) {}
+    }
+    if (mapVisible && map) setTimeout(function () { map.invalidateSize(); fitMap(); }, 80);
   }
 
   function selectPlace(id, scroll, pan) {
@@ -316,7 +349,6 @@
     if (scroll) {
       var target = Array.prototype.find.call(results.querySelectorAll('[data-place-id]'), function (card) { return card.getAttribute('data-place-id') === id; });
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      if (window.matchMedia('(max-width: 760px)').matches) setMobileView('list');
     }
   }
 
@@ -425,7 +457,7 @@
     if (button) requestLocation(button.getAttribute('data-location-choice'));
     else if (event.target === locationDialog) closeLocationDialog();
   });
-  document.querySelectorAll('[data-guide-view]').forEach(function (button) { button.addEventListener('click', function () { setMobileView(button.getAttribute('data-guide-view')); }); });
+  if (mapToggle) mapToggle.addEventListener('click', function () { setMapVisible(!mapVisible, true); });
   document.getElementById('guide-map-fit').addEventListener('click', fitMap);
   document.getElementById('guide-map-in').addEventListener('click', function () { if (map) map.zoomIn(); });
   document.getElementById('guide-map-out').addEventListener('click', function () { if (map) map.zoomOut(); });
@@ -433,19 +465,24 @@
   window.addEventListener('pagehide', function () { stopLocationWatch(); userPosition = null; locationMode = 'none'; });
   document.addEventListener('cordal:access-ended', function () { stopLocationWatch(); userPosition = null; locationMode = 'none'; updateUserMarker(); });
 
-  if (window.GH_I18N) window.GH_I18N.subscribe(function () { renderQuality(); renderGeometry(); render(false); });
+  if (window.GH_I18N) window.GH_I18N.subscribe(function () { renderQuality(); renderGeometry(); render(false); setMapVisible(mapVisible, false); });
 
   fetch('data/destination-guide.json').then(function (response) {
     if (!response.ok) throw new Error('destination guide unavailable');
     return response.json();
   }).then(function (payload) {
     data = payload;
+    if (loading) loading.hidden = true;
+    if (resultsRegion) resultsRegion.setAttribute('aria-busy', 'false');
     publicPlaces = data.places.filter(function (place) { return !LODGING[place.category]; });
     data._centerline = data.geometry.corridor.geometry.coordinates.map(function (point) { return { lon: point[0], lat: point[1] }; });
     renderQuality();
     initializeMap();
+    setMapVisible(preferredMapVisibility(), false);
     render(true);
   }).catch(function () {
+    if (loading) loading.hidden = true;
+    if (resultsRegion) resultsRegion.setAttribute('aria-busy', 'false');
     mapFallback.hidden = false;
     empty.hidden = false;
     empty.textContent = t('guide.loadError');
