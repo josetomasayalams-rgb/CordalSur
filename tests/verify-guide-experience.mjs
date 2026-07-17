@@ -11,6 +11,7 @@ const styles = read('css/styles.css');
 const lang = read('js/lang.js');
 const theme = read('js/theme.js');
 const catalog = read('js/catalog-guide.js');
+const home = read('index.html');
 
 if (!/id="guide-map-toggle"[^>]*aria-expanded="true"[^>]*aria-controls="guide-map-shell"/.test(html) ||
     !/id="guide-map-shell"/.test(html)) {
@@ -63,8 +64,25 @@ for (const page of ['actividades.html', 'restaurantes.html']) {
   if (/data-category="(?:hotel|cabin)"/.test(source)) fail(`${page}: lodging leaked into the canonical catalog`);
   if (/class="catalog-sources"|>Fuentes<|>Fontes<|>Sources</.test(source)) fail(`${page}: editorial provenance must not appear in the guest catalog`);
 }
-if (/[🔑📍🍽️🚵❄️🎿🚙📖🩹🚪]/u.test(read('index.html'))) fail('home section icons must use theme-aware SVG instead of emoji');
-if (!read('index.html').includes('class="card nearby-home-card') || !read('index.html').includes('Restaurantes, panoramas y servicios cercanos')) {
+if (/[🔑📍🍽️🚵❄️🎿🚙📖🩹🚪]/u.test(home)) fail('home section icons must use generated raster artwork instead of emoji');
+const themeImages = [...home.matchAll(/<img\b[^>]*\bdata-theme-image\b[^>]*>/g)].map((match) => match[0]);
+if (themeImages.length !== 12 || themeImages.some((tag) => !/data-src-light="assets\/home-icons\/[a-z]+-light\.webp"/.test(tag) || !/data-src-dark="assets\/home-icons\/[a-z]+-dark\.webp"/.test(tag) || !/alt=""/.test(tag))) {
+  fail('home must use 12 decorative light/dark raster icon pairs');
+}
+for (const name of ['checkin', 'wifi', 'valley', 'food', 'activities', 'weather', 'tickets', 'transport', 'manual', 'firstaid', 'checkout', 'emergency']) {
+  for (const themeName of ['light', 'dark']) {
+    const asset = `assets/home-icons/${name}-${themeName}.webp`;
+    if (!fs.existsSync(path.join(ROOT, asset))) fail(`missing generated home icon ${asset}`);
+    else {
+      const bytes = fs.readFileSync(path.join(ROOT, asset));
+      if (bytes.length < 2_000 || bytes.length > 90_000 || bytes.subarray(0, 4).toString('ascii') !== 'RIFF' || bytes.subarray(8, 12).toString('ascii') !== 'WEBP') fail(`${asset} must be an optimized WebP asset`);
+    }
+  }
+}
+if (!theme.includes("querySelectorAll('img[data-theme-image]')") || !theme.includes("image.setAttribute('src', next)")) {
+  fail('theme changes must swap generated home artwork without CSS filters');
+}
+if (!home.includes('class="card nearby-home-card') || !home.includes('Restaurantes, panoramas y servicios cercanos')) {
   fail('home must present Explore the Valley as a featured, descriptive entry');
 }
 if (!theme.includes("classList.add('preference-bar')") || !styles.includes('.preference-bar .theme-selector')) {
@@ -83,4 +101,27 @@ for (const asset of ['navigation', 'google-maps', 'website', 'instagram', 'phone
   if (!styles.includes(`../assets/icons/${asset}.svg`)) fail(`theme-aware action icon mapping missing: ${asset}`);
 }
 
-if (!process.exitCode) console.log('  PASS (premium icons, unified preferences, private provenance, responsive guide actions)');
+if (!nearby.includes('enableHighAccuracy: true') || !nearby.includes("maximumAge: choice === 'once' ? 0 : 5000") ||
+    !nearby.includes('navigator.geolocation.watchPosition') || !nearby.includes('navigator.geolocation.clearWatch') ||
+    !nearby.includes('timestamp - lastAcceptedAt < 5000') || !nearby.includes("window.addEventListener('pagehide'")) {
+  fail('location must use high-accuracy one-time/session GPS with throttling and cleanup');
+}
+if (!nearby.includes("if (mode === 'nearby' || mode === 'route') return userPosition") ||
+    nearby.includes('data.geometry.corridor.ruralStart') || nearby.includes('enableHighAccuracy: false')) {
+  fail('journey and current-location modes must never substitute Pinto or the apartment for the guest');
+}
+if (!html.includes('id="guide-location-accuracy"') || !html.includes('id="guide-location-updated"') ||
+    !html.includes('id="guide-map-user"') || !nearby.includes('userAccuracyCircle = L.circle') ||
+    !nearby.includes("map.setView([userPosition.lat, userPosition.lon]")) {
+  fail('map must show the real user position, accuracy radius, update time and recenter control');
+}
+if (!styles.includes('.guide-categories::-webkit-scrollbar { display: none') || !styles.includes('scrollbar-width: none') ||
+    !nearby.includes("categories.addEventListener('wheel'") || !nearby.includes("event.key !== 'ArrowRight'")) {
+  fail('category rail must scroll without a visible scrollbar using wheel, touch and keyboard');
+}
+if (!styles.includes('.guide-mode::-webkit-scrollbar { display: none')) fail('mobile discovery modes must not expose a visual scrollbar');
+if (!nearby.includes("mapToggle.setAttribute('aria-pressed'") || !styles.includes('html[data-theme="dark"] .guide-map-toggle[aria-expanded="true"]')) {
+  fail('map visibility control must expose state and retain strong contrast in both themes');
+}
+
+if (!process.exitCode) console.log('  PASS (24 premium raster icons, exact GPS, accessible map and scrollbar-free categories)');

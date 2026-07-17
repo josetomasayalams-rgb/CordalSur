@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="assets/vendor/leaflet-markercluster/MarkerCluster.css">
   <link rel="stylesheet" href="assets/vendor/leaflet-markercluster/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="css/styles.css?v=20">
+  <link rel="stylesheet" href="css/styles.css?v=21">
   <link rel="stylesheet" href="css/section-palettes.css?v=4">
   <link rel="stylesheet" href="css/access.css?v=4">
 </head>
@@ -46,6 +46,10 @@
    <div>
     <strong data-i18n="guide.location.title">Tu ubicación es opcional</strong>
     <p class="nearby-status" id="nearby-status" role="status" aria-live="polite" data-i18n="guide.location.fallback">La guía funciona sin permiso y no guarda tu posición.</p>
+    <div class="guide-location__meta" id="guide-location-meta" hidden>
+     <span id="guide-location-accuracy"></span>
+     <span id="guide-location-updated"></span>
+    </div>
    </div>
    <button type="button" class="nearby-locate" id="nearby-locate" data-i18n="guide.location.open">Elegir cómo usar mi ubicación</button>
    <label class="guide-behind" id="guide-behind-wrap" hidden><input type="checkbox" id="guide-behind"> <span data-i18n="guide.showBehind">Mostrar también lugares ya pasados</span></label>
@@ -53,8 +57,8 @@
 
   <div class="guide-mode" id="guide-mode" role="group" data-i18n-aria="guide.mode.aria" aria-label="Modo de exploración">
    <button type="button" class="guide-mode__button is-active" data-guide-mode="apartment" aria-pressed="true"><span class="guide-mode__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 11 8-7 8 7v9h-6v-5h-4v5H4Z"/></svg></span><strong data-i18n="guide.mode.apartment">Desde el departamento</strong><span data-i18n="guide.mode.apartment.detail">Radio automático hasta Los Pincheira</span></button>
-   <button type="button" class="guide-mode__button" data-guide-mode="nearby" aria-pressed="false"><span class="guide-mode__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19c5-1 6-5 8-8s4-5 8-6"/><path d="m16 4 4 1-1 4"/><circle cx="5" cy="19" r="2"/></svg></span><strong data-i18n="guide.mode.nearby">En mi ruta</strong><span data-i18n="guide.mode.nearby.detail">Prioriza lo que viene en la N-55</span></button>
-   <button type="button" class="guide-mode__button" data-guide-mode="route" aria-pressed="false"><span class="guide-mode__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 4-5 3v13l5-3 8 3 5-3V4l-5 3Z"/><path d="M8 4v13m8-10v13"/></svg></span><strong data-i18n="guide.mode.route">Ruta completa</strong><span data-i18n="guide.mode.route.detail">Pinto a Condominio Andes Chillán</span></button>
+   <button type="button" class="guide-mode__button" data-guide-mode="route" aria-pressed="false"><span class="guide-mode__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19c5-1 6-5 8-8s4-5 8-6"/><path d="m16 4 4 1-1 4"/><circle cx="5" cy="19" r="2"/></svg></span><strong data-i18n="guide.mode.route">Durante el trayecto</strong><span data-i18n="guide.mode.route.detail">Usa tu GPS y prioriza lo que viene</span></button>
+   <button type="button" class="guide-mode__button" data-guide-mode="nearby" aria-pressed="false"><span class="guide-mode__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg></span><strong data-i18n="guide.mode.nearby">Mi ubicación</strong><span data-i18n="guide.mode.nearby.detail">Ordena desde tu posición real</span></button>
   </div>
 
   <section class="guide-tools" data-i18n-aria="guide.tools.aria" aria-label="Búsqueda y orden">
@@ -64,7 +68,7 @@
    <label class="guide-field"><span class="guide-field__label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16m0 0-3-3m3 3 3-3M13 6h7m-7 6h5m-5 6h3"/></svg><span data-i18n="guide.sort.label">Ordenar por</span></span><select id="guide-sort"><option value="distance" data-i18n="guide.sort.distance">Distancia</option><option value="rating" data-i18n="guide.sort.rating">Valoración</option><option value="popularity" data-i18n="guide.sort.popularity">Popularidad</option><option value="alphabetical" data-i18n="guide.sort.alphabetical">A–Z</option></select></label>
   </section>
 
-  <nav class="guide-categories" id="guide-categories" data-i18n-aria="guide.categories.aria" aria-label="Categorías"></nav>
+  <div class="guide-categories-shell"><nav class="guide-categories" id="guide-categories" data-i18n-aria="guide.categories.aria" aria-label="Categorías" tabindex="0"></nav></div>
 
   <section class="guide-display-bar" data-i18n-aria="guide.display.aria" aria-label="Vista de resultados">
    <div><strong data-i18n="guide.display.title">Elige cómo explorar</strong><span data-i18n="guide.display.detail">La lista conserva tus filtros aunque ocultes el mapa.</span></div>
@@ -76,9 +80,9 @@
 
   <div class="guide-layout" data-map-visible="true">
    <section class="guide-map-shell" id="guide-map-shell" aria-labelledby="guide-map-title">
-    <div class="guide-map-head"><div><span class="guide-eyebrow" data-i18n="guide.map.eyebrow">Geometría real N-55</span><h2 id="guide-map-title" data-i18n="guide.map.title">Mapa del corredor</h2></div><div class="guide-map-controls"><button type="button" id="guide-map-fit" data-i18n-aria="guide.map.fit" aria-label="Ajustar mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 11 8-7 8 7v9h-6v-5h-4v5H4Z"/></svg></button><button type="button" id="guide-map-out" data-i18n-aria="guide.map.out" aria-label="Alejar">−</button><button type="button" id="guide-map-in" data-i18n-aria="guide.map.in" aria-label="Acercar">+</button></div></div>
+    <div class="guide-map-head"><div><span class="guide-eyebrow" data-i18n="guide.map.eyebrow">Geometría real N-55</span><h2 id="guide-map-title" data-i18n="guide.map.title">Mapa del corredor</h2></div><div class="guide-map-controls"><button type="button" id="guide-map-user" data-i18n-aria="guide.map.centerUser" aria-label="Centrar en mi ubicación" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg></button><button type="button" id="guide-map-fit" data-i18n-aria="guide.map.fit" aria-label="Ajustar mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 11 8-7 8 7v9h-6v-5h-4v5H4Z"/></svg></button><button type="button" id="guide-map-out" data-i18n-aria="guide.map.out" aria-label="Alejar">−</button><button type="button" id="guide-map-in" data-i18n-aria="guide.map.in" aria-label="Acercar">+</button></div></div>
     <div class="guide-map" id="guide-map"><div id="guide-map-canvas" role="application" data-i18n-aria="guide.map.aria" aria-label="Mapa de lugares y Ruta N-55"></div><p class="guide-map-fallback" id="guide-map-fallback" hidden data-i18n="guide.map.unavailable">El mapa no pudo cargar. La lista y los filtros siguen disponibles.</p></div>
-    <div class="guide-map-legend"><span><i class="guide-legend__route"></i> N-55</span><span><i class="guide-legend__apartment"></i> <span data-i18n="guide.legend.apartment">Departamento</span></span><span><i class="guide-legend__user"></i> <span data-i18n="guide.legend.user">Tu ubicación</span></span></div>
+    <div class="guide-map-legend"><span><i class="guide-legend__route"></i> N-55</span><span><i class="guide-legend__apartment"></i> <span data-i18n="guide.legend.apartment">Departamento</span></span><span><i class="guide-legend__landmark"></i> <span data-i18n="guide.legend.landmarks">Los Pincheira y Quincho del Valle</span></span><span><i class="guide-legend__user"></i> <span data-i18n="guide.legend.user">Estás aquí</span></span></div>
    </section>
 
    <section class="guide-results" id="guide-results-region" aria-labelledby="guide-results-title" aria-busy="true">
@@ -95,16 +99,16 @@
     <p data-i18n="guide.location.dialogBody">Tu posición sólo se usa en este dispositivo para ordenar y mostrar lugares. Nunca se agrega a enlaces ni al catálogo.</p>
     <button type="button" class="guide-location-choice" data-location-choice="once"><strong data-i18n="guide.location.once">Solo esta vez</strong><span data-i18n="guide.location.onceDetail">Toma una posición y deja de consultar.</span></button>
     <button type="button" class="guide-location-choice" data-location-choice="session"><strong data-i18n="guide.location.session">Durante esta sesión</strong><span data-i18n="guide.location.sessionDetail">Actualiza el orden mientras avanzas; se borra al salir o terminar el acceso.</span></button>
-    <button type="button" class="guide-location-choice" data-location-choice="none"><strong data-i18n="guide.location.none">Ahora no</strong><span data-i18n="guide.location.noneDetail">Usa Pinto como punto de partida y mantiene toda la guía disponible.</span></button>
+    <button type="button" class="guide-location-choice" data-location-choice="none"><strong data-i18n="guide.location.none">Ahora no</strong><span data-i18n="guide.location.noneDetail">Mantiene la guía disponible, sin fingir una ubicación ni calcular distancias desde ti.</span></button>
    </form>
   </dialog>
  </div>
- <script src="js/lang.js?v=10"></script>
+ <script src="js/lang.js?v=11"></script>
  <script src="js/access.js?v=4" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
- <script src="js/theme.js?v=7"></script>
+ <script src="js/theme.js?v=8"></script>
  <script src="assets/vendor/leaflet/leaflet.js" defer></script>
  <script src="assets/vendor/leaflet-markercluster/leaflet.markercluster.js" defer></script>
- <script src="js/nearby.js?v=8" defer></script>
+ <script src="js/nearby.js?v=9" defer></script>
  <script src="js/study-condition.js?v=1"></script>
 </body>
 </html>

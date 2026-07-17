@@ -23,7 +23,11 @@
   var mapShell = document.getElementById('guide-map-shell');
   var mapToggle = document.getElementById('guide-map-toggle');
   var mapToggleLabel = document.getElementById('guide-map-toggle-label');
+  var centerUser = document.getElementById('guide-map-user');
   var locationDialog = document.getElementById('guide-location-dialog');
+  var locationMeta = document.getElementById('guide-location-meta');
+  var locationAccuracy = document.getElementById('guide-location-accuracy');
+  var locationUpdated = document.getElementById('guide-location-updated');
   var layout = document.querySelector('.guide-layout');
   var total = document.getElementById('guide-place-total');
   if (!results || !locate || !categories || !mapCanvas) return;
@@ -43,6 +47,9 @@
   var markerCluster = null;
   var markers = new Map();
   var userMarker = null;
+  var userAccuracyCircle = null;
+  var lastAcceptedAt = 0;
+  var locationStatusKey = null;
   var MAP_VISIBILITY_KEY = 'cordal-guide-map-visible';
   var mapVisible = true;
 
@@ -121,21 +128,21 @@
   }
 
   function currentOrigin() {
-    if (mode === 'nearby') return userPosition || data.geometry.corridor.ruralStart;
-    if (mode === 'route') return data.geometry.corridor.ruralStart;
+    if (mode === 'nearby' || mode === 'route') return userPosition;
     return { lat: data.geometry.apartment.lat, lon: data.geometry.apartment.lon };
   }
 
   function placesForState() {
     var origin = currentOrigin();
+    if (!origin) return [];
     var query = normalize(search.value);
     var minimumRating = Number(rating.value || 0);
     var maximumDistance = Number(distance.value || 0);
     var userProgress = userPosition ? lineProjection(data._centerline, userPosition).progressMeters : 0;
     var list = publicPlaces.filter(function (place) {
       if (mode === 'apartment' && !place.discovery.apartment) return false;
-      if (mode !== 'apartment' && !place.discovery.corridor) return false;
-      if (mode === 'nearby' && userPosition && !showBehind.checked && place.discovery.routeProgressMeters < userProgress) return false;
+      if (mode === 'route' && !place.discovery.corridor) return false;
+      if (mode === 'route' && !showBehind.checked && place.discovery.routeProgressMeters < userProgress) return false;
       if (activeCategory !== 'all' && place.category !== activeCategory) return false;
       var directDistance = distanceKm(origin, place.location);
       if (maximumDistance && directDistance > maximumDistance) return false;
@@ -197,7 +204,7 @@
   function renderCategories() {
     var available = new Map();
     publicPlaces.forEach(function (place) {
-      var inMode = mode === 'apartment' ? place.discovery.apartment : place.discovery.corridor;
+      var inMode = mode === 'apartment' ? place.discovery.apartment : (mode === 'route' ? place.discovery.corridor : true);
       if (inMode) available.set(place.category, (available.get(place.category) || 0) + 1);
     });
     if (activeCategory !== 'all' && !available.has(activeCategory)) activeCategory = 'all';
@@ -210,21 +217,26 @@
   }
 
   function markerIcon(place, selected) {
+    if (/pincheir|quincho del valle/i.test(place.name)) return landmarkIcon(selected);
     return L.divIcon({
       className: 'guide-marker-wrap',
       html: '<span class="guide-marker' + (selected ? ' is-selected' : '') + '" style="--marker-color:' + escapeHtml(categoryColor(place.category)) + '"><i></i></span>',
-      iconSize: [30, 36],
-      iconAnchor: [15, 34],
+      iconSize: [44, 44],
+      iconAnchor: [22, 40],
       popupAnchor: [0, -30]
     });
   }
 
   function homeIcon() {
-    return L.divIcon({ className: 'guide-special-wrap', html: '<span class="guide-special guide-special--home" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 11 8-7 8 7v9h-6v-5h-4v5H4Z"/></svg></span>', iconSize: [34, 34], iconAnchor: [17, 17] });
+    return L.divIcon({ className: 'guide-special-wrap', html: '<span class="guide-special guide-special--home" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 11 8-7 8 7v9h-6v-5h-4v5H4Z"/></svg></span>', iconSize: [44, 44], iconAnchor: [22, 22] });
   }
 
   function userIcon() {
-    return L.divIcon({ className: 'guide-special-wrap', html: '<span class="guide-special guide-special--user" aria-hidden="true"><i></i></span>', iconSize: [34, 34], iconAnchor: [17, 17] });
+    return L.divIcon({ className: 'guide-special-wrap', html: '<span class="guide-special guide-special--user" aria-hidden="true"><i></i><b></b></span>', iconSize: [44, 44], iconAnchor: [22, 22] });
+  }
+
+  function landmarkIcon(selected) {
+    return L.divIcon({ className: 'guide-special-wrap', html: '<span class="guide-special guide-special--landmark' + (selected ? ' is-selected' : '') + '" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 5.2-7 13-7 13S5 14.2 5 9a7 7 0 0 1 7-7Z"/><circle cx="12" cy="9" r="2.2"/></svg></span>', iconSize: [44, 44], iconAnchor: [22, 41], popupAnchor: [0, -38] });
   }
 
   function initializeMap() {
@@ -256,17 +268,28 @@
     }
     L.geoJSON(corridor.geometry, { interactive: false, style: { color: '#e7a957', weight: 5, opacity: 0.92 } }).addTo(geometryLayer);
     L.marker([data.geometry.apartment.lat, data.geometry.apartment.lon], { icon: homeIcon(), zIndexOffset: 900, keyboard: false }).bindTooltip(t('guide.legend.apartment'), { direction: 'top' }).addTo(geometryLayer);
+    (data._landmarks || []).forEach(function (landmark) {
+      var alreadyListed = publicPlaces.some(function (place) { return distanceKm(place.location, landmark) < 0.04; });
+      if (!alreadyListed) L.marker([landmark.lat, landmark.lon], { icon: landmarkIcon(false), zIndexOffset: 930, keyboard: false }).bindTooltip(landmark.name, { direction: 'top' }).addTo(geometryLayer);
+    });
     updateUserMarker();
   }
 
   function updateUserMarker() {
     if (!map || !geometryLayer) return;
     if (userMarker) { geometryLayer.removeLayer(userMarker); userMarker = null; }
-    if (userPosition) userMarker = L.marker([userPosition.lat, userPosition.lon], { icon: userIcon(), zIndexOffset: 1000, keyboard: false }).bindTooltip(t('guide.legend.user'), { direction: 'top' }).addTo(geometryLayer);
+    if (userAccuracyCircle) { geometryLayer.removeLayer(userAccuracyCircle); userAccuracyCircle = null; }
+    if (userPosition) {
+      userAccuracyCircle = L.circle([userPosition.lat, userPosition.lon], { radius: Math.max(5, userPosition.accuracy || 0), interactive: false, color: '#2388d1', weight: 2, fillColor: '#4aa7e8', fillOpacity: 0.13, opacity: 0.72 }).addTo(geometryLayer);
+      userMarker = L.marker([userPosition.lat, userPosition.lon], { icon: userIcon(), zIndexOffset: 1100, keyboard: false, title: t('guide.legend.user') }).bindTooltip(t('guide.legend.user'), { direction: 'top', offset: [0, -14] }).addTo(geometryLayer);
+    }
+    if (centerUser) centerUser.disabled = !userPosition;
   }
 
   function popupHtml(place) {
-    return '<div class="guide-map-popup"><span style="--popup-color:' + escapeHtml(categoryColor(place.category)) + '">' + escapeHtml(categoryLabel(place.category)) + '</span><strong>' + escapeHtml(place.name) + '</strong><small>≈ ' + escapeHtml(formatDistance(place._distanceKm || distanceKm(currentOrigin(), place.location))) + '</small></div>';
+    var origin = currentOrigin();
+    var placeDistance = Number.isFinite(place._distanceKm) ? place._distanceKm : (origin ? distanceKm(origin, place.location) : null);
+    return '<div class="guide-map-popup"><span style="--popup-color:' + escapeHtml(categoryColor(place.category)) + '">' + escapeHtml(categoryLabel(place.category)) + '</span><strong>' + escapeHtml(place.name) + '</strong>' + (placeDistance === null ? '' : '<small>≈ ' + escapeHtml(formatDistance(placeDistance)) + '</small>') + '</div>';
   }
 
   function renderMapPlaces() {
@@ -311,6 +334,7 @@
     if (mapShell) mapShell.hidden = !mapVisible;
     if (layout) layout.setAttribute('data-map-visible', mapVisible ? 'true' : 'false');
     if (mapToggle) mapToggle.setAttribute('aria-expanded', mapVisible ? 'true' : 'false');
+    if (mapToggle) mapToggle.setAttribute('aria-pressed', mapVisible ? 'true' : 'false');
     var key = mapVisible ? 'guide.map.hide' : 'guide.map.show';
     if (mapToggleLabel) {
       mapToggleLabel.setAttribute('data-i18n', key);
@@ -344,8 +368,8 @@
 
   function updateModeCopy() {
     modeSummary.textContent = t('guide.mode.' + mode + '.summary');
-    showBehindWrap.hidden = mode !== 'nearby';
-    if (!userPosition) status.textContent = mode === 'nearby' ? t('guide.location.nearbyFallback') : t('guide.location.fallback');
+    showBehindWrap.hidden = mode !== 'route';
+    updateLocationStatus();
   }
 
   function render(shouldFit) {
@@ -357,7 +381,7 @@
     if (shouldFit) fitMap();
   }
 
-  function setMode(next) {
+  function setMode(next, requestedByUser) {
     mode = next;
     activeCategory = 'all';
     modeGroup.querySelectorAll('[data-guide-mode]').forEach(function (button) {
@@ -367,6 +391,7 @@
     });
     renderGeometry();
     render(true);
+    if (requestedByUser && mode !== 'apartment' && !userPosition) openLocationDialog();
   }
 
   function openLocationDialog() {
@@ -384,23 +409,80 @@
     watchId = null;
   }
 
-  function usePosition(position, nextMode) {
-    userPosition = { lat: position.coords.latitude, lon: position.coords.longitude, accuracy: position.coords.accuracy };
-    locationMode = nextMode;
-    status.textContent = t(nextMode === 'session' ? 'guide.location.sessionActive' : 'guide.location.onceActive') + (Number.isFinite(position.coords.accuracy) ? ' · ±' + Math.round(position.coords.accuracy) + ' m' : '');
-    locate.disabled = false;
-    updateUserMarker();
-    setMode('nearby');
+  function formatUpdatedTime(timestamp) {
+    var lang = window.GH_I18N ? window.GH_I18N.getLang() : 'es';
+    return new Intl.DateTimeFormat(lang === 'pt' ? 'pt-BR' : lang, { hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date(timestamp));
   }
 
-  function locationFailure() {
+  function updateLocationReadout() {
+    if (!userPosition) {
+      if (locationMeta) locationMeta.hidden = true;
+      if (centerUser) centerUser.disabled = true;
+      return;
+    }
+    var accuracy = Number(userPosition.accuracy);
+    var accuracyKey = accuracy <= 50 ? 'guide.location.accuracyGood' : 'guide.location.accuracyLow';
+    if (locationAccuracy) locationAccuracy.textContent = t(accuracyKey).replace('{meters}', Number.isFinite(accuracy) ? String(Math.round(accuracy)) : '—');
+    if (locationUpdated) locationUpdated.textContent = t('guide.location.updated').replace('{time}', formatUpdatedTime(userPosition.timestamp));
+    if (locationMeta) locationMeta.hidden = false;
+    if (centerUser) centerUser.disabled = false;
+  }
+
+  function updateLocationStatus() {
+    if (locationStatusKey) {
+      status.textContent = t(locationStatusKey);
+      return;
+    }
+    if (!userPosition) {
+      status.textContent = t(mode === 'apartment' ? 'guide.location.fallback' : 'guide.location.required');
+      return;
+    }
+    status.textContent = t(locationMode === 'session' ? 'guide.location.sessionActive' : 'guide.location.onceActive') + (Number.isFinite(Number(userPosition.accuracy)) ? ' · ±' + Math.round(Number(userPosition.accuracy)) + ' m' : '');
+  }
+
+  function centerOnUser() {
+    if (!map || !userPosition) return;
+    if (!mapVisible) setMapVisible(true, true);
+    map.setView([userPosition.lat, userPosition.lon], Math.max(map.getZoom(), 16), { animate: true });
+    if (userMarker) userMarker.openTooltip();
+  }
+
+  function usePosition(position, nextMode) {
+    var timestamp = Number(position.timestamp) || Date.now();
+    var nextPosition = { lat: position.coords.latitude, lon: position.coords.longitude, accuracy: position.coords.accuracy, timestamp: timestamp };
+    if (nextMode === 'session' && userPosition) {
+      var movedMeters = distanceKm(userPosition, nextPosition) * 1000;
+      var improvesAccuracy = Number(nextPosition.accuracy) + 10 < Number(userPosition.accuracy);
+      if (timestamp - lastAcceptedAt < 5000 && movedMeters < 12 && !improvesAccuracy) return;
+    }
+    userPosition = nextPosition;
+    lastAcceptedAt = timestamp;
+    locationMode = nextMode;
+    locationStatusKey = null;
+    updateLocationStatus();
+    locate.disabled = false;
+    updateLocationReadout();
+    updateUserMarker();
+    if (mode === 'apartment') setMode('nearby', false);
+    else render(true);
+  }
+
+  function locationFailure(error) {
     stopLocationWatch();
+    locate.disabled = false;
+    if (userPosition) {
+      locationMode = 'none';
+      locationStatusKey = 'guide.location.updateFailed';
+      updateLocationStatus();
+      return;
+    }
     locationMode = 'none';
     userPosition = null;
-    locate.disabled = false;
-    status.textContent = t('nearby.denied');
+    locationStatusKey = error && error.code === 1 ? 'guide.location.denied' : (error && error.code === 3 ? 'guide.location.timeout' : 'guide.location.unavailable');
+    updateLocationStatus();
+    updateLocationReadout();
     updateUserMarker();
-    setMode('nearby');
+    render(true);
   }
 
   function requestLocation(choice) {
@@ -409,30 +491,49 @@
     if (choice === 'none') {
       locationMode = 'none';
       userPosition = null;
-      status.textContent = t('guide.location.nearbyFallback');
+      locationStatusKey = null;
+      updateLocationStatus();
+      updateLocationReadout();
       updateUserMarker();
-      setMode('nearby');
+      render(true);
       return;
     }
     if (!navigator.geolocation) { locationFailure(); return; }
     locate.disabled = true;
-    status.textContent = t('nearby.locating');
-    var options = { enableHighAccuracy: false, timeout: 10000, maximumAge: choice === 'once' ? 120000 : 15000 };
+    locationStatusKey = 'nearby.locating';
+    updateLocationStatus();
+    var options = { enableHighAccuracy: true, timeout: 15000, maximumAge: choice === 'once' ? 0 : 5000 };
     if (choice === 'session') watchId = navigator.geolocation.watchPosition(function (position) { usePosition(position, 'session'); }, locationFailure, options);
     else navigator.geolocation.getCurrentPosition(function (position) { usePosition(position, 'once'); }, locationFailure, options);
   }
 
   modeGroup.addEventListener('click', function (event) {
     var button = event.target.closest('[data-guide-mode]');
-    if (button) setMode(button.getAttribute('data-guide-mode'));
+    if (button) setMode(button.getAttribute('data-guide-mode'), true);
   });
-  routeFeatured.addEventListener('click', function () { setMode('route'); modeGroup.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  routeFeatured.addEventListener('click', function () { setMode('route', true); modeGroup.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
   categories.addEventListener('click', function (event) {
     var button = event.target.closest('[data-guide-category]');
     if (!button) return;
     activeCategory = button.getAttribute('data-guide-category');
     render(true);
   });
+  categories.addEventListener('keydown', function (event) {
+    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+    var buttons = Array.prototype.slice.call(categories.querySelectorAll('[data-guide-category]'));
+    if (!buttons.length) return;
+    var current = buttons.indexOf(document.activeElement);
+    var direction = event.key === 'ArrowRight' ? 1 : -1;
+    var next = buttons[(current < 0 ? 0 : current + direction + buttons.length) % buttons.length];
+    event.preventDefault();
+    next.focus();
+    next.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  });
+  categories.addEventListener('wheel', function (event) {
+    if (categories.scrollWidth <= categories.clientWidth || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+    event.preventDefault();
+    categories.scrollLeft += event.deltaY;
+  }, { passive: false });
   [search, rating, distance, sort, showBehind].forEach(function (control) { control.addEventListener(control === search ? 'input' : 'change', function () { render(false); }); });
   locate.addEventListener('click', openLocationDialog);
   locationDialog.addEventListener('click', function (event) {
@@ -442,19 +543,21 @@
   });
   if (mapToggle) mapToggle.addEventListener('click', function () { setMapVisible(!mapVisible, true); });
   document.getElementById('guide-map-fit').addEventListener('click', fitMap);
+  if (centerUser) centerUser.addEventListener('click', centerOnUser);
   document.getElementById('guide-map-in').addEventListener('click', function () { if (map) map.zoomIn(); });
   document.getElementById('guide-map-out').addEventListener('click', function () { if (map) map.zoomOut(); });
   window.addEventListener('resize', function () { if (map) map.invalidateSize(); });
   window.addEventListener('pagehide', function () { stopLocationWatch(); userPosition = null; locationMode = 'none'; });
   document.addEventListener('cordal:access-ended', function () { stopLocationWatch(); userPosition = null; locationMode = 'none'; updateUserMarker(); });
 
-  if (window.GH_I18N) window.GH_I18N.subscribe(function () { renderQuality(); renderGeometry(); render(false); setMapVisible(mapVisible, false); });
+  if (window.GH_I18N) window.GH_I18N.subscribe(function () { renderQuality(); renderGeometry(); render(false); updateLocationReadout(); updateLocationStatus(); setMapVisible(mapVisible, false); });
 
-  fetch('data/destination-guide.json').then(function (response) {
-    if (!response.ok) throw new Error('destination guide unavailable');
-    return response.json();
-  }).then(function (payload) {
-    data = payload;
+  Promise.all([fetch('data/destination-guide.json'), fetch('data/nearby.json')]).then(function (responses) {
+    if (!responses[0].ok) throw new Error('destination guide unavailable');
+    return Promise.all([responses[0].json(), responses[1].ok ? responses[1].json() : Promise.resolve(null)]);
+  }).then(function (payloads) {
+    data = payloads[0];
+    data._landmarks = payloads[1] && payloads[1].coverage ? payloads[1].coverage.anchors || [] : [];
     if (loading) loading.hidden = true;
     if (resultsRegion) resultsRegion.setAttribute('aria-busy', 'false');
     publicPlaces = data.places.filter(function (place) { return !LODGING[place.category]; });

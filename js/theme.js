@@ -5,6 +5,13 @@
   var root = document.documentElement;
   var control = null;
 
+  function swapThemeImages(theme) {
+    document.querySelectorAll('img[data-theme-image]').forEach(function (image) {
+      var next = image.getAttribute(theme === 'dark' ? 'data-src-dark' : 'data-src-light');
+      if (next && image.getAttribute('src') !== next) image.setAttribute('src', next);
+    });
+  }
+
   function readTheme() {
     try {
       localStorage.removeItem('gh-theme');
@@ -16,7 +23,9 @@
   }
 
   function applyTheme(theme) {
-    root.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+    var nextTheme = theme === 'dark' ? 'dark' : 'light';
+    root.setAttribute('data-theme', nextTheme);
+    swapThemeImages(nextTheme);
     if (control) {
       var btns = control.querySelectorAll('button[data-theme-option]');
       for (var i = 0; i < btns.length; i++) {
@@ -24,7 +33,7 @@
         btn.setAttribute('aria-pressed', btn.getAttribute('data-theme-option') === theme ? 'true' : 'false');
       }
     }
-    document.dispatchEvent(new CustomEvent('cordal:theme-changed', { detail: { theme: theme } }));
+    document.dispatchEvent(new CustomEvent('cordal:theme-changed', { detail: { theme: nextTheme } }));
   }
 
   function setTheme(theme) {
@@ -68,6 +77,7 @@
     }
     if (!preferenceBar) return;
     preferenceBar.appendChild(control);
+    preferenceBar.setAttribute('data-preference-ready', 'true');
 
     function localizeControl() {
       if (!window.GH_I18N || typeof window.GH_I18N.t !== 'function') return;
