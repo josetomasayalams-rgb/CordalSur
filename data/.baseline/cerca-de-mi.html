@@ -8,9 +8,9 @@
   <title>Cerca de mí · CordalSur</title>
   <script>(function(){var t="";try{t=localStorage.getItem("gh-theme-v3")||""}catch(e){}if(t!=="light"&&t!=="dark"){t="dark"}document.documentElement.setAttribute("data-theme",t)})();</script>
   <script>(function(){var c=new URLSearchParams(location.search).get("condition");if(c==="a"||c==="b")document.documentElement.setAttribute("data-study-condition",c)})();</script>
-  <link rel="stylesheet" href="css/styles.css?v=8">
+  <link rel="stylesheet" href="css/styles.css?v=10">
   <link rel="stylesheet" href="css/section-palettes.css?v=3">
-  <link rel="stylesheet" href="css/access.css?v=3">
+  <link rel="stylesheet" href="css/access.css?v=4">
 </head>
 <body class="is-winter bg-actividades" data-section="nearby" data-page="nearby">
  <div class="app-container">
@@ -25,42 +25,60 @@
    <button type="button" data-lang="en" aria-pressed="false">EN</button>
   </div>
 
-  <section class="nearby-hero card">
-   <div class="nearby-hero__icon" aria-hidden="true">📍</div>
-   <div>
-    <h1 data-i18n="nav.nearby.t">Cerca de mí</h1>
-    <p data-i18n="nearby.intro">Encuentra comida, bencina, salud y servicios ordenados por distancia.</p>
+  <section class="guide-hero card">
+   <div class="guide-hero__copy">
+    <span class="guide-eyebrow" data-i18n="guide.eyebrow">Guía territorial CordalSur</span>
+    <h1 data-i18n="guide.title">Explora el valle y tu ruta</h1>
+    <p data-i18n="guide.intro">Lugares útiles, actividades y servicios con fuentes y distancias aproximadas.</p>
    </div>
-   <button type="button" class="nearby-locate" id="nearby-locate" data-i18n="nearby.locate">Usar mi ubicación</button>
-   <p class="nearby-status" id="nearby-status" role="status" aria-live="polite" data-i18n="nearby.home">Mostrando distancias desde el departamento (ubicación aproximada).</p>
+   <button type="button" class="guide-route-featured" id="guide-route-featured" data-i18n="guide.completeRoute">Explora la ruta completa a Chillán</button>
   </section>
 
   <aside class="nearby-emergency" data-i18n="nearby.emergency">En una emergencia llama de inmediato: SAMU 131 · Bomberos 132 · Carabineros 133.</aside>
 
-  <nav class="nearby-filters rest-filter-bar" id="nearby-filters">
-   <button type="button" class="rest-filter__btn rest-filter__btn--active" data-nearby-filter="all" data-i18n="nearby.cat.all">Todo</button>
-   <button type="button" class="rest-filter__btn" data-nearby-filter="food" data-i18n="nearby.cat.food">Restaurantes</button>
-   <button type="button" class="rest-filter__btn" data-nearby-filter="groceries" data-i18n="nearby.cat.groceries">Supermercados</button>
-   <button type="button" class="rest-filter__btn" data-nearby-filter="fuel" data-i18n="nearby.cat.fuel">Bencina</button>
-   <button type="button" class="rest-filter__btn" data-nearby-filter="health" data-i18n="nearby.cat.health">Salud</button>
-   <button type="button" class="rest-filter__btn" data-nearby-filter="hardware" data-i18n="nearby.cat.hardware">Ferreterías</button>
-   <button type="button" class="rest-filter__btn" data-nearby-filter="police" data-i18n="nearby.cat.police">Carabineros</button>
-   <button type="button" class="rest-filter__btn" data-nearby-filter="fire" data-i18n="nearby.cat.fire">Bomberos</button>
-   <button type="button" class="rest-filter__btn" data-nearby-filter="activities" data-i18n="nearby.cat.activities">Actividades</button>
-  </nav>
-
-  <div class="nearby-results-heading">
-   <strong data-i18n="nearby.sort">Más cerca primero</strong>
-   <span id="nearby-count" aria-live="polite"></span>
+  <div class="guide-mode" id="guide-mode" role="group" data-i18n-aria="guide.mode.aria" aria-label="Modo de exploración">
+   <button type="button" class="guide-mode__button is-active" data-guide-mode="apartment" aria-pressed="true"><strong data-i18n="guide.mode.apartment">Desde el departamento</strong><span data-i18n="guide.mode.apartment.detail">Radio automático hasta Los Pincheira</span></button>
+   <button type="button" class="guide-mode__button" data-guide-mode="nearby" aria-pressed="false"><strong data-i18n="guide.mode.nearby">Cerca de mí</strong><span data-i18n="guide.mode.nearby.detail">Prioriza lo que viene en la N-55</span></button>
+   <button type="button" class="guide-mode__button" data-guide-mode="route" aria-pressed="false"><strong data-i18n="guide.mode.route">Ruta completa</strong><span data-i18n="guide.mode.route.detail">Pinto a Condominio Andes Chillán</span></button>
   </div>
-  <div class="nearby-grid" id="nearby-results"></div>
-  <p class="nearby-empty" id="nearby-empty" hidden data-i18n="nearby.empty">No hay lugares catastrados en esta categoría. Usa la búsqueda en Maps.</p>
-  <a class="nearby-search" id="nearby-search" target="_blank" rel="noopener" data-i18n="nearby.search">Buscar más cerca en Maps</a>
+
+  <section class="guide-location card">
+   <div>
+    <strong data-i18n="guide.location.title">Tu ubicación es opcional</strong>
+    <p class="nearby-status" id="nearby-status" role="status" aria-live="polite" data-i18n="guide.location.fallback">La guía funciona sin permiso y no guarda tu posición.</p>
+   </div>
+   <button type="button" class="nearby-locate" id="nearby-locate" data-i18n="nearby.locate">Usar mi ubicación</button>
+   <label class="guide-behind" id="guide-behind-wrap" hidden><input type="checkbox" id="guide-behind"> <span data-i18n="guide.showBehind">Mostrar también lugares ya pasados</span></label>
+  </section>
+
+  <section class="guide-tools" data-i18n-aria="guide.tools.aria" aria-label="Búsqueda y orden">
+   <label class="guide-field guide-field--search"><span data-i18n="guide.search.label">Buscar</span><input id="guide-search" type="search" data-i18n-placeholder="guide.search.placeholder" placeholder="Nombre, categoría o localidad"></label>
+   <label class="guide-field"><span data-i18n="guide.rating.label">Valoración mínima</span><select id="guide-rating"><option value="0" data-i18n="guide.rating.any">Cualquiera</option><option value="3">3+</option><option value="4">4+</option><option value="4.5">4,5+</option></select></label>
+   <label class="guide-field"><span data-i18n="guide.distance.label">Distancia máxima</span><select id="guide-distance"><option value="0" data-i18n="guide.distance.any">Sin límite</option><option value="5">5 km</option><option value="10">10 km</option><option value="25">25 km</option><option value="50">50 km</option></select></label>
+   <label class="guide-field"><span data-i18n="guide.sort.label">Ordenar por</span><select id="guide-sort"><option value="distance" data-i18n="guide.sort.distance">Distancia</option><option value="rating" data-i18n="guide.sort.rating">Valoración</option><option value="popularity" data-i18n="guide.sort.popularity">Popularidad</option><option value="alphabetical" data-i18n="guide.sort.alphabetical">A–Z</option></select></label>
+  </section>
+
+  <nav class="guide-categories" id="guide-categories" data-i18n-aria="guide.categories.aria" aria-label="Categorías"></nav>
+
+  <div class="guide-layout">
+   <section class="guide-map-shell" aria-labelledby="guide-map-title">
+    <div class="guide-map-head"><div><span class="guide-eyebrow" data-i18n="guide.map.eyebrow">Geometría real N-55</span><h2 id="guide-map-title" data-i18n="guide.map.title">Mapa del corredor</h2></div><div class="guide-map-controls"><button type="button" id="guide-map-fit" data-i18n-aria="guide.map.fit" aria-label="Ajustar mapa">⌂</button><button type="button" id="guide-map-out" data-i18n-aria="guide.map.out" aria-label="Alejar">−</button><button type="button" id="guide-map-in" data-i18n-aria="guide.map.in" aria-label="Acercar">+</button></div></div>
+    <div class="guide-map" id="guide-map"><svg id="guide-map-svg" viewBox="0 0 1000 620" role="img" data-i18n-aria="guide.map.aria" aria-label="Mapa de lugares y Ruta N-55"></svg><div class="guide-map-popover" id="guide-map-popover" hidden></div></div>
+    <div class="guide-map-legend"><span><i class="guide-legend__route"></i> N-55</span><span><i class="guide-legend__apartment"></i> <span data-i18n="guide.legend.apartment">Departamento</span></span><span><i class="guide-legend__user"></i> <span data-i18n="guide.legend.user">Tu ubicación</span></span><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a></div>
+   </section>
+
+   <section class="guide-results" aria-labelledby="guide-results-title">
+    <div class="nearby-results-heading"><div><span class="guide-eyebrow" id="guide-mode-summary"></span><h2 id="guide-results-title" data-i18n="guide.results.title">Lugares encontrados</h2></div><strong id="nearby-count" aria-live="polite">0</strong></div>
+    <div class="guide-quality" id="guide-quality"></div>
+    <div class="nearby-grid" id="nearby-results"></div>
+    <p class="nearby-empty" id="nearby-empty" hidden data-i18n="guide.empty">No hay lugares que coincidan con estos filtros.</p>
+   </section>
+  </div>
  </div>
  <script src="js/lang.js?v=6"></script>
- <script src="js/access.js?v=2" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
+ <script src="js/access.js?v=3" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
  <script src="js/theme.js?v=5"></script>
- <script src="js/nearby.js?v=1" defer></script>
+ <script src="js/nearby.js?v=3" defer></script>
  <script src="js/study-condition.js?v=1"></script>
 </body>
 </html>

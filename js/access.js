@@ -14,6 +14,7 @@
   var rechecking = false;
   var sessionExpiresAt = 0;
   var sessionRole = '';
+  var localPreview = false;
 
   document.documentElement.classList.add('access-pending');
 
@@ -97,6 +98,10 @@
 
   function isSessionFailure(error) {
     return Boolean(error && (error.status === 401 || error.code === 'session_expired' || error.code === 'session_revoked'));
+  }
+
+  function isLocalPreviewHost() {
+    return ['localhost', '127.0.0.1', '::1', '[::1]'].indexOf(location.hostname) >= 0;
   }
 
   async function api(path, options) {
@@ -315,6 +320,7 @@
   }
 
   async function revalidateSession() {
+    if (localPreview) return;
     if (rechecking) return;
     if (!token()) {
       if (document.documentElement.classList.contains('access-granted')) {
@@ -355,7 +361,21 @@
     window.dispatchEvent(new CustomEvent('cordal:access-granted', { detail: { role: sessionRole } }));
   }
 
+  function unlockLocalPreview() {
+    localPreview = true;
+    sessionRole = 'local-preview';
+    document.documentElement.classList.remove('access-pending');
+    document.documentElement.classList.add('access-granted');
+    document.documentElement.setAttribute('data-access-role', sessionRole);
+    if (root) root.remove();
+    window.dispatchEvent(new CustomEvent('cordal:access-granted', { detail: { role: sessionRole } }));
+  }
+
   async function boot() {
+    if (isLocalPreviewHost()) {
+      unlockLocalPreview();
+      return;
+    }
     ensureRoot();
     render();
     if (!apiBase()) {

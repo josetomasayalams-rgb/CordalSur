@@ -1,0 +1,163 @@
+{
+  "_doc": "Field-level corrections verified on 2026-07-17. Runtime admin exports use the same action shape.",
+  "overrides": [
+    {
+      "id": "verified-merge-los-pincheira-osm",
+      "action": "merge",
+      "placeId": "manual-los-pincheiras-restaurant",
+      "targetPlaceId": "osm-node-5397096121-los-pincheiras-restaurant",
+      "payload": {},
+      "reason": "Same OSM node, coordinates and establishment; spelling varies between Pincheira and Pincheiras."
+    },
+    {
+      "id": "verified-merge-olivas-osm",
+      "action": "merge",
+      "placeId": "manual-oliva-s-restaurant",
+      "targetPlaceId": "osm-node-988305632-olivas-restaurant",
+      "payload": {},
+      "reason": "Same exact OSM location and restaurant; punctuation differs."
+    },
+    {
+      "id": "verified-merge-observatorio-osm",
+      "action": "merge",
+      "placeId": "manual-observatorio-cafe",
+      "targetPlaceId": "osm-way-28945463-observatorio",
+      "payload": {},
+      "reason": "Same exact OSM feature center and café; the shorter map name omits the category."
+    },
+    {
+      "id": "verified-merge-copec-osm",
+      "action": "merge",
+      "placeId": "manual-copec-recinto",
+      "targetPlaceId": "osm-node-307548419-copec",
+      "payload": {},
+      "reason": "Same exact fuel-station node; the curated name adds the locality."
+    },
+    {
+      "id": "verified-merge-bomberos-las-trancas-osm",
+      "action": "merge",
+      "placeId": "manual-bomberos-las-trancas",
+      "targetPlaceId": "osm-way-593911598-3a-compania-de-bomberos-las-trancas",
+      "payload": {},
+      "reason": "Same exact fire-station feature; ordinal typography differs."
+    },
+    {
+      "id": "verified-merge-bike-park-osm",
+      "action": "merge",
+      "placeId": "manual-mtb-bike-park",
+      "targetPlaceId": "osm-node-13646131950-bikepark-nevados-de-chillan",
+      "payload": {},
+      "reason": "Same exact sports-centre node and operator; Bikepark and Bike Park are spelling variants."
+    },
+    {
+      "id": "verified-rucahue-website",
+      "action": "website",
+      "placeId": "rucahue",
+      "payload": {
+        "websiteUrl": "https://www.rucahueescalador.cl/servicios/minimarket",
+        "sourceUrl": "https://www.rucahueescalador.cl/servicios/minimarket",
+        "checkedAt": "2026-07-17T00:00:00.000Z"
+      },
+      "reason": "The official Rucahue website identifies its minimarket service."
+    },
+    {
+      "id": "verified-turbinas-website",
+      "action": "website",
+      "placeId": "parque-las-turbinas",
+      "payload": {
+        "websiteUrl": "https://www.turismovallelastrancas.com/atractivos/parque-las-turbinas/",
+        "sourceUrl": "https://www.turismovallelastrancas.com/atractivos/parque-las-turbinas/",
+        "checkedAt": "2026-07-17T00:00:00.000Z"
+      },
+      "reason": "The official destination portal publishes a dedicated attraction page."
+    },
+    {
+      "id": "verified-turbinas-instagram",
+      "action": "instagram",
+      "placeId": "parque-las-turbinas",
+      "payload": {
+        "instagramUrl": "https://www.instagram.com/parquelasturbinas",
+        "verifiedFrom": "https://www.turismovallelastrancas.com/atractivos/parque-las-turbinas/",
+        "checkedAt": "2026-07-17T00:00:00.000Z"
+      },
+      "reason": "The dedicated destination page links directly to the attraction account."
+    },
+    {
+      "id": "verified-cueva-website",
+      "action": "website",
+      "placeId": "atr-cueva-pincheira",
+      "payload": {
+        "websiteUrl": "https://www.turismovallelastrancas.com/atractivos/cueva-de-los-pincheira/",
+        "sourceUrl": "https://www.turismovallelastrancas.com/atractivos/cueva-de-los-pincheira/",
+        "checkedAt": "2026-07-17T00:00:00.000Z"
+      },
+      "reason": "The official destination portal publishes a dedicated attraction page."
+    },
+    {
+      "id": "verified-valle-hermoso-website",
+      "action": "website",
+      "placeId": "term-valle-hermoso",
+      "payload": {
+        "websiteUrl": "https://www.nevadosdechillan.com/experiencias-diarias",
+        "sourceUrl": "https://www.nevadosdechillan.com/experiencias-diarias",
+        "checkedAt": "2026-07-17T00:00:00.000Z"
+      },
+      "reason": "Nevados de Chillán publishes current 2026 Valle Hermoso programs."
+    },
+    {
+      "id": "verified-valle-hermoso-instagram",
+      "action": "instagram",
+      "placeId": "term-valle-hermoso",
+      "payload": {
+        "instagramUrl": "https://www.instagram.com/nevadosdechillan/",
+        "verifiedFrom": "https://www.nevadosdechillan.com/",
+        "checkedAt": "2026-07-17T00:00:00.000Z"
+      },
+      "reason": "The operator website links its official corporate Instagram account."
+    },
+    {
+      "id": "verified-bike-park-website",
+      "action": "website",
+      "placeId": "mtb-bike-park",
+      "payload": {
+        "websiteUrl": "https://www.nevadosdechillan.com/bike-park",
+        "sourceUrl": "https://www.nevadosdechillan.com/bike-park",
+        "checkedAt": "2026-07-17T00:00:00.000Z"
+      },
+      "reason": "Official Bike Park page."
+    },
+    {
+      "id": "verified-bike-park-instagram",
+      "action": "instagram",
+      "placeId": "mtb-bike-park",
+      "payload": {
+        "instagramUrl": "https://www.instagram.com/nevadosdechillan/",
+        "verifiedFrom": "https://www.nevadosdechillan.com/",
+        "checkedAt": "2026-07-17T00:00:00.000Z"
+      },
+      "reason": "The operator website links its official corporate Instagram account."
+    },
+    {
+      "id": "verified-bike-park-seasonal-close",
+      "action": "closed",
+      "placeId": "mtb-bike-park",
+      "payload": {
+        "closed": true,
+        "checkedAt": "2026-07-17T00:00:00.000Z",
+        "sourceUrl": "https://www.nevadosdechillan.com/bike-park"
+      },
+      "reason": "Official page states Bike Park closed after the 2026-04-05 season end."
+    },
+    {
+      "id": "verified-fumarolas-website",
+      "action": "website",
+      "placeId": "fumarolas-olla-del-mote",
+      "payload": {
+        "websiteUrl": "https://www.turismovallelastrancas.com/atractivos/fumarolas/",
+        "sourceUrl": "https://www.turismovallelastrancas.com/atractivos/fumarolas/",
+        "checkedAt": "2026-07-17T00:00:00.000Z"
+      },
+      "reason": "The official destination portal describes the attraction; access remains unconfirmed."
+    }
+  ]
+}

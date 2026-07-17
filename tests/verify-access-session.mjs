@@ -35,7 +35,7 @@ function jsonResponse(status, body) {
   };
 }
 
-async function runScenario({ adminToken = '', guestToken = '', now = Date.parse('2026-07-13T18:00:00Z'), fetchHandler }) {
+async function runScenario({ adminToken = '', guestToken = '', hostname = 'example.test', now = Date.parse('2026-07-13T18:00:00Z'), fetchHandler }) {
   const documentListeners = new Map();
   const windowListeners = new Map();
   const timers = new Map();
@@ -111,7 +111,7 @@ async function runScenario({ adminToken = '', guestToken = '', now = Date.parse(
       return fetchHandler(url, options, fetchCalls.length);
     },
     localStorage,
-    location: { hostname: 'example.test' },
+    location: { hostname },
     sessionStorage,
     setTimeout(listener, delay = 0) {
       timerId += 1;
@@ -147,6 +147,28 @@ async function runScenario({ adminToken = '', guestToken = '', now = Date.parse(
 }
 
 const tests = [
+  ['localhost opens a temporary preview without contacting the access service', async () => {
+    const app = await runScenario({
+      hostname: '127.0.0.1',
+      fetchHandler: async () => { throw new Error('local preview must not fetch'); }
+    });
+    assert.equal(app.htmlClasses.contains('access-granted'), true);
+    assert.equal(app.htmlClasses.contains('access-pending'), false);
+    assert.equal(app.attributes.get('data-access-role'), 'local-preview');
+    assert.equal(app.fetchCalls.length, 0);
+  }],
+  ['a non-local hostname remains protected by the remote access service', async () => {
+    const app = await runScenario({
+      hostname: 'cordalsur.example',
+      fetchHandler: async (url) => {
+        assert.match(url, /\/v1\/access\/status$/);
+        return jsonResponse(200, { active: false, timeZone: 'America/Santiago' });
+      }
+    });
+    assert.equal(app.htmlClasses.contains('access-granted'), false);
+    assert.equal(app.attributes.get('data-access-role'), undefined);
+    assert.equal(app.fetchCalls.length, 1);
+  }],
   ['a valid administrator session opens the protected platform', async () => {
     const app = await runScenario({
       adminToken: 'admin-token',
