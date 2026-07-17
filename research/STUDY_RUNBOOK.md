@@ -12,12 +12,13 @@ El estudio humano puede sostener una afirmación causal limitada: que la paleta 
 2. No cambies resultados, márgenes, exclusiones ni tamaño muestral después de abrir los datos observados.
 3. Obtén la revisión ética o consentimiento que exija tu institución. No recolectes nombres, correo, teléfono, PIN, dirección IP ni contenido libre identificable.
 4. Recluta 80 participantes para buscar al menos 72 sesiones completas. La cifra incorpora margen operativo sobre un objetivo de potencia 0,80 para un efecto pareado estandarizado pequeño-moderado de 0,35.
-5. Asigna en bloques balanceados las secuencias `uniform-section-adaptive` y `section-adaptive-uniform`.
+5. Usa `randomization.csv`: asigna en bloques de cuatro las secuencias `uniform-section-adaptive` y `section-adaptive-uniform`, con 40 participantes por secuencia. No reemplaces manualmente el orden.
 
 ## Aplicación
 
 - Cada participante completa las mismas ocho tareas en ambas condiciones: Wi-Fi, check-in, restaurante, actividad, clima, tickets, check-out y emergencia.
 - Contrabalancea el orden de las tareas dentro de cada condición con una lista preparada antes de comenzar.
+- Aplica exactamente `period_1_task_order` y `period_2_task_order` de la fila anónima asignada. La lista se genera de forma determinista desde la semilla preregistrada.
 - Mantén el mismo dispositivo y tema claro/oscuro para las dos condiciones de una persona.
 - Registra éxito binario por tarea, duración desde la presentación hasta la respuesta y errores observables definidos antes de comenzar.
 - Después de cada condición registra el promedio de estética visual, la intención de reutilización y las escalas autorizadas. No reproduzcas ítems protegidos sin comprobar sus permisos.

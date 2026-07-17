@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { analyzeStudyCsv } from '../scripts/analyze-section-theme-study.mjs';
+import { renderRandomization } from '../scripts/generate-section-theme-randomization.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const configText = fs.readFileSync(path.join(ROOT, 'research', 'study-config.json'), 'utf8');
@@ -12,6 +13,7 @@ const fixtureText = fs.readFileSync(
 );
 const config = JSON.parse(configText);
 const result = analyzeStudyCsv(fixtureText, configText);
+const randomizationText = fs.readFileSync(path.join(ROOT, 'research', 'randomization.csv'), 'utf8');
 
 assert.equal(config.status, 'preregister-before-data-collection');
 assert.equal(config.plannedCompletedParticipants, 72);
@@ -32,6 +34,22 @@ assert.match(result.protocol.configSha256, /^[a-f0-9]{64}$/);
 assert.equal(result.metrics.visual_aesthetics.estimate, 0.591667);
 assert.deepEqual(result.metrics.visual_aesthetics.confidenceInterval, [0.491676, 0.691657]);
 assert.equal(result.metrics.task_success_rate.holmAdjustedPValue, 0.020239);
+
+assert.equal(renderRandomization(config), randomizationText);
+const assignments = randomizationText.trim().split('\n').slice(1).map((line) => line.split(','));
+assert.equal(assignments.length, 80);
+assert.equal(new Set(assignments.map((row) => row[0])).size, 80);
+assert.equal(assignments.filter((row) => row[2] === 'uniform-section-adaptive').length, 40);
+assert.equal(assignments.filter((row) => row[2] === 'section-adaptive-uniform').length, 40);
+for (let block = 1; block <= 20; block += 1) {
+  const blockRows = assignments.filter((row) => Number(row[1]) === block);
+  assert.equal(blockRows.length, 4);
+  assert.equal(blockRows.filter((row) => row[2] === 'uniform-section-adaptive').length, 2);
+  for (const row of blockRows) {
+    assert.deepEqual(new Set(row[5].split('|')), new Set(config.randomization.tasks));
+    assert.deepEqual(new Set(row[6].split('|')), new Set(config.randomization.tasks));
+  }
+}
 
 const tooSmallObserved = fixtureText.replaceAll('synthetic,', 'observed,');
 const tooSmallResult = analyzeStudyCsv(tooSmallObserved, configText);

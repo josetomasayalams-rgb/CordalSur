@@ -11,6 +11,20 @@
   "targetStandardizedPairedEffect": 0.35,
   "plannedCompletedParticipants": 72,
   "plannedRecruitment": 80,
+  "randomization": {
+    "seed": "cordalsur-section-theme-v1-2026-07-17",
+    "blockSize": 4,
+    "tasks": [
+      "wifi",
+      "checkin",
+      "restaurant",
+      "activity",
+      "weather",
+      "tickets",
+      "checkout",
+      "emergency"
+    ]
+  },
   "primary": {
     "column": "visual_aesthetics",
     "label": "Perceived visual aesthetics",
