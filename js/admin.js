@@ -8,7 +8,11 @@
   var app = document.getElementById('admin-app');
   var mode = 'checking';
   var stays = [];
+  var placeOverrides = [];
+  var placeOverridesAvailable = true;
+  var adminSection = 'stays';
   var editingId = null;
+  var editingOverrideId = null;
   var busy = false;
   var notice = null;
   var expiresAt = '';
@@ -195,12 +199,77 @@
       '<button class="cs-button cs-button--secondary" type="button" data-action="cancel"' + (busy ? ' disabled' : '') + '>' + t('admin.cancel') + '</button></div></form></section>';
   }
 
+  function editOverride() {
+    return placeOverrides.find(function (item) { return item.id === editingOverrideId; }) || null;
+  }
+
+  function overridePayloadSummary(item) {
+    var payload = item.payload || {};
+    if (item.action === 'category') return payload.category;
+    if (item.action === 'location') return payload.lat + ', ' + payload.lon + ' · ' + payload.coordinateKind;
+    if (item.action === 'website') return payload.websiteUrl || t('admin.override.removeValue');
+    if (item.action === 'instagram') return payload.instagramUrl || t('admin.override.removeValue');
+    if (item.action === 'closed') return payload.closed ? t('admin.override.closedYes') : t('admin.override.closedNo');
+    if (item.action === 'merge') return item.targetPlaceId;
+    return payload.name + ' · ' + payload.category;
+  }
+
+  function overrideCard(item) {
+    var disabled = busy ? ' disabled' : '';
+    return '<article class="cs-stay-card cs-override-card"><div><span class="cs-status">' + escapeHtml(t('admin.override.action.' + item.action)) + '</span>' +
+      '<h3>' + escapeHtml(item.placeId) + '</h3><div class="cs-stay-meta"><span><strong>' + escapeHtml(t('admin.override.value')) + ':</strong> ' + escapeHtml(overridePayloadSummary(item)) + '</span>' +
+      '<span><strong>' + escapeHtml(t('admin.override.reason')) + ':</strong> ' + escapeHtml(item.reason) + '</span><span>v' + escapeHtml(item.revision) + ' · ' + escapeHtml(displayDate(item.updatedAt)) + '</span></div></div>' +
+      '<div class="cs-card-actions"><button class="cs-button cs-button--secondary cs-button--small" type="button" data-action="override-edit" data-id="' + item.id + '"' + disabled + '>' + t('admin.edit') + '</button>' +
+      '<button class="cs-button cs-button--secondary cs-button--small" type="button" data-action="override-revert" data-id="' + item.id + '"' + disabled + '>' + t('admin.override.revert') + '</button>' +
+      '<button class="cs-button cs-button--danger cs-button--small" type="button" data-action="override-delete" data-id="' + item.id + '"' + disabled + '>' + t('admin.delete') + '</button></div></article>';
+  }
+
+  function overrideFieldViews(values) {
+    var payload = values.payload || {};
+    return '<div class="cs-override-fields" data-override-fields>' +
+      '<div data-override-for="category add" class="cs-field"><label for="override-category">' + t('admin.override.category') + '</label><input id="override-category" value="' + escapeHtml(payload.category || '') + '" placeholder="restaurant"></div>' +
+      '<div data-override-for="location add" class="cs-field"><label for="override-lat">' + t('admin.override.latitude') + '</label><input id="override-lat" type="number" step="any" value="' + escapeHtml(payload.lat) + '"></div>' +
+      '<div data-override-for="location add" class="cs-field"><label for="override-lon">' + t('admin.override.longitude') + '</label><input id="override-lon" type="number" step="any" value="' + escapeHtml(payload.lon) + '"></div>' +
+      '<div data-override-for="location" class="cs-field"><label for="override-coordinate-kind">' + t('admin.override.coordinateKind') + '</label><select id="override-coordinate-kind"><option value="entrance"' + (payload.coordinateKind === 'entrance' ? ' selected' : '') + '>entrance</option><option value="parking"' + (payload.coordinateKind === 'parking' ? ' selected' : '') + '>parking</option><option value="manual_verified"' + (!payload.coordinateKind || payload.coordinateKind === 'manual_verified' ? ' selected' : '') + '>manual_verified</option></select></div>' +
+      '<div data-override-for="website add" class="cs-field cs-field--wide"><label for="override-website">' + t('admin.override.website') + '</label><input id="override-website" type="url" value="' + escapeHtml(payload.websiteUrl || '') + '" placeholder="https://"></div>' +
+      '<div data-override-for="instagram" class="cs-field"><label for="override-instagram">Instagram</label><input id="override-instagram" type="url" value="' + escapeHtml(payload.instagramUrl || '') + '" placeholder="https://instagram.com/"></div>' +
+      '<div data-override-for="instagram" class="cs-field"><label for="override-verified-from">' + t('admin.override.verifiedFrom') + '</label><input id="override-verified-from" type="url" value="' + escapeHtml(payload.verifiedFrom || '') + '" placeholder="https://"></div>' +
+      '<label data-override-for="closed" class="cs-checkbox cs-field--wide"><input id="override-closed" type="checkbox"' + (payload.closed ? ' checked' : '') + '><span>' + t('admin.override.closed') + '</span></label>' +
+      '<div data-override-for="closed" class="cs-field"><label for="override-checked-at">' + t('admin.override.checkedAt') + '</label><input id="override-checked-at" type="date" value="' + escapeHtml(payload.checkedAt || '') + '"></div>' +
+      '<div data-override-for="merge" class="cs-field cs-field--wide"><label for="override-target">' + t('admin.override.targetPlace') + '</label><input id="override-target" value="' + escapeHtml(values.targetPlaceId || '') + '" required></div>' +
+      '<div data-override-for="add" class="cs-field cs-field--wide"><label for="override-name">' + t('admin.override.name') + '</label><input id="override-name" value="' + escapeHtml(payload.name || '') + '"></div>' +
+      '<div data-override-for="add" class="cs-field"><label for="override-municipality">' + t('admin.override.municipality') + '</label><input id="override-municipality" value="' + escapeHtml(payload.municipality || '') + '"></div>' +
+      '<div data-override-for="add" class="cs-field"><label for="override-phone">' + t('admin.override.phone') + '</label><input id="override-phone" value="' + escapeHtml(payload.phone || '') + '"></div>' +
+      '<div data-override-for="add" class="cs-field cs-field--wide"><label for="override-source">' + t('admin.override.sourceUrl') + '</label><input id="override-source" type="url" value="' + escapeHtml(payload.sourceUrl || '') + '" placeholder="https://"></div>' +
+      '</div>';
+  }
+
+  function overrideFormView() {
+    if (editingOverrideId === null) return '';
+    var item = editOverride();
+    var values = item || { action: 'category', payload: {} };
+    return '<section class="cs-form-panel" aria-labelledby="override-form-title"><h2 id="override-form-title">' + t(item ? 'admin.override.edit' : 'admin.override.new') + '</h2>' +
+      '<p class="cs-hint">' + t('admin.override.hint') + '</p><form id="override-form" novalidate><div class="cs-form-grid">' +
+      '<div class="cs-field"><label for="override-action">' + t('admin.override.action') + '</label><select id="override-action">' + ['category', 'location', 'website', 'instagram', 'closed', 'merge', 'add'].map(function (action) { return '<option value="' + action + '"' + (values.action === action ? ' selected' : '') + '>' + escapeHtml(t('admin.override.action.' + action)) + '</option>'; }).join('') + '</select></div>' +
+      '<div class="cs-field"><label for="override-place-id">' + t('admin.override.placeId') + '</label><input id="override-place-id" value="' + escapeHtml(values.placeId || '') + '" required></div>' +
+      overrideFieldViews(values) +
+      '<div class="cs-field cs-field--wide"><label for="override-reason">' + t('admin.override.reason') + '</label><textarea id="override-reason" minlength="3" maxlength="500" required>' + escapeHtml(values.reason || '') + '</textarea></div></div>' +
+      '<div class="cs-form-actions"><button class="cs-button" type="submit"' + (busy ? ' disabled' : '') + '>' + t('admin.save') + '</button><button class="cs-button cs-button--secondary" type="button" data-action="override-cancel">' + t('admin.cancel') + '</button></div></form></section>';
+  }
+
+  function overridesView() {
+    if (!placeOverridesAvailable) return '<div class="cs-dashboard-head"><div><h2>' + t('admin.override.title') + '</h2><p class="cs-lead">' + t('admin.override.unavailable') + '</p></div></div>';
+    var list = placeOverrides.length ? '<div class="cs-stay-list">' + placeOverrides.map(overrideCard).join('') + '</div>' : '<p class="cs-empty">' + t('admin.override.empty') + '</p>';
+    return '<div class="cs-dashboard-head"><div><h2>' + t('admin.override.title') + '</h2><p class="cs-lead">' + t('admin.override.subtitle') + '</p></div><button class="cs-button" type="button" data-action="override-new">' + t('admin.override.new') + '</button></div>' + list + overrideFormView();
+  }
+
   function dashboardView() {
     var list = stays.length ? '<div class="cs-stay-list">' + stays.map(stayCard).join('') + '</div>' : '<p class="cs-empty">' + t('admin.empty') + '</p>';
     var expiration = expiresAt ? '<p class="cs-hint">' + t('admin.expires') + ': ' + escapeHtml(displayDate(expiresAt)) + '</p>' : '';
     return '<section class="cs-panel"><div class="cs-dashboard-head"><div><h1>' + t('admin.dashboard.title') + '</h1><p class="cs-lead">' + t('admin.dashboard.subtitle') + '</p>' + expiration + '</div>' +
-      '<div class="cs-admin-actions"><a class="cs-button" href="index.html">' + t('admin.enterSite') + '</a><button class="cs-button cs-button--secondary" type="button" data-action="new"' + (busy ? ' disabled' : '') + '>' + t('admin.newStay') + '</button><button class="cs-text-button" type="button" data-action="logout"' + (busy ? ' disabled' : '') + '>' + t('admin.logout') + '</button></div></div>' +
-      alertHtml() + list + formView() + '</section>';
+      '<div class="cs-admin-actions"><a class="cs-button" href="index.html">' + t('admin.enterSite') + '</a><button class="cs-text-button" type="button" data-action="logout"' + (busy ? ' disabled' : '') + '>' + t('admin.logout') + '</button></div></div>' +
+      '<div class="cs-admin-tabs" role="tablist"><button type="button" role="tab" data-admin-section="stays" aria-selected="' + (adminSection === 'stays') + '">' + t('admin.tabs.stays') + '</button><button type="button" role="tab" data-admin-section="places" aria-selected="' + (adminSection === 'places') + '">' + t('admin.tabs.places') + '</button></div>' +
+      alertHtml() + (adminSection === 'stays' ? '<div class="cs-dashboard-head cs-dashboard-head--section"><h2>' + t('admin.tabs.stays') + '</h2><button class="cs-button cs-button--secondary" type="button" data-action="new"' + (busy ? ' disabled' : '') + '>' + t('admin.newStay') + '</button></div>' + list + formView() : overridesView()) + '</section>';
   }
 
   function render() {
@@ -236,12 +305,36 @@
     if (loginForm) loginForm.addEventListener('submit', login);
     var stayForm = document.getElementById('stay-form');
     if (stayForm) stayForm.addEventListener('submit', saveStay);
+    var overrideForm = document.getElementById('override-form');
+    if (overrideForm) overrideForm.addEventListener('submit', saveOverride);
+    var overrideAction = document.getElementById('override-action');
+    if (overrideAction) {
+      overrideAction.addEventListener('change', updateOverrideFields);
+      updateOverrideFields();
+    }
     var revealButtons = document.querySelectorAll('[data-reveal]');
     for (var index = 0; index < revealButtons.length; index += 1) bindReveal(revealButtons[index]);
     var actionButtons = app.querySelectorAll('[data-action]');
     for (var actionIndex = 0; actionIndex < actionButtons.length; actionIndex += 1) {
       actionButtons[actionIndex].addEventListener('click', handleAction);
     }
+    app.querySelectorAll('[data-admin-section]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        adminSection = button.getAttribute('data-admin-section');
+        editingId = null;
+        editingOverrideId = null;
+        notice = null;
+        render();
+      });
+    });
+  }
+
+  function updateOverrideFields() {
+    var action = document.getElementById('override-action');
+    if (!action) return;
+    app.querySelectorAll('[data-override-for]').forEach(function (field) {
+      field.hidden = field.getAttribute('data-override-for').split(/\s+/).indexOf(action.value) < 0;
+    });
   }
 
   async function login(event) {
@@ -268,7 +361,7 @@
       expiresAt = result.expiresAt;
       scheduleExpiry(expiresAt);
       mode = 'dashboard';
-      await loadStays();
+      await Promise.all([loadStays(), loadPlaceOverrides()]);
     } catch (error) {
       clearToken();
       mode = 'login';
@@ -282,6 +375,92 @@
   async function loadStays() {
     var result = await api('/v1/admin/stays');
     stays = result.stays || [];
+  }
+
+  async function loadPlaceOverrides() {
+    try {
+      var result = await api('/v1/admin/place-overrides');
+      placeOverrides = result.overrides || [];
+      placeOverridesAvailable = true;
+    } catch (error) {
+      if (error && error.status === 404) {
+        placeOverrides = [];
+        placeOverridesAvailable = false;
+        return;
+      }
+      throw error;
+    }
+  }
+
+  function inputValue(id) {
+    var input = document.getElementById(id);
+    return input ? input.value.trim() : '';
+  }
+
+  function overridePayload(action) {
+    if (action === 'category') return { category: inputValue('override-category') };
+    if (action === 'location') return { lat: Number(inputValue('override-lat')), lon: Number(inputValue('override-lon')), coordinateKind: inputValue('override-coordinate-kind') };
+    if (action === 'website') return { websiteUrl: inputValue('override-website') || null };
+    if (action === 'instagram') return { instagramUrl: inputValue('override-instagram') || null, verifiedFrom: inputValue('override-verified-from') || null };
+    if (action === 'closed') return { closed: document.getElementById('override-closed').checked, checkedAt: inputValue('override-checked-at') || null };
+    if (action === 'merge') return {};
+    return {
+      name: inputValue('override-name'), category: inputValue('override-category'),
+      lat: Number(inputValue('override-lat')), lon: Number(inputValue('override-lon')),
+      municipality: inputValue('override-municipality') || null,
+      websiteUrl: inputValue('override-website') || null, phone: inputValue('override-phone') || null,
+      sourceUrl: inputValue('override-source') || null
+    };
+  }
+
+  async function saveOverride(event) {
+    event.preventDefault();
+    if (busy) return;
+    var item = editOverride();
+    var action = inputValue('override-action');
+    var payload = {
+      action: action,
+      placeId: inputValue('override-place-id'),
+      targetPlaceId: action === 'merge' ? inputValue('override-target') : undefined,
+      payload: overridePayload(action),
+      reason: inputValue('override-reason')
+    };
+    busy = true;
+    notice = null;
+    render();
+    try {
+      await api('/v1/admin/place-overrides' + (item ? '/' + item.id : ''), {
+        method: item ? 'PATCH' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+      });
+      notice = { type: 'success', key: item ? 'admin.success.updated' : 'admin.success.created' };
+      editingOverrideId = null;
+      await loadPlaceOverrides();
+    } catch (error) {
+      handleSessionError(error);
+      notice = { type: 'error', key: errorKey(error) };
+    } finally {
+      busy = false;
+      render();
+    }
+  }
+
+  async function mutateOverride(id, action) {
+    if (busy) return;
+    busy = true;
+    notice = null;
+    render();
+    try {
+      await api('/v1/admin/place-overrides/' + id + (action === 'revert' ? '/revert' : ''), { method: action === 'delete' ? 'DELETE' : 'POST' });
+      notice = { type: 'success', key: action === 'delete' ? 'admin.success.deleted' : 'admin.override.reverted' };
+      editingOverrideId = null;
+      await loadPlaceOverrides();
+    } catch (error) {
+      handleSessionError(error);
+      notice = { type: 'error', key: errorKey(error) };
+    } finally {
+      busy = false;
+      render();
+    }
   }
 
   async function saveStay(event) {
@@ -367,6 +546,11 @@
     else if (action === 'toggle') mutate(id, 'PATCH', { enabled: button.getAttribute('data-enabled') === 'true' }, 'admin.success.updated');
     else if (action === 'finish' && window.confirm(t('admin.confirm.finish'))) mutate(id, 'PATCH', { finish: true }, 'admin.success.finished');
     else if (action === 'delete' && window.confirm(t('admin.confirm.delete'))) mutate(id, 'DELETE', null, 'admin.success.deleted');
+    else if (action === 'override-new') { editingOverrideId = ''; notice = null; render(); focusOverrideForm(); }
+    else if (action === 'override-edit') { editingOverrideId = id; notice = null; render(); focusOverrideForm(); }
+    else if (action === 'override-cancel') { editingOverrideId = null; render(); }
+    else if (action === 'override-delete' && window.confirm(t('admin.override.confirmDelete'))) mutateOverride(id, 'delete');
+    else if (action === 'override-revert' && window.confirm(t('admin.override.confirmRevert'))) mutateOverride(id, 'revert');
   }
 
   function focusForm() {
@@ -376,10 +560,19 @@
     }, 0);
   }
 
+  function focusOverrideForm() {
+    setTimeout(function () {
+      var input = document.getElementById('override-place-id');
+      if (input) { input.focus(); input.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }, 0);
+  }
+
   function logout() {
     if (expiryTimer) clearTimeout(expiryTimer);
     clearToken();
     stays = [];
+    placeOverrides = [];
+    placeOverridesAvailable = true;
     expiresAt = '';
     editingId = null;
     formDraft = null;
@@ -395,6 +588,8 @@
     expiryTimer = setTimeout(function () {
       clearToken();
       stays = [];
+      placeOverrides = [];
+      placeOverridesAvailable = true;
       expiresAt = '';
       editingId = null;
       formDraft = null;
@@ -427,7 +622,7 @@
       if (session.role !== 'admin') throw new Error('wrong_role');
       expiresAt = session.expiresAt;
       scheduleExpiry(expiresAt);
-      await loadStays();
+      await Promise.all([loadStays(), loadPlaceOverrides()]);
       mode = 'dashboard';
     } catch (error) {
       clearToken();

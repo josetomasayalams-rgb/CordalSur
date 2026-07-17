@@ -552,3 +552,18 @@ html[data-theme="dark"] .cs-stay-card { background: rgba(24, 40, 33, 0.9); }
   .cs-spinner { animation-duration: 1600ms; }
   .cs-button { transition: none; }
 }
+
+.cs-admin-tabs { display: flex; gap: 6px; margin: 22px 0; padding: 5px; border: 1px solid var(--cs-line); border-radius: 14px; background: color-mix(in srgb, var(--cs-brand) 6%, transparent); }
+.cs-admin-tabs button { flex: 1; min-height: 44px; border: 0; border-radius: 10px; background: transparent; color: var(--cs-muted); font: 750 .82rem/1 Manrope, sans-serif; cursor: pointer; }
+.cs-admin-tabs button[aria-selected="true"] { background: var(--cs-surface-solid); color: var(--cs-brand-strong); box-shadow: 0 5px 16px rgba(10, 30, 24, .12); }
+.cs-dashboard-head--section { margin: 8px 0 14px; }
+.cs-dashboard-head--section h2, .cs-dashboard-head h2 { margin: 0; color: var(--cs-ink); font-size: 1.15rem; }
+.cs-override-card { border-left: 4px solid var(--cs-warning); }
+.cs-override-fields { display: grid; grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.cs-override-fields [hidden] { display: none !important; }
+.cs-field textarea { width: 100%; min-height: 100px; box-sizing: border-box; resize: vertical; border: 1px solid var(--cs-line); border-radius: 12px; padding: 12px 14px; background: var(--cs-surface-solid); color: var(--cs-ink); font: 500 .86rem/1.45 Manrope, sans-serif; }
+.cs-field textarea:focus { outline: 3px solid color-mix(in srgb, var(--cs-focus) 34%, transparent); border-color: var(--cs-focus); }
+html[data-theme="dark"] .cs-field textarea { background: rgba(7, 15, 12, 0.58); }
+@media (max-width: 640px) {
+  .cs-override-fields { grid-template-columns: 1fr; }
+}
