@@ -77,7 +77,7 @@ for (const [file, html] of [['index.html', index], ['check-in.html', checkin]]) 
     fail(`${file} must show a safe, icon-based link to the canonical Instagram profile`);
   }
 }
-if (!checkin.includes('css/styles.css?v=6')) {
+if (!checkin.includes('css/styles.css?v=7')) {
   fail('check-in must use the current brand styles');
 }
 if (hostData.urls?.['quick.wa'] !== `https://wa.me/${phone}`) {
@@ -109,9 +109,15 @@ for (const token of ['#153b33', '#d9a24f']) {
 if (!styles.includes("font-family: 'Manrope'") || !accessStyles.includes('font-family: Manrope')) {
   fail('the guide and access screen must use local Manrope');
 }
-if (!read('js/theme.js').includes("matchMedia('(prefers-color-scheme: dark)')") ||
-    !index.includes('matchMedia("(prefers-color-scheme: dark)")')) {
-  fail('initial theme must follow the device while preserving manual selection');
+if (!read('js/theme.js').includes("return 'dark';") ||
+    !index.includes('if(t!=="light"&&t!=="dark"){t="dark"}') ||
+    !index.includes('js/theme.js?v=5')) {
+  fail('the first visit must default to dark while preserving manual selection');
+}
+if (!styles.includes('--photo-overlay-home') || !styles.includes('--photo-overlay-inner') ||
+    !styles.includes('var(--photo-overlay-home)') || !styles.includes('var(--photo-overlay-inner)') ||
+    !index.includes('js/backgrounds.js?v=2')) {
+  fail('photos must use the cache-busted, theme-aware green and ivory filters');
 }
 
 if (!index.includes('href="instrucciones.html#wifi"') || !index.includes('quick-access__item--instagram')) {

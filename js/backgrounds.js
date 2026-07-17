@@ -13,7 +13,6 @@
     'css/bg/winter/home-08-bosque-otono'
   ];
   var intervalMs = 10000;
-  var gradient = 'linear-gradient(180deg, rgba(243,247,250,0) 0%, rgba(243,247,250,0.35) 55%, rgba(243,247,250,0.92) 100%)';
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
   var ext = supportsWebP() ? '.webp' : '.jpg';
   var currentIndex = 0;
@@ -37,7 +36,7 @@
   }
 
   function backgroundValue(index) {
-    return gradient + ', url("' + imageUrl(index) + '")';
+    return 'url("' + imageUrl(index) + '")';
   }
 
   function preload(index) {

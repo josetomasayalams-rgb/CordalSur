@@ -4,16 +4,6 @@
   var STORAGE_KEY = 'gh-theme-v3';
   var root = document.documentElement;
   var control = null;
-  var systemTheme = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-
-  function hasSavedTheme() {
-    try {
-      var saved = localStorage.getItem(STORAGE_KEY);
-      return saved === 'light' || saved === 'dark';
-    } catch (e) {
-      return false;
-    }
-  }
 
   function readTheme() {
     try {
@@ -22,7 +12,7 @@
       var saved = localStorage.getItem(STORAGE_KEY);
       if (saved === 'light' || saved === 'dark') return saved;
     } catch (e) {}
-    return systemTheme && systemTheme.matches ? 'dark' : 'light';
+    return 'dark';
   }
 
   function applyTheme(theme) {
@@ -99,17 +89,6 @@
   }
 
   applyTheme(readTheme());
-
-  if (systemTheme) {
-    var followSystemTheme = function (event) {
-      if (!hasSavedTheme()) applyTheme(event.matches ? 'dark' : 'light');
-    };
-    if (typeof systemTheme.addEventListener === 'function') {
-      systemTheme.addEventListener('change', followSystemTheme);
-    } else if (typeof systemTheme.addListener === 'function') {
-      systemTheme.addListener(followSystemTheme);
-    }
-  }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', buildControl);
