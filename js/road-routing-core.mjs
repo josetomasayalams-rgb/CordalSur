@@ -36,19 +36,28 @@ function projectOnSegment(a, b, target) {
 }
 
 export function prepareNetwork(raw) {
-  if (!raw || raw.schemaVersion !== 1 || !Array.isArray(raw.nodes) || !Array.isArray(raw.segments)) throw new Error('invalid driving network');
+  if (!raw || ![1, 2].includes(raw.schemaVersion) || !Array.isArray(raw.nodes) || !Array.isArray(raw.segments)) throw new Error('invalid driving network');
+  const defaultImpedance = raw.schemaVersion === 2
+    ? Number(raw.profile?.impedance?.defaultFactor ?? 1)
+    : 1;
+  if (!Number.isFinite(defaultImpedance) || defaultImpedance < 1) throw new Error('invalid driving network impedance');
   const nodes = raw.nodes.map((node) => ({ lat: Number(node[0]), lon: Number(node[1]) }));
-  const segments = raw.segments.map((segment, index) => ({
-    index,
-    from: Number(segment[0]),
-    to: Number(segment[1]),
-    meters: Number(segment[2]),
-    flags: Number(segment[3])
-  }));
+  const segments = raw.segments.map((segment, index) => {
+    const impedance = raw.schemaVersion === 2 ? Number(segment[4] ?? defaultImpedance) : 1;
+    if (!Number.isFinite(impedance) || impedance < 1) throw new Error('invalid driving network impedance');
+    return {
+      index,
+      from: Number(segment[0]),
+      to: Number(segment[1]),
+      meters: Number(segment[2]),
+      flags: Number(segment[3]),
+      impedance
+    };
+  });
   const adjacency = Array.from({ length: nodes.length }, () => []);
   for (const segment of segments) {
-    if (segment.flags & 1) adjacency[segment.from].push({ to: segment.to, meters: segment.meters });
-    if (segment.flags & 2) adjacency[segment.to].push({ to: segment.from, meters: segment.meters });
+    if (segment.flags & 1) adjacency[segment.from].push({ to: segment.to, meters: segment.meters, impedance: segment.impedance });
+    if (segment.flags & 2) adjacency[segment.to].push({ to: segment.from, meters: segment.meters, impedance: segment.impedance });
   }
   return { ...raw, nodes, segments, adjacency, graph: networkIdentity(raw) };
 }
@@ -72,13 +81,13 @@ export function snapToNetwork(network, target, maxDistanceMeters = 1000) {
 
 class MinHeap {
   constructor() { this.items = []; }
-  push(node, distance) {
-    const item = { node, distance };
+  push(node, cost, meters) {
+    const item = { node, cost, meters };
     this.items.push(item);
     let index = this.items.length - 1;
     while (index > 0) {
       const parent = (index - 1) >> 1;
-      if (this.items[parent].distance <= distance) break;
+      if (compareRoute(this.items[parent], item) <= 0) break;
       this.items[index] = this.items[parent];
       index = parent;
     }
@@ -94,8 +103,8 @@ class MinHeap {
         const left = index * 2 + 1;
         const right = left + 1;
         if (left >= this.items.length) break;
-        const child = right < this.items.length && this.items[right].distance < this.items[left].distance ? right : left;
-        if (this.items[child].distance >= last.distance) break;
+        const child = right < this.items.length && compareRoute(this.items[right], this.items[left]) < 0 ? right : left;
+        if (compareRoute(this.items[child], last) >= 0) break;
         this.items[index] = this.items[child];
         index = child;
       }
@@ -105,56 +114,100 @@ class MinHeap {
   }
 }
 
+function compareRoute(left, right) {
+  return left.cost - right.cost || left.meters - right.meters;
+}
+
+function shouldReplace(costs, meters, node, candidateCost, candidateMeters) {
+  return candidateCost < costs[node] || (candidateCost === costs[node] && candidateMeters < meters[node]);
+}
+
 function seedOrigin(network, originSnap) {
-  const distances = new Float64Array(network.nodes.length);
-  distances.fill(Infinity);
+  const costs = new Float64Array(network.nodes.length);
+  const meters = new Float64Array(network.nodes.length);
+  costs.fill(Infinity);
+  meters.fill(Infinity);
   const heap = new MinHeap();
   const segment = network.segments[originSnap.segment];
-  if (!segment) return { distances, heap };
+  if (!segment) return { costs, meters, heap };
   const offset = originSnap.offsetMeters;
   if (segment.flags & 1) {
-    const value = offset + (1 - originSnap.fraction) * segment.meters;
-    distances[segment.to] = value;
-    heap.push(segment.to, value);
+    const roadMeters = (1 - originSnap.fraction) * segment.meters;
+    const candidateMeters = offset + roadMeters;
+    const candidateCost = offset + roadMeters * segment.impedance;
+    costs[segment.to] = candidateCost;
+    meters[segment.to] = candidateMeters;
+    heap.push(segment.to, candidateCost, candidateMeters);
   }
   if (segment.flags & 2) {
-    const value = offset + originSnap.fraction * segment.meters;
-    if (value < distances[segment.from]) {
-      distances[segment.from] = value;
-      heap.push(segment.from, value);
+    const roadMeters = originSnap.fraction * segment.meters;
+    const candidateMeters = offset + roadMeters;
+    const candidateCost = offset + roadMeters * segment.impedance;
+    if (shouldReplace(costs, meters, segment.from, candidateCost, candidateMeters)) {
+      costs[segment.from] = candidateCost;
+      meters[segment.from] = candidateMeters;
+      heap.push(segment.from, candidateCost, candidateMeters);
     }
   }
-  return { distances, heap };
+  return { costs, meters, heap };
 }
 
 function dijkstra(network, originSnap) {
-  const { distances, heap } = seedOrigin(network, originSnap);
+  const { costs, meters, heap } = seedOrigin(network, originSnap);
   while (heap.items.length) {
     const current = heap.pop();
-    if (!current || current.distance !== distances[current.node]) continue;
+    if (!current || current.cost !== costs[current.node] || current.meters !== meters[current.node]) continue;
     for (const edge of network.adjacency[current.node]) {
-      const candidate = current.distance + edge.meters;
-      if (candidate < distances[edge.to]) {
-        distances[edge.to] = candidate;
-        heap.push(edge.to, candidate);
+      const candidateCost = current.cost + edge.meters * edge.impedance;
+      const candidateMeters = current.meters + edge.meters;
+      if (shouldReplace(costs, meters, edge.to, candidateCost, candidateMeters)) {
+        costs[edge.to] = candidateCost;
+        meters[edge.to] = candidateMeters;
+        heap.push(edge.to, candidateCost, candidateMeters);
       }
     }
   }
-  return distances;
+  return { costs, meters };
 }
 
-function destinationDistance(network, distances, originSnap, destinationSnap) {
+function destinationDistance(network, graphRoutes, originSnap, destinationSnap, directAccessMeters = Infinity) {
   if (!destinationSnap) return Infinity;
   const segment = network.segments[destinationSnap.segment];
   if (!segment) return Infinity;
-  let best = Infinity;
-  if (segment.flags & 1) best = Math.min(best, distances[segment.from] + destinationSnap.fraction * segment.meters);
-  if (segment.flags & 2) best = Math.min(best, distances[segment.to] + (1 - destinationSnap.fraction) * segment.meters);
-  if (originSnap.segment === destinationSnap.segment) {
-    if ((segment.flags & 1) && destinationSnap.fraction >= originSnap.fraction) best = Math.min(best, originSnap.offsetMeters + (destinationSnap.fraction - originSnap.fraction) * segment.meters);
-    if ((segment.flags & 2) && destinationSnap.fraction <= originSnap.fraction) best = Math.min(best, originSnap.offsetMeters + (originSnap.fraction - destinationSnap.fraction) * segment.meters);
+  let best = { cost: Infinity, meters: Infinity };
+  function consider(baseNode, roadMeters) {
+    const candidate = {
+      cost: graphRoutes.costs[baseNode] + roadMeters * segment.impedance + destinationSnap.offsetMeters,
+      meters: graphRoutes.meters[baseNode] + roadMeters + destinationSnap.offsetMeters
+    };
+    if (compareRoute(candidate, best) < 0) best = candidate;
   }
-  return best + destinationSnap.offsetMeters;
+  if (segment.flags & 1) consider(segment.from, destinationSnap.fraction * segment.meters);
+  if (segment.flags & 2) consider(segment.to, (1 - destinationSnap.fraction) * segment.meters);
+  if (originSnap.segment === destinationSnap.segment) {
+    if ((segment.flags & 1) && destinationSnap.fraction >= originSnap.fraction) {
+      const roadMeters = (destinationSnap.fraction - originSnap.fraction) * segment.meters;
+      const candidate = {
+        cost: originSnap.offsetMeters + roadMeters * segment.impedance + destinationSnap.offsetMeters,
+        meters: originSnap.offsetMeters + roadMeters + destinationSnap.offsetMeters
+      };
+      if (compareRoute(candidate, best) < 0) best = candidate;
+    }
+    if ((segment.flags & 2) && destinationSnap.fraction <= originSnap.fraction) {
+      const roadMeters = (originSnap.fraction - destinationSnap.fraction) * segment.meters;
+      const candidate = {
+        cost: originSnap.offsetMeters + roadMeters * segment.impedance + destinationSnap.offsetMeters,
+        meters: originSnap.offsetMeters + roadMeters + destinationSnap.offsetMeters
+      };
+      if (compareRoute(candidate, best) < 0) best = candidate;
+    }
+    const sharesAccess = Math.abs(destinationSnap.fraction - originSnap.fraction) <= 1e-6;
+    if (sharesAccess && Number.isFinite(directAccessMeters)) {
+      const candidate = { cost: directAccessMeters, meters: directAccessMeters };
+      if (compareRoute(candidate, best) < 0) best = candidate;
+    }
+  }
+  return best.meters;
 }
 
 export function routeDistances(network, origin, destinationSnaps = network.destinations || []) {
@@ -165,15 +218,21 @@ export function routeDistances(network, origin, destinationSnaps = network.desti
     return { coverage: 'outside-network', graph, originSnap: null, distances: {} };
   }
   const rawOrigin = isSnap ? null : { lat: Number(origin.lat), lon: Number(origin.lon) };
-  const originSnap = isSnap ? origin : snapToNetwork(network, rawOrigin);
+  const snapLimitMeters = Number(network.profile?.snapLimitMeters);
+  const originSnap = isSnap ? origin : snapToNetwork(
+    network,
+    rawOrigin,
+    Number.isFinite(snapLimitMeters) && snapLimitMeters > 0 ? snapLimitMeters : 1000
+  );
   if (!originSnap || !network.segments[originSnap.segment]) {
     return { coverage: 'outside-network', graph, originSnap: null, distances: {} };
   }
-  const graphDistances = dijkstra(network, originSnap);
+  const graphRoutes = dijkstra(network, originSnap);
   const distances = {};
   for (const destination of destinationSnaps) {
-    const meters = destinationDistance(network, graphDistances, originSnap, destination.snap);
     const direct = rawOrigin && destination.location ? haversineMeters(rawOrigin, destination.location) : 0;
+    const sharedAccessMeters = rawOrigin && destination.location ? direct : Infinity;
+    const meters = destinationDistance(network, graphRoutes, originSnap, destination.snap, sharedAccessMeters);
     distances[destination.id] = Number.isFinite(meters) && meters + 1 >= direct ? {
       meters: Math.ceil(Math.max(meters, direct) * 10) / 10,
       accessNearby: destination.snap.quality === 'access_nearby',

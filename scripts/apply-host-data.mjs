@@ -448,6 +448,16 @@ const SVG_MAPS = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><p
 const SVG_IG = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.41a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" fill="#E4405F"/></svg>`;
 const SVG_WEB = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#4285F4" stroke-width="1.6" fill="none"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" stroke="#4285F4" stroke-width="1.6" fill="none"/></svg>`;
 
+function isRoutingEligible(place) {
+  return place.routingEligible !== false && place.status !== 'candidate_coordinate';
+}
+
+function sortableRoadDistance(place) {
+  return isRoutingEligible(place) && Number.isFinite(place.discovery?.apartmentRoadDistanceMeters)
+    ? place.discovery.apartmentRoadDistanceMeters
+    : Infinity;
+}
+
 // Public catalog v10: every guest-facing card derives from the normalized
 // destination snapshot. host-data remains an editorial provider, but it no
 // longer creates a competing runtime catalog.
@@ -455,7 +465,7 @@ const ACTIVITY_CATEGORIES = new Set(['tourism', 'thermal_baths', 'ski', 'trail',
 const LODGING_CATEGORIES = new Set(['hotel', 'cabin']);
 const publicApartmentPlaces = destinationGuide.places
   .filter((place) => place.discovery && place.discovery.apartment && !LODGING_CATEGORIES.has(place.category))
-  .sort((left, right) => (left.discovery.apartmentRoadDistanceMeters ?? Infinity) - (right.discovery.apartmentRoadDistanceMeters ?? Infinity) || left.name.localeCompare(right.name));
+  .sort((left, right) => sortableRoadDistance(left) - sortableRoadDistance(right) || left.name.localeCompare(right.name));
 const activityPlaces = publicApartmentPlaces.filter((place) => ACTIVITY_CATEGORIES.has(place.category));
 const provisionPlaces = publicApartmentPlaces.filter((place) => !ACTIVITY_CATEGORIES.has(place.category));
 
@@ -475,9 +485,12 @@ function catalogAction(url, key, label, type, className = '') {
 
 function canonicalCard(place) {
   const category = categoryFor(place.category);
-  const distanceMeters = Number.isFinite(place.discovery.apartmentRoadDistanceMeters) ? place.discovery.apartmentRoadDistanceMeters : null;
-  const address = place.municipality || fieldValue(place.address) || '';
+  const routingEligible = isRoutingEligible(place);
+  const distanceMeters = routingEligible && Number.isFinite(place.discovery.apartmentRoadDistanceMeters) ? place.discovery.apartmentRoadDistanceMeters : null;
+  const address = fieldValue(place.address) || place.municipality || '';
+  const pendingLocation = `${address ? `${attrEsc(address)} <span aria-hidden="true">·</span> ` : ''}<span data-i18n="guide.coordinate.pendingLocation">Ubicación exacta por confirmar</span>`;
   const approximate = place.coordinateKind === 'center_candidate' || place.status === 'candidate_coordinate';
+  const precision = place.coordinatePrecision || (routingEligible ? place.coordinateKind : 'unverified');
   const closed = place.operatingStatus === 'closed';
   const phone = fieldValue(place.phone);
   const website = fieldValue(place.website);
@@ -487,17 +500,17 @@ function canonicalCard(place) {
     ? `<span class="catalog-rating"><b>★ ${attrEsc(rating.value)}</b><span aria-hidden="true"> · </span>${attrEsc(rating.reviewCount || 0)} <span data-i18n="guide.reviews">reseñas</span></span>`
     : '';
   const phoneHref = phone ? `tel:${String(phone).replace(/[^+\d]/g, '')}` : '';
-  return `      <article class="rest-card catalog-card" data-id="${attrEsc(place.id)}" data-category="${attrEsc(place.category)}" data-lat="${attrEsc(place.location.lat)}" data-lon="${attrEsc(place.location.lon)}" data-distance="${distanceMeters ?? ''}" data-distance-source="${distanceMeters === null ? 'unknown' : 'road-apartment'}" data-apartment-distance="${distanceMeters ?? ''}" data-apartment-access-nearby="${place.discovery.roadAccessNearby ? 'true' : 'false'}" data-road-access-nearby="${place.discovery.roadAccessNearby ? 'true' : 'false'}" style="--catalog-color:${attrEsc(category.color)}">
+  return `      <article class="rest-card catalog-card" data-id="${attrEsc(place.id)}" data-category="${attrEsc(place.category)}" data-lat="${attrEsc(place.location.lat)}" data-lon="${attrEsc(place.location.lon)}" data-routing-eligible="${routingEligible ? 'true' : 'false'}" data-coordinate-precision="${attrEsc(precision)}" data-distance="${distanceMeters ?? ''}" data-distance-source="${distanceMeters === null ? 'unknown' : 'road-apartment'}" data-apartment-distance="${distanceMeters ?? ''}" data-apartment-access-nearby="${routingEligible && place.discovery.roadAccessNearby ? 'true' : 'false'}" data-road-access-nearby="${routingEligible && place.discovery.roadAccessNearby ? 'true' : 'false'}" style="--catalog-color:${attrEsc(category.color)}">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
             <span class="catalog-card__category" data-i18n="guide.cat.${attrEsc(place.category)}">${attrEsc(category.label)}</span>
             <h3 class="rest-card__name">${attrEsc(place.name)}</h3>
-            <p>${address ? attrEsc(address) : '<span data-i18n="guide.location.unknown">Sector por confirmar</span>'}</p>
+            <p>${routingEligible ? (address ? attrEsc(address) : '<span data-i18n="guide.location.unknown">Sector por confirmar</span>') : pendingLocation}</p>
           </div>
-          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+          ${routingEligible ? '<strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>' : ''}
         </header>
-        ${approximate ? '<p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>' : ''}
+        ${approximate && routingEligible ? '<p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>' : ''}
         ${closed ? '<p class="catalog-warning catalog-warning--closed" data-i18n="guide.status.closed">Cerrado según la última verificación. Revisa el sitio oficial antes de viajar.</p>' : ''}
         ${ratingHtml}
         <div class="catalog-actions">
@@ -536,7 +549,7 @@ function catalogToolbar(kind, places) {
 function canonicalCatalog(kind, titleKey, title, introKey, intro, places) {
   const graph = destinationGuide.meta && destinationGuide.meta.drivingNetwork || {};
   const apartment = destinationGuide.geometry.apartment;
-  return `    <section class="canonical-catalog" data-canonical-catalog="${kind}" data-apartment-lat="${attrEsc(apartment.lat)}" data-apartment-lon="${attrEsc(apartment.lon)}" data-graph-schema-version="${attrEsc(graph.schemaVersion ?? '')}" data-graph-version="${attrEsc(graph.generatedAt || '')}" data-graph-hash="${attrEsc(graph.responseSha256 || '')}">
+  return `    <section class="canonical-catalog" data-canonical-catalog="${kind}" data-apartment-lat="${attrEsc(apartment.lat)}" data-apartment-lon="${attrEsc(apartment.lon)}" data-graph-schema-version="${attrEsc(graph.schemaVersion ?? '')}" data-graph-version="${attrEsc(graph.networkVersion || graph.generatedAt || '')}" data-graph-hash="${attrEsc(graph.networkHash || graph.artifactSha256 || graph.responseSha256 || '')}">
       <div class="catalog-heading"><div><span class="guide-eyebrow" data-i18n="catalog.eyebrow">Selección territorial verificada</span><h2 class="section-title" data-i18n="${titleKey}">${title}</h2><p data-i18n="${introKey}">${intro}</p></div><span class="catalog-total"><b>${places.length}</b><span data-i18n="guide.quality.places">lugares</span></span></div>
 ${catalogToolbar(kind, places)}
       <div class="rest-grid" data-catalog-grid>

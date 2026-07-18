@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "apartment": {
+    "name": "Condominio Andes Chillán",
+    "lat": -36.9082176,
+    "lon": -71.4205745,
+    "precision": "approximate"
+  },
+  "radiusAnchor": {
+    "name": "Restaurant Los Pincheira",
+    "lat": -36.8402926,
+    "lon": -71.660382,
+    "osm": "node/6660304685"
+  },
+  "route": {
+    "ref": "N-55",
+    "bbox": [-37.1, -72.1, -36.65, -71.2],
+    "ruralStart": {
+      "name": "Salida rural al este de Pinto",
+      "lat": -36.7087,
+      "lon": -71.8796477
+    },
+    "bufferMeters": 3000,
+    "tileSizeMeters": 5000,
+    "simplifyToleranceMeters": 20
+  },
+  "providers": {
+    "overpassEndpoint": "https://overpass-api.de/api/interpreter",
+    "googleEnabledWhenEnv": "GOOGLE_PLACES_API_KEY",
+    "tripadvisorEnabledWhenEnv": "TRIPADVISOR_API_KEY"
+  }
+}

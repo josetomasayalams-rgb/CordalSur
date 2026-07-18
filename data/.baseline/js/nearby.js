@@ -90,6 +90,14 @@
     return field && typeof field === 'object' && Object.prototype.hasOwnProperty.call(field, 'value') ? field.value : field;
   }
 
+  function isRoutingEligible(place) {
+    return place.routingEligible !== false && place.status !== 'candidate_coordinate';
+  }
+
+  function sortableDistance(place) {
+    return isRoutingEligible(place) && Number.isFinite(place._roadDistanceMeters) ? place._roadDistanceMeters : Infinity;
+  }
+
   function distanceKm(a, b) {
     var radians = Math.PI / 180;
     var dLat = (b.lat - a.lat) * radians;
@@ -179,13 +187,14 @@
       forwardDirection = window.CordalLocationMotion.angleDifference(travelHeading, userProjection.bearing) <= 90 ? 1 : -1;
     }
     var list = publicPlaces.filter(function (place) {
+      var routingEligible = isRoutingEligible(place);
       if (mode === 'apartment' && !place.discovery.apartment) return false;
       if (mode === 'route' && !place.discovery.corridor) return false;
-      if (mode === 'route' && !showBehind.checked && forwardDirection > 0 && place.discovery.routeProgressMeters < userProgress) return false;
-      if (mode === 'route' && !showBehind.checked && forwardDirection < 0 && place.discovery.routeProgressMeters > userProgress) return false;
+      if (routingEligible && mode === 'route' && !showBehind.checked && forwardDirection > 0 && place.discovery.routeProgressMeters < userProgress) return false;
+      if (routingEligible && mode === 'route' && !showBehind.checked && forwardDirection < 0 && place.discovery.routeProgressMeters > userProgress) return false;
       if (activeCategory !== 'all' && place.category !== activeCategory) return false;
       var roadDistance = Number(place._roadDistanceMeters);
-      if (maximumDistance && Number.isFinite(roadDistance) && roadDistance > maximumDistance * 1000) return false;
+      if (maximumDistance && (!routingEligible || !Number.isFinite(roadDistance) || roadDistance > maximumDistance * 1000)) return false;
       if (minimumRating && ratingValue(place) < minimumRating) return false;
       if (query) {
         var haystack = normalize([place.name, categoryLabel(place.category), place.municipality, value(place.address)].filter(Boolean).join(' '));
@@ -197,7 +206,7 @@
       if (sort.value === 'rating') return ratingValue(right) - ratingValue(left) || left.name.localeCompare(right.name);
       if (sort.value === 'popularity') return popularity(right) - popularity(left) || ratingValue(right) - ratingValue(left);
       if (sort.value === 'alphabetical') return left.name.localeCompare(right.name);
-      return (Number.isFinite(left._roadDistanceMeters) ? left._roadDistanceMeters : Infinity) - (Number.isFinite(right._roadDistanceMeters) ? right._roadDistanceMeters : Infinity) || left.name.localeCompare(right.name);
+      return sortableDistance(left) - sortableDistance(right) || left.name.localeCompare(right.name);
     });
     return list;
   }
@@ -218,17 +227,20 @@
   function renderCards() {
     filteredPlaces = placesForState();
     results.innerHTML = filteredPlaces.map(function (place) {
+      var routingEligible = isRoutingEligible(place);
       var approximate = place.coordinateKind === 'center_candidate' || place.status === 'candidate_coordinate';
       var closed = place.operatingStatus === 'closed';
       var phone = value(place.phone);
       var address = value(place.address);
-      var addressLabel = [address, place.municipality && place.municipality !== address ? place.municipality : ''].filter(Boolean).join(' · ') || t('guide.location.unknown');
-      var hasRoadDistance = Number.isFinite(place._roadDistanceMeters);
+      var addressLabel = routingEligible
+        ? ([address, place.municipality && place.municipality !== address ? place.municipality : ''].filter(Boolean).join(' · ') || t('guide.location.unknown'))
+        : ([address, t('guide.coordinate.pendingLocation')].filter(Boolean).join(' · '));
+      var hasRoadDistance = routingEligible && Number.isFinite(place._roadDistanceMeters);
       var roadLabel = hasRoadDistance ? formatRoadDistance(place._roadDistanceMeters) : t('guide.road.unavailable');
       var roadNote = distanceNote(place);
-      return '<article class="nearby-card guide-place" data-place-id="' + escapeHtml(place.id) + '" data-distance-source="' + escapeHtml(place._distanceSource || 'unknown') + '" tabindex="0" style="--place-color:' + escapeHtml(categoryColor(place.category)) + '">' +
-        '<div class="nearby-card__top"><span class="guide-place__dot" aria-hidden="true"></span><div class="guide-place__heading"><span class="guide-place__category">' + escapeHtml(categoryLabel(place.category)) + '</span><h3>' + escapeHtml(place.name) + '</h3><p class="guide-place__address">' + escapeHtml(addressLabel) + '</p></div><strong class="nearby-card__distance">' + escapeHtml(roadLabel) + '<small>' + escapeHtml(roadNote) + '</small></strong></div>' +
-        (approximate ? '<p class="guide-place__warning">' + escapeHtml(t('guide.coordinate.warning')) + '</p>' : '') +
+      return '<article class="nearby-card guide-place" data-place-id="' + escapeHtml(place.id) + '" data-routing-eligible="' + (routingEligible ? 'true' : 'false') + '" data-coordinate-precision="' + escapeHtml(place.coordinatePrecision || (routingEligible ? place.coordinateKind : 'unverified')) + '" data-distance-source="' + escapeHtml(place._distanceSource || 'unknown') + '" tabindex="0" style="--place-color:' + escapeHtml(categoryColor(place.category)) + '">' +
+        '<div class="nearby-card__top"><span class="guide-place__dot" aria-hidden="true"></span><div class="guide-place__heading"><span class="guide-place__category">' + escapeHtml(categoryLabel(place.category)) + '</span><h3>' + escapeHtml(place.name) + '</h3><p class="guide-place__address">' + escapeHtml(addressLabel) + '</p></div>' + (routingEligible ? '<strong class="nearby-card__distance">' + escapeHtml(roadLabel) + '<small>' + escapeHtml(roadNote) + '</small></strong>' : '') + '</div>' +
+        (approximate && routingEligible ? '<p class="guide-place__warning">' + escapeHtml(t('guide.coordinate.warning')) + '</p>' : '') +
         (closed ? '<p class="guide-place__warning guide-place__warning--closed">' + escapeHtml(t('guide.status.closed')) + '</p>' : '') +
         '<div class="guide-place__ratings">' + ratingHtml(place) + '</div>' +
         '<div class="nearby-card__actions">' + action(place.navigationUrl, 'guide.action.navigate', 'navigation', !closed) + action(place.googleMapsUrl, 'guide.action.maps', 'maps') + action(value(place.website), 'guide.action.website', 'website') + action(value(place.instagram), 'guide.action.instagram', 'instagram') + (phone ? action('tel:' + String(phone).replace(/[^+\d]/g, ''), 'nearby.call', 'phone') : '') + '</div></article>';
@@ -342,7 +354,7 @@
     if (mode === 'route') L.geoJSON(corridor.geometry, { interactive: false, style: { color: '#e7a957', weight: 5, opacity: 0.92 } }).addTo(geometryLayer);
     if (mode !== 'nearby') L.marker([data.geometry.apartment.lat, data.geometry.apartment.lon], { icon: homeIcon(), zIndexOffset: 900, keyboard: false }).bindTooltip(t('guide.legend.apartment'), { direction: 'top' }).addTo(geometryLayer);
     (data._landmarks || []).forEach(function (landmark) {
-      var alreadyListed = publicPlaces.some(function (place) { return distanceKm(place.location, landmark) < 0.04; });
+      var alreadyListed = publicPlaces.some(function (place) { return isRoutingEligible(place) && distanceKm(place.location, landmark) < 0.04; });
       if (!alreadyListed) L.marker([landmark.lat, landmark.lon], { icon: landmarkIcon(false), zIndexOffset: 930, keyboard: false }).bindTooltip(landmark.name, { direction: 'top' }).addTo(geometryLayer);
     });
     updateUserMarker();
@@ -368,7 +380,7 @@
     if (!map || !markerCluster) return;
     markerCluster.clearLayers();
     markers.clear();
-    filteredPlaces.forEach(function (place) {
+    filteredPlaces.filter(isRoutingEligible).forEach(function (place) {
       var marker = L.marker([place.location.lat, place.location.lon], { icon: markerIcon(place, place.id === selectedId), title: place.name, riseOnHover: true });
       marker.bindPopup(popupHtml(place), { closeButton: true, maxWidth: 250 });
       marker.on('click', function () { selectPlace(place.id, true, false); });
@@ -379,7 +391,8 @@
 
   function visibleBounds() {
     if (!window.L) return null;
-    var boundsPlaces = mode === 'nearby' ? filteredPlaces.slice(0, 12) : filteredPlaces;
+    var eligiblePlaces = filteredPlaces.filter(isRoutingEligible);
+    var boundsPlaces = mode === 'nearby' ? eligiblePlaces.slice(0, 12) : eligiblePlaces;
     var points = boundsPlaces.map(function (place) { return [place.location.lat, place.location.lon]; });
     if (mode !== 'nearby') points.push([data.geometry.apartment.lat, data.geometry.apartment.lon]);
     if (userPosition) points.push([userPosition.lat, userPosition.lon]);
@@ -460,6 +473,12 @@
 
   function restoreApartmentDistances() {
     publicPlaces.forEach(function (place) {
+      if (!isRoutingEligible(place)) {
+        place._roadDistanceMeters = NaN;
+        place._roadAccessNearby = false;
+        place._distanceSource = 'unknown';
+        return;
+      }
       place._roadDistanceMeters = Number.isFinite(place.discovery.apartmentRoadDistanceMeters) ? place.discovery.apartmentRoadDistanceMeters : NaN;
       place._roadAccessNearby = Boolean(place.discovery.roadAccessNearby);
       place._distanceSource = Number.isFinite(place._roadDistanceMeters) ? 'road-apartment' : 'unknown';
@@ -602,6 +621,12 @@
   function applyDirectDistances(snapshot) {
     if (!data) return;
     publicPlaces.forEach(function (place) {
+      if (!isRoutingEligible(place)) {
+        place._roadDistanceMeters = NaN;
+        place._roadAccessNearby = false;
+        place._distanceSource = 'unknown';
+        return;
+      }
       place._roadDistanceMeters = window.CordalLocationMotion.distanceMeters(snapshot, place.location);
       place._roadAccessNearby = false;
       place._distanceSource = 'direct-current';
@@ -630,6 +655,7 @@
       }
       roadCoverage = 'covered';
       publicPlaces.forEach(function (place) {
+        if (!isRoutingEligible(place)) return;
         var route = message.distances[place.id];
         if (!route || !Number.isFinite(Number(route.meters))) return;
         place._roadDistanceMeters = Number(route.meters);
@@ -835,7 +861,10 @@
     updateLocationStatus();
   }
 
-  Promise.all([fetch('data/destination-guide.json'), fetch('data/nearby.json')]).then(function (responses) {
+  Promise.all([
+    fetch('data/destination-guide.json?v=location-v2', { cache: 'no-store' }),
+    fetch('data/nearby.json?v=location-v2', { cache: 'no-store' })
+  ]).then(function (responses) {
     if (!responses[0].ok) throw new Error('destination guide unavailable');
     return Promise.all([responses[0].json(), responses[1].ok ? responses[1].json() : Promise.resolve(null)]);
   }).then(function (payloads) {

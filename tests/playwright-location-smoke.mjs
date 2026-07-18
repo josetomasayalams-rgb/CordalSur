@@ -68,8 +68,7 @@ async function assertNoCoordinateLeak(page, requestUrls, consoleMessages) {
   for (const needle of needles) assert.ok(!surface.includes(needle), `exact coordinate leaked: ${needle}`);
 }
 
-async function runPrimaryCase(browserType, browserName, scenario) {
-  const browser = await browserType.launch({ headless: true });
+async function runPrimaryCase(browser, browserName, scenario) {
   const context = await browser.newContext({
     viewport: scenario.viewport,
     geolocation: exactPosition,
@@ -91,6 +90,18 @@ async function runPrimaryCase(browserType, browserName, scenario) {
   assert.ok(visibleCards > 0, `${browserName}/${scenario.page}: location left an empty list`);
   const status = await page.locator(scenario.kind === 'guide' ? '#nearby-status' : '[data-catalog-location-status]').textContent();
   assert.ok(status && status.trim(), `${browserName}/${scenario.page}: location status is missing`);
+
+  if (scenario.page === 'restaurantes.html') {
+    await page.waitForFunction(() => document.querySelectorAll('.catalog-card[data-distance-source="road-current"]').length >= 15);
+    const firstRoadDistances = await page.locator('.catalog-card:visible[data-distance-source="road-current"]').evaluateAll((cards) => (
+      cards.slice(0, 20).map((card) => Number(card.dataset.distance)).filter(Number.isFinite)
+    ));
+    assert.equal(firstRoadDistances.length, 20, `${browserName}: expected 20 routed food results`);
+    assert.ok(new Set(firstRoadDistances).size >= 15, `${browserName}: nearby food distances collapsed onto repeated values`);
+    const candidates = page.locator('.catalog-card:visible[data-routing-eligible="false"]');
+    assert.ok(await candidates.count() >= 15, `${browserName}: unresolved places should remain visible`);
+    assert.equal(await candidates.locator('.catalog-distance').count(), 0, `${browserName}: unresolved places must not display fake distances`);
+  }
 
   if (scenario.kind === 'guide') {
     await page.locator('.guide-special--user').waitFor({ state: 'visible' });
@@ -115,11 +126,9 @@ async function runPrimaryCase(browserType, browserName, scenario) {
     assert.equal(await page.locator('.guide-special--user').count(), 0, 'access end must remove the user marker');
   }
   await context.close();
-  await browser.close();
 }
 
-async function runDeniedCase(browserType, browserName) {
-  const browser = await browserType.launch({ headless: true });
+async function runDeniedCase(browser, browserName) {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
   await page.goto(`${baseUrl}/cerca-de-mi.html`, { waitUntil: 'domcontentloaded' });
@@ -130,7 +139,6 @@ async function runDeniedCase(browserType, browserName) {
   assert.ok(await page.locator('.guide-place:visible').count(), `${browserName}: denial must preserve the previous list`);
   assert.equal(await page.locator('[data-guide-mode="apartment"]').getAttribute('aria-pressed'), 'true');
   await context.close();
-  await browser.close();
 }
 
 async function runManualAndOutsideCases() {
@@ -257,8 +265,13 @@ async function runManualAndOutsideCases() {
 
 for (const browserName of ['chromium', 'webkit']) {
   const browserType = playwright[browserName];
-  for (const scenario of cases) await runPrimaryCase(browserType, browserName, scenario);
-  await runDeniedCase(browserType, browserName);
+  const browser = await browserType.launch({ headless: true });
+  try {
+    for (const scenario of cases) await runPrimaryCase(browser, browserName, scenario);
+    await runDeniedCase(browser, browserName);
+  } finally {
+    await browser.close();
+  }
 }
 await runManualAndOutsideCases();
 console.log('  PASS (Chromium/WebKit geolocation, denial, manual point, tile failure, privacy and outside-network fallback)');

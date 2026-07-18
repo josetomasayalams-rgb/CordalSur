@@ -1,0 +1,18 @@
+{
+  "name": "cordalsur-guest-guide",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "sync:geometry": "node scripts/destination/fetch-route.mjs",
+    "sync:destination": "node scripts/destination/sync.mjs --providers=manual,editorial,osm,google,tripadvisor",
+    "sync:driving": "node scripts/destination/fetch-driving-network.mjs",
+    "report:destination": "node scripts/destination/report.mjs",
+    "test:destination": "node --test tests/destination/*.test.mjs",
+    "test:landing": "bash tests/verify-gates.sh",
+    "test:worker": "npm --prefix worker test",
+    "test": "npm run test:destination && npm run test:landing && npm run test:worker"
+  }
+}

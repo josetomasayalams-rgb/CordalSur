@@ -1,31 +1,20 @@
 # Informe de cobertura de la guía territorial CordalSur
 
-**Corte de datos:** 2026-07-17T18:56:24.130Z  
-**Estadía de referencia:** Condominio Andes Chillán  
+**Corte de datos:** 2026-07-18T20:32:43.442Z<br>
+**Estadía de referencia:** Condominio Andes Chillán<br>
 **Cobertura:** Condominio Andes Chillán apartment radius and buffered Ruta N-55 corridor from Pinto
 
 ## Resumen ejecutivo
 
-- **445 registros brutos** consolidados en **210 lugares publicables**.
-- **197 duplicados fusionados** mediante identificadores de proveedor, teléfono/sitio, nombre, categoría y proximidad.
-- **178 lugares** dentro del radio automático del departamento y **179 lugares** dentro del corredor N-55; **147** pertenecen a ambas geometrías.
-- De los **178 lugares** del radio, **62 alojamientos** (hotel/cabaña) se excluyen de todas las vistas de huéspedes y quedan sólo en esta auditoría. El catálogo visible final contiene **116 lugares**.
-- Los **116 lugares visibles** se publican exactamente una vez: **57 en Actividades** y **59 en Comida y provisiones**.
+- **445 registros brutos** consolidados en **209 lugares publicables**.
+- **198 duplicados fusionados** mediante identificadores de proveedor, teléfono/sitio, nombre, categoría y proximidad.
+- **177 lugares** dentro del radio automático del departamento y **178 lugares** dentro del corredor N-55; **146** pertenecen a ambas geometrías.
+- De los **177 lugares** del radio, **62 alojamientos** (hotel/cabaña) se excluyen de todas las vistas de huéspedes y quedan sólo en esta auditoría. El catálogo visible final contiene **115 lugares**.
+- Los **115 lugares visibles** se publican exactamente una vez: **57 en Actividades** y **58 en Comida y provisiones**.
 - **53 ofertas** editoriales y **59 rutas** se mantienen separadas de los lugares físicos.
 - **33 elementos de pista de ski** se trasladaron de la lista de establecimientos al modelo de rutas sin navegación vehicular.
-- **51 coordenadas candidatas** permanecen visibles con advertencia; no se presentan como entradas exactas.
+- **32 coordenadas candidatas** permanecen visibles con advertencia; no se presentan como entradas exactas.
 - El radio del departamento es **22.63 km**, calculado por Haversine WGS84 hasta Restaurant Los Pincheira. La línea central N-55 mide **52.52 km** y usa un buffer de **3.0 km**.
-
-## Auditoría de experiencia de huésped
-
-- La vista **Explora el Valle** permite mostrar u ocultar el mapa con un control `aria-expanded`/`aria-controls`. Al ocultarlo, el mapa queda fuera del layout y la lista ocupa el ancho completo sin recargar ni perder modo, categoría, búsqueda u orden.
-- En pantallas de hasta 760 px la primera visita de la sesión parte con la lista visible y el mapa colapsado. La preferencia se conserva sólo en `sessionStorage`; no se persiste entre sesiones.
-- Se eliminó de esta vista la franja de emergencias y se conservó el módulo progresivo de contactos oficiales en Inicio.
-- La cabecera de la guía usa una única superficie continua, sin bandas decorativas verdes o amarillas. Idioma y tema permanecen en flujo y no se superponen con el contenido.
-- Las acciones de navegación, Google Maps, sitio, Instagram y teléfono usan recursos SVG locales, nombre accesible localizado, ayuda contextual y `noopener` para enlaces externos. El logo de Google Maps proviene de los [recursos oficiales de atribución](https://developers.google.com/maps/documentation/javascript/policies#google-maps-attribution-requirements).
-- La auditoría interactiva cubrió **320, 360, 390, 430, 768, 1024 y 1280 px** en ES/PT/EN y claro/oscuro. No se detectó desbordamiento horizontal; los controles de acción mantienen al menos 44 × 44 px.
-- Inicio, Explora el Valle, Actividades y Comida/provisiones se verificaron en móvil y escritorio. El selector de idioma actualiza texto visible y nombres accesibles sin estados mixtos; el selector de tema no vuelve a ejecutar la traducción completa.
-- Los estados de carga, vacío y error de datos están anunciados; el diálogo de ubicación cabe en 390 px, explica el uso local y ofrece uso único, durante la sesión o sin ubicación.
 
 ## Estrategia de descubrimiento
 
@@ -42,9 +31,9 @@
 |---|---:|
 | Llamadas de proveedor | 111 |
 | Llamadas fallidas | 0 |
-| Respuestas desde caché | 105 |
+| Respuestas desde caché | 111 |
 | Duración mediana informada | 0 ms |
-| Duración p95 informada | 1 ms |
+| Duración p95 informada | 0 ms |
 | Teselas del departamento | 83 |
 | Teselas del corredor | 28 |
 
@@ -54,7 +43,7 @@
 
 | Proveedor | Activo | Registros descubiertos | Lugares publicados con fuente | Nota |
 |---|---:|---:|---:|---|
-| manual | Sí | 30 | 30 | Legacy curated catalog; field verification dates remain null when unknown. |
+| manual | Sí | 30 | 48 | Legacy curated catalog; field verification dates remain null when unknown. |
 | editorial | Sí | 36 | 36 | Host-curated catalog; unresolved coordinates remain explicit candidates. |
 | osm | Sí | 379 | 170 |  |
 | google | No | 0 | 0 | missing_credentials |
@@ -68,7 +57,7 @@
 | coffee | Cafés | 9 |
 | fast_food | Comida rápida | 3 |
 | bakery | Panaderías | 8 |
-| supermarket | Supermercados | 12 |
+| supermarket | Supermercados | 11 |
 | convenience | Tiendas de conveniencia | 4 |
 | hardware | Ferreterías | 1 |
 | home_improvement | Mejoramiento del hogar | 1 |
@@ -97,11 +86,11 @@ Categorías sin un lugar verificable en el corte actual: **Veterinaria, Aventura
 
 | Etapa | Lugares |
 |---|---:|
-| Inventario geográfico dentro del radio del departamento | 178 |
+| Inventario geográfico dentro del radio del departamento | 177 |
 | Hoteles y cabañas excluidos de vistas públicas | −62 |
-| Catálogo visible único | 116 |
+| Catálogo visible único | 115 |
 | Actividades | 57 |
-| Comida y provisiones | 59 |
+| Comida y provisiones | 58 |
 
 La suma de Actividades y Comida/provisiones coincide con el catálogo visible y no contiene IDs repetidos. Hoteles y cabañas continúan en el inventario completo inferior únicamente para trazabilidad administrativa y para futuras auditorías de deduplicación.
 
@@ -136,8 +125,8 @@ La suma de Actividades y Comida/provisiones coincide con el catálogo visible y 
 |---|---|---|---|---|---|
 | osm-node-308161534-bancoestado | BancoEstado | atm | — | publicado | osm |
 | osm-node-4494177192-caja-vecina-banco-estado | Caja Vecina Banco Estado | atm | — | publicado | osm |
-| editorial-che-cami | Che Cami | bakery | Pinto | coordenada candidata | editorial |
-| editorial-dulce-monta-a | Dulce Montaña | bakery | Pinto | coordenada candidata | editorial |
+| editorial-che-cami | Che Cami | bakery | Pinto | publicado | editorial, manual |
+| editorial-dulce-monta-a | Dulce Montaña | bakery | Pinto | publicado | editorial, manual |
 | editorial-las-cacha-as | Las Cachañas | bakery | Pinto | coordenada candidata | editorial |
 | osm-node-4494191494-panaderia | Panadería | bakery | Pinto | publicado | osm |
 | osm-way-353004595-panaderia-fenix | Panadería Fenix | bakery | Pinto | coordenada candidata | osm |
@@ -186,26 +175,26 @@ La suma de Actividades y Comida/provisiones coincide con el catálogo visible y 
 | osm-node-1289135966-rio-renegado | Río Renegado | cabin | — | publicado | osm |
 | osm-node-988305693-santa-rosa-lodge | Santa Rosa Lodge | cabin | — | publicado | osm |
 | osm-node-4116261796-villa-parma | Villa Parma | cabin | — | publicado | osm |
-| editorial-bagual | Bagual | coffee | Pinto | coordenada candidata | editorial |
-| editorial-caramba-helados | Caramba Helados | coffee | Pinto | coordenada candidata | editorial |
+| editorial-bagual | Bagual | coffee | Pinto | publicado | editorial, manual |
+| editorial-caramba-helados | Caramba Helados | coffee | Pinto | publicado | editorial, manual |
 | osm-node-1289135961-casita-de-te | Casita de Te | coffee | — | publicado | osm |
 | osm-node-1189531669-el-chacay | El Chacay | coffee | — | publicado | osm |
-| editorial-koiwe-cafe-boutique | Koiwe Cafe & Boutique | coffee | Pinto | coordenada candidata | editorial |
+| editorial-koiwe-cafe-boutique | Koiwe Cafe & Boutique | coffee | Pinto | publicado | editorial, manual |
 | editorial-las-bravas-cafe | Las Bravas Cafe | coffee | Pinto | coordenada candidata | editorial |
-| editorial-lux-petit-club-cafe-bar | Lux / Petit Club Cafe Bar | coffee | Pinto | coordenada candidata | editorial |
+| editorial-lux-petit-club-cafe-bar | Lux / Petit Club Cafe Bar | coffee | Pinto | publicado | editorial, manual |
 | osm-node-3588420773-mahuida-cafe | Mahuida Café | coffee | Pinto | publicado | osm |
 | osm-node-308161487-organicos-brita | Organicos Brita | coffee | — | publicado | osm |
 | osm-node-268892414-almacen | Almacen | convenience | — | publicado | osm |
-| editorial-charcuter-a-las-cabras | Charcutería Las Cabras | convenience | Pinto | coordenada candidata | editorial |
+| editorial-charcuter-a-las-cabras | Charcutería Las Cabras | convenience | Pinto | publicado | editorial, manual |
 | editorial-gastronom-a-nevados-de-chill-n | Gastronomía Nevados de Chillán | convenience | Pinto | coordenada candidata | editorial |
-| editorial-la-cava-de-la-monta-a | La Cava de la Montaña | convenience | Pinto | coordenada candidata | editorial |
+| editorial-la-cava-de-la-monta-a | La Cava de la Montaña | convenience | Pinto | publicado | editorial, manual |
 | manual-bomberos-las-trancas | 3ª Compañía Bomberos Las Trancas | emergency | — | publicado | manual, osm |
 | manual-bomberos-los-lleuques | Bomberos Los Lleuques | emergency | — | publicado | manual, osm |
 | manual-reten-recinto | Retén Recinto | emergency | — | publicado | manual, osm |
 | osm-node-539944872-reten-tanilvoro | Retén Tanilvoro | emergency | Coihueco | publicado | osm |
 | manual-tenencia-las-trancas | Tenencia Las Trancas | emergency | — | publicado | manual, osm |
 | osm-node-268892416-tenencia-pinto | Tenencia Pinto | emergency | Pinto | publicado | osm |
-| editorial-pizzas-and-beers-del-valle | Pizzas and Beers del Valle | fast_food | Pinto | coordenada candidata | editorial |
+| editorial-pizzas-and-beers-del-valle | Pizzas and Beers del Valle | fast_food | Pinto | publicado | editorial, manual |
 | osm-node-13502766797-sabores-mexicanos | Sabores Mexicanos | fast_food | Pinto | publicado | osm |
 | osm-way-353042657-the-burguer-company | The Burguer Company | fast_food | Pinto | coordenada candidata | osm |
 | manual-copec-recinto | Copec Recinto | gas_station | — | publicado | manual, osm |
@@ -237,11 +226,11 @@ La suma de Actividades y Comida/provisiones coincide con el catálogo visible y 
 | osm-node-4494177194-doctor-rubilar | Doctor Rubilar | medical | Pinto | publicado | osm |
 | osm-node-11978125701-posta-de-salud-rural-ciruelito | Posta de Salud Rural Ciruelito | medical | — | publicado | osm |
 | manual-posta-recinto | Posta de Salud Rural Recinto | medical | — | publicado | manual, osm |
-| editorial-cervecer-a-garganta-del-diablo | Cervecería Garganta del Diablo | other | Pinto | coordenada candidata | editorial |
+| editorial-cervecer-a-garganta-del-diablo | Cervecería Garganta del Diablo | other | Pinto | publicado | editorial, manual |
 | editorial-cervecer-a-shangrila | Cervecería Shangrila | other | Pinto | coordenada candidata | editorial |
 | editorial-patio-tranquino | Patio Tranquino | other | Pinto | coordenada candidata | editorial |
 | osm-node-4494113896-farmacia-becerra | Farmacia Becerra | pharmacy | Pinto | publicado | osm |
-| editorial-alto-las-trancas | Alto Las Trancas | restaurant | Pinto | coordenada candidata | editorial |
+| editorial-alto-las-trancas | Alto Las Trancas | restaurant | Pinto | publicado | editorial, manual |
 | osm-node-6629435738-buena-vista-bar | Buena Vista Bar | restaurant | — | publicado | osm |
 | manual-cafeteria-tata | Cafetería Tata | restaurant | — | publicado | manual, osm |
 | manual-cafeteria-tio-willy | Cafetería Tío Willy | restaurant | — | publicado | manual, osm |
@@ -250,25 +239,25 @@ La suma de Actividades y Comida/provisiones coincide con el catálogo visible y 
 | osm-node-4088884738-condominio-patagonia | Condominio Patagonia | restaurant | — | publicado | osm |
 | manual-cumbres-restaurante | Cumbres Restaurante | restaurant | — | coordenada candidata | manual |
 | manual-don-quelo | Don Quelo | restaurant | — | coordenada candidata | manual |
-| editorial-el-pared-n | El Paredón | restaurant | Pinto | coordenada candidata | editorial |
+| editorial-el-pared-n | El Paredón | restaurant | Pinto | publicado | editorial, manual |
 | osm-node-4494178491-entre-vigas | Entre Vigas | restaurant | — | publicado | osm |
 | editorial-fauna-lounge | Fauna Lounge | restaurant | Pinto | coordenada candidata | editorial |
 | osm-node-311431245-la-araucana-jamon-pan-y-vino | La Araucana - Jamon Pan y Vino | restaurant | — | publicado | osm |
 | osm-node-308161486-los-adobes | Los Adobes | restaurant | — | publicado | osm |
 | editorial-los-hualles-restobar | Los Hualles Restobar | restaurant | Pinto | coordenada candidata | editorial |
-| editorial-miski-lirio | Miski Lirio | restaurant | Pinto | coordenada candidata | editorial |
+| editorial-miski-lirio | Miski Lirio | restaurant | Pinto | publicado | editorial, manual |
 | editorial-monte-carla-las-trancas | Monte Carla Las Trancas | restaurant | Pinto | coordenada candidata | editorial |
 | manual-observatorio-cafe | Observatorio Café | restaurant | — | publicado | manual, osm |
 | manual-oliva-s-restaurant | Oliva's Restaurant | restaurant | — | publicado | manual, editorial, osm |
 | manual-quincho-del-valle | Quincho del Valle | restaurant | — | publicado | manual |
 | manual-rendez-vous | Rendez-vous | restaurant | — | publicado | manual, osm |
-| editorial-restaurant-borde-andino | Restaurant Borde Andino | restaurant | Pinto | coordenada candidata | editorial |
+| editorial-restaurant-borde-andino | Restaurant Borde Andino | restaurant | Pinto | publicado | editorial, manual |
 | manual-los-pincheiras-restaurant | Restaurant Los Pincheira | restaurant | — | publicado | manual, osm |
 | editorial-restaurant-patrimonial-el-tren | Restaurant Patrimonial El Tren | restaurant | Pinto | coordenada candidata | editorial |
-| editorial-restaurante-pizzer-a-chil-in | Restaurante Pizzería Chil'in | restaurant | Pinto | coordenada candidata | editorial |
+| editorial-restaurante-pizzer-a-chil-in | Restaurante Pizzería Chil'in | restaurant | Pinto | publicado | editorial, manual |
 | editorial-restobar-shangrila | Restobar Shangrila | restaurant | Pinto | coordenada candidata | editorial |
 | osm-node-5843178085-riding | Riding | restaurant | — | publicado | osm |
-| editorial-sitari-tapas-y-brasas | Sitari Tapas y Brasas | restaurant | Pinto | coordenada candidata | editorial |
+| editorial-sitari-tapas-y-brasas | Sitari Tapas y Brasas | restaurant | Pinto | publicado | editorial, manual |
 | manual-snow-pub | Snow Pub | restaurant | — | publicado | manual, editorial, osm |
 | editorial-steak-house | Steak House | restaurant | Pinto | coordenada candidata | editorial |
 | osm-node-13502766799-sushi-oasis-pinto | Sushi Oasis Pinto | restaurant | Pinto | publicado | osm |
@@ -276,13 +265,12 @@ La suma de Actividades y Comida/provisiones coincide con el catálogo visible y 
 | osm-node-2471159073-centro-de-ski-nevados-de-chillan | Centro de Ski Nevados de Chillán | ski | Pinto | publicado | osm |
 | osm-node-4494132497-almacen | Almacén | supermarket | — | publicado | osm |
 | osm-node-4494178490-almacen-el-magnolio | Almacén "El Magnolio" | supermarket | — | publicado | osm |
-| editorial-super-mcpato | McPato Supermercado | supermarket | Pinto | coordenada candidata | editorial |
+| editorial-super-mcpato | McPato Supermercado | supermarket | Pinto | publicado | editorial, manual |
 | manual-minimarket-el-varon | Minimarket El Varón | supermarket | — | publicado | manual |
-| manual-rucahue | Rucahue | supermarket | — | publicado | manual, osm |
-| editorial-minimarket-rucahue | Rucahue Minimarket | supermarket | Pinto | coordenada candidata | editorial |
+| manual-rucahue | Rucahue | supermarket | — | publicado | manual, editorial, osm |
 | osm-node-4494132493-supermercado | Supermercado | supermarket | — | publicado | osm |
 | osm-node-4494181889-supermercado | Supermercado | supermarket | Pinto | publicado | osm |
-| editorial-super-el-refugio | Supermercado El Refugio | supermarket | Pinto | coordenada candidata | editorial |
+| editorial-super-el-refugio | Supermercado El Refugio | supermarket | Pinto | publicado | editorial, manual |
 | osm-node-4494178494-supermercado-javiera | Supermercado Javiera | supermarket | — | publicado | osm |
 | manual-la-pileta | Supermercado La Pileta | supermarket | — | publicado | manual, osm |
 | osm-node-11230095722-supermercado-pinto | Supermercado Pinto | supermarket | — | publicado | osm |

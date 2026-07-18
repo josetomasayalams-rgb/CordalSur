@@ -42,8 +42,8 @@
     value = value && typeof value === 'object' ? value : {};
     return {
       schemaVersion: value.schemaVersion === undefined || value.schemaVersion === null ? null : Number(value.schemaVersion),
-      version: value.version || value.generatedAt || null,
-      hash: value.hash || value.responseSha256 || null
+      version: value.version || value.networkVersion || value.generatedAt || null,
+      hash: value.hash || value.networkHash || value.artifactSha256 || value.responseSha256 || null
     };
   }
 
@@ -66,8 +66,10 @@
     });
   }
 
-  function resolveNetworkUrl(value) {
-    var url = new URL(value || 'data/driving-network.json?v=1', document.baseURI);
+  function resolveNetworkUrl(value, expectedGraph) {
+    var version = expectedGraph && (expectedGraph.hash || expectedGraph.version);
+    var fallback = 'data/driving-network.json?v=' + encodeURIComponent(version || '2');
+    var url = new URL(value || fallback, document.baseURI);
     var location = document.location || window.location;
     if (location && location.origin && url.origin !== location.origin) {
       throw roadError('driving network must be same-origin', 'ROAD_NETWORK_ORIGIN');
@@ -88,7 +90,7 @@
       hash: settings.expectedGraphHash
     });
     return {
-      networkUrl: resolveNetworkUrl(value || settings.networkUrl),
+      networkUrl: resolveNetworkUrl(value || settings.networkUrl, expected),
       expectedGraph: expected,
       initTimeoutMs: Number.isFinite(Number(settings.initTimeoutMs)) ? Number(settings.initTimeoutMs) : INIT_TIMEOUT_MS,
       routeTimeoutMs: Number.isFinite(Number(settings.routeTimeoutMs)) ? Number(settings.routeTimeoutMs) : ROUTE_TIMEOUT_MS
@@ -189,7 +191,7 @@
 
     var instance;
     try {
-      instance = new Worker('js/road-distance-worker.js?v=2', { type: 'module' });
+      instance = new Worker('js/road-distance-worker.js?v=3', { type: 'module' });
     } catch (error) {
       return Promise.reject(roadError(error && error.message ? error.message : 'road worker could not start', 'ROAD_WORKER_CONSTRUCTOR'));
     }

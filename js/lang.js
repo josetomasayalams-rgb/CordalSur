@@ -2051,6 +2051,7 @@
       'guide.road.outsideNetwork': 'Estás fuera de la red vial disponible; conservamos las distancias aproximadas en línea recta.',
       'guide.road.errorDirect': 'La mejora vial no respondió; conservamos las distancias aproximadas en línea recta.',
       'catalog.origin.directReady': 'Resultados cercanos listos · mejorando rutas en segundo plano',
+      'guide.coordinate.pendingLocation': 'Ubicación exacta por confirmar',
     
     },
 
@@ -4092,6 +4093,7 @@
       'guide.road.outsideNetwork': 'Você está fora da rede viária disponível; mantemos as distâncias aproximadas em linha reta.',
       'guide.road.errorDirect': 'A melhoria viária não respondeu; mantemos as distâncias aproximadas em linha reta.',
       'catalog.origin.directReady': 'Resultados próximos prontos · melhorando rotas em segundo plano',
+      'guide.coordinate.pendingLocation': 'Localização exata por confirmar',
     
     },
 
@@ -6133,6 +6135,7 @@
       'guide.road.outsideNetwork': 'You are outside the available road network; approximate straight-line distances remain visible.',
       'guide.road.errorDirect': 'Road routing did not respond; approximate straight-line distances remain visible.',
       'catalog.origin.directReady': 'Nearby results ready · improving routes in the background',
+      'guide.coordinate.pendingLocation': 'Exact location to be confirmed',
     
     }
   };

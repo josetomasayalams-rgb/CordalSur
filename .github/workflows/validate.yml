@@ -18,3 +18,5 @@ jobs:
           node-version: 20
       - name: Run landing gates
         run: bash tests/verify-gates.sh
+      - name: Run destination and routing tests
+        run: node --test tests/destination/*.test.mjs

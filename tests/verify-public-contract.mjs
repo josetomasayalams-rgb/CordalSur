@@ -28,7 +28,7 @@ for (const file of expectedPages) {
   const html = read(file);
   if (!/<title>[^<]*CordalSur[^<]*<\/title>/i.test(html)) fail(`${file}: static title must contain CordalSur`);
   if (!/<html\b[^>]*data-i18n-title="page\.[^"]+"/i.test(html)) fail(`${file}: <html> needs a localized page.* title key`);
-  if (!html.includes('js/lang.js?v=14')) fail(`${file}: localized copy must use the current cache version`);
+  if (!html.includes('js/lang.js?v=15')) fail(`${file}: localized copy must use the current cache version`);
   if (!html.includes('js/theme.js?v=10')) fail(`${file}: theme control must use the current cache version`);
   if (!html.includes('css/styles.css?v=25')) fail(`${file}: shared sensory brand styles are stale`);
   if (!html.includes("document.documentElement.classList.add('access-pending')") ||
@@ -50,7 +50,7 @@ const nearbyHtml = read('cerca-de-mi.html');
 const nearbyScript = read('js/nearby.js');
 const locationControllerScript = read('js/location-controller.js');
 const destinationGuide = JSON.parse(read('data/destination-guide.json'));
-if (!index.includes('href="cerca-de-mi.html"') || !nearbyHtml.includes('js/nearby.js?v=12') || !nearbyHtml.includes('js/road-distance.js?v=3') || !nearbyHtml.includes('js/location-motion.js?v=1') || !nearbyHtml.includes('js/location-controller.js?v=1')) {
+if (!index.includes('href="cerca-de-mi.html"') || !nearbyHtml.includes('js/nearby.js?v=13') || !nearbyHtml.includes('js/road-distance.js?v=4') || !nearbyHtml.includes('js/location-motion.js?v=1') || !nearbyHtml.includes('js/location-controller.js?v=1')) {
   fail('home must expose the protected nearby essentials tool');
 }
 if (!locationControllerScript.includes('geolocation.watchPosition') ||
@@ -58,6 +58,9 @@ if (!locationControllerScript.includes('geolocation.watchPosition') ||
     !nearbyScript.includes('CordalLocationController.create') ||
     /localStorage\.(?:getItem|setItem)/.test(nearbyScript + locationControllerScript)) {
   fail('destination guide must support one-time/session location without persistence');
+}
+if (!nearbyScript.includes("destination-guide.json?v=location-v2") || !nearbyScript.includes("cache: 'no-store'")) {
+  fail('nearby guide must revalidate its versioned destination snapshot instead of mixing stale graph data');
 }
 if (destinationGuide.schemaVersion !== 1 || !Array.isArray(destinationGuide.places) || destinationGuide.places.length < 200 ||
     !destinationGuide.geometry?.apartment?.radiusMeters || !destinationGuide.geometry?.corridor?.bufferGeometry) {
@@ -127,8 +130,8 @@ if (publishedIds.some((id) => lodgingCategories.has(destinationGuide.places.find
     nearbyScript.includes("hotel: false") || nearbyHtml.includes('data-guide-category="hotel"')) {
   fail('lodging must remain outside every guest-facing guide surface');
 }
-if (!activityHtml.includes('js/catalog-guide.js?v=4') || !provisionsHtml.includes('js/catalog-guide.js?v=4') ||
-    !activityHtml.includes('js/road-distance.js?v=3') || !provisionsHtml.includes('js/road-distance.js?v=3') ||
+if (!activityHtml.includes('js/catalog-guide.js?v=5') || !provisionsHtml.includes('js/catalog-guide.js?v=5') ||
+    !activityHtml.includes('js/road-distance.js?v=4') || !provisionsHtml.includes('js/road-distance.js?v=4') ||
     !activityHtml.includes('js/location-motion.js?v=1') || !provisionsHtml.includes('js/location-motion.js?v=1') ||
     !activityHtml.includes('js/location-controller.js?v=1') || !provisionsHtml.includes('js/location-controller.js?v=1') ||
     !activityHtml.includes('data-graph-hash=') || !provisionsHtml.includes('data-catalog-manual-map')) {
@@ -300,7 +303,7 @@ if (!accessScript.includes('async function restoreGuestSession()') ||
   fail('administrator access must revalidate after history restores and safely fall back to a valid guest session');
 }
 if (!adminScript.includes('href="index.html"') || !adminScript.includes("t('admin.enterSite')") ||
-    !adminHtml.includes('js/lang.js?v=14') || !adminHtml.includes('js/admin.js?v=4')) {
+    !adminHtml.includes('js/lang.js?v=15') || !adminHtml.includes('js/admin.js?v=4')) {
   fail('Administration must expose the localized same-tab platform entry action');
 }
 const enterSiteCopy = hostData.scalar?.['admin.enterSite'];

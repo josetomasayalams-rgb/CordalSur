@@ -50,6 +50,14 @@
       "reason": "Same exact sports-centre node and operator; Bikepark and Bike Park are spelling variants."
     },
     {
+      "id": "verified-merge-rucahue-minimarket",
+      "action": "merge",
+      "placeId": "manual-rucahue",
+      "targetPlaceId": "editorial-minimarket-rucahue",
+      "payload": {},
+      "reason": "The curated Rucahue minimarket and the exact Google Maps place are the same establishment."
+    },
+    {
       "id": "verified-rucahue-website",
       "action": "website",
       "placeId": "rucahue",
@@ -158,6 +166,253 @@
         "checkedAt": "2026-07-17T00:00:00.000Z"
       },
       "reason": "The official destination portal describes the attraction; access remains unconfirmed."
+    },
+    {
+      "id": "verified-location-sitari-tapas-y-brasas",
+      "action": "location",
+      "placeId": "sitari-tapas-y-brasas",
+      "payload": {
+        "lat": -36.914584,
+        "lon": -71.4929253,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Sitari+Tapas+%26+Brasas/@-36.914584,-71.4929253,17z/data=!3m1!4b1!4m6!3m5!1s0x966e95cd120e8cf5:0x84e080ade3210c86!8m2!3d-36.914584!4d-71.4929253!16s%2Fg%2F11vt4y_44l?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Sitari Tapas y Brasas”."
+    },
+    {
+      "id": "verified-location-bagual",
+      "action": "location",
+      "placeId": "bagual",
+      "payload": {
+        "lat": -36.9147125,
+        "lon": -71.5037252,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Bagual+Bistr%C3%B3-Restaurante+Valle+Las+Trancas/@-36.9147125,-71.5037252,17z/data=!3m1!4b1!4m6!3m5!1s0x966e95006b92476d:0x2d58df5857f425d4!8m2!3d-36.9147125!4d-71.5037252!16s%2Fg%2F11ldlqtkn1?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Bagual”."
+    },
+    {
+      "id": "verified-location-restaurant-borde-andino",
+      "action": "location",
+      "placeId": "restaurant-borde-andino",
+      "payload": {
+        "lat": -36.9119549,
+        "lon": -71.5130047,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Hotel+Borde+Andino/@-36.9119549,-71.5130047,17z/data=!4m9!3m8!1s0x966e938358a01a17:0xabbc0941f341db81!5m2!4m1!1i2!8m2!3d-36.9119549!4d-71.5130047!16s%2Fg%2F11cny0zp1p?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Restaurant Borde Andino”."
+    },
+    {
+      "id": "verified-location-miski-lirio",
+      "action": "location",
+      "placeId": "miski-lirio",
+      "payload": {
+        "lat": -36.9149651,
+        "lon": -71.4988804,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Miski+lirio/@-36.9149651,-71.4988804,17z/data=!3m1!4b1!4m6!3m5!1s0x966e95a7fd90da49:0x60be88cb45eb63b9!8m2!3d-36.9149651!4d-71.4988804!16s%2Fg%2F11v6fhf9vq?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Miski Lirio”."
+    },
+    {
+      "id": "verified-location-restaurante-pizzer-a-chil-in",
+      "action": "location",
+      "placeId": "restaurante-pizzer-a-chil-in",
+      "payload": {
+        "lat": -36.9151993,
+        "lon": -71.4938144,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Chil%C2%B4in+Restaurante,+Bar+%26+Hotel/@-36.9151993,-71.4938144,17z/data=!4m9!3m8!1s0x966e94114194bafb:0x5d49e339d71a53cf!5m2!4m1!1i2!8m2!3d-36.9151993!4d-71.4938144!16s%2Fg%2F11b73knl25?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Restaurante Pizzería Chil'in”."
+    },
+    {
+      "id": "verified-location-pizzas-and-beers-del-valle",
+      "action": "location",
+      "placeId": "pizzas-and-beers-del-valle",
+      "payload": {
+        "lat": -36.9149093,
+        "lon": -71.4952139,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Pizzas+and+beers+del+Valle+las+Trancas/@-36.9149093,-71.4952139,17z/data=!3m1!4b1!4m6!3m5!1s0x966e93453b5d8721:0xbcc626ed271b54b!8m2!3d-36.9149093!4d-71.4952139!16s%2Fg%2F11kjf6rsrw?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Pizzas and Beers del Valle”."
+    },
+    {
+      "id": "verified-location-dulce-monta-a",
+      "action": "location",
+      "placeId": "dulce-monta-a",
+      "payload": {
+        "lat": -36.9145447,
+        "lon": -71.4969361,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Dulce+Monta%C3%B1a/@-36.9145447,-71.4969361,17z/data=!3m1!4b1!4m6!3m5!1s0x966e95731fade9ed:0x7630de9e1f3846b!8m2!3d-36.9145447!4d-71.4969361!16s%2Fg%2F11vjpmjsd6?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Dulce Montaña”."
+    },
+    {
+      "id": "verified-location-koiwe-cafe-boutique",
+      "action": "location",
+      "placeId": "koiwe-cafe-boutique",
+      "payload": {
+        "lat": -36.9155647,
+        "lon": -71.5085413,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Koiwe+caf%C3%A9/@-36.9155647,-71.5085413,17z/data=!3m1!4b1!4m6!3m5!1s0x966e9522fdc2a283:0x762f38dbc9350394!8m2!3d-36.9155647!4d-71.5085413!16s%2Fg%2F11trg8n448?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Koiwe Cafe & Boutique”."
+    },
+    {
+      "id": "verified-location-lux-petit-club-cafe-bar",
+      "action": "location",
+      "placeId": "lux-petit-club-cafe-bar",
+      "payload": {
+        "lat": -36.9155723,
+        "lon": -71.5068873,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Caf%C3%A9+%26+Bar+de+monta%C3%B1a+Petit+Club/@-36.9155723,-71.5068873,17z/data=!3m1!4b1!4m6!3m5!1s0x966e956f606ad8e5:0xb2d7a1cdd9f7c969!8m2!3d-36.9155723!4d-71.5068873!16s%2Fg%2F11t6kygbb2?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Lux / Petit Club Cafe Bar”."
+    },
+    {
+      "id": "verified-location-caramba-helados",
+      "action": "location",
+      "placeId": "caramba-helados",
+      "payload": {
+        "lat": -36.9151643,
+        "lon": -71.4970999,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Caramba+Helados/@-36.9151643,-71.4970999,17z/data=!3m1!4b1!4m6!3m5!1s0x966e95513f037a59:0x3667a92d551ca71!8m2!3d-36.9151643!4d-71.4970999!16s%2Fg%2F11shd2frsx?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Caramba Helados”."
+    },
+    {
+      "id": "verified-location-che-cami",
+      "action": "location",
+      "placeId": "che-cami",
+      "payload": {
+        "lat": -36.9151364,
+        "lon": -71.507515,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Che+Cami/@-36.9151364,-71.507515,17z/data=!3m1!4b1!4m6!3m5!1s0x966e95416e1cafcd:0xb93101f9008bd334!8m2!3d-36.9151364!4d-71.507515!16s%2Fg%2F11vcm4sx3_?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Che Cami”."
+    },
+    {
+      "id": "verified-location-cervecer-a-garganta-del-diablo",
+      "action": "location",
+      "placeId": "cervecer-a-garganta-del-diablo",
+      "payload": {
+        "lat": -36.9146636,
+        "lon": -71.5036974,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Cervecer%C3%ADa+Garganta+del+Diablo/@-36.9146636,-71.5036974,17z/data=!3m1!4b1!4m6!3m5!1s0x966e95a0fd469f1d:0x75fcfd48d18960a4!8m2!3d-36.9146636!4d-71.5036974!16s%2Fg%2F11svgmv03y?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Cervecería Garganta del Diablo”."
+    },
+    {
+      "id": "verified-location-la-cava-de-la-monta-a",
+      "action": "location",
+      "placeId": "la-cava-de-la-monta-a",
+      "payload": {
+        "lat": -36.9150588,
+        "lon": -71.4983967,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/La+Cava+de+la+Monta%C3%B1a/@-36.9150588,-71.4983967,17z/data=!3m1!4b1!4m6!3m5!1s0x966e95b4fa9b7f35:0x8748323e784e1222!8m2!3d-36.9150588!4d-71.4983967!16s%2Fg%2F11vwlbz_15?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “La Cava de la Montaña”."
+    },
+    {
+      "id": "verified-location-charcuter-a-las-cabras",
+      "action": "location",
+      "placeId": "charcuter-a-las-cabras",
+      "payload": {
+        "lat": -36.9091547,
+        "lon": -71.4897332,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Charcuteria+las+Cabras/@-36.9091547,-71.4897332,17z/data=!3m1!4b1!4m6!3m5!1s0x966e95aaa2b7a559:0x8f9f183b7185e459!8m2!3d-36.9091547!4d-71.4897332!16s%2Fg%2F11svpnzshr?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Charcutería Las Cabras”."
+    },
+    {
+      "id": "verified-location-alto-las-trancas",
+      "action": "location",
+      "placeId": "alto-las-trancas",
+      "payload": {
+        "lat": -36.9149024,
+        "lon": -71.5112385,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Restaurante+Alto+Las+Trancas/@-36.9149024,-71.5112385,17z/data=!3m1!4b1!4m6!3m5!1s0x966e952402e23775:0x9b12ef2fd252d7aa!8m2!3d-36.9149024!4d-71.5112385!16s%2Fg%2F11sk6mtshc?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Alto Las Trancas”."
+    },
+    {
+      "id": "verified-location-el-pared-n",
+      "action": "location",
+      "placeId": "el-pared-n",
+      "payload": {
+        "lat": -36.870892,
+        "lon": -71.6008277,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/El+Paredon+Out+Door+Restaurant/@-36.870892,-71.6008277,17z/data=!3m1!4b1!4m6!3m5!1s0x966ebf4e27ad1485:0xd31ed9abdeac740e!8m2!3d-36.870892!4d-71.6008277!16s%2Fg%2F11f6c5d2nz?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “El Paredón”."
+    },
+    {
+      "id": "verified-location-super-el-refugio",
+      "action": "location",
+      "placeId": "super-el-refugio",
+      "payload": {
+        "lat": -36.9149867,
+        "lon": -71.5016034,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Supermercado+el+refugio/@-36.9149867,-71.5016034,17z/data=!3m1!4b1!4m6!3m5!1s0x966e950026b7f161:0xebc67850601342b7!8m2!3d-36.9149867!4d-71.5016034!16s%2Fg%2F11wjhvrpcz?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Supermercado El Refugio”."
+    },
+    {
+      "id": "verified-location-minimarket-rucahue",
+      "action": "location",
+      "placeId": "rucahue",
+      "payload": {
+        "lat": -36.9148209,
+        "lon": -71.4945317,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Rucahue+Minimarket/@-36.9148209,-71.4945317,17z/data=!3m1!4b1!4m6!3m5!1s0x966e95005b95ba4b:0xb6a5973479875991!8m2!3d-36.9148209!4d-71.4945317!16s%2Fg%2F11x6sk43fl?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “Rucahue Minimarket”."
+    },
+    {
+      "id": "verified-location-super-mcpato",
+      "action": "location",
+      "placeId": "super-mcpato",
+      "payload": {
+        "lat": -36.9093563,
+        "lon": -71.4860349,
+        "coordinateKind": "google_maps_place",
+        "sourceUrl": "https://www.google.com/maps/place/Mini+market+McPato/@-36.9093563,-71.4860349,17z/data=!3m1!4b1!4m6!3m5!1s0x966e952a19f83449:0x81b6496b12a7fb2b!8m2!3d-36.9093563!4d-71.4860349!16s%2Fg%2F11vl1xmrmh?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D",
+        "checkedAt": "2026-07-18T00:00:00.000Z"
+      },
+      "reason": "Exact Google Maps place result matched the curated establishment “McPato Supermercado”."
     }
   ]
 }

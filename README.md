@@ -29,6 +29,27 @@ reemplaza por distancia vial cuando la red privada tiene cobertura. Un fallo
 del GPS, del Worker o de OpenStreetMap conserva la lista y permite reintentar o
 marcar un punto manual que se elimina al salir.
 
+La red vial `data/driving-network.json` se calcula desde OpenStreetMap y se
+resuelve íntegramente en el navegador, sin enviar la posición a un router
+externo. El perfil v2 respeta sentidos y restricciones de automóvil, evita
+caminos intransitables y penaliza huellas, estacionamientos y accesos de
+servicio. Las fichas sin coordenada exacta permanecen visibles por nombre y
+sector, pero no muestran kilómetros ni participan en el orden por cercanía.
+
+Para regenerar catálogo, red y reporte:
+
+```sh
+npm run sync:destination
+npm run sync:driving
+npm run report:destination
+npm test
+```
+
+`sync:driving` falla sin sobrescribir el artefacto sano si Overpass entrega una
+respuesta parcial, cae bajo los pisos de cobertura o pierde más del 25% del
+grafo anterior. La guía y la red publican el mismo hash para impedir mezclas de
+caché entre versiones.
+
 La suite opcional de navegador requiere Playwright y un servidor local activo:
 
 ```sh
@@ -71,13 +92,16 @@ project-root/
 │   └── activities.js             ← filter bar for actividades.html
 │
 ├── scripts/
-│   └── apply-host-data.mjs       ← propagates data/host-data.json → lang.js + HTML
+│   ├── apply-host-data.mjs       ← propagates data/host-data.json → lang.js + HTML
+│   └── destination/              ← discovery, deduplication and local road graph generator
 ├── assets/brand/                ← CordalSur symbol copied into the project
 ├── worker/                      ← Cloudflare Worker, D1 migration and tests
 │
 ├── data/
 │   ├── host-data.json            ← live data (the "truth" the script reads)
 │   ├── host-data.sample.json     ← fake data for dry-runs
+│   ├── destination-guide.json    ← normalized places and routing eligibility
+│   ├── driving-network.json      ← versioned local OSM road graph
 │   └── .baseline/                ← synchronized snapshot of 15 canonical files
 │       ├── index.html
 │       ├── check-in.html

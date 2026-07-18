@@ -1978,6 +1978,7 @@
     "guide.road.outsideNetwork": { "es": "Estás fuera de la red vial disponible; conservamos las distancias aproximadas en línea recta.", "pt": "Você está fora da rede viária disponível; mantemos as distâncias aproximadas em linha reta.", "en": "You are outside the available road network; approximate straight-line distances remain visible." },
     "guide.road.errorDirect": { "es": "La mejora vial no respondió; conservamos las distancias aproximadas en línea recta.", "pt": "A melhoria viária não respondeu; mantemos as distâncias aproximadas em linha reta.", "en": "Road routing did not respond; approximate straight-line distances remain visible." },
     "guide.coordinate.warning": { "es": "Coordenada aproximada: confirma la entrada antes de viajar.", "pt": "Coordenada aproximada: confirme a entrada antes de viajar.", "en": "Approximate coordinate: confirm the entrance before travelling." },
+    "guide.coordinate.pendingLocation": { "es": "Ubicación exacta por confirmar", "pt": "Localização exata por confirmar", "en": "Exact location to be confirmed" },
     "guide.status.closed": { "es": "Cerrado según la última verificación. Revisa el sitio oficial antes de viajar.", "pt": "Fechado segundo a última verificação. Consulte o site oficial antes de viajar.", "en": "Closed according to the latest verification. Check the official site before travelling." },
     "guide.sources": { "es": "Fuentes", "pt": "Fontes", "en": "Sources" },
     "guide.action.navigate": { "es": "Navegar", "pt": "Navegar", "en": "Navigate" },

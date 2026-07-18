@@ -1,4 +1,4 @@
-import { networkIdentity, prepareNetwork, routeDistances } from './road-routing-core.mjs';
+import { networkIdentity, prepareNetwork, routeDistances } from './road-routing-core.mjs?v=2';
 
 let network = null;
 let graph = null;
@@ -13,8 +13,8 @@ function expectedIdentity(message) {
   const expected = message.expectedGraph && typeof message.expectedGraph === 'object' ? message.expectedGraph : {};
   return {
     schemaVersion: expected.schemaVersion ?? message.expectedGraphSchemaVersion ?? null,
-    version: expected.version || expected.generatedAt || message.expectedGraphVersion || null,
-    hash: expected.hash || expected.responseSha256 || message.expectedGraphHash || null
+    version: expected.version || expected.networkVersion || expected.generatedAt || message.expectedGraphVersion || null,
+    hash: expected.hash || expected.networkHash || expected.artifactSha256 || expected.responseSha256 || message.expectedGraphHash || null
   };
 }
 
@@ -36,7 +36,7 @@ self.addEventListener('message', async (event) => {
   const message = event.data || {};
   try {
     if (message.type === 'init') {
-      const response = await fetch(sameOriginNetworkUrl(message.networkUrl), { credentials: 'same-origin' });
+      const response = await fetch(sameOriginNetworkUrl(message.networkUrl), { credentials: 'same-origin', cache: 'no-store' });
       if (!response.ok) throw new Error(`driving network ${response.status}`);
       const raw = await response.json();
       const actualGraph = networkIdentity(raw);
