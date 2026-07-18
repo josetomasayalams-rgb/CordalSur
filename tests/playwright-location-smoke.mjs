@@ -44,7 +44,7 @@ async function selectLocation(page, kind, choice = 'once') {
     await page.locator(`[data-location-choice="${choice}"]`).click();
     await page.waitForFunction(() => {
       const card = document.querySelector('.guide-place[data-distance-source]');
-      return card && card.dataset.distanceSource !== 'road-apartment' && card.dataset.distanceSource !== 'unknown';
+      return card && /-current$/.test(card.dataset.distanceSource || '');
     });
     return;
   }
@@ -53,7 +53,7 @@ async function selectLocation(page, kind, choice = 'once') {
   await page.locator(`[data-catalog-location-choice="${choice}"]`).click();
   await page.waitForFunction(() => {
     const card = document.querySelector('.catalog-card[data-distance-source]');
-    return card && card.dataset.distanceSource !== 'road-apartment' && card.dataset.distanceSource !== 'unknown';
+    return card && /-current$/.test(card.dataset.distanceSource || '');
   });
 }
 
