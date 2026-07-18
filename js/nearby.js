@@ -28,6 +28,12 @@
   var locationMeta = document.getElementById('guide-location-meta');
   var locationAccuracy = document.getElementById('guide-location-accuracy');
   var locationUpdated = document.getElementById('guide-location-updated');
+  var manualActions = document.getElementById('guide-manual-actions');
+  var manualCancel = document.getElementById('guide-manual-cancel');
+  var manualConfirm = document.getElementById('guide-manual-confirm');
+  var mapRetry = document.getElementById('guide-map-retry');
+  var tileStatus = document.getElementById('guide-map-tile-status');
+  var tileRetry = document.getElementById('guide-map-tile-retry');
   var layout = document.querySelector('.guide-layout');
   var total = document.getElementById('guide-place-total');
   if (!results || !locate || !categories || !mapCanvas) return;
@@ -36,10 +42,10 @@
   var data = null;
   var publicPlaces = [];
   var mode = 'apartment';
+  var requestedMode = null;
   var activeCategory = 'all';
   var userPosition = null;
   var locationMode = 'none';
-  var watchId = null;
   var selectedId = null;
   var filteredPlaces = [];
   var map = null;
@@ -48,11 +54,23 @@
   var markers = new Map();
   var userMarker = null;
   var userAccuracyCircle = null;
-  var locationTracker = window.CordalLocationMotion.createTracker({ maximumAccuracy: 150 });
+  var locationController = null;
+  var previousMotionPoint = null;
   var travelHeading = NaN;
   var travelHeadingReliable = false;
   var locationGeneration = 0;
   var locationStatusKey = null;
+  var locationState = 'idle';
+  var roadCoverage = null;
+  var followUser = false;
+  var hasOpenedMapForLocation = false;
+  var manualSelecting = false;
+  var manualCandidate = null;
+  var manualCandidateMarker = null;
+  var tileLayer = null;
+  var tileErrors = 0;
+  var graphExpectation = null;
+  var pendingReroute = false;
   var MAP_VISIBILITY_KEY = 'cordal-guide-map-visible';
   var mapVisible = true;
 
@@ -85,6 +103,15 @@
   function formatRoadDistance(meters) {
     var lang = window.GH_I18N ? window.GH_I18N.getLang() : 'es';
     return window.CordalRoadDistances.formatMeters(meters, lang);
+  }
+
+  function distanceNote(place) {
+    if (!Number.isFinite(Number(place._roadDistanceMeters))) return '';
+    if (place._distanceSource === 'direct-current') return t('guide.road.direct');
+    if (place._distanceSource === 'road-current' || place._distanceSource === 'road-apartment') {
+      return t('guide.road.approx') + (place._roadAccessNearby ? ' · ' + t('guide.road.access') : '');
+    }
+    return '';
   }
 
   function ratingValue(place) {
@@ -198,8 +225,8 @@
       var addressLabel = [address, place.municipality && place.municipality !== address ? place.municipality : ''].filter(Boolean).join(' · ') || t('guide.location.unknown');
       var hasRoadDistance = Number.isFinite(place._roadDistanceMeters);
       var roadLabel = hasRoadDistance ? formatRoadDistance(place._roadDistanceMeters) : t('guide.road.unavailable');
-      var roadNote = hasRoadDistance ? t('guide.road.approx') + (place._roadAccessNearby ? ' · ' + t('guide.road.access') : '') : '';
-      return '<article class="nearby-card guide-place" data-place-id="' + escapeHtml(place.id) + '" tabindex="0" style="--place-color:' + escapeHtml(categoryColor(place.category)) + '">' +
+      var roadNote = distanceNote(place);
+      return '<article class="nearby-card guide-place" data-place-id="' + escapeHtml(place.id) + '" data-distance-source="' + escapeHtml(place._distanceSource || 'unknown') + '" tabindex="0" style="--place-color:' + escapeHtml(categoryColor(place.category)) + '">' +
         '<div class="nearby-card__top"><span class="guide-place__dot" aria-hidden="true"></span><div class="guide-place__heading"><span class="guide-place__category">' + escapeHtml(categoryLabel(place.category)) + '</span><h3>' + escapeHtml(place.name) + '</h3><p class="guide-place__address">' + escapeHtml(addressLabel) + '</p></div><strong class="nearby-card__distance">' + escapeHtml(roadLabel) + '<small>' + escapeHtml(roadNote) + '</small></strong></div>' +
         (approximate ? '<p class="guide-place__warning">' + escapeHtml(t('guide.coordinate.warning')) + '</p>' : '') +
         (closed ? '<p class="guide-place__warning guide-place__warning--closed">' + escapeHtml(t('guide.status.closed')) + '</p>' : '') +
@@ -260,15 +287,46 @@
       mapCanvas.hidden = true;
       return;
     }
+    if (map) return;
+    mapFallback.hidden = true;
+    mapCanvas.hidden = false;
     map = L.map(mapCanvas, { zoomControl: false, attributionControl: false, minZoom: 8, maxZoom: 19 });
     L.control.attribution({ prefix: false }).addTo(map);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+    addTileLayer();
     markerCluster = typeof L.markerClusterGroup === 'function' ? L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 48, spiderfyOnMaxZoom: true }) : L.layerGroup();
     markerCluster.addTo(map);
+    map.on('dragstart zoomstart', function (event) {
+      if (event && event.originalEvent) followUser = false;
+    });
+    map.on('click', function (event) {
+      if (!manualSelecting || !event || !event.latlng) return;
+      manualCandidate = { lat: event.latlng.lat, lon: event.latlng.lng, accuracy: 0 };
+      if (manualCandidateMarker) manualCandidateMarker.setLatLng(event.latlng);
+      else manualCandidateMarker = L.circleMarker(event.latlng, { radius: 9, color: '#fff8e9', weight: 3, fillColor: '#153b33', fillOpacity: 1 }).addTo(map);
+      if (manualConfirm) manualConfirm.disabled = false;
+      status.textContent = t('guide.location.manualReady');
+    });
     renderGeometry();
+  }
+
+  function addTileLayer() {
+    if (!map || !window.L) return;
+    if (tileLayer) map.removeLayer(tileLayer);
+    tileErrors = 0;
+    if (tileStatus) tileStatus.hidden = true;
+    tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+    tileLayer.on('tileerror', function () {
+      tileErrors += 1;
+      if (tileErrors >= 2 && tileStatus) tileStatus.hidden = false;
+    });
+    tileLayer.on('tileload', function () {
+      if (tileErrors && tileStatus) tileStatus.hidden = true;
+      tileErrors = 0;
+    });
+    tileLayer.addTo(map);
   }
 
   function renderGeometry() {
@@ -276,13 +334,13 @@
     if (geometryLayer) geometryLayer.remove();
     geometryLayer = L.layerGroup().addTo(map);
     var corridor = data.geometry.corridor;
-    if (mode !== 'apartment') {
+    if (mode === 'route') {
       L.geoJSON(corridor.bufferGeometry, { interactive: false, style: { color: '#38a27a', weight: 1, fillColor: '#8fd9bd', fillOpacity: 0.12 } }).addTo(geometryLayer);
-    } else {
+    } else if (mode === 'apartment') {
       L.circle([data.geometry.apartment.lat, data.geometry.apartment.lon], { radius: data.geometry.apartment.radiusMeters, interactive: false, color: '#8bd3b4', weight: 1, dashArray: '7 8', fillColor: '#8bd3b4', fillOpacity: 0.08 }).addTo(geometryLayer);
     }
-    L.geoJSON(corridor.geometry, { interactive: false, style: { color: '#e7a957', weight: 5, opacity: 0.92 } }).addTo(geometryLayer);
-    L.marker([data.geometry.apartment.lat, data.geometry.apartment.lon], { icon: homeIcon(), zIndexOffset: 900, keyboard: false }).bindTooltip(t('guide.legend.apartment'), { direction: 'top' }).addTo(geometryLayer);
+    if (mode === 'route') L.geoJSON(corridor.geometry, { interactive: false, style: { color: '#e7a957', weight: 5, opacity: 0.92 } }).addTo(geometryLayer);
+    if (mode !== 'nearby') L.marker([data.geometry.apartment.lat, data.geometry.apartment.lon], { icon: homeIcon(), zIndexOffset: 900, keyboard: false }).bindTooltip(t('guide.legend.apartment'), { direction: 'top' }).addTo(geometryLayer);
     (data._landmarks || []).forEach(function (landmark) {
       var alreadyListed = publicPlaces.some(function (place) { return distanceKm(place.location, landmark) < 0.04; });
       if (!alreadyListed) L.marker([landmark.lat, landmark.lon], { icon: landmarkIcon(false), zIndexOffset: 930, keyboard: false }).bindTooltip(landmark.name, { direction: 'top' }).addTo(geometryLayer);
@@ -302,7 +360,7 @@
   }
 
   function popupHtml(place) {
-    var distanceLabel = Number.isFinite(place._roadDistanceMeters) ? formatRoadDistance(place._roadDistanceMeters) + ' · ' + t('guide.road.approx') : t('guide.road.unavailable');
+    var distanceLabel = Number.isFinite(place._roadDistanceMeters) ? formatRoadDistance(place._roadDistanceMeters) + ' · ' + distanceNote(place) : t('guide.road.unavailable');
     return '<div class="guide-map-popup"><span style="--popup-color:' + escapeHtml(categoryColor(place.category)) + '">' + escapeHtml(categoryLabel(place.category)) + '</span><strong>' + escapeHtml(place.name) + '</strong><small>' + escapeHtml(distanceLabel) + '</small></div>';
   }
 
@@ -321,10 +379,11 @@
 
   function visibleBounds() {
     if (!window.L) return null;
-    var points = filteredPlaces.map(function (place) { return [place.location.lat, place.location.lon]; });
-    points.push([data.geometry.apartment.lat, data.geometry.apartment.lon]);
+    var boundsPlaces = mode === 'nearby' ? filteredPlaces.slice(0, 12) : filteredPlaces;
+    var points = boundsPlaces.map(function (place) { return [place.location.lat, place.location.lon]; });
+    if (mode !== 'nearby') points.push([data.geometry.apartment.lat, data.geometry.apartment.lon]);
     if (userPosition) points.push([userPosition.lat, userPosition.lon]);
-    if (mode !== 'apartment') data.geometry.corridor.geometry.coordinates.forEach(function (point) { points.push([point[1], point[0]]); });
+    if (mode === 'route') data.geometry.corridor.geometry.coordinates.forEach(function (point) { points.push([point[1], point[0]]); });
     return points.length ? L.latLngBounds(points) : null;
   }
 
@@ -357,7 +416,11 @@
     if (persist !== false) {
       try { sessionStorage.setItem(MAP_VISIBILITY_KEY, mapVisible ? 'true' : 'false'); } catch (e) {}
     }
-    if (mapVisible && map) setTimeout(function () { map.invalidateSize(); fitMap(); }, 80);
+    if (mapVisible && map) setTimeout(function () {
+      map.invalidateSize();
+      if (followUser && userPosition) centerOnUser(false);
+      else fitMap();
+    }, 80);
   }
 
   function selectPlace(id, scroll, pan) {
@@ -395,8 +458,15 @@
     if (shouldFit) fitMap();
   }
 
-  function setMode(next, requestedByUser) {
-    if (requestedByUser && next === 'apartment') releasePrivateLocation();
+  function restoreApartmentDistances() {
+    publicPlaces.forEach(function (place) {
+      place._roadDistanceMeters = Number.isFinite(place.discovery.apartmentRoadDistanceMeters) ? place.discovery.apartmentRoadDistanceMeters : NaN;
+      place._roadAccessNearby = Boolean(place.discovery.roadAccessNearby);
+      place._distanceSource = Number.isFinite(place._roadDistanceMeters) ? 'road-apartment' : 'unknown';
+    });
+  }
+
+  function commitMode(next, shouldFit) {
     mode = next;
     activeCategory = 'all';
     modeGroup.querySelectorAll('[data-guide-mode]').forEach(function (button) {
@@ -404,15 +474,25 @@
       button.classList.toggle('is-active', active);
       button.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
-    if (mode === 'apartment') {
-      publicPlaces.forEach(function (place) {
-        place._roadDistanceMeters = Number.isFinite(place.discovery.apartmentRoadDistanceMeters) ? place.discovery.apartmentRoadDistanceMeters : NaN;
-        place._roadAccessNearby = Boolean(place.discovery.roadAccessNearby);
-      });
-    }
+    if (mode === 'apartment') restoreApartmentDistances();
     renderGeometry();
-    render(true);
-    if (requestedByUser && mode !== 'apartment' && !userPosition) openLocationDialog();
+    render(shouldFit !== false);
+  }
+
+  function setMode(next, requestedByUser) {
+    if (next === 'apartment') {
+      requestedMode = null;
+      releasePrivateLocation();
+      commitMode('apartment', true);
+      return;
+    }
+    if (!userPosition) {
+      requestedMode = next;
+      if (requestedByUser) openLocationDialog();
+      return;
+    }
+    requestedMode = null;
+    commitMode(next, true);
   }
 
   function openLocationDialog() {
@@ -425,19 +505,19 @@
     else locationDialog.removeAttribute('open');
   }
 
-  function stopLocationWatch() {
-    if (watchId !== null && navigator.geolocation) navigator.geolocation.clearWatch(watchId);
-    watchId = null;
-  }
-
   function releasePrivateLocation() {
     locationGeneration += 1;
-    stopLocationWatch();
-    locationTracker.reset();
+    if (locationController) locationController.stop();
     userPosition = null;
     locationMode = 'none';
+    locationState = 'idle';
+    roadCoverage = null;
+    previousMotionPoint = null;
     travelHeading = NaN;
     travelHeadingReliable = false;
+    followUser = false;
+    hasOpenedMapForLocation = false;
+    stopManualSelection();
     if (window.CordalRoadDistances) window.CordalRoadDistances.destroy();
     updateLocationReadout();
     updateUserMarker();
@@ -455,7 +535,7 @@
       return;
     }
     var accuracy = Number(userPosition.accuracy);
-    var accuracyKey = accuracy <= 50 ? 'guide.location.accuracyGood' : 'guide.location.accuracyLow';
+    var accuracyKey = accuracy <= 100 ? 'guide.location.accuracyGood' : (accuracy <= 1000 ? 'guide.location.accuracyApproximate' : 'guide.location.accuracyCoarse');
     if (locationAccuracy) locationAccuracy.textContent = t(accuracyKey).replace('{meters}', Number.isFinite(accuracy) ? String(Math.round(accuracy)) : '—');
     if (locationUpdated) locationUpdated.textContent = t('guide.location.updated').replace('{time}', formatUpdatedTime(userPosition.timestamp));
     if (locationMeta) locationMeta.hidden = false;
@@ -474,91 +554,212 @@
     status.textContent = t(locationMode === 'session' ? 'guide.location.sessionActive' : 'guide.location.onceActive') + (Number.isFinite(Number(userPosition.accuracy)) ? ' · ±' + Math.round(Number(userPosition.accuracy)) + ' m' : '');
   }
 
-  function centerOnUser() {
+  function zoomForAccuracy(accuracy) {
+    if (!Number.isFinite(Number(accuracy))) return 15;
+    if (accuracy <= 30) return 17;
+    if (accuracy <= 100) return 16;
+    if (accuracy <= 1000) return 14;
+    return 12;
+  }
+
+  function centerOnUser(animate) {
     if (!map || !userPosition) return;
-    if (!mapVisible) setMapVisible(true, true);
-    map.setView([userPosition.lat, userPosition.lon], Math.max(map.getZoom(), 16), { animate: true });
+    followUser = true;
+    if (!mapVisible) {
+      setMapVisible(true, true);
+      return;
+    }
+    map.setView([userPosition.lat, userPosition.lon], zoomForAccuracy(userPosition.accuracy), { animate: animate !== false });
     if (userMarker) userMarker.openTooltip();
   }
 
-  function usePosition(position, nextMode) {
-    var tracked = locationTracker.accept(position);
-    if (!tracked.accepted) {
-      if (tracked.reason === 'low_accuracy' && !userPosition) {
-        locationStatusKey = 'guide.location.unavailable';
-        updateLocationStatus();
-        locate.disabled = false;
-      }
+  function updateMotion(snapshot) {
+    if (snapshot.source !== 'gps') {
+      previousMotionPoint = null;
       return;
     }
-    userPosition = tracked.point;
-    travelHeading = tracked.heading;
-    travelHeadingReliable = tracked.headingReliable;
-    locationMode = nextMode;
-    locationStatusKey = null;
-    locationStatusKey = 'guide.road.calculating';
-    updateLocationStatus();
-    locate.disabled = false;
-    updateLocationReadout();
-    updateUserMarker();
-    var generation = ++locationGeneration;
-    window.CordalRoadDistances.routeFrom(userPosition).then(function (message) {
-      if (generation !== locationGeneration || !userPosition) return;
-      publicPlaces.forEach(function (place) {
-        var route = message.distances[place.id];
-        place._roadDistanceMeters = route ? route.meters : NaN;
-        place._roadAccessNearby = Boolean(route && route.accessNearby);
-      });
-      locationStatusKey = null;
-      updateLocationStatus();
-      if (mode === 'apartment') setMode('nearby', false);
-      else render(true);
-    }).catch(function (error) {
-      if (error && error.stale) return;
-      if (generation !== locationGeneration) return;
-      locationStatusKey = 'guide.road.error';
-      updateLocationStatus();
-      render(true);
+    if (!previousMotionPoint) {
+      previousMotionPoint = snapshot;
+      return;
+    }
+    var moved = window.CordalLocationMotion.distanceMeters(previousMotionPoint, snapshot);
+    var previousAccuracy = Number(previousMotionPoint.accuracy);
+    var currentAccuracy = Number(snapshot.accuracy);
+    var preciseEnough = Number.isFinite(previousAccuracy) && Number.isFinite(currentAccuracy) && previousAccuracy <= 100 && currentAccuracy <= 100;
+    var movementThreshold = Math.max(25, previousAccuracy + currentAccuracy);
+    if (!preciseEnough) {
+      travelHeadingReliable = false;
+      previousMotionPoint = snapshot;
+    } else if (moved >= movementThreshold) {
+      travelHeading = window.CordalLocationMotion.bearing(previousMotionPoint, snapshot);
+      travelHeadingReliable = true;
+      previousMotionPoint = snapshot;
+    } else if (currentAccuracy + 20 < previousAccuracy) {
+      previousMotionPoint = snapshot;
+    }
+  }
+
+  function applyDirectDistances(snapshot) {
+    if (!data) return;
+    publicPlaces.forEach(function (place) {
+      place._roadDistanceMeters = window.CordalLocationMotion.distanceMeters(snapshot, place.location);
+      place._roadAccessNearby = false;
+      place._distanceSource = 'direct-current';
     });
   }
 
-  function locationFailure(error) {
-    stopLocationWatch();
-    locate.disabled = false;
-    if (userPosition) {
-      locationMode = 'none';
-      locationStatusKey = 'guide.location.updateFailed';
+  function warmRoadEngine() {
+    if (!window.CordalRoadDistances) return Promise.reject(new Error('road engine unavailable'));
+    return window.CordalRoadDistances.init({ expectedGraph: graphExpectation || {} });
+  }
+
+  function calculateRoadDistances(snapshot) {
+    if (!data || !snapshot || !window.CordalRoadDistances) return;
+    var generation = ++locationGeneration;
+    locationStatusKey = 'guide.road.calculating';
+    updateLocationStatus();
+    window.CordalRoadDistances.routeFrom(snapshot, { expectedGraph: graphExpectation || {} }).then(function (message) {
+      if (generation !== locationGeneration || !userPosition) return;
+      if (message.coverage === 'outside-network') {
+        roadCoverage = 'outside-network';
+        locationState = 'outside-network';
+        locationStatusKey = 'guide.road.outsideNetwork';
+        updateLocationStatus();
+        render(false);
+        return;
+      }
+      roadCoverage = 'covered';
+      publicPlaces.forEach(function (place) {
+        var route = message.distances[place.id];
+        if (!route || !Number.isFinite(Number(route.meters))) return;
+        place._roadDistanceMeters = Number(route.meters);
+        place._roadAccessNearby = Boolean(route.accessNearby);
+        place._distanceSource = 'road-current';
+      });
+      locationStatusKey = null;
       updateLocationStatus();
+      render(false);
+    }).catch(function (error) {
+      if (error && error.stale) return;
+      if (generation !== locationGeneration) return;
+      roadCoverage = 'routing-error';
+      locationState = 'routing-error';
+      locationStatusKey = 'guide.road.errorDirect';
+      updateLocationStatus();
+      render(false);
+    });
+  }
+
+  function showSnapshot(snapshot, shouldReroute) {
+    userPosition = snapshot;
+    locationMode = snapshot.source === 'manual' ? 'manual' : (locationController && locationController.getMode ? locationController.getMode() : locationMode);
+    updateMotion(snapshot);
+    updateLocationReadout();
+    if (!data) {
+      pendingReroute = pendingReroute || shouldReroute !== false;
       return;
     }
-    locationMode = 'none';
-    userPosition = null;
-    locationStatusKey = error && error.code === 1 ? 'guide.location.denied' : (error && error.code === 3 ? 'guide.location.timeout' : 'guide.location.unavailable');
-    updateLocationStatus();
-    updateLocationReadout();
+    applyDirectDistances(snapshot);
+    var nextMode = requestedMode || (mode === 'apartment' ? 'nearby' : mode);
+    requestedMode = null;
+    commitMode(nextMode, false);
+    locate.disabled = false;
     updateUserMarker();
-    render(true);
+    if (!hasOpenedMapForLocation) {
+      hasOpenedMapForLocation = true;
+      followUser = true;
+      if (window.matchMedia('(max-width: 760px)').matches) setMapVisible(true, true);
+      else if (mapVisible) centerOnUser(false);
+    } else if (followUser) {
+      centerOnUser(false);
+    }
+    if (shouldReroute !== false) calculateRoadDistances(snapshot);
+  }
+
+  function locationStateKey(nextState, hasSnapshot, error) {
+    if (nextState === 'requesting') return 'guide.location.requesting';
+    if (nextState === 'refining') return hasSnapshot ? 'guide.location.refiningWithFix' : 'guide.location.refining';
+    if (nextState === 'degraded') return hasSnapshot ? 'guide.location.degraded' : 'guide.location.unavailable';
+    if (nextState === 'denied') return 'guide.location.deniedHelp';
+    if (nextState === 'timeout') return 'guide.location.timeout';
+    if (nextState === 'unavailable' && error && error.reason === 'insecure-context') return 'guide.location.insecure';
+    if (nextState === 'unavailable') return 'guide.location.unavailableHelp';
+    return null;
+  }
+
+  function handleLocationEvent(event) {
+    if (!event) return;
+    if (event.type === 'snapshot') {
+      if (event.final && userPosition && userPosition.timestamp === event.snapshot.timestamp && !event.shouldReroute) return;
+      locationState = event.snapshot.quality === 'coarse' ? 'degraded' : 'ready';
+      showSnapshot(event.snapshot, event.shouldReroute);
+      return;
+    }
+    if (event.type !== 'state') return;
+    locationState = event.state;
+    var existing = event.snapshot || userPosition;
+    locationStatusKey = locationStateKey(event.state, Boolean(existing), event.error);
+    // Keep the chooser available while GPS is pending so the guest can cancel
+    // immediately instead of waiting for the browser timeout.
+    locate.disabled = false;
+    if (event.state === 'denied') {
+      locationGeneration += 1;
+      roadCoverage = null;
+      if (window.CordalRoadDistances) window.CordalRoadDistances.destroy();
+    }
+    if ((event.state === 'denied' || event.state === 'unavailable' || event.state === 'timeout') && !existing) requestedMode = null;
+    if (event.state === 'denied' && !event.snapshot && userPosition) {
+      userPosition = null;
+      requestedMode = null;
+      restoreApartmentDistances();
+      commitMode('apartment', true);
+      updateLocationReadout();
+      updateUserMarker();
+    }
+    updateLocationStatus();
+  }
+
+  function stopManualSelection() {
+    manualSelecting = false;
+    manualCandidate = null;
+    if (manualActions) manualActions.hidden = true;
+    if (manualConfirm) manualConfirm.disabled = true;
+    if (manualCandidateMarker && map) map.removeLayer(manualCandidateMarker);
+    manualCandidateMarker = null;
+  }
+
+  function startManualSelection() {
+    closeLocationDialog();
+    initializeMap();
+    manualSelecting = true;
+    manualCandidate = null;
+    if (manualActions) manualActions.hidden = false;
+    if (manualConfirm) manualConfirm.disabled = true;
+    locationStatusKey = 'guide.location.manualWaiting';
+    setMapVisible(true, true);
+    updateLocationStatus();
   }
 
   function requestLocation(choice) {
-    closeLocationDialog();
-    stopLocationWatch();
-    if (choice === 'none') {
-      releasePrivateLocation();
-      locationStatusKey = null;
-      updateLocationStatus();
-      updateLocationReadout();
-      updateUserMarker();
-      setMode('apartment', false);
+    if (choice === 'manual') {
+      startManualSelection();
       return;
     }
-    if (!navigator.geolocation) { locationFailure(); return; }
-    locate.disabled = true;
-    locationStatusKey = 'nearby.locating';
+    closeLocationDialog();
+    stopManualSelection();
+    if (choice === 'none') {
+      requestedMode = null;
+      locationStatusKey = null;
+      releasePrivateLocation();
+      if (data) commitMode('apartment', true);
+      else updateLocationStatus();
+      return;
+    }
+    locationMode = choice;
+    locationStatusKey = 'guide.location.requesting';
     updateLocationStatus();
-    var options = { enableHighAccuracy: true, timeout: 15000, maximumAge: choice === 'once' ? 0 : 5000 };
-    if (choice === 'session') watchId = navigator.geolocation.watchPosition(function (position) { usePosition(position, 'session'); }, locationFailure, options);
-    else navigator.geolocation.getCurrentPosition(function (position) { usePosition(position, 'once'); }, locationFailure, options);
+    warmRoadEngine().catch(function () { /* direct distance remains available */ });
+    locationController.start(choice);
   }
 
   modeGroup.addEventListener('click', function (event) {
@@ -597,33 +798,63 @@
   });
   if (mapToggle) mapToggle.addEventListener('click', function () { setMapVisible(!mapVisible, true); });
   document.getElementById('guide-map-fit').addEventListener('click', fitMap);
-  if (centerUser) centerUser.addEventListener('click', centerOnUser);
+  if (centerUser) centerUser.addEventListener('click', function () { centerOnUser(true); });
   document.getElementById('guide-map-in').addEventListener('click', function () { if (map) map.zoomIn(); });
   document.getElementById('guide-map-out').addEventListener('click', function () { if (map) map.zoomOut(); });
+  if (mapRetry) mapRetry.addEventListener('click', function () { initializeMap(); if (map) { renderGeometry(); render(false); fitMap(); } });
+  if (tileRetry) tileRetry.addEventListener('click', addTileLayer);
+  if (manualCancel) manualCancel.addEventListener('click', function () {
+    stopManualSelection();
+    requestedMode = null;
+    locationStatusKey = null;
+    updateLocationStatus();
+  });
+  if (manualConfirm) manualConfirm.addEventListener('click', function () {
+    if (!manualCandidate || !locationController) return;
+    var selected = manualCandidate;
+    stopManualSelection();
+    locationController.setManual(selected);
+  });
   window.addEventListener('resize', function () { if (map) map.invalidateSize(); });
-  window.addEventListener('pagehide', releasePrivateLocation);
-  document.addEventListener('cordal:access-ended', releasePrivateLocation);
+  window.addEventListener('pagehide', function () {
+    releasePrivateLocation();
+    if (locationController) locationController.destroy();
+  });
+  document.addEventListener('cordal:access-ended', function () {
+    releasePrivateLocation();
+    if (data) commitMode('apartment', true);
+  });
 
   if (window.GH_I18N) window.GH_I18N.subscribe(function () { renderQuality(); renderGeometry(); render(false); updateLocationReadout(); updateLocationStatus(); setMapVisible(mapVisible, false); });
+
+  if (window.CordalLocationController && typeof window.CordalLocationController.create === 'function') {
+    locationController = window.CordalLocationController.create({ onEvent: handleLocationEvent });
+  } else {
+    locate.disabled = true;
+    locationStatusKey = 'guide.location.unavailableHelp';
+    updateLocationStatus();
+  }
 
   Promise.all([fetch('data/destination-guide.json'), fetch('data/nearby.json')]).then(function (responses) {
     if (!responses[0].ok) throw new Error('destination guide unavailable');
     return Promise.all([responses[0].json(), responses[1].ok ? responses[1].json() : Promise.resolve(null)]);
   }).then(function (payloads) {
     data = payloads[0];
+    graphExpectation = data.meta && data.meta.drivingNetwork ? data.meta.drivingNetwork : null;
     data._landmarks = payloads[1] && payloads[1].coverage ? payloads[1].coverage.anchors || [] : [];
     if (loading) loading.hidden = true;
     if (resultsRegion) resultsRegion.setAttribute('aria-busy', 'false');
     publicPlaces = data.places.filter(function (place) { return !LODGING[place.category]; });
-    publicPlaces.forEach(function (place) {
-      place._roadDistanceMeters = Number.isFinite(place.discovery.apartmentRoadDistanceMeters) ? place.discovery.apartmentRoadDistanceMeters : NaN;
-      place._roadAccessNearby = Boolean(place.discovery.roadAccessNearby);
-    });
+    restoreApartmentDistances();
     data._centerline = data.geometry.corridor.geometry.coordinates.map(function (point) { return { lon: point[0], lat: point[1] }; });
     renderQuality();
     initializeMap();
     setMapVisible(preferredMapVisibility(), false);
-    render(true);
+    if (userPosition) {
+      var reroute = pendingReroute;
+      pendingReroute = false;
+      showSnapshot(userPosition, reroute);
+    } else render(true);
   }).catch(function () {
     if (loading) loading.hidden = true;
     if (resultsRegion) resultsRegion.setAttribute('aria-busy', 'false');

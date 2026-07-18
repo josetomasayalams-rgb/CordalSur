@@ -487,7 +487,7 @@ function canonicalCard(place) {
     ? `<span class="catalog-rating"><b>★ ${attrEsc(rating.value)}</b><span aria-hidden="true"> · </span>${attrEsc(rating.reviewCount || 0)} <span data-i18n="guide.reviews">reseñas</span></span>`
     : '';
   const phoneHref = phone ? `tel:${String(phone).replace(/[^+\d]/g, '')}` : '';
-  return `      <article class="rest-card catalog-card" data-id="${attrEsc(place.id)}" data-category="${attrEsc(place.category)}" data-distance="${distanceMeters ?? ''}" data-apartment-distance="${distanceMeters ?? ''}" data-apartment-access-nearby="${place.discovery.roadAccessNearby ? 'true' : 'false'}" data-road-access-nearby="${place.discovery.roadAccessNearby ? 'true' : 'false'}" style="--catalog-color:${attrEsc(category.color)}">
+  return `      <article class="rest-card catalog-card" data-id="${attrEsc(place.id)}" data-category="${attrEsc(place.category)}" data-lat="${attrEsc(place.location.lat)}" data-lon="${attrEsc(place.location.lon)}" data-distance="${distanceMeters ?? ''}" data-distance-source="${distanceMeters === null ? 'unknown' : 'road-apartment'}" data-apartment-distance="${distanceMeters ?? ''}" data-apartment-access-nearby="${place.discovery.roadAccessNearby ? 'true' : 'false'}" data-road-access-nearby="${place.discovery.roadAccessNearby ? 'true' : 'false'}" style="--catalog-color:${attrEsc(category.color)}">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
@@ -534,7 +534,9 @@ function catalogToolbar(kind, places) {
 }
 
 function canonicalCatalog(kind, titleKey, title, introKey, intro, places) {
-  return `    <section class="canonical-catalog" data-canonical-catalog="${kind}">
+  const graph = destinationGuide.meta && destinationGuide.meta.drivingNetwork || {};
+  const apartment = destinationGuide.geometry.apartment;
+  return `    <section class="canonical-catalog" data-canonical-catalog="${kind}" data-apartment-lat="${attrEsc(apartment.lat)}" data-apartment-lon="${attrEsc(apartment.lon)}" data-graph-schema-version="${attrEsc(graph.schemaVersion ?? '')}" data-graph-version="${attrEsc(graph.generatedAt || '')}" data-graph-hash="${attrEsc(graph.responseSha256 || '')}">
       <div class="catalog-heading"><div><span class="guide-eyebrow" data-i18n="catalog.eyebrow">Selección territorial verificada</span><h2 class="section-title" data-i18n="${titleKey}">${title}</h2><p data-i18n="${introKey}">${intro}</p></div><span class="catalog-total"><b>${places.length}</b><span data-i18n="guide.quality.places">lugares</span></span></div>
 ${catalogToolbar(kind, places)}
       <div class="rest-grid" data-catalog-grid>
@@ -544,10 +546,21 @@ ${places.map(canonicalCard).join('\n')}
       <dialog class="guide-location-dialog catalog-location-dialog" data-catalog-location-dialog aria-labelledby="catalog-location-title-${kind}">
         <form method="dialog" class="guide-location-dialog__panel">
           <div class="guide-location-dialog__head"><div><span class="guide-eyebrow" data-i18n="guide.location.title">Tu ubicación es opcional</span><h2 id="catalog-location-title-${kind}" data-i18n="guide.location.dialogTitle">¿Cómo quieres usar tu ubicación?</h2></div><button type="submit" class="guide-dialog-close" value="close" data-i18n-aria="guide.location.close" aria-label="Cerrar">×</button></div>
-          <p data-i18n="guide.location.dialogBody">Tu posición sólo se usa en este dispositivo para calcular distancias viales. Nunca se agrega a enlaces ni al catálogo.</p>
+          <p data-i18n="guide.location.dialogBody">Tu posición sólo se usa en este dispositivo. CordalSur no la guarda ni la añade a enlaces; al abrir el mapa, OpenStreetMap recibe las teselas de la zona visible.</p>
           <button type="button" class="guide-location-choice" data-catalog-location-choice="once"><strong data-i18n="guide.location.once">Solo esta vez</strong><span data-i18n="guide.location.onceDetail">Toma una posición y deja de consultar.</span></button>
           <button type="button" class="guide-location-choice" data-catalog-location-choice="session"><strong data-i18n="guide.location.session">Durante esta sesión</strong><span data-i18n="guide.location.sessionDetail">Actualiza mientras avanzas; se borra al salir.</span></button>
+          <button type="button" class="guide-location-choice" data-catalog-location-choice="manual"><strong data-i18n="guide.location.manual">Elegir un punto en el mapa</strong><span data-i18n="guide.location.manualDetail">El punto se usa sólo en esta página y no se guarda.</span></button>
           <button type="button" class="guide-location-choice" data-catalog-location-choice="none"><strong data-i18n="guide.location.none">Seguir sin ubicación</strong><span data-i18n="guide.location.noneDetail">Mantiene las distancias desde el departamento.</span></button>
+        </form>
+      </dialog>
+      <dialog class="guide-location-dialog catalog-manual-dialog" data-catalog-manual-dialog aria-labelledby="catalog-manual-title-${kind}">
+        <form method="dialog" class="guide-location-dialog__panel">
+          <div class="guide-location-dialog__head"><div><span class="guide-eyebrow" data-i18n="guide.location.manualEyebrow">Ubicación manual</span><h2 id="catalog-manual-title-${kind}" data-i18n="guide.location.manualTitle">Marca un punto en el mapa</h2></div><button type="submit" class="guide-dialog-close" value="close" data-i18n-aria="guide.location.close" aria-label="Cerrar">×</button></div>
+          <p data-i18n="guide.location.manualHelp">Toca el mapa para mover el punto. No se guardará al salir de esta página.</p>
+          <div class="catalog-manual-map" data-catalog-manual-map role="application" data-i18n-aria="guide.location.manualMapAria" aria-label="Mapa para elegir una ubicación"></div>
+          <p class="catalog-manual-status" data-catalog-manual-status role="status" aria-live="polite" data-i18n="guide.location.manualWaiting">Toca el mapa para elegir un punto.</p>
+          <button type="button" class="catalog-manual-tile-retry" data-catalog-manual-tile-retry hidden data-i18n="common.retry">Reintentar mapa base</button>
+          <div class="guide-manual-actions"><button type="submit" class="guide-manual-cancel" value="close" data-i18n="common.cancel">Cancelar</button><button type="button" class="guide-manual-confirm" data-catalog-manual-confirm disabled data-i18n="guide.location.manualConfirm">Usar este punto</button></div>
         </form>
       </dialog>
     </section>`;

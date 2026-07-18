@@ -376,7 +376,6 @@ html[data-theme="dark"] .guide-hero__facts b, html[data-theme="dark"] .catalog-t
 .guide-map-controls { display: flex; gap: 5px; }
 .guide-map-controls button { width: 36px; height: 36px; border: 1px solid var(--card-border); border-radius: 10px; background: var(--card-bg); color: var(--night); font: 800 1rem/1 Manrope, sans-serif; cursor: pointer; }
 .guide-map { position: relative; min-height: 400px; border-block: 1px solid var(--card-border); background: #dfe8df; }
-.guide-map svg { display: block; width: 100%; min-height: 400px; max-height: 68vh; touch-action: manipulation; }
 .guide-map__background { fill: #e8eee7; }
 .guide-map__corridor { fill: rgba(49, 111, 91, .13); stroke: rgba(49, 111, 91, .3); stroke-width: 2; vector-effect: non-scaling-stroke; }
 .guide-map__radius { fill: rgba(217, 162, 79, .12); stroke: #b87c2e; stroke-width: 2.2; stroke-dasharray: 7 5; vector-effect: non-scaling-stroke; }
@@ -435,7 +434,6 @@ html[data-theme="dark"] .guide-route-featured { box-shadow: 0 14px 34px rgba(0,0
   .guide-layout { grid-template-columns: 1fr; }
   .guide-map-shell { position: relative; top: auto; }
   .guide-map { min-height: 340px; }
-  .guide-map svg { min-height: 340px; max-height: 520px; }
 }
 @media (max-width: 620px) {
   .guide-hero { grid-template-columns: 1fr; }
@@ -447,7 +445,6 @@ html[data-theme="dark"] .guide-route-featured { box-shadow: 0 14px 34px rgba(0,0
   .guide-tools { grid-template-columns: 1fr 1fr; }
   .guide-map-head { align-items: flex-end; }
   .guide-map { min-height: 290px; }
-  .guide-map svg { min-height: 290px; }
   .nearby-card__top { grid-template-columns: auto minmax(0, 1fr); }
   .nearby-card__distance { grid-column: 2; justify-items: start; }
 }
@@ -5030,4 +5027,106 @@ html[data-theme="dark"] .guide-map-toggle[aria-expanded="true"] {
   .guide-location .nearby-locate:disabled,
   .guide-special--user b { animation: none !important; }
   body[data-section="home"] .top-controls.preference-bar[data-preference-ready="true"] { animation: none !important; }
+}
+
+/* Location recovery and Leaflet-safe map surfaces. */
+.guide-special--home svg {
+  width: 22px;
+  height: 22px;
+  min-height: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.guide-map-fallback,
+.guide-map-tile-status {
+  position: absolute;
+  z-index: 700;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 0;
+  padding: 11px 12px;
+  border: 1px solid color-mix(in srgb, var(--gold) 38%, var(--ui-border));
+  border-radius: var(--ui-radius-control);
+  background: color-mix(in srgb, var(--ui-card-bg) 94%, transparent);
+  color: #153b33;
+  box-shadow: var(--ui-shadow-soft);
+  backdrop-filter: blur(14px);
+}
+.guide-map-fallback { top: 12px; }
+.guide-map-tile-status { bottom: 12px; }
+.guide-map-fallback[hidden],
+.guide-map-tile-status[hidden] { display: none !important; }
+.guide-map-fallback p,
+.guide-map-tile-status span { margin: 0; font-size: .7rem; line-height: 1.4; }
+.guide-map-fallback button,
+.guide-map-tile-status button,
+.guide-manual-actions button {
+  min-height: 44px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-control);
+  padding: 9px 13px;
+  background: var(--ui-control-bg);
+  color: var(--night);
+  font: 750 .7rem/1 Manrope, sans-serif;
+  cursor: pointer;
+}
+.guide-manual-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;
+}
+.guide-manual-actions[hidden] { display: none !important; }
+.guide-manual-confirm {
+  border-color: var(--forest) !important;
+  background: var(--forest) !important;
+  color: #fff !important;
+}
+.guide-manual-confirm:disabled { opacity: .45; cursor: not-allowed; }
+.catalog-manual-map {
+  width: 100%;
+  min-height: 320px;
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-card);
+  background: #dfe8df;
+}
+.catalog-manual-status { margin: 0 !important; color: var(--rock); }
+.catalog-location-dialog .guide-location-choice,
+.catalog-manual-dialog .guide-location-choice { flex: none; }
+.guide-location-choice[data-location-choice="manual"],
+.guide-location-choice[data-catalog-location-choice="manual"] {
+  border-color: color-mix(in srgb, #247ebe 45%, var(--ui-border));
+}
+.guide-place[data-distance-source="direct-current"] .nearby-card__distance,
+.catalog-card[data-distance-source="direct-current"] .catalog-distance { color: #236f9f; }
+html[data-theme="dark"] .guide-place[data-distance-source="direct-current"] .nearby-card__distance,
+html[data-theme="dark"] .catalog-card[data-distance-source="direct-current"] .catalog-distance { color: #86cff4; }
+.catalog-manual-tile-retry {
+  align-self: flex-start;
+  min-height: 44px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-control);
+  padding: 9px 13px;
+  background: var(--ui-control-bg);
+  color: var(--night);
+  font: 750 .7rem/1 Manrope, sans-serif;
+  cursor: pointer;
+}
+.catalog-manual-tile-retry[hidden] { display: none !important; }
+
+@media (max-width: 620px) {
+  .guide-map-fallback,
+  .guide-map-tile-status { align-items: stretch; flex-direction: column; }
+  .guide-map-fallback button,
+  .guide-map-tile-status button { width: 100%; }
+  .catalog-manual-map { min-height: min(48vh, 360px); }
 }

@@ -28,6 +28,7 @@ node --test tests/verify-ski-prices.mjs
 node tests/verify-access-session.mjs
 node tests/verify-guide-experience.mjs
 node tests/verify-road-ui.mjs
+node --test tests/location-controller.test.mjs
 node --test tests/road-routing.test.mjs
 
 echo "=== Gate 6: generator idempotency (temporary copy) ==="

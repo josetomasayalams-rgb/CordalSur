@@ -24,10 +24,11 @@ for (const name of ['instagram', 'whatsapp', 'vehicle', 'transport', 'firstaid']
 for (const page of ['cerca-de-mi.html', 'restaurantes.html', 'actividades.html']) {
   assert.match(read(page).toString(), /js\/road-distance\.js/);
   assert.match(read(page).toString(), /js\/location-motion\.js/);
+  assert.match(read(page).toString(), /js\/location-controller\.js/);
 }
-for (const file of ['js/nearby.js', 'js/catalog-guide.js', 'js/lang.js']) {
-  assert.doesNotMatch(read(file).toString(), /straightLine|en línea recta|em linha reta|straight line/i);
-}
+assert.match(read('js/nearby.js').toString(), /direct-current/);
+assert.match(read('js/catalog-guide.js').toString(), /direct-current/);
+assert.match(read('js/lang.js').toString(), /en línea recta/);
 const styles = read('css/styles.css').toString();
 assert.match(styles, /\.preference-bar,[\s\S]*?border-radius:\s*999px;[\s\S]*?clip-path:\s*inset\(0 round 999px\)/);
 assert.match(styles, /\.theme-selector button,[\s\S]*?display:\s*grid;[\s\S]*?place-items:\s*center;[\s\S]*?padding:\s*0/);

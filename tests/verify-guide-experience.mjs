@@ -12,6 +12,8 @@ const lang = read('js/lang.js');
 const theme = read('js/theme.js');
 const catalog = read('js/catalog-guide.js');
 const motion = read('js/location-motion.js');
+const locationController = read('js/location-controller.js');
+const roadClient = read('js/road-distance.js');
 const home = read('index.html');
 
 if (!/id="guide-map-toggle"[^>]*aria-expanded="true"[^>]*aria-controls="guide-map-shell"/.test(html) ||
@@ -111,15 +113,16 @@ for (const asset of ['navigation', 'google-maps', 'website', 'instagram', 'phone
   if (!styles.includes(`../assets/icons/${asset}.svg`)) fail(`theme-aware action icon mapping missing: ${asset}`);
 }
 
-if (!nearby.includes('enableHighAccuracy: true') || !nearby.includes("maximumAge: choice === 'once' ? 0 : 5000") ||
-    !nearby.includes('navigator.geolocation.watchPosition') || !nearby.includes('navigator.geolocation.clearWatch') ||
-    !nearby.includes('locationTracker.accept(position)') || !nearby.includes("window.addEventListener('pagehide'")) {
-  fail('location must use high-accuracy one-time/session GPS with throttling and cleanup');
+if (!locationController.includes('geolocation.watchPosition') || !locationController.includes('enableHighAccuracy: true') ||
+    !locationController.includes('ONCE_DEADLINE_MS = 20000') || !locationController.includes('REROUTE_DISTANCE_METERS = 25') ||
+    !locationController.includes('REROUTE_INTERVAL_MS = 5000') || !locationController.includes('clearPrivateSnapshot()')) {
+  fail('the shared controller must refine one-time GPS, throttle session reroutes and clear private coordinates');
 }
-if (!motion.includes("reason: 'low_accuracy'") || !motion.includes("reason: 'noise'") ||
+if (!nearby.includes('CordalLocationController.create') || !catalog.includes('CordalLocationController.create') ||
+    !nearby.includes("place._distanceSource = 'direct-current'") || !catalog.includes("source: 'direct-current'") ||
     !nearby.includes('travelHeadingReliable') || !nearby.includes('forwardDirection') ||
     !nearby.includes('locationGeneration') || !catalog.includes('locationGeneration')) {
-  fail('moving GPS must reject weak/noisy fixes, infer direction and discard obsolete road responses');
+  fail('all three guides must share GPS, show direct results immediately, infer direction and discard obsolete routes');
 }
 if (!nearby.includes('releasePrivateLocation') || !catalog.includes("document.addEventListener('cordal:access-ended'")) {
   fail('private coordinates, watchers and workers must be released on exit or access end');
@@ -128,10 +131,21 @@ if (!nearby.includes("if (mode === 'nearby' || mode === 'route') return userPosi
     nearby.includes('data.geometry.corridor.ruralStart') || nearby.includes('enableHighAccuracy: false')) {
   fail('journey and current-location modes must never substitute Pinto or the apartment for the guest');
 }
+if (!roadClient.includes('INIT_TIMEOUT_MS = 10000') || !roadClient.includes('ROUTE_TIMEOUT_MS = 5000') ||
+    !roadClient.includes('expectedGraph') || !nearby.includes("message.coverage === 'outside-network'") ||
+    !catalog.includes("message.coverage === 'outside-network'")) {
+  fail('road routing must time out, validate graph identity and preserve direct distances outside coverage');
+}
 if (!html.includes('id="guide-location-accuracy"') || !html.includes('id="guide-location-updated"') ||
     !html.includes('id="guide-map-user"') || !nearby.includes('userAccuracyCircle = L.circle') ||
     !nearby.includes("map.setView([userPosition.lat, userPosition.lon]")) {
   fail('map must show the real user position, accuracy radius, update time and recenter control');
+}
+if (!html.includes('data-location-choice="manual"') || !html.includes('id="guide-manual-confirm"') ||
+    !nearby.includes('manualSelecting') || !nearby.includes("map.on('dragstart zoomstart'") ||
+    !nearby.includes('followUser = false') || !catalog.includes('loadLeaflet()') ||
+    !catalog.includes('data-catalog-manual-map')) {
+  fail('manual point selection and opt-in mobile map following must be available without persisting coordinates');
 }
 if (!styles.includes('.guide-categories::-webkit-scrollbar { display: none') || !styles.includes('scrollbar-width: none') ||
     !nearby.includes("categories.addEventListener('wheel'") || !nearby.includes("event.key !== 'ArrowRight'")) {

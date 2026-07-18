@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="assets/vendor/leaflet-markercluster/MarkerCluster.css">
   <link rel="stylesheet" href="assets/vendor/leaflet-markercluster/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="css/styles.css?v=24">
+<link rel="stylesheet" href="css/styles.css?v=25">
   <link rel="stylesheet" href="css/section-palettes.css?v=5">
   <link rel="stylesheet" href="css/access.css?v=4">
 </head>
@@ -52,6 +52,10 @@
     </div>
    </div>
    <button type="button" class="nearby-locate" id="nearby-locate" data-i18n="guide.location.open">Elegir cómo usar mi ubicación</button>
+   <div class="guide-manual-actions" id="guide-manual-actions" hidden>
+    <button type="button" class="guide-manual-cancel" id="guide-manual-cancel" data-i18n="common.cancel">Cancelar</button>
+    <button type="button" class="guide-manual-confirm" id="guide-manual-confirm" disabled data-i18n="guide.location.manualConfirm">Usar este punto</button>
+   </div>
    <label class="guide-behind" id="guide-behind-wrap" hidden><input type="checkbox" id="guide-behind"> <span data-i18n="guide.showBehind">Mostrar también lugares ya pasados</span></label>
   </section>
 
@@ -81,7 +85,7 @@
   <div class="guide-layout" data-map-visible="true">
    <section class="guide-map-shell" id="guide-map-shell" aria-labelledby="guide-map-title">
     <div class="guide-map-head"><div><span class="guide-eyebrow" data-i18n="guide.map.eyebrow">Geometría real N-55</span><h2 id="guide-map-title" data-i18n="guide.map.title">Mapa del corredor</h2></div><div class="guide-map-controls"><button type="button" id="guide-map-user" data-i18n-aria="guide.map.centerUser" aria-label="Centrar en mi ubicación" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg></button><button type="button" id="guide-map-fit" data-i18n-aria="guide.map.fit" aria-label="Ajustar mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 11 8-7 8 7v9h-6v-5h-4v5H4Z"/></svg></button><button type="button" id="guide-map-out" data-i18n-aria="guide.map.out" aria-label="Alejar">−</button><button type="button" id="guide-map-in" data-i18n-aria="guide.map.in" aria-label="Acercar">+</button></div></div>
-    <div class="guide-map" id="guide-map"><div id="guide-map-canvas" role="application" data-i18n-aria="guide.map.aria" aria-label="Mapa de lugares y Ruta N-55"></div><p class="guide-map-fallback" id="guide-map-fallback" hidden data-i18n="guide.map.unavailable">El mapa no pudo cargar. La lista y los filtros siguen disponibles.</p></div>
+    <div class="guide-map" id="guide-map"><div id="guide-map-canvas" role="application" data-i18n-aria="guide.map.aria" aria-label="Mapa de lugares y Ruta N-55"></div><div class="guide-map-fallback" id="guide-map-fallback" hidden><p data-i18n="guide.map.unavailable">El mapa no pudo cargar. La lista y los filtros siguen disponibles.</p><button type="button" id="guide-map-retry" data-i18n="common.retry">Reintentar</button></div><div class="guide-map-tile-status" id="guide-map-tile-status" hidden><span data-i18n="guide.map.tilesUnavailable">El mapa base no está disponible; tu ubicación y los lugares siguen visibles.</span><button type="button" id="guide-map-tile-retry" data-i18n="common.retry">Reintentar</button></div></div>
     <div class="guide-map-legend"><span><i class="guide-legend__route"></i> N-55</span><span><i class="guide-legend__apartment"></i> <span data-i18n="guide.legend.apartment">Departamento</span></span><span><i class="guide-legend__landmark"></i> <span data-i18n="guide.legend.landmarks">Los Pincheira y Quincho del Valle</span></span><span><i class="guide-legend__user"></i> <span data-i18n="guide.legend.user">Estás aquí</span></span></div>
    </section>
 
@@ -96,21 +100,23 @@
   <dialog class="guide-location-dialog" id="guide-location-dialog" aria-labelledby="guide-location-title">
    <form method="dialog" class="guide-location-dialog__panel">
     <div class="guide-location-dialog__head"><div><span class="guide-eyebrow" data-i18n="guide.location.title">Tu ubicación es opcional</span><h2 id="guide-location-title" data-i18n="guide.location.dialogTitle">¿Cómo quieres usar tu ubicación?</h2></div><button type="submit" class="guide-dialog-close" value="close" data-i18n-aria="guide.location.close" aria-label="Cerrar">×</button></div>
-    <p data-i18n="guide.location.dialogBody">Tu posición sólo se usa en este dispositivo para ordenar y mostrar lugares. Nunca se agrega a enlaces ni al catálogo.</p>
+    <p data-i18n="guide.location.dialogBody">Tu posición sólo se usa en este dispositivo. CordalSur no la guarda ni la añade a enlaces; al abrir el mapa, OpenStreetMap recibe las teselas de la zona visible.</p>
     <button type="button" class="guide-location-choice" data-location-choice="once"><strong data-i18n="guide.location.once">Solo esta vez</strong><span data-i18n="guide.location.onceDetail">Toma una posición y deja de consultar.</span></button>
     <button type="button" class="guide-location-choice" data-location-choice="session"><strong data-i18n="guide.location.session">Durante esta sesión</strong><span data-i18n="guide.location.sessionDetail">Actualiza el orden mientras avanzas; se borra al salir o terminar el acceso.</span></button>
+    <button type="button" class="guide-location-choice" data-location-choice="manual"><strong data-i18n="guide.location.manual">Elegir un punto en el mapa</strong><span data-i18n="guide.location.manualDetail">El punto se usa sólo en esta página y no se guarda.</span></button>
     <button type="button" class="guide-location-choice" data-location-choice="none"><strong data-i18n="guide.location.none">Ahora no</strong><span data-i18n="guide.location.noneDetail">Mantiene la guía disponible, sin fingir una ubicación ni calcular distancias desde ti.</span></button>
    </form>
   </dialog>
  </div>
- <script src="js/lang.js?v=13"></script>
+<script src="js/lang.js?v=14"></script>
  <script src="js/access.js?v=4" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
  <script src="js/theme.js?v=10"></script>
  <script src="assets/vendor/leaflet/leaflet.js" defer></script>
  <script src="assets/vendor/leaflet-markercluster/leaflet.markercluster.js" defer></script>
  <script src="js/location-motion.js?v=1" defer></script>
- <script src="js/road-distance.js?v=2" defer></script>
- <script src="js/nearby.js?v=11" defer></script>
+ <script src="js/location-controller.js?v=1" defer></script>
+ <script src="js/road-distance.js?v=3" defer></script>
+ <script src="js/nearby.js?v=12" defer></script>
  <script src="js/study-condition.js?v=1"></script>
 </body>
 </html>

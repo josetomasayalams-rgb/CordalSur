@@ -20,6 +20,28 @@ npm --prefix worker test
 
 For the filter bar (restaurantes.html / actividades.html) to work, the browser must support `defer` scripts — all modern browsers do.
 
+## Ubicación y mapas
+
+`cerca-de-mi.html`, `restaurantes.html` y `actividades.html` comparten
+`js/location-controller.js`. Las coordenadas permanecen sólo en memoria: la
+lista se ordena primero con distancia geodésica local y cada resultado se
+reemplaza por distancia vial cuando la red privada tiene cobertura. Un fallo
+del GPS, del Worker o de OpenStreetMap conserva la lista y permite reintentar o
+marcar un punto manual que se elimina al salir.
+
+La suite opcional de navegador requiere Playwright y un servidor local activo:
+
+```sh
+python3 -m http.server 4173 --bind 127.0.0.1
+CORDALSUR_TEST_URL=http://127.0.0.1:4173 \
+  node tests/playwright-location-smoke.mjs
+```
+
+Recorre Chromium y WebKit con GPS emulado, ES/PT/EN, tres tamaños, permiso
+denegado, punto manual, teselas fallidas, Worker bloqueado y verificación de que
+las coordenadas exactas no aparezcan en almacenamiento, URLs, solicitudes ni
+consola.
+
 ## Project structure
 
 ```

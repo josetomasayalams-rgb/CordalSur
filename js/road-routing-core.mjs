@@ -1,5 +1,16 @@
 const EARTH_RADIUS_METERS = 6371008.8;
 
+export function networkIdentity(raw) {
+  const source = raw && raw.source && typeof raw.source === 'object' ? raw.source : {};
+  const version = raw && (raw.networkVersion || raw.version || raw.generatedAt);
+  const hash = raw && (raw.networkHash || raw.hash || source.responseSha256);
+  return {
+    schemaVersion: raw && Number.isFinite(Number(raw.schemaVersion)) ? Number(raw.schemaVersion) : null,
+    version: typeof version === 'string' && version ? version : null,
+    hash: typeof hash === 'string' && hash ? hash : null
+  };
+}
+
 export function haversineMeters(a, b) {
   const radians = Math.PI / 180;
   const dLat = (b.lat - a.lat) * radians;
@@ -39,7 +50,7 @@ export function prepareNetwork(raw) {
     if (segment.flags & 1) adjacency[segment.from].push({ to: segment.to, meters: segment.meters });
     if (segment.flags & 2) adjacency[segment.to].push({ to: segment.from, meters: segment.meters });
   }
-  return { ...raw, nodes, segments, adjacency };
+  return { ...raw, nodes, segments, adjacency, graph: networkIdentity(raw) };
 }
 
 export function snapToNetwork(network, target, maxDistanceMeters = 1000) {
@@ -147,9 +158,17 @@ function destinationDistance(network, distances, originSnap, destinationSnap) {
 }
 
 export function routeDistances(network, origin, destinationSnaps = network.destinations || []) {
-  const rawOrigin = origin && !Object.prototype.hasOwnProperty.call(origin, 'segment') ? origin : null;
-  const originSnap = origin && Object.prototype.hasOwnProperty.call(origin, 'segment') ? origin : snapToNetwork(network, origin);
-  if (!originSnap) return { originSnap: null, distances: {} };
+  const graph = network.graph || networkIdentity(network);
+  const isSnap = Boolean(origin && Object.prototype.hasOwnProperty.call(origin, 'segment'));
+  const hasCoordinates = Boolean(origin && Number.isFinite(Number(origin.lat)) && Number.isFinite(Number(origin.lon)));
+  if (!isSnap && !hasCoordinates) {
+    return { coverage: 'outside-network', graph, originSnap: null, distances: {} };
+  }
+  const rawOrigin = isSnap ? null : { lat: Number(origin.lat), lon: Number(origin.lon) };
+  const originSnap = isSnap ? origin : snapToNetwork(network, rawOrigin);
+  if (!originSnap || !network.segments[originSnap.segment]) {
+    return { coverage: 'outside-network', graph, originSnap: null, distances: {} };
+  }
   const graphDistances = dijkstra(network, originSnap);
   const distances = {};
   for (const destination of destinationSnaps) {
@@ -162,5 +181,5 @@ export function routeDistances(network, origin, destinationSnaps = network.desti
       snapQuality: destination.snap.quality
     } : null;
   }
-  return { originSnap, distances };
+  return { coverage: 'covered', graph, originSnap, distances };
 }
