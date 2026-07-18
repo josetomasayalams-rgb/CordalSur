@@ -11,6 +11,7 @@ const styles = read('css/styles.css');
 const lang = read('js/lang.js');
 const theme = read('js/theme.js');
 const catalog = read('js/catalog-guide.js');
+const motion = read('js/location-motion.js');
 const home = read('index.html');
 
 if (!/id="guide-map-toggle"[^>]*aria-expanded="true"[^>]*aria-controls="guide-map-shell"/.test(html) ||
@@ -64,12 +65,12 @@ for (const page of ['actividades.html', 'restaurantes.html']) {
   if (/data-category="(?:hotel|cabin)"/.test(source)) fail(`${page}: lodging leaked into the canonical catalog`);
   if (/class="catalog-sources"|>Fuentes<|>Fontes<|>Sources</.test(source)) fail(`${page}: editorial provenance must not appear in the guest catalog`);
 }
-if (/[🔑📍🍽️🚵❄️🎿🚙📖🩹🚪]/u.test(home)) fail('home section icons must use generated raster artwork instead of emoji');
+if (/[🚙🩹]/u.test(read('buggy.html') + read('botiquin.html')) || /<svg[\s\S]*?WhatsApp/i.test(read('buggy.html'))) fail('Buggy and first-aid feature art must not fall back to emoji or a generic WhatsApp glyph');
 const themeImages = [...home.matchAll(/<img\b[^>]*\bdata-theme-image\b[^>]*>/g)].map((match) => match[0]);
-if (themeImages.length !== 13 || themeImages.some((tag) => !/data-src-light="assets\/home-icons\/[a-z]+-light\.webp"/.test(tag) || !/data-src-dark="assets\/home-icons\/[a-z]+-dark\.webp"/.test(tag) || !/alt=""/.test(tag))) {
-  fail('home must use 13 decorative light/dark raster icon pairs');
+if (themeImages.length !== 14 || themeImages.some((tag) => !/data-src-light="assets\/home-icons\/[a-z]+-light\.webp"/.test(tag) || !/data-src-dark="assets\/home-icons\/[a-z]+-dark\.webp"/.test(tag) || !/alt=""/.test(tag))) {
+  fail('home must use 14 decorative light/dark raster icon instances');
 }
-for (const name of ['checkin', 'wifi', 'instagram', 'valley', 'food', 'activities', 'weather', 'tickets', 'transport', 'manual', 'firstaid', 'checkout', 'emergency']) {
+for (const name of ['checkin', 'wifi', 'instagram', 'valley', 'food', 'activities', 'weather', 'tickets', 'transport', 'vehicle', 'whatsapp', 'manual', 'firstaid', 'checkout', 'emergency']) {
   for (const themeName of ['light', 'dark']) {
     const asset = `assets/home-icons/${name}-${themeName}.webp`;
     if (!fs.existsSync(path.join(ROOT, asset))) fail(`missing generated home icon ${asset}`);
@@ -103,8 +104,16 @@ for (const asset of ['navigation', 'google-maps', 'website', 'instagram', 'phone
 
 if (!nearby.includes('enableHighAccuracy: true') || !nearby.includes("maximumAge: choice === 'once' ? 0 : 5000") ||
     !nearby.includes('navigator.geolocation.watchPosition') || !nearby.includes('navigator.geolocation.clearWatch') ||
-    !nearby.includes('timestamp - lastAcceptedAt < 5000') || !nearby.includes("window.addEventListener('pagehide'")) {
+    !nearby.includes('locationTracker.accept(position)') || !nearby.includes("window.addEventListener('pagehide'")) {
   fail('location must use high-accuracy one-time/session GPS with throttling and cleanup');
+}
+if (!motion.includes("reason: 'low_accuracy'") || !motion.includes("reason: 'noise'") ||
+    !nearby.includes('travelHeadingReliable') || !nearby.includes('forwardDirection') ||
+    !nearby.includes('locationGeneration') || !catalog.includes('locationGeneration')) {
+  fail('moving GPS must reject weak/noisy fixes, infer direction and discard obsolete road responses');
+}
+if (!nearby.includes('releasePrivateLocation') || !catalog.includes("document.addEventListener('cordal:access-ended'")) {
+  fail('private coordinates, watchers and workers must be released on exit or access end');
 }
 if (!nearby.includes("if (mode === 'nearby' || mode === 'route') return userPosition") ||
     nearby.includes('data.geometry.corridor.ruralStart') || nearby.includes('enableHighAccuracy: false')) {
@@ -124,4 +133,4 @@ if (!nearby.includes("mapToggle.setAttribute('aria-pressed'") || !styles.include
   fail('map visibility control must expose state and retain strong contrast in both themes');
 }
 
-if (!process.exitCode) console.log('  PASS (26 premium raster icons, exact GPS, accessible map and scrollbar-free categories)');
+if (!process.exitCode) console.log('  PASS (premium theme art, direction-aware GPS, accessible map and scrollbar-free categories)');

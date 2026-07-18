@@ -48,7 +48,10 @@
   var markers = new Map();
   var userMarker = null;
   var userAccuracyCircle = null;
-  var lastAcceptedAt = 0;
+  var locationTracker = window.CordalLocationMotion.createTracker({ maximumAccuracy: 150 });
+  var travelHeading = NaN;
+  var travelHeadingReliable = false;
+  var locationGeneration = 0;
   var locationStatusKey = null;
   var MAP_VISIBILITY_KEY = 'cordal-guide-map-visible';
   var mapVisible = true;
@@ -120,7 +123,11 @@
       var dy = by - ay;
       var lengthSquared = dx * dx + dy * dy;
       var fraction = lengthSquared ? Math.max(0, Math.min(1, -(ax * dx + ay * dy) / lengthSquared)) : 0;
-      var candidate = { distanceMeters: Math.hypot(ax + fraction * dx, ay + fraction * dy), progressMeters: progress + fraction * Math.hypot(dx, dy) };
+      var candidate = {
+        distanceMeters: Math.hypot(ax + fraction * dx, ay + fraction * dy),
+        progressMeters: progress + fraction * Math.hypot(dx, dy),
+        bearing: window.CordalLocationMotion.bearing(start, end)
+      };
       if (!best || candidate.distanceMeters < best.distanceMeters) best = candidate;
       progress += Math.hypot(dx, dy);
     }
@@ -138,11 +145,17 @@
     var query = normalize(search.value);
     var minimumRating = Number(rating.value || 0);
     var maximumDistance = Number(distance.value || 0);
-    var userProgress = userPosition ? lineProjection(data._centerline, userPosition).progressMeters : 0;
+    var userProjection = userPosition ? lineProjection(data._centerline, userPosition) : null;
+    var userProgress = userProjection ? userProjection.progressMeters : 0;
+    var forwardDirection = 0;
+    if (mode === 'route' && travelHeadingReliable && userProjection && Number.isFinite(userProjection.bearing)) {
+      forwardDirection = window.CordalLocationMotion.angleDifference(travelHeading, userProjection.bearing) <= 90 ? 1 : -1;
+    }
     var list = publicPlaces.filter(function (place) {
       if (mode === 'apartment' && !place.discovery.apartment) return false;
       if (mode === 'route' && !place.discovery.corridor) return false;
-      if (mode === 'route' && !showBehind.checked && place.discovery.routeProgressMeters < userProgress) return false;
+      if (mode === 'route' && !showBehind.checked && forwardDirection > 0 && place.discovery.routeProgressMeters < userProgress) return false;
+      if (mode === 'route' && !showBehind.checked && forwardDirection < 0 && place.discovery.routeProgressMeters > userProgress) return false;
       if (activeCategory !== 'all' && place.category !== activeCategory) return false;
       var roadDistance = Number(place._roadDistanceMeters);
       if (maximumDistance && Number.isFinite(roadDistance) && roadDistance > maximumDistance * 1000) return false;
@@ -368,8 +381,8 @@
   }
 
   function updateModeCopy() {
-    modeSummary.textContent = t('guide.mode.' + mode + '.summary');
-    showBehindWrap.hidden = mode !== 'route';
+    modeSummary.textContent = t(mode === 'route' && userPosition && !travelHeadingReliable ? 'guide.mode.route.headingSummary' : 'guide.mode.' + mode + '.summary');
+    showBehindWrap.hidden = mode !== 'route' || !travelHeadingReliable;
     updateLocationStatus();
   }
 
@@ -383,6 +396,7 @@
   }
 
   function setMode(next, requestedByUser) {
+    if (requestedByUser && next === 'apartment') releasePrivateLocation();
     mode = next;
     activeCategory = 'all';
     modeGroup.querySelectorAll('[data-guide-mode]').forEach(function (button) {
@@ -414,6 +428,19 @@
   function stopLocationWatch() {
     if (watchId !== null && navigator.geolocation) navigator.geolocation.clearWatch(watchId);
     watchId = null;
+  }
+
+  function releasePrivateLocation() {
+    locationGeneration += 1;
+    stopLocationWatch();
+    locationTracker.reset();
+    userPosition = null;
+    locationMode = 'none';
+    travelHeading = NaN;
+    travelHeadingReliable = false;
+    if (window.CordalRoadDistances) window.CordalRoadDistances.destroy();
+    updateLocationReadout();
+    updateUserMarker();
   }
 
   function formatUpdatedTime(timestamp) {
@@ -455,15 +482,18 @@
   }
 
   function usePosition(position, nextMode) {
-    var timestamp = Number(position.timestamp) || Date.now();
-    var nextPosition = { lat: position.coords.latitude, lon: position.coords.longitude, accuracy: position.coords.accuracy, timestamp: timestamp };
-    if (nextMode === 'session' && userPosition) {
-      var movedMeters = distanceKm(userPosition, nextPosition) * 1000;
-      var improvesAccuracy = Number(nextPosition.accuracy) + 10 < Number(userPosition.accuracy);
-      if (timestamp - lastAcceptedAt < 5000 && movedMeters < 12 && !improvesAccuracy) return;
+    var tracked = locationTracker.accept(position);
+    if (!tracked.accepted) {
+      if (tracked.reason === 'low_accuracy' && !userPosition) {
+        locationStatusKey = 'guide.location.unavailable';
+        updateLocationStatus();
+        locate.disabled = false;
+      }
+      return;
     }
-    userPosition = nextPosition;
-    lastAcceptedAt = timestamp;
+    userPosition = tracked.point;
+    travelHeading = tracked.heading;
+    travelHeadingReliable = tracked.headingReliable;
     locationMode = nextMode;
     locationStatusKey = null;
     locationStatusKey = 'guide.road.calculating';
@@ -471,7 +501,9 @@
     locate.disabled = false;
     updateLocationReadout();
     updateUserMarker();
-    window.CordalRoadDistances.routeFrom(nextPosition).then(function (message) {
+    var generation = ++locationGeneration;
+    window.CordalRoadDistances.routeFrom(userPosition).then(function (message) {
+      if (generation !== locationGeneration || !userPosition) return;
       publicPlaces.forEach(function (place) {
         var route = message.distances[place.id];
         place._roadDistanceMeters = route ? route.meters : NaN;
@@ -483,6 +515,7 @@
       else render(true);
     }).catch(function (error) {
       if (error && error.stale) return;
+      if (generation !== locationGeneration) return;
       locationStatusKey = 'guide.road.error';
       updateLocationStatus();
       render(true);
@@ -511,8 +544,7 @@
     closeLocationDialog();
     stopLocationWatch();
     if (choice === 'none') {
-      locationMode = 'none';
-      userPosition = null;
+      releasePrivateLocation();
       locationStatusKey = null;
       updateLocationStatus();
       updateLocationReadout();
@@ -569,8 +601,8 @@
   document.getElementById('guide-map-in').addEventListener('click', function () { if (map) map.zoomIn(); });
   document.getElementById('guide-map-out').addEventListener('click', function () { if (map) map.zoomOut(); });
   window.addEventListener('resize', function () { if (map) map.invalidateSize(); });
-  window.addEventListener('pagehide', function () { stopLocationWatch(); userPosition = null; locationMode = 'none'; if (window.CordalRoadDistances) window.CordalRoadDistances.destroy(); });
-  document.addEventListener('cordal:access-ended', function () { stopLocationWatch(); userPosition = null; locationMode = 'none'; if (window.CordalRoadDistances) window.CordalRoadDistances.destroy(); updateUserMarker(); });
+  window.addEventListener('pagehide', releasePrivateLocation);
+  document.addEventListener('cordal:access-ended', releasePrivateLocation);
 
   if (window.GH_I18N) window.GH_I18N.subscribe(function () { renderQuality(); renderGeometry(); render(false); updateLocationReadout(); updateLocationStatus(); setMapVisible(mapVisible, false); });
 

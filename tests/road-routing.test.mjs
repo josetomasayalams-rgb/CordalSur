@@ -58,3 +58,22 @@ test('artifact keeps ODbL provenance and known road distances', () => {
     assert.ok(place.discovery.apartmentRoadDistanceMeters > place.discovery.apartmentDistanceMeters, name);
   }
 });
+
+test('motion tracker rejects poor fixes, suppresses GPS noise and derives travel heading', () => {
+  const source = fs.readFileSync(path.join(SITE, 'js/location-motion.js'), 'utf8');
+  const context = { window: {}, globalThis: {}, Date, Number, Math };
+  vm.runInNewContext(source, context);
+  const tracker = context.window.CordalLocationMotion.createTracker({ maximumAccuracy: 100 });
+  const fix = (latitude, longitude, accuracy, timestamp, speed = null, heading = null) => ({
+    timestamp,
+    coords: { latitude, longitude, accuracy, speed, heading }
+  });
+  assert.equal(tracker.accept(fix(-36.9, -71.5, 180, 1_000)).reason, 'low_accuracy');
+  assert.equal(tracker.accept(fix(-36.9, -71.5, 12, 2_000)).accepted, true);
+  assert.equal(tracker.accept(fix(-36.90001, -71.50001, 13, 3_000)).reason, 'noise');
+  const moving = tracker.accept(fix(-36.9, -71.4995, 10, 12_000, 4, null));
+  assert.equal(moving.accepted, true);
+  assert.equal(moving.headingReliable, true);
+  assert.ok(moving.heading > 70 && moving.heading < 110);
+  assert.ok(context.window.CordalLocationMotion.angleDifference(355, 5) < 11);
+});

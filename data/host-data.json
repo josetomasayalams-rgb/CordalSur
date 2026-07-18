@@ -364,6 +364,11 @@
       "pt": "Horário",
       "en": "Schedule"
     },
+    "checkin.time.value": {
+      "es": "15:00",
+      "pt": "15:00",
+      "en": "3:00 PM"
+    },
     "checkin.location.tag": {
       "es": "Ubicación",
       "pt": "Localização",
@@ -688,6 +693,16 @@
       "es": "Contraseña",
       "pt": "Senha",
       "en": "Password"
+    },
+    "wifi.network.label": {
+      "es": "Red",
+      "pt": "Rede",
+      "en": "Network"
+    },
+    "wifi.network.value": {
+      "es": "34A",
+      "pt": "34A",
+      "en": "34A"
     },
     "wifi.password.value": {
       "es": "Mateo123",
@@ -1693,6 +1708,7 @@
     "guide.mode.apartment.summary": { "es": "Dentro del radio del departamento", "pt": "Dentro do raio do apartamento", "en": "Inside the apartment radius" },
     "guide.mode.nearby.summary": { "es": "Distancias desde tu ubicación real", "pt": "Distâncias desde sua localização real", "en": "Distances from your real location" },
     "guide.mode.route.summary": { "es": "Próximos lugares en tu trayecto", "pt": "Próximos lugares no seu trajeto", "en": "Upcoming places on your journey" },
+    "guide.mode.route.headingSummary": { "es": "Lugares del corredor ordenados desde tu ubicación; detectando el sentido del trayecto", "pt": "Lugares do corredor ordenados desde sua localização; detectando o sentido do trajeto", "en": "Corridor places sorted from your location while travel direction is detected" },
     "guide.location.title": { "es": "Tu ubicación es opcional", "pt": "Sua localização é opcional", "en": "Your location is optional" },
     "guide.location.fallback": { "es": "La guía funciona sin permiso y no guarda tu posición.", "pt": "O guia funciona sem permissão e não armazena sua posição.", "en": "The guide works without permission and does not store your position." },
     "guide.location.nearbyFallback": { "es": "Activa tu ubicación para calcular distancias reales desde ti.", "pt": "Ative sua localização para calcular distâncias reais a partir de você.", "en": "Enable your location to calculate real distances from you." },

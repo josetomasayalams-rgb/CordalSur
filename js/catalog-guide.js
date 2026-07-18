@@ -16,6 +16,8 @@
   var cards = Array.prototype.slice.call(root.querySelectorAll('[data-id]'));
   var activeCategory = 'all';
   var watchId = null;
+  var locationTracker = window.CordalLocationMotion.createTracker({ maximumAccuracy: 150 });
+  var locationGeneration = 0;
 
   function translate(key, fallback) {
     if (window.GH_I18N && typeof window.GH_I18N.t === 'function') {
@@ -81,8 +83,11 @@
   }
 
   function restoreApartment() {
+    locationGeneration += 1;
     if (watchId !== null) navigator.geolocation.clearWatch(watchId);
     watchId = null;
+    locationTracker.reset();
+    if (window.CordalRoadDistances) window.CordalRoadDistances.destroy();
     cards.forEach(function (card) {
       card.setAttribute('data-distance', card.getAttribute('data-apartment-distance') || '');
       card.setAttribute('data-road-access-nearby', card.getAttribute('data-apartment-access-nearby') || card.getAttribute('data-road-access-nearby') || 'false');
@@ -93,8 +98,15 @@
   }
 
   function routePosition(position) {
+    var tracked = locationTracker.accept(position);
+    if (!tracked.accepted) {
+      if (tracked.reason === 'low_accuracy' && !tracked.point) locationStatus.textContent = translate('guide.location.unavailable', 'La precisión del GPS no es suficiente todavía.');
+      return;
+    }
+    var generation = ++locationGeneration;
     locationStatus.textContent = translate('catalog.origin.calculating', 'Calculando distancias viales…');
-    window.CordalRoadDistances.routeFrom({ lat: position.coords.latitude, lon: position.coords.longitude }).then(function (message) {
+    window.CordalRoadDistances.routeFrom(tracked.point).then(function (message) {
+      if (generation !== locationGeneration) return;
       cards.forEach(function (card) {
         var route = message.distances[card.getAttribute('data-id')];
         card.setAttribute('data-distance', route ? route.meters : '');
@@ -105,6 +117,7 @@
       update();
     }).catch(function (error) {
       if (error && error.stale) return;
+      if (generation !== locationGeneration) return;
       locationStatus.textContent = translate('guide.location.error', 'No pudimos calcular desde tu ubicación. Puedes seguir desde el departamento.');
     });
   }
@@ -151,9 +164,12 @@
   if (sort) sort.addEventListener('change', update);
   if (window.GH_I18N && typeof window.GH_I18N.subscribe === 'function') window.GH_I18N.subscribe(update);
   window.addEventListener('pagehide', function () {
+    locationGeneration += 1;
     if (watchId !== null) navigator.geolocation.clearWatch(watchId);
     watchId = null;
+    locationTracker.reset();
     if (window.CordalRoadDistances) window.CordalRoadDistances.destroy();
   });
+  document.addEventListener('cordal:access-ended', restoreApartment);
   restoreApartment();
 }());

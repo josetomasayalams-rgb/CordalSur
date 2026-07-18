@@ -13,14 +13,17 @@ const info = (buffer) => {
   return { alpha: Boolean(buffer[20] & 0x10), width: uint24(24) + 1, height: uint24(27) + 1 };
 };
 
-const light = read('assets/home-icons/instagram-light.webp');
-const dark = read('assets/home-icons/instagram-dark.webp');
-assert.deepEqual(info(light), { alpha: true, width: 384, height: 384 });
-assert.deepEqual(info(dark), { alpha: true, width: 384, height: 384 });
-assert.notDeepEqual(light, dark);
+for (const name of ['instagram', 'whatsapp', 'vehicle', 'transport', 'firstaid']) {
+  const light = read(`assets/home-icons/${name}-light.webp`);
+  const dark = read(`assets/home-icons/${name}-dark.webp`);
+  assert.deepEqual(info(light), { alpha: true, width: 384, height: 384 });
+  assert.deepEqual(info(dark), { alpha: true, width: 384, height: 384 });
+  assert.notDeepEqual(light, dark);
+}
 
 for (const page of ['cerca-de-mi.html', 'restaurantes.html', 'actividades.html']) {
   assert.match(read(page).toString(), /js\/road-distance\.js/);
+  assert.match(read(page).toString(), /js\/location-motion\.js/);
 }
 for (const file of ['js/nearby.js', 'js/catalog-guide.js', 'js/lang.js']) {
   assert.doesNotMatch(read(file).toString(), /straightLine|en línea recta|em linha reta|straight line/i);
@@ -28,4 +31,5 @@ for (const file of ['js/nearby.js', 'js/catalog-guide.js', 'js/lang.js']) {
 const styles = read('css/styles.css').toString();
 assert.match(styles, /\.preference-bar,[\s\S]*?border-radius:\s*30px;[\s\S]*?clip-path:\s*inset\(0 round 30px\)/);
 assert.match(styles, /\.catalog-filters::\-webkit-scrollbar\s*\{\s*display:\s*none/);
-console.log('  PASS (local road UI, transparent Instagram themes and rounded preference surface)');
+assert.match(styles, /\.guide-category\.is-active b,[\s\S]*?background:\s*#102f29;[\s\S]*?color:\s*#fff8e9/);
+console.log('  PASS (local road UI, transparent premium themes, strong count contrast and rounded preferences)');
