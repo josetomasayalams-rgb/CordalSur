@@ -3,9 +3,9 @@ main = "src/index.js"
 compatibility_date = "2025-04-01"
 
 [vars]
-# Production must contain the exact GitHub Pages origin, with no trailing slash.
-# Add localhost only in a separate Wrangler environment or .dev.vars.
-ALLOWED_ORIGINS = "https://josetomasayalams-rgb.github.io"
+# Exact origins only. Local ports support the checked-in visual test harness;
+# tokens remain origin-scoped in browser storage and are never cookie-based.
+ALLOWED_ORIGINS = "https://josetomasayalams-rgb.github.io,http://127.0.0.1:4174,http://localhost:4174,http://127.0.0.1:8765,http://localhost:8765"
 TOKEN_ISSUER = "cordal-sur-access"
 
 [[d1_databases]]

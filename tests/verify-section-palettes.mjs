@@ -30,7 +30,7 @@ for (const [section, definition] of Object.entries(data.sections)) {
   pages.add(definition.page);
   const html = read(definition.page);
   if (!html.includes(`data-section="${section}"`)) failures.push(`${definition.page}: missing data-section="${section}"`);
-  if (!html.includes('css/section-palettes.css?v=4')) failures.push(`${definition.page}: missing palette stylesheet v4`);
+  if (!html.includes('css/section-palettes.css?v=5')) failures.push(`${definition.page}: missing palette stylesheet v5`);
 
   lightAccents.add(definition.light.accent.toLowerCase());
   darkAccents.add(definition.dark.accent.toLowerCase());

@@ -1605,7 +1605,9 @@ a.ext-link-row:hover .chev { transform: translateX(3px); }
 }
 .mountain-resource__icon--camera { --mountain-resource-icon: url('../assets/icons/camera.svg'); }
 .mountain-resource__icon--mountain { --mountain-resource-icon: url('../assets/icons/mountain-snow.svg'); }
-.mountain-resource__icon--ticket { --mountain-resource-icon: url('../assets/icons/ticket.svg'); }
+.mountain-resource__icon--ticket { --mountain-resource-icon: url('../assets/icons/ticket-check.svg'); }
+.mountain-resource__icon--locker { --mountain-resource-icon: url('../assets/icons/warehouse.svg'); }
+.action-icon--refresh { --action-icon: url('../assets/icons/refresh-cw.svg'); }
 .ticket-price { font-size: clamp(1.75rem, 8vw, 2.5rem); }
 .ticket-price-note {
   margin: 10px 0 0;
@@ -1625,6 +1627,99 @@ a.ext-link-row:hover .chev { transform: translateX(3px); }
   color: var(--ui-copy-muted);
   font-size: .9rem;
   line-height: 1.55;
+}
+.ticket-live-card__product {
+  margin: 4px 0 14px;
+  color: var(--ui-copy-muted);
+  font-size: .82rem;
+}
+.ticket-live-card__controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 48px;
+  align-items: end;
+  gap: 10px;
+}
+.ticket-live-card__date {
+  display: grid;
+  gap: 6px;
+  color: var(--ui-copy-muted);
+  font-size: .76rem;
+  font-weight: 700;
+}
+.ticket-live-card__date input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--ui-border);
+  border-radius: 14px;
+  padding: 0 13px;
+  background: var(--ui-surface-raised);
+  color: inherit;
+  font: inherit;
+  color-scheme: light;
+}
+html[data-theme="dark"] .ticket-live-card__date input { color-scheme: dark; }
+.ticket-live-card__refresh {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid color-mix(in srgb, var(--ui-control-active) 72%, white);
+  border-radius: 15px;
+  background: var(--ui-control-active);
+  color: var(--ui-control-active-text);
+  box-shadow: 0 8px 18px rgba(21, 59, 51, .17);
+}
+.ticket-live-card__refresh:disabled { cursor: wait; opacity: .58; }
+.ticket-live-card[aria-busy="true"] .ticket-live-card__refresh .action-icon { animation: ticket-refresh-spin .8s linear infinite; }
+@keyframes ticket-refresh-spin { to { transform: rotate(360deg); } }
+.ticket-live-card .metric { align-items: baseline; flex-wrap: wrap; gap: 7px 10px; }
+.ticket-live-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
+  margin-top: 9px;
+  color: var(--ui-copy-muted);
+  font-size: .72rem;
+}
+.ticket-live-card__status { font-weight: 800; }
+.ticket-live-card__status[data-state="current"] { color: #247255; }
+.ticket-live-card__status[data-state="stale"],
+.ticket-live-card__status[data-state="error"] { color: #a15b16; }
+.ticket-live-card__source {
+  display: inline-flex;
+  margin-top: 9px;
+  color: var(--wood);
+  font-size: .76rem;
+  font-weight: 800;
+}
+.locker-card h3 { margin: 0; }
+.locker-card__reference {
+  display: block;
+  margin-top: 13px;
+  color: var(--night);
+  font-size: 1rem;
+}
+html[data-theme="dark"] .locker-card__reference { color: var(--snow); }
+.locker-card > p {
+  margin: 8px 0 0;
+  color: var(--ui-copy-muted);
+  font-size: .9rem;
+  line-height: 1.58;
+}
+.locker-card__action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  margin-top: 13px;
+  padding: 0 14px;
+  border: 1px solid var(--ui-border);
+  border-radius: 14px;
+  background: var(--ui-control-bg);
+  color: inherit;
+  font-size: .82rem;
+  font-weight: 800;
+  text-decoration: none;
 }
 @media (max-width: 520px) {
   .forecast-snowforecast { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; }
@@ -4127,7 +4222,7 @@ html[data-theme="dark"] body {
   max-width: none;
   min-width: 0;
   margin: 0 0 14px;
-  padding: 5px;
+  padding: 7px 10px;
   border: 1px solid var(--ui-border);
   border-radius: 999px;
   overflow: clip;
@@ -4137,6 +4232,20 @@ html[data-theme="dark"] body {
   backdrop-filter: blur(18px) saturate(1.15);
   -webkit-backdrop-filter: blur(18px) saturate(1.15);
 }
+.preference-bar::after,
+.top-controls.preference-bar::after,
+.prefs-stack.preference-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, transparent 18%, rgba(255,255,255,.16) 48%, transparent 72%);
+  opacity: .52;
+  pointer-events: none;
+}
+.preference-bar > * { position: relative; z-index: 1; }
+html[data-theme="light"] .preference-bar { background: rgba(255, 253, 247, .975) !important; }
+html[data-theme="dark"] .preference-bar { background: rgba(12, 37, 31, .97) !important; }
 .preference-bar::before,
 .top-controls.preference-bar::before,
 .prefs-stack.preference-bar::before { content: none !important; display: none !important; }
@@ -4171,6 +4280,11 @@ html[data-theme="dark"] body {
   border: 1px solid transparent;
   border-radius: 15px;
   color: inherit;
+}
+.theme-selector button:focus-visible,
+.lang-selector button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ui-control-active) 68%, white);
+  outline-offset: 2px;
 }
 .preference-bar .lang-selector button,
 .preference-bar .theme-selector button { min-width: 44px !important; min-height: 44px !important; }
@@ -4270,22 +4384,6 @@ body[data-section="home"] .top-controls.preference-bar {
   clip-path: inset(0 round 999px);
   background: var(--ui-surface-raised) !important;
 }
-html[data-theme="light"] body[data-section="home"] .top-controls.preference-bar {
-  background: rgba(255, 253, 247, .975) !important;
-}
-html[data-theme="dark"] body[data-section="home"] .top-controls.preference-bar {
-  background: rgba(12, 37, 31, .97) !important;
-}
-body[data-section="home"] .top-controls.preference-bar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(115deg, transparent 18%, rgba(255,255,255,.16) 48%, transparent 72%);
-  opacity: .52;
-  pointer-events: none;
-}
-body[data-section="home"] .top-controls.preference-bar > * { position: relative; z-index: 1; }
 body[data-section="home"] .top-controls.preference-bar[data-preference-ready="true"] {
   animation: cs-preferences-arrive 320ms var(--ease-out) both;
 }

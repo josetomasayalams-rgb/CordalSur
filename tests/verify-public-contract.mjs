@@ -28,9 +28,9 @@ for (const file of expectedPages) {
   const html = read(file);
   if (!/<title>[^<]*CordalSur[^<]*<\/title>/i.test(html)) fail(`${file}: static title must contain CordalSur`);
   if (!/<html\b[^>]*data-i18n-title="page\.[^"]+"/i.test(html)) fail(`${file}: <html> needs a localized page.* title key`);
-  if (!html.includes('js/lang.js?v=12')) fail(`${file}: localized copy must use the current cache version`);
-  if (!html.includes('js/theme.js?v=9')) fail(`${file}: theme control must use the current cache version`);
-  if (!html.includes('css/styles.css?v=23')) fail(`${file}: shared sensory brand styles are stale`);
+  if (!html.includes('js/lang.js?v=13')) fail(`${file}: localized copy must use the current cache version`);
+  if (!html.includes('js/theme.js?v=10')) fail(`${file}: theme control must use the current cache version`);
+  if (!html.includes('css/styles.css?v=24')) fail(`${file}: shared sensory brand styles are stale`);
   if (!html.includes("document.documentElement.classList.add('access-pending')") ||
       !html.includes('css/access.css?v=4') || !html.includes('js/access.js?v=4')) {
     fail(`${file}: guest gate must load before protected content is shown`);
@@ -201,7 +201,7 @@ if (!styles.includes("font-family: 'Manrope'") || !accessStyles.includes('font-f
 }
 if (!read('js/theme.js').includes("return 'dark';") ||
     !index.includes('if(t!=="light"&&t!=="dark"){t="dark"}') ||
-    !index.includes('js/theme.js?v=9')) {
+    !index.includes('js/theme.js?v=10')) {
   fail('the first visit must default to dark while preserving manual selection');
 }
 if (!styles.includes('--photo-overlay-home') || !styles.includes('--photo-overlay-inner') ||
@@ -297,7 +297,7 @@ if (!accessScript.includes('async function restoreGuestSession()') ||
   fail('administrator access must revalidate after history restores and safely fall back to a valid guest session');
 }
 if (!adminScript.includes('href="index.html"') || !adminScript.includes("t('admin.enterSite')") ||
-    !adminHtml.includes('js/lang.js?v=12') || !adminHtml.includes('js/admin.js?v=4')) {
+    !adminHtml.includes('js/lang.js?v=13') || !adminHtml.includes('js/admin.js?v=4')) {
   fail('Administration must expose the localized same-tab platform entry action');
 }
 const enterSiteCopy = hostData.scalar?.['admin.enterSite'];

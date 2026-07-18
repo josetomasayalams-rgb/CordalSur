@@ -9,8 +9,8 @@
  <link rel="preload" as="image" type="image/webp" media="(min-width: 720px)" fetchpriority="high" href="css/bg/winter/tickets-pistas-nevados.webp?v=2">
   <script>(function(){var t="";try{t=localStorage.getItem("gh-theme-v3")||""}catch(e){}if(t!=="light"&&t!=="dark"){t="dark"}document.documentElement.setAttribute("data-theme",t)})();</script>
   <script>(function(){var c=new URLSearchParams(location.search).get("condition");if(c==="a"||c==="b")document.documentElement.setAttribute("data-study-condition",c)})();</script>
-<link rel="stylesheet" href="css/styles.css?v=23">
-<link rel="stylesheet" href="css/section-palettes.css?v=4">
+<link rel="stylesheet" href="css/styles.css?v=24">
+<link rel="stylesheet" href="css/section-palettes.css?v=5">
 <link rel="stylesheet" href="css/access.css?v=4">
 </head>
 <!-- ponytail: is-winter emphasizes Tickets in season (GRAPHIFY §3 módulo 7); deployment toggles -->
@@ -27,17 +27,30 @@
    <button type="button" data-lang="en" aria-pressed="false">EN</button>
   </div>
 
-  <!-- Official day-pass reference. The final amount is confirmed on the selected date. -->
-  <div class="card mb-4">
+  <div class="card ticket-live-card mb-4" data-ski-price data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev" aria-live="polite">
    <div class="card-header">
-    <div class="icon-box bg-winter">🎟️</div>
+    <div class="icon-box bg-winter"><span class="mountain-resource__icon mountain-resource__icon--ticket" aria-hidden="true"></span></div>
     <h3 style="margin:0" data-i18n="tickets.pass.t">[cargado vía i18n]</h3>
    </div>
-   <div class="metric">
-    <span class="val ticket-price" data-i18n="tickets.pass.price">Desde $65.000</span>
-    <span class="unit" data-i18n="tickets.pass.unit">online</span>
+   <p class="ticket-live-card__product" data-i18n="tickets.live.product">Ticket diario web · Adulto y niño</p>
+   <div class="ticket-live-card__controls">
+    <label class="ticket-live-card__date">
+     <span data-i18n="tickets.live.date">Fecha de uso</span>
+     <input type="date" data-ski-date>
+    </label>
+    <button class="ticket-live-card__refresh" type="button" data-ski-refresh data-i18n-aria="tickets.live.refresh" data-i18n-title="tickets.live.refresh" aria-label="Actualizar precio" title="Actualizar precio">
+     <span class="action-icon action-icon--refresh" aria-hidden="true"></span>
+    </button>
    </div>
-   <p class="ticket-price-note" data-i18n="tickets.pass.note">Valor oficial publicado para temporada baja 2026. El precio final depende de la fecha seleccionada.</p>
+   <div class="metric">
+    <span class="val ticket-price" data-ski-price-value data-i18n="tickets.live.unavailable">Consultar precio oficial</span>
+    <span class="unit" data-ski-season data-i18n="tickets.live.season.none">Según fecha</span>
+   </div>
+   <div class="ticket-live-card__meta">
+    <span class="ticket-live-card__status" data-ski-status data-state="loading" data-i18n="tickets.live.loading">Consultando fuente oficial…</span>
+    <span data-ski-updated></span>
+   </div>
+   <a class="ticket-live-card__source" data-ski-source href="https://www.nevadosdechillan.com/andariveles-y-pistas" target="_blank" rel="noopener noreferrer" data-i18n="tickets.live.source">Fuente oficial de tarifas</a>
   </div>
 
   <a class="forecast-snowforecast forecast-resource--ticket" href="https://www.skipassnevadosdechillan.com/tienda/" target="_blank" rel="noopener noreferrer">
@@ -65,9 +78,10 @@
   </a>
 
  </div>
-<script src="js/lang.js?v=12"></script>
+<script src="js/lang.js?v=13"></script>
   <script src="js/access.js?v=4" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
-<script src="js/theme.js?v=9"></script>
+<script src="js/theme.js?v=10"></script>
+ <script type="module" src="js/ski-prices.js?v=2"></script>
  <script src="js/study-condition.js?v=1"></script>
 </body>
 </html>

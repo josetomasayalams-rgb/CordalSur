@@ -129,8 +129,6 @@ export function renderSectionPalettes(data) {
     '  background: var(--section-surface);',
     '}',
     '',
-    'html[data-theme] body[data-section] .lang-selector button[aria-pressed="true"],',
-    'html[data-theme] body[data-section] .theme-selector button[aria-pressed="true"],',
     'html[data-theme] body[data-section] .rest-filter__btn--active,',
     'html[data-theme] body[data-section] .tag[aria-pressed="true"] {',
     '  background: linear-gradient(145deg, var(--section-accent-alt), var(--section-accent));',

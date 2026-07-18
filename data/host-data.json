@@ -40,19 +40,84 @@
       "en": "Day pass"
     },
     "tickets.pass.price": {
-      "es": "Desde $65.000",
-      "pt": "A partir de $65.000",
-      "en": "From $65,000"
+      "es": "Consultar precio oficial",
+      "pt": "Consultar preço oficial",
+      "en": "Check official price"
     },
     "tickets.pass.unit": {
-      "es": "online",
-      "pt": "online",
-      "en": "online"
+      "es": "según fecha",
+      "pt": "conforme a data",
+      "en": "date dependent"
     },
     "tickets.pass.note": {
-      "es": "Valor oficial publicado para temporada baja 2026. El precio final depende de la fecha seleccionada.",
-      "pt": "Valor oficial publicado para a baixa temporada de 2026. O preço final depende da data selecionada.",
-      "en": "Official published price for the 2026 low season. The final price depends on the selected date."
+      "es": "El valor se consulta en la fuente oficial para la fecha seleccionada.",
+      "pt": "O valor é consultado na fonte oficial para a data selecionada.",
+      "en": "The price is checked against the official source for the selected date."
+    },
+    "tickets.live.product": {
+      "es": "Ticket diario web · Adulto y niño",
+      "pt": "Ticket diário online · Adulto e criança",
+      "en": "Online day ticket · Adult and child"
+    },
+    "tickets.live.date": {
+      "es": "Fecha de uso",
+      "pt": "Data de uso",
+      "en": "Use date"
+    },
+    "tickets.live.refresh": {
+      "es": "Actualizar precio",
+      "pt": "Atualizar preço",
+      "en": "Refresh price"
+    },
+    "tickets.live.unavailable": {
+      "es": "Consultar precio oficial",
+      "pt": "Consultar preço oficial",
+      "en": "Check official price"
+    },
+    "tickets.live.season.none": {
+      "es": "Según fecha",
+      "pt": "Conforme a data",
+      "en": "Date dependent"
+    },
+    "tickets.live.season.high": {
+      "es": "Temporada alta",
+      "pt": "Alta temporada",
+      "en": "High season"
+    },
+    "tickets.live.season.low": {
+      "es": "Temporada baja",
+      "pt": "Baixa temporada",
+      "en": "Low season"
+    },
+    "tickets.live.loading": {
+      "es": "Consultando fuente oficial…",
+      "pt": "Consultando a fonte oficial…",
+      "en": "Checking the official source…"
+    },
+    "tickets.live.current": {
+      "es": "Precio oficial actualizado",
+      "pt": "Preço oficial atualizado",
+      "en": "Official price up to date"
+    },
+    "tickets.live.stale": {
+      "es": "Último precio verificado; la fuente no respondió",
+      "pt": "Último preço verificado; a fonte não respondeu",
+      "en": "Last verified price; the source did not respond"
+    },
+    "tickets.live.error": {
+      "es": "No hay un precio oficial verificado para mostrar",
+      "pt": "Não há um preço oficial verificado para mostrar",
+      "en": "No verified official price is available"
+    },
+    "tickets.live.updated": {
+      "es": "Actualizado:",
+      "pt": "Atualizado:",
+      "en": "Updated:"
+    },
+    "tickets.live.source": {
+      "es": "Fuente oficial de tarifas",
+      "pt": "Fonte oficial de tarifas",
+      "en": "Official pricing source"
     },
     "tickets.buy.title": {
       "es": "Comprar ticket oficial",
@@ -433,6 +498,31 @@
       "es": "Busca el espacio que dice DEPTO-34 en grande sobre la pared. Mirando hacia la escalera de acceso al edificio, es el estacionamiento inmediatamente a mano izquierda, pegado a la escalera.",
       "pt": "Procure a vaga com DEPTO-34 escrito em letras grandes na parede. De frente para a escada de acesso ao edifício, é a vaga imediatamente à esquerda, junto à escada.",
       "en": "Look for the space marked DEPTO-34 in large letters on the wall. Facing the building access stairs, it is the space immediately to the left, right beside the stairs."
+    },
+    "checkin.locker.tag": {
+      "es": "Equipamiento",
+      "pt": "Equipamento",
+      "en": "Equipment"
+    },
+    "checkin.locker.title": {
+      "es": "Locker de esquí",
+      "pt": "Armário de esqui",
+      "en": "Ski locker"
+    },
+    "checkin.locker.reference": {
+      "es": "Piso -1 · Locker 23",
+      "pt": "Piso -1 · Armário 23",
+      "en": "Level -1 · Locker 23"
+    },
+    "checkin.locker.body": {
+      "es": "Junto con las llaves de la estadía te dejamos la llave del locker 23. Al llegar al piso -1, sal al pasillo y camina hasta el final. En la zona de lockers busca el número 23: allí puedes guardar el equipo de esquí. Junto a esa zona está la salida exterior para tomar el buggy que lleva hacia las canchas.",
+      "pt": "Junto com as chaves da estadia, deixamos a chave do armário 23. Ao chegar ao piso -1, saia para o corredor e caminhe até o final. Na área dos armários, procure o número 23: ali você pode guardar o equipamento de esqui. Ao lado dessa área fica a saída externa para pegar o buggy que leva às pistas.",
+      "en": "The key to locker 23 is provided with your stay keys. When you reach level -1, enter the corridor and walk to the end. In the locker area, look for number 23: you can store your ski equipment there. Beside that area is the outside exit where you can take the buggy to the slopes."
+    },
+    "checkin.locker.action": {
+      "es": "Ver recorrido del buggy",
+      "pt": "Ver trajeto do buggy",
+      "en": "View the buggy route"
     },
     "checkin.access.t": {
       "es": "Acceso al departamento",

@@ -8,7 +8,7 @@ Current production resources:
 
 - Worker: `https://cordal-sur-access.josetomasayalams.workers.dev`
 - D1 database: `cordal-sur-access`
-- Allowed web origin: `https://josetomasayalams-rgb.github.io`
+- Allowed web origins: the GitHub Pages origin plus the documented local test ports
 
 ## Security model
 
@@ -32,7 +32,7 @@ by GitHub Pages secret. The HTML remains retrievable from the static origin.
 
 | Name | Kind | Purpose |
 |---|---|---|
-| `DB` | D1 binding | `stays` and rate-limit state |
+| `DB` | D1 binding | Access state, catalog overrides and the last verified ski-price snapshot |
 | `ALLOWED_ORIGINS` | variable | Comma-separated exact origins, no path or trailing slash |
 | `TOKEN_ISSUER` | variable | Token namespace; keep stable after launch |
 | `TOKEN_SECRET` | secret | At least 32 random characters, used only for token signatures |
@@ -40,14 +40,19 @@ by GitHub Pages secret. The HTML remains retrievable from the static origin.
 | `ADMIN_PIN_DIGEST` | secret | 64-character hex HMAC digest for the private administrator PIN |
 | `DEFAULT_GUEST_PIN_DIGEST` | secret | 64-character hex HMAC digest for the private default guest PIN |
 
-Production should use only:
+Production uses exact origins only:
 
 ```text
 https://josetomasayalams-rgb.github.io
+http://127.0.0.1:4174
+http://localhost:4174
+http://127.0.0.1:8765
+http://localhost:8765
 ```
 
-Local origins belong in the separate `dev` environment already declared in
-`wrangler.toml`.
+The local origins exist solely for the checked-in static visual test harness.
+They do not receive GitHub Pages localStorage or sessionStorage tokens because
+browser storage is origin-scoped and the service does not use cookies.
 
 ## Recreate the service in another Cloudflare account
 
@@ -131,6 +136,7 @@ All request bodies are JSON. Protected routes use
 | Method and path | Authentication | Behavior |
 |---|---|---|
 | `GET /v1/access/status` | none | Returns only `active`/`locked` and timezone |
+| `GET /v1/public/ski-price?date=YYYY-MM-DD` | none | Returns the verified official web day-ticket price for that date |
 | `POST /v1/auth/guest` | none | Accepts `{ "pin": "NN-NN" }` during an active stay |
 | `POST /v1/auth/admin` | none | Accepts the configured administrator PIN |
 | `GET /v1/auth/session` | guest or admin | Verifies signature, expiry and stay revision/state |
@@ -138,6 +144,27 @@ All request bodies are JSON. Protected routes use
 | `POST /v1/admin/stays` | admin | Creates a stay |
 | `PATCH /v1/admin/stays/:id` | admin | Updates, enables/disables, changes PIN, or finishes |
 | `DELETE /v1/admin/stays/:id` | admin | Deletes and immediately revokes a stay |
+| `GET /v1/admin/place-overrides` | admin | Lists current catalog corrections for export |
+| `POST /v1/admin/place-overrides` | admin | Creates a validated, versioned correction |
+| `PATCH /v1/admin/place-overrides/:id` | admin | Updates a correction and stores the previous revision |
+| `DELETE /v1/admin/place-overrides/:id` | admin | Removes a correction while preserving history |
+| `GET /v1/admin/place-overrides/:id/history` | admin | Lists append-only revision snapshots |
+| `POST /v1/admin/place-overrides/:id/revert` | admin | Restores the latest prior snapshot |
+
+Place overrides support `category`, `location`, `website`, `instagram`,
+`closed`, `merge` and `add`. Instagram requires an HTTPS verification source;
+added places require an HTTPS source URL. Apply migration
+`0002_place_overrides.sql` before deploying the routes.
+
+The public ski-price route reads the official Nevados de Chillán
+`andariveles-y-pistas` page server-side, validates both the operation calendar
+and the web high/low-season amounts, and stores only a complete verified
+snapshot in D1. A normal request revalidates after 30 minutes. Add
+`refresh=1` for an explicit refresh. If Nevados is temporarily unavailable,
+the route returns the latest verified snapshot with `stale: true`; when no
+verified snapshot exists it returns `503 ski_price_unavailable` and never
+invents an amount. Apply `0003_ski_price_snapshots.sql` before deploying this
+route.
 
 Create body:
 
@@ -170,5 +197,6 @@ npm test
 ```
 
 They cover exact CORS, token tampering/expiry, peppered digests,
-`America/Santiago` conversion and DST edges, access policy constants, and the
-D1 no-overlap trigger.
+`America/Santiago` conversion and DST edges, access policy constants, the D1
+no-overlap trigger, official ski-calendar parsing, snapshot fallback and the
+no-invented-price invariant.

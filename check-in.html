@@ -10,8 +10,8 @@
  <link rel="preload" as="image" type="image/webp" media="(min-width: 720px)" fetchpriority="high" href="css/bg/winter/checkin-camino-nieve.webp?v=2">
   <script>(function(){var t="";try{t=localStorage.getItem("gh-theme-v3")||""}catch(e){}if(t!=="light"&&t!=="dark"){t="dark"}document.documentElement.setAttribute("data-theme",t)})();</script>
   <script>(function(){var c=new URLSearchParams(location.search).get("condition");if(c==="a"||c==="b")document.documentElement.setAttribute("data-study-condition",c)})();</script>
-<link rel="stylesheet" href="css/styles.css?v=23">
- <link rel="stylesheet" href="css/section-palettes.css?v=4">
+<link rel="stylesheet" href="css/styles.css?v=24">
+ <link rel="stylesheet" href="css/section-palettes.css?v=5">
  <link rel="stylesheet" href="css/access.css?v=4">
 </head>
 <body class="is-winter bg-checkin" data-section="checkin">
@@ -58,6 +58,22 @@
    <p data-i18n="checkin.parking.body">Busca el espacio que dice DEPTO-34 en grande sobre la pared. Mirando hacia la escalera de acceso al edificio, es el estacionamiento inmediatamente a mano izquierda, pegado a la escalera.</p>
   </div>
 
+  <div class="card locker-card mb-4">
+   <div class="card-header">
+    <div class="icon-box"><span class="mountain-resource__icon mountain-resource__icon--locker" aria-hidden="true"></span></div>
+    <div>
+     <span class="tag tag-winter" data-i18n="checkin.locker.tag">Equipamiento</span>
+     <h3 data-i18n="checkin.locker.title">Locker de esquí</h3>
+    </div>
+   </div>
+   <strong class="locker-card__reference" data-i18n="checkin.locker.reference">Piso -1 · Locker 23</strong>
+   <p data-i18n="checkin.locker.body">Junto con las llaves de la estadía te dejamos la llave del locker 23. Al llegar al piso -1, sal al pasillo y camina hasta el final. En la zona de lockers busca el número 23: allí puedes guardar el equipo de esquí. Junto a esa zona está la salida exterior para tomar el buggy que lleva hacia las canchas.</p>
+   <a class="locker-card__action" href="buggy.html">
+    <span data-i18n="checkin.locker.action">Ver recorrido del buggy</span>
+    <span aria-hidden="true">›</span>
+   </a>
+  </div>
+
   <!-- Access steps — host-private, kept as TODO(host) placeholders (.ph) -->
   <div class="card mb-4">
    <h3 data-i18n="checkin.access.t">Acceso al departamento</h3>
@@ -98,10 +114,10 @@
   </div>
 
  </div>
-<script src="js/lang.js?v=12"></script>
+<script src="js/lang.js?v=13"></script>
  <script src="js/access.js?v=4" data-api-base="https://cordal-sur-access.josetomasayalams.workers.dev"></script>
   <script src="js/whatsapp.js"></script>
-<script src="js/theme.js?v=9"></script>
+<script src="js/theme.js?v=10"></script>
  <script src="js/study-condition.js?v=1"></script>
 </body>
 </html>

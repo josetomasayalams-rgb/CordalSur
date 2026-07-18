@@ -6,6 +6,11 @@ const FAILURE_LIMIT = 5;
 const LOCK_SECONDS = 30 * 60;
 const MAX_JSON_BYTES = 16 * 1024;
 const PIN_PATTERN = /^\d{2}-\d{2}$/;
+const PLACE_OVERRIDE_ACTIONS = new Set(['category', 'location', 'website', 'instagram', 'closed', 'merge', 'add']);
+const PLACE_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$/;
+const SKI_PRICE_SOURCE_URL = 'https://www.nevadosdechillan.com/andariveles-y-pistas';
+const SKI_PRICE_FRESH_SECONDS = 30 * 60;
+const SKI_PRICE_TIMEOUT_MS = 8_000;
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
@@ -43,6 +48,169 @@ function empty(status = 204, extraHeaders = {}) {
   const headers = { ...baseHeaders(), ...extraHeaders };
   delete headers['Content-Type'];
   return new Response(null, { status, headers });
+}
+
+function decodeHtml(value) {
+  return String(value)
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&aacute;/gi, 'á')
+    .replace(/&eacute;/gi, 'é')
+    .replace(/&iacute;/gi, 'í')
+    .replace(/&oacute;/gi, 'ó')
+    .replace(/&uacute;/gi, 'ú')
+    .replace(/&ntilde;/gi, 'ñ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(parseInt(code, 16)));
+}
+
+function htmlText(value) {
+  return decodeHtml(String(value).replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+}
+
+function parseOfficialDate(value) {
+  const match = /^(\d{2})-(\d{2})-(\d{4})$/.exec(String(value).trim());
+  if (!match) throw new Error(`Invalid official date: ${value}`);
+  const iso = `${match[3]}-${match[2]}-${match[1]}`;
+  const date = new Date(`${iso}T00:00:00Z`);
+  if (date.toISOString().slice(0, 10) !== iso) throw new Error(`Invalid official date: ${value}`);
+  return iso;
+}
+
+function parseOfficialMoney(value) {
+  const amount = Number(String(value).replace(/[^0-9]/g, ''));
+  if (!Number.isInteger(amount) || amount < 10_000 || amount > 250_000) {
+    throw new Error(`Invalid official ski price: ${value}`);
+  }
+  return amount;
+}
+
+export function parseOfficialSkiPrices(html, fetchedAt = nowSeconds()) {
+  const source = String(html);
+  const calendarStart = source.search(/Revisa calendario de operaci(?:ó|&oacute;)n temporada invierno/i);
+  const valuesStart = source.search(/<h2>\s*Ticket diario web\s*<\/h2>/i);
+  const valuesEnd = source.search(/<h2>\s*Ticket diario presencial\s*<\/h2>/i);
+  if (calendarStart < 0 || valuesStart < 0 || valuesEnd <= valuesStart) {
+    throw new Error('Official ski calendar or web ticket section was not found.');
+  }
+
+  const calendarBlock = source.slice(calendarStart, valuesStart);
+  const periods = [];
+  for (const row of calendarBlock.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)) {
+    const cells = [...row[1].matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/gi)].map((cell) => htmlText(cell[1]));
+    if (cells.length < 2) continue;
+    const season = /temporada alta/i.test(cells[1]) ? 'high' : /temporada baja/i.test(cells[1]) ? 'low' : '';
+    if (!season) continue;
+    const range = /^(\d{2}-\d{2}-\d{4})\s*(?:al|\/)\s*(\d{2}-\d{2}-\d{4})$/i.exec(cells[0]);
+    if (!range) throw new Error(`Invalid official ski calendar range: ${cells[0]}`);
+    const start = parseOfficialDate(range[1]);
+    const end = parseOfficialDate(range[2]);
+    if (start > end) throw new Error(`Reversed official ski calendar range: ${cells[0]}`);
+    periods.push({ start, end, season });
+  }
+
+  const webTicketBlock = source.slice(valuesStart, valuesEnd);
+  const prices = {};
+  for (const match of webTicketBlock.matchAll(/<p>\s*(Ticket Alta web|Temporada baja web)\s*<\/p>\s*<h1>\s*([^<]+)\s*<\/h1>/gi)) {
+    prices[/alta/i.test(match[1]) ? 'high' : 'low'] = parseOfficialMoney(match[2]);
+  }
+  if (!periods.length || !prices.high || !prices.low) {
+    throw new Error('Official ski prices did not pass completeness checks.');
+  }
+  periods.sort((left, right) => left.start.localeCompare(right.start));
+  for (let index = 1; index < periods.length; index += 1) {
+    if (periods[index].start <= periods[index - 1].end) throw new Error('Official ski calendar contains overlapping ranges.');
+  }
+
+  return {
+    product: 'Ticket diario web · Adulto y niño',
+    currency: 'CLP',
+    prices,
+    periods,
+    sourceUrl: SKI_PRICE_SOURCE_URL,
+    fetchedAt
+  };
+}
+
+export function skiPriceForDate(snapshot, date) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(date))) throw new ApiError(400, 'invalid_date', 'date must use YYYY-MM-DD.');
+  const parsed = new Date(`${date}T00:00:00Z`);
+  if (Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== date) {
+    throw new ApiError(400, 'invalid_date', 'date must be a real calendar date.');
+  }
+  const period = snapshot.periods.find((candidate) => date >= candidate.start && date <= candidate.end);
+  return {
+    date,
+    product: snapshot.product,
+    currency: snapshot.currency,
+    season: period ? period.season : null,
+    price: period ? snapshot.prices[period.season] : null,
+    available: Boolean(period),
+    sourceUrl: snapshot.sourceUrl,
+    fetchedAt: new Date(snapshot.fetchedAt * 1000).toISOString()
+  };
+}
+
+async function loadSkiPriceSnapshot(db) {
+  const row = await db.prepare('SELECT payload_json, fetched_at FROM ski_price_snapshots WHERE id = 1').first();
+  if (!row) return null;
+  try {
+    const payload = JSON.parse(row.payload_json);
+    payload.fetchedAt = Number(row.fetched_at);
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
+async function storeSkiPriceSnapshot(db, snapshot, currentTime) {
+  await db.prepare(`
+    INSERT INTO ski_price_snapshots (id, payload_json, source_url, fetched_at, updated_at)
+    VALUES (1, ?, ?, ?, ?)
+    ON CONFLICT(id) DO UPDATE SET payload_json = excluded.payload_json,
+      source_url = excluded.source_url, fetched_at = excluded.fetched_at, updated_at = excluded.updated_at
+  `).bind(JSON.stringify(snapshot), snapshot.sourceUrl, snapshot.fetchedAt, currentTime).run();
+}
+
+async function fetchOfficialSkiPriceSnapshot(fetcher, currentTime) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), SKI_PRICE_TIMEOUT_MS);
+  try {
+    const response = await fetcher(SKI_PRICE_SOURCE_URL, {
+      headers: { Accept: 'text/html', 'User-Agent': 'CordalSur/1.0 (+https://josetomasayalams-rgb.github.io/CordalSur/)' },
+      signal: controller.signal
+    });
+    if (!response.ok) throw new Error(`Official ski source returned ${response.status}.`);
+    return parseOfficialSkiPrices(await response.text(), currentTime);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function publicSkiPrice(request, env, currentTime) {
+  const url = new URL(request.url);
+  const date = url.searchParams.get('date') || '';
+  const force = url.searchParams.get('refresh') === '1';
+  let snapshot = await loadSkiPriceSnapshot(env.DB);
+  let stale = false;
+  let sourceStatus = 'cache';
+
+  if (force || !snapshot || currentTime - snapshot.fetchedAt >= SKI_PRICE_FRESH_SECONDS) {
+    try {
+      const fetcher = typeof env.SKI_PRICE_FETCHER === 'function' ? env.SKI_PRICE_FETCHER : fetch;
+      snapshot = await fetchOfficialSkiPriceSnapshot(fetcher, currentTime);
+      await storeSkiPriceSnapshot(env.DB, snapshot, currentTime);
+      sourceStatus = 'live';
+    } catch (error) {
+      if (!snapshot) throw new ApiError(503, 'ski_price_unavailable', 'No verified official ski price is available.');
+      stale = true;
+      sourceStatus = 'stale-cache';
+    }
+  }
+
+  return json({ ...skiPriceForDate(snapshot, date), stale, sourceStatus }, 200, {
+    'Cache-Control': force ? 'no-store' : 'public, max-age=300, stale-while-revalidate=1800'
+  });
 }
 
 function errorResponse(error) {
@@ -416,6 +584,191 @@ function cleanLabel(value) {
   return label;
 }
 
+function safeHttpsUrl(value, field) {
+  if (value == null || value === '') return null;
+  let url;
+  try { url = new URL(String(value)); } catch { throw new ApiError(400, 'validation_error', `${field} must be a valid URL.`); }
+  if (url.protocol !== 'https:') throw new ApiError(400, 'validation_error', `${field} must use HTTPS.`);
+  return url.toString();
+}
+
+function cleanPlaceId(value, field = 'placeId') {
+  const id = String(value || '').trim();
+  if (!PLACE_ID_PATTERN.test(id)) throw new ApiError(400, 'validation_error', `${field} has an invalid format.`);
+  return id;
+}
+
+export function validatePlaceOverride(body) {
+  const action = String(body.action || '').trim();
+  if (!PLACE_OVERRIDE_ACTIONS.has(action)) throw new ApiError(400, 'validation_error', 'Unsupported place override action.');
+  const placeId = cleanPlaceId(body.placeId);
+  const reason = String(body.reason || '').trim();
+  if (reason.length < 3 || reason.length > 500) throw new ApiError(400, 'validation_error', 'Reason must contain 3 to 500 characters.');
+  const sourcePayload = body.payload && typeof body.payload === 'object' && !Array.isArray(body.payload) ? body.payload : {};
+  let payload;
+  let targetPlaceId = null;
+  if (action === 'category') {
+    const category = String(sourcePayload.category || '').trim();
+    if (!/^[a-z][a-z0-9_]{1,48}$/.test(category)) throw new ApiError(400, 'validation_error', 'Category is invalid.');
+    payload = { category };
+  } else if (action === 'location') {
+    const lat = Number(sourcePayload.lat);
+    const lon = Number(sourcePayload.lon);
+    const coordinateKind = String(sourcePayload.coordinateKind || 'manual_verified');
+    if (!Number.isFinite(lat) || lat < -90 || lat > 90 || !Number.isFinite(lon) || lon < -180 || lon > 180) {
+      throw new ApiError(400, 'validation_error', 'Location must contain valid latitude and longitude.');
+    }
+    if (!['entrance', 'parking', 'manual_verified'].includes(coordinateKind)) throw new ApiError(400, 'validation_error', 'coordinateKind is invalid.');
+    payload = { lat, lon, coordinateKind };
+  } else if (action === 'website') {
+    payload = { websiteUrl: safeHttpsUrl(sourcePayload.websiteUrl, 'websiteUrl') };
+  } else if (action === 'instagram') {
+    const instagramUrl = safeHttpsUrl(sourcePayload.instagramUrl, 'instagramUrl');
+    if (instagramUrl && new URL(instagramUrl).hostname.replace(/^www\./, '') !== 'instagram.com') {
+      throw new ApiError(400, 'validation_error', 'instagramUrl must use instagram.com.');
+    }
+    payload = { instagramUrl, verifiedFrom: safeHttpsUrl(sourcePayload.verifiedFrom, 'verifiedFrom') };
+    if (instagramUrl && !payload.verifiedFrom) throw new ApiError(400, 'validation_error', 'A verification source is required for Instagram.');
+  } else if (action === 'closed') {
+    if (typeof sourcePayload.closed !== 'boolean') throw new ApiError(400, 'validation_error', 'closed must be boolean.');
+    payload = { closed: sourcePayload.closed, checkedAt: String(sourcePayload.checkedAt || '').trim() || null };
+  } else if (action === 'merge') {
+    targetPlaceId = cleanPlaceId(body.targetPlaceId, 'targetPlaceId');
+    if (targetPlaceId === placeId) throw new ApiError(400, 'validation_error', 'A place cannot be merged with itself.');
+    payload = { targetPlaceId };
+  } else {
+    const name = String(sourcePayload.name || '').trim();
+    const category = String(sourcePayload.category || '').trim();
+    const lat = Number(sourcePayload.lat);
+    const lon = Number(sourcePayload.lon);
+    if (!name || name.length > 160 || !/^[a-z][a-z0-9_]{1,48}$/.test(category) ||
+        !Number.isFinite(lat) || lat < -90 || lat > 90 || !Number.isFinite(lon) || lon < -180 || lon > 180) {
+      throw new ApiError(400, 'validation_error', 'Added place requires a valid name, category and coordinates.');
+    }
+    payload = {
+      name, category, lat, lon,
+      municipality: String(sourcePayload.municipality || '').trim() || null,
+      websiteUrl: safeHttpsUrl(sourcePayload.websiteUrl, 'websiteUrl'),
+      phone: String(sourcePayload.phone || '').trim() || null,
+      sourceUrl: safeHttpsUrl(sourcePayload.sourceUrl, 'sourceUrl')
+    };
+    if (!payload.sourceUrl) throw new ApiError(400, 'validation_error', 'Added place requires a sourceUrl.');
+  }
+  return { action, placeId, targetPlaceId, payload, reason };
+}
+
+function overrideResponse(row) {
+  let payload = {};
+  try { payload = JSON.parse(row.payload_json || '{}'); } catch {}
+  return {
+    id: row.id,
+    action: row.action,
+    placeId: row.place_id,
+    targetPlaceId: row.target_place_id || null,
+    payload,
+    reason: row.reason,
+    revision: Number(row.revision),
+    createdBy: row.created_by || 'admin',
+    createdAt: iso(row.created_at),
+    updatedAt: iso(row.updated_at)
+  };
+}
+
+async function recordOverrideHistory(env, row, operation, currentTime) {
+  await env.DB.prepare(`
+    INSERT INTO place_override_history (id, override_id, operation, snapshot_json, revision, created_by, created_at)
+    VALUES (?, ?, ?, ?, ?, 'admin', ?)
+  `).bind(crypto.randomUUID(), row.id, operation, JSON.stringify(overrideResponse(row)), Number(row.revision), currentTime).run();
+}
+
+async function listPlaceOverrides(request, env, currentTime) {
+  await authenticatedClaims(request, env, 'admin', currentTime);
+  const result = await env.DB.prepare('SELECT * FROM place_overrides ORDER BY updated_at DESC').all();
+  return json({ overrides: (result.results || []).map(overrideResponse) });
+}
+
+async function createPlaceOverride(request, env, currentTime) {
+  await authenticatedClaims(request, env, 'admin', currentTime);
+  const input = validatePlaceOverride(await readJson(request));
+  const id = crypto.randomUUID();
+  await env.DB.prepare(`
+    INSERT INTO place_overrides (id, action, place_id, target_place_id, payload_json, reason, revision, created_by, created_at, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, 1, 'admin', ?, ?)
+  `).bind(id, input.action, input.placeId, input.targetPlaceId, JSON.stringify(input.payload), input.reason, currentTime, currentTime).run();
+  const created = await env.DB.prepare('SELECT * FROM place_overrides WHERE id = ?').bind(id).first();
+  await recordOverrideHistory(env, created, 'create', currentTime);
+  return json({ override: overrideResponse(created) }, 201);
+}
+
+async function updatePlaceOverride(request, env, currentTime, id) {
+  await authenticatedClaims(request, env, 'admin', currentTime);
+  const existing = await env.DB.prepare('SELECT * FROM place_overrides WHERE id = ?').bind(id).first();
+  if (!existing) throw new ApiError(404, 'override_not_found', 'Place override not found.');
+  const body = await readJson(request);
+  const input = validatePlaceOverride({
+    action: body.action ?? existing.action,
+    placeId: body.placeId ?? existing.place_id,
+    targetPlaceId: body.targetPlaceId ?? existing.target_place_id,
+    payload: body.payload ?? JSON.parse(existing.payload_json),
+    reason: body.reason ?? existing.reason
+  });
+  await recordOverrideHistory(env, existing, 'update_before', currentTime);
+  await env.DB.prepare(`
+    UPDATE place_overrides SET action = ?, place_id = ?, target_place_id = ?, payload_json = ?, reason = ?, revision = revision + 1, updated_at = ?
+    WHERE id = ?
+  `).bind(input.action, input.placeId, input.targetPlaceId, JSON.stringify(input.payload), input.reason, currentTime, id).run();
+  const updated = await env.DB.prepare('SELECT * FROM place_overrides WHERE id = ?').bind(id).first();
+  return json({ override: overrideResponse(updated) });
+}
+
+async function deletePlaceOverride(request, env, currentTime, id) {
+  await authenticatedClaims(request, env, 'admin', currentTime);
+  const existing = await env.DB.prepare('SELECT * FROM place_overrides WHERE id = ?').bind(id).first();
+  if (!existing) throw new ApiError(404, 'override_not_found', 'Place override not found.');
+  await recordOverrideHistory(env, existing, 'delete', currentTime);
+  await env.DB.prepare('DELETE FROM place_overrides WHERE id = ?').bind(id).run();
+  return empty();
+}
+
+async function placeOverrideHistory(request, env, currentTime, id) {
+  await authenticatedClaims(request, env, 'admin', currentTime);
+  const result = await env.DB.prepare(`
+    SELECT id, operation, snapshot_json, revision, created_by, created_at
+    FROM place_override_history WHERE override_id = ? ORDER BY created_at DESC
+  `).bind(id).all();
+  return json({ history: (result.results || []).map((row) => ({
+    id: row.id, operation: row.operation, revision: Number(row.revision), createdBy: row.created_by,
+    createdAt: iso(row.created_at), snapshot: JSON.parse(row.snapshot_json)
+  })) });
+}
+
+async function revertPlaceOverride(request, env, currentTime, id) {
+  await authenticatedClaims(request, env, 'admin', currentTime);
+  const current = await env.DB.prepare('SELECT * FROM place_overrides WHERE id = ?').bind(id).first();
+  const previous = await env.DB.prepare(`
+    SELECT * FROM place_override_history
+    WHERE override_id = ? AND operation IN ('update_before', 'delete', 'revert_before')
+    ORDER BY revision DESC, created_at DESC LIMIT 1
+  `).bind(id).first();
+  if (!previous) throw new ApiError(409, 'nothing_to_revert', 'No prior override revision is available.');
+  const snapshot = JSON.parse(previous.snapshot_json);
+  const input = validatePlaceOverride({
+    action: snapshot.action, placeId: snapshot.placeId, targetPlaceId: snapshot.targetPlaceId,
+    payload: snapshot.payload, reason: `Revert: ${snapshot.reason}`.slice(0, 500)
+  });
+  if (current) await recordOverrideHistory(env, current, 'revert_before', currentTime);
+  await env.DB.prepare(`
+    INSERT INTO place_overrides (id, action, place_id, target_place_id, payload_json, reason, revision, created_by, created_at, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, 'admin', ?, ?)
+    ON CONFLICT(id) DO UPDATE SET action = excluded.action, place_id = excluded.place_id,
+      target_place_id = excluded.target_place_id, payload_json = excluded.payload_json,
+      reason = excluded.reason, revision = place_overrides.revision + 1, updated_at = excluded.updated_at
+  `).bind(id, input.action, input.placeId, input.targetPlaceId, JSON.stringify(input.payload), input.reason,
+    current ? Number(current.revision) + 1 : Number(snapshot.revision) + 1, current ? Number(current.created_at) : currentTime, currentTime).run();
+  const restored = await env.DB.prepare('SELECT * FROM place_overrides WHERE id = ?').bind(id).first();
+  return json({ override: overrideResponse(restored) });
+}
+
 async function assertNoOverlap(env, startsAt, endsAt, excludeId = '') {
   const row = await env.DB.prepare(`
     SELECT id FROM stays
@@ -590,15 +943,25 @@ async function route(request, env) {
   const method = request.method.toUpperCase();
 
   if (method === 'GET' && path === `${API_PREFIX}/access/status`) return accessStatus(env, currentTime);
+  if (method === 'GET' && path === `${API_PREFIX}/public/ski-price`) return publicSkiPrice(request, env, currentTime);
   if (method === 'POST' && path === `${API_PREFIX}/auth/guest`) return guestLogin(request, env, currentTime);
   if (method === 'POST' && path === `${API_PREFIX}/auth/admin`) return adminLogin(request, env, currentTime);
   if (method === 'GET' && path === `${API_PREFIX}/auth/session`) return sessionStatus(request, env, currentTime);
   if (method === 'GET' && path === `${API_PREFIX}/admin/stays`) return listStays(request, env, currentTime);
   if (method === 'POST' && path === `${API_PREFIX}/admin/stays`) return createStay(request, env, currentTime);
+  if (method === 'GET' && path === `${API_PREFIX}/admin/place-overrides`) return listPlaceOverrides(request, env, currentTime);
+  if (method === 'POST' && path === `${API_PREFIX}/admin/place-overrides`) return createPlaceOverride(request, env, currentTime);
 
   const stayMatch = /^\/v1\/admin\/stays\/([0-9a-f-]{36})$/i.exec(path);
   if (stayMatch && method === 'PATCH') return updateStay(request, env, currentTime, stayMatch[1]);
   if (stayMatch && method === 'DELETE') return deleteStay(request, env, currentTime, stayMatch[1]);
+  const overrideMatch = /^\/v1\/admin\/place-overrides\/([0-9a-f-]{36})$/i.exec(path);
+  if (overrideMatch && method === 'PATCH') return updatePlaceOverride(request, env, currentTime, overrideMatch[1]);
+  if (overrideMatch && method === 'DELETE') return deletePlaceOverride(request, env, currentTime, overrideMatch[1]);
+  const overrideHistoryMatch = /^\/v1\/admin\/place-overrides\/([0-9a-f-]{36})\/history$/i.exec(path);
+  if (overrideHistoryMatch && method === 'GET') return placeOverrideHistory(request, env, currentTime, overrideHistoryMatch[1]);
+  const overrideRevertMatch = /^\/v1\/admin\/place-overrides\/([0-9a-f-]{36})\/revert$/i.exec(path);
+  if (overrideRevertMatch && method === 'POST') return revertPlaceOverride(request, env, currentTime, overrideRevertMatch[1]);
   throw new ApiError(404, 'not_found', 'API route not found.');
 }
 
@@ -636,5 +999,8 @@ export const __test = {
   FAILURE_LIMIT,
   FAILURE_WINDOW_SECONDS,
   LOCK_SECONDS,
-  RESERVE_ATTEMPT_SQL
+  RESERVE_ATTEMPT_SQL,
+  validatePlaceOverride,
+  parseOfficialSkiPrices,
+  skiPriceForDate
 };

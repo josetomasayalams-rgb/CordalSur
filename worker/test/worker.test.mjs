@@ -12,8 +12,10 @@ import {
   handleRequest,
   isAllowedOrigin,
   localToUtcSeconds,
+  parseOfficialSkiPrices,
   parseAllowedOrigins,
   pinDigest,
+  skiPriceForDate,
   utcSecondsToLocal,
   verifyToken
 } from '../src/index.js';
@@ -22,6 +24,44 @@ const tokenEnv = {
   TOKEN_SECRET: 'token-secret-that-is-longer-than-thirty-two-characters',
   TOKEN_ISSUER: 'cordal-sur-test'
 };
+
+const skiFixture = readFileSync(new URL('./fixtures/nevados-ski-prices.html', import.meta.url), 'utf8');
+
+function createSkiPriceDb() {
+  let row = null;
+  return {
+    prepare(sql) {
+      let values = [];
+      return {
+        bind(...nextValues) {
+          values = nextValues;
+          return this;
+        },
+        async first() {
+          return /SELECT payload_json/i.test(sql) ? row : null;
+        },
+        async run() {
+          if (/INSERT INTO ski_price_snapshots/i.test(sql)) {
+            row = { payload_json: values[0], fetched_at: values[2] };
+          }
+          return { meta: { changes: 1 } };
+        }
+      };
+    }
+  };
+}
+
+function skiPriceEnv(fetcher, db = createSkiPriceDb()) {
+  return {
+    ...tokenEnv,
+    DB: db,
+    ALLOWED_ORIGINS: 'https://josetomasayalams-rgb.github.io',
+    PIN_PEPPER: 'pepper-that-is-longer-than-thirty-two-characters',
+    ADMIN_PIN_DIGEST: 'a'.repeat(64),
+    DEFAULT_GUEST_PIN_DIGEST: 'b'.repeat(64),
+    SKI_PRICE_FETCHER: fetcher
+  };
+}
 
 test('CORS origin matching is exact and trims configuration whitespace', () => {
   const configured = 'https://josetomasayalams-rgb.github.io, http://127.0.0.1:8765 ';
@@ -83,6 +123,65 @@ test('America/Santiago local timestamps round-trip in summer and winter', () => 
   assert.equal(new Date(localToUtcSeconds('2026-07-13T12:00') * 1000).toISOString(), '2026-07-13T16:00:00.000Z');
 });
 
+test('official ski parser combines the operation calendar with verified web prices', () => {
+  const snapshot = parseOfficialSkiPrices(skiFixture, 1_784_398_400);
+  assert.equal(snapshot.product, 'Ticket diario web · Adulto y niño');
+  assert.deepEqual(snapshot.prices, { high: 80_000, low: 70_000 });
+  assert.deepEqual(skiPriceForDate(snapshot, '2026-07-19'), {
+    date: '2026-07-19', product: snapshot.product, currency: 'CLP', season: 'high', price: 80_000,
+    available: true, sourceUrl: snapshot.sourceUrl, fetchedAt: new Date(1_784_398_400 * 1000).toISOString()
+  });
+  assert.equal(skiPriceForDate(snapshot, '2026-08-03').price, 70_000);
+  assert.equal(skiPriceForDate(snapshot, '2026-07-18').available, false);
+  assert.equal(skiPriceForDate(snapshot, '2026-09-21').price, null);
+});
+
+test('official ski parser rejects incomplete, overlapping or implausible source data', () => {
+  assert.throws(() => parseOfficialSkiPrices(skiFixture.replace('80.000', '800')), /Invalid official ski price/);
+  assert.throws(() => parseOfficialSkiPrices(skiFixture.replace('03-08-2026 al 07-08-2026', '01-08-2026 al 07-08-2026')), /overlapping/);
+  assert.throws(() => parseOfficialSkiPrices(skiFixture.replace('<h2>Ticket diario web</h2>', '<h2>Otro producto</h2>')), /not found/);
+});
+
+test('public ski endpoint refreshes once and falls back to the last verified snapshot', async () => {
+  let calls = 0;
+  let shouldFail = false;
+  const db = createSkiPriceDb();
+  const env = skiPriceEnv(async () => {
+    calls += 1;
+    if (shouldFail) throw new Error('network down');
+    return new Response(skiFixture, { status: 200 });
+  }, db);
+  const request = (query = '') => new Request(`https://worker.example/v1/public/ski-price?date=2026-08-03${query}`, {
+    headers: { Origin: 'https://josetomasayalams-rgb.github.io' }
+  });
+
+  const live = await handleRequest(request(), env);
+  assert.equal(live.status, 200);
+  assert.equal((await live.json()).price, 70_000);
+  assert.equal(calls, 1);
+
+  const cached = await handleRequest(request(), env);
+  assert.equal((await cached.json()).sourceStatus, 'cache');
+  assert.equal(calls, 1);
+
+  shouldFail = true;
+  const stale = await handleRequest(request('&refresh=1'), env);
+  const staleBody = await stale.json();
+  assert.equal(stale.status, 200);
+  assert.equal(staleBody.price, 70_000);
+  assert.equal(staleBody.stale, true);
+  assert.equal(staleBody.sourceStatus, 'stale-cache');
+  assert.equal(calls, 2);
+});
+
+test('public ski endpoint never invents a price when no verified snapshot exists', async () => {
+  const response = await handleRequest(new Request('https://worker.example/v1/public/ski-price?date=2026-08-03', {
+    headers: { Origin: 'https://josetomasayalams-rgb.github.io' }
+  }), skiPriceEnv(async () => { throw new Error('network down'); }));
+  assert.equal(response.status, 503);
+  assert.equal((await response.json()).error.code, 'ski_price_unavailable');
+});
+
 test('DST gaps and duplicate wall times are rejected instead of guessed', () => {
   assert.throws(() => localToUtcSeconds('2025-09-07T00:30'), (error) => error.code === 'nonexistent_local_time');
   assert.throws(() => localToUtcSeconds('2025-04-05T23:30'), (error) => error.code === 'ambiguous_local_time');
@@ -94,6 +193,81 @@ test('security policy constants match the access contract', () => {
   assert.equal(__test.FAILURE_LIMIT, 5);
   assert.equal(__test.FAILURE_WINDOW_SECONDS, 15 * 60);
   assert.equal(__test.LOCK_SECONDS, 30 * 60);
+});
+
+test('place override validation supports every editorial action without trusting arbitrary payloads', () => {
+  const base = { placeId: 'osm-node-123', reason: 'Verified by the local operations team.' };
+  assert.deepEqual(__test.validatePlaceOverride({ ...base, action: 'category', payload: { category: 'pharmacy', ignored: true } }).payload, { category: 'pharmacy' });
+  assert.deepEqual(__test.validatePlaceOverride({ ...base, action: 'location', payload: { lat: -36.8, lon: -71.6, coordinateKind: 'entrance' } }).payload,
+    { lat: -36.8, lon: -71.6, coordinateKind: 'entrance' });
+  assert.equal(__test.validatePlaceOverride({ ...base, action: 'website', payload: { websiteUrl: 'https://example.com' } }).payload.websiteUrl, 'https://example.com/');
+  assert.equal(__test.validatePlaceOverride({ ...base, action: 'instagram', payload: { instagramUrl: 'https://instagram.com/example', verifiedFrom: 'https://example.com/contact' } }).payload.instagramUrl,
+    'https://instagram.com/example');
+  assert.deepEqual(__test.validatePlaceOverride({ ...base, action: 'closed', payload: { closed: true } }).payload, { closed: true, checkedAt: null });
+  assert.equal(__test.validatePlaceOverride({ ...base, action: 'merge', targetPlaceId: 'google-abc', payload: {} }).targetPlaceId, 'google-abc');
+  assert.equal(__test.validatePlaceOverride({ ...base, action: 'add', payload: {
+    name: 'Farmacia local', category: 'pharmacy', lat: -36.8, lon: -71.6, sourceUrl: 'https://example.com/source'
+  } }).payload.name, 'Farmacia local');
+  assert.throws(() => __test.validatePlaceOverride({ ...base, action: 'instagram', payload: { instagramUrl: 'https://instagram.com/guessed' } }), /verification source/i);
+  assert.throws(() => __test.validatePlaceOverride({ ...base, action: 'merge', targetPlaceId: base.placeId }), /itself/i);
+  assert.throws(() => __test.validatePlaceOverride({ ...base, action: 'website', payload: { websiteUrl: 'http://example.com' } }), /HTTPS/);
+});
+
+test('place override routes require an administrator session before touching D1', async () => {
+  const env = {
+    ...tokenEnv,
+    DB: {},
+    ALLOWED_ORIGINS: 'https://app.example',
+    PIN_PEPPER: 'pepper-that-is-longer-than-thirty-two-characters',
+    ADMIN_PIN_DIGEST: 'a'.repeat(64),
+    DEFAULT_GUEST_PIN_DIGEST: 'b'.repeat(64)
+  };
+  const response = await handleRequest(new Request('https://worker.example/v1/admin/place-overrides', {
+    headers: { Origin: 'https://app.example' }
+  }), env);
+  assert.equal(response.status, 401);
+  assert.equal((await response.json()).error.code, 'missing_token');
+});
+
+test('authenticated override writes validate payload before a D1 mutation', async () => {
+  const now = Math.floor(Date.now() / 1000);
+  const token = await createToken({ role: 'admin', sub: 'admin', iat: now, exp: now + 300 }, tokenEnv);
+  const env = {
+    ...tokenEnv,
+    DB: {},
+    ALLOWED_ORIGINS: 'https://app.example',
+    PIN_PEPPER: 'pepper-that-is-longer-than-thirty-two-characters',
+    ADMIN_PIN_DIGEST: 'a'.repeat(64),
+    DEFAULT_GUEST_PIN_DIGEST: 'b'.repeat(64)
+  };
+  const response = await handleRequest(new Request('https://worker.example/v1/admin/place-overrides', {
+    method: 'POST',
+    headers: { Origin: 'https://app.example', Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'category', placeId: 'osm-node-1', payload: { category: 'INVALID VALUE' }, reason: 'invalid category test' })
+  }), env);
+  assert.equal(response.status, 400);
+  assert.equal((await response.json()).error.code, 'validation_error');
+});
+
+test('D1 place override migration keeps current revisions and append-only history separate', () => {
+  const directory = mkdtempSync(join(tmpdir(), 'cordal-sur-overrides-'));
+  const database = join(directory, 'test.sqlite');
+  try {
+    const migrations = [
+      readFileSync(new URL('../migrations/0001_access.sql', import.meta.url), 'utf8'),
+      readFileSync(new URL('../migrations/0002_place_overrides.sql', import.meta.url), 'utf8'),
+      readFileSync(new URL('../migrations/0003_ski_price_snapshots.sql', import.meta.url), 'utf8')
+    ].join('\n');
+    execFileSync('sqlite3', [database], { input: migrations });
+    execFileSync('sqlite3', [database, `INSERT INTO place_overrides VALUES ('one','category','osm-node-1',NULL,'{"category":"pharmacy"}','verified locally',1,'admin',1,1);`]);
+    execFileSync('sqlite3', [database, `INSERT INTO place_override_history VALUES ('history-one','one','create','{}',1,'admin',1);`]);
+    assert.equal(execFileSync('sqlite3', [database, 'SELECT COUNT(*) FROM place_overrides;'], { encoding: 'utf8' }).trim(), '1');
+    assert.equal(execFileSync('sqlite3', [database, 'SELECT COUNT(*) FROM place_override_history;'], { encoding: 'utf8' }).trim(), '1');
+    assert.equal(execFileSync('sqlite3', [database, "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='ski_price_snapshots';"], { encoding: 'utf8' }).trim(), '1');
+    assert.throws(() => execFileSync('sqlite3', [database, `INSERT INTO place_overrides VALUES ('bad','unsupported','x',NULL,'{}','bad reason',1,'admin',1,1);`], { stdio: 'pipe' }));
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 });
 
 test('D1 migration enforces half-open, non-overlapping stay windows', () => {
