@@ -30,6 +30,8 @@ for (const file of ['js/nearby.js', 'js/catalog-guide.js', 'js/lang.js']) {
 }
 const styles = read('css/styles.css').toString();
 assert.match(styles, /\.preference-bar,[\s\S]*?border-radius:\s*30px;[\s\S]*?clip-path:\s*inset\(0 round 30px\)/);
+assert.match(styles, /\.preference-bar,[\s\S]*?width:\s*100% !important;[\s\S]*?max-width:\s*none/);
+assert.doesNotMatch(styles, /prefs-stack--inline\.preference-bar\s*\{[^}]*width:\s*max-content/);
 assert.match(styles, /\.catalog-filters::\-webkit-scrollbar\s*\{\s*display:\s*none/);
 assert.match(styles, /\.guide-category\.is-active b,[\s\S]*?background:\s*#102f29;[\s\S]*?color:\s*#fff8e9/);
 console.log('  PASS (local road UI, transparent premium themes, strong count contrast and rounded preferences)');

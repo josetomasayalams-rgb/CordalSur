@@ -30,7 +30,7 @@ for (const file of expectedPages) {
   if (!/<html\b[^>]*data-i18n-title="page\.[^"]+"/i.test(html)) fail(`${file}: <html> needs a localized page.* title key`);
   if (!html.includes('js/lang.js?v=11')) fail(`${file}: localized copy must use the current cache version`);
   if (!html.includes('js/theme.js?v=8')) fail(`${file}: theme control must use the current cache version`);
-  if (!html.includes('css/styles.css?v=21')) fail(`${file}: shared sensory brand styles are stale`);
+  if (!html.includes('css/styles.css?v=22')) fail(`${file}: shared sensory brand styles are stale`);
   if (!html.includes("document.documentElement.classList.add('access-pending')") ||
       !html.includes('css/access.css?v=4') || !html.includes('js/access.js?v=4')) {
     fail(`${file}: guest gate must load before protected content is shown`);

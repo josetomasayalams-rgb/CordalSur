@@ -66,6 +66,11 @@ for (const page of ['actividades.html', 'restaurantes.html']) {
   if (/class="catalog-sources"|>Fuentes<|>Fontes<|>Sources</.test(source)) fail(`${page}: editorial provenance must not appear in the guest catalog`);
 }
 if (/[🚙🩹]/u.test(read('buggy.html') + read('botiquin.html')) || /<svg[\s\S]*?WhatsApp/i.test(read('buggy.html'))) fail('Buggy and first-aid feature art must not fall back to emoji or a generic WhatsApp glyph');
+if (!home.includes('data-src-light="assets/home-icons/transport-light.webp"') ||
+    !home.includes('data-src-dark="assets/home-icons/transport-dark.webp"') ||
+    !read('buggy.html').includes('data-src-light="assets/home-icons/transport-light.webp"')) {
+  fail('the Buggy entry and detail page must share the premium Can-Am-style pickup pair');
+}
 const themeImages = [...home.matchAll(/<img\b[^>]*\bdata-theme-image\b[^>]*>/g)].map((match) => match[0]);
 if (themeImages.length !== 14 || themeImages.some((tag) => !/data-src-light="assets\/home-icons\/[a-z]+-light\.webp"/.test(tag) || !/data-src-dark="assets\/home-icons\/[a-z]+-dark\.webp"/.test(tag) || !/alt=""/.test(tag))) {
   fail('home must use 14 decorative light/dark raster icon instances');
@@ -88,6 +93,10 @@ if (!home.includes('class="card nearby-home-card') || !home.includes('Restaurant
 }
 if (!theme.includes("classList.add('preference-bar')") || !styles.includes('.preference-bar .theme-selector')) {
   fail('language and theme must share one reusable preference bar');
+}
+if (!/\.preference-bar,[\s\S]*?width:\s*100% !important;[\s\S]*?max-width:\s*none;/.test(styles) ||
+    styles.includes('prefs-stack--inline.preference-bar { display: flex; width: max-content !important; }')) {
+  fail('the preference surface must span the same full content width on every breakpoint');
 }
 if (nearby.includes('guide-place__sources') || nearby.includes('<b>Google ') || nearby.includes('<b>Tripadvisor ')) {
   fail('nearby cards must keep provenance internal and show a compact provider-neutral rating');
