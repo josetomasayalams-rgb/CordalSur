@@ -1986,6 +1986,10 @@
       'guide.location.updateFailed': 'No pudimos actualizar el GPS; conservamos la última posición de esta sesión.',
       'guide.map.centerUser': 'Centrar en mi ubicación',
       'guide.legend.landmarks': 'Los Pincheira y Quincho del Valle',
+      'checkin.time.value': '15:00',
+      'wifi.network.label': 'Red',
+      'wifi.network.value': '34A',
+      'guide.mode.route.headingSummary': 'Lugares del corredor ordenados desde tu ubicación; detectando el sentido del trayecto',
     
     },
 
@@ -3962,6 +3966,10 @@
       'guide.location.updateFailed': 'Não foi possível atualizar o GPS; mantivemos a última posição desta sessão.',
       'guide.map.centerUser': 'Centralizar na minha localização',
       'guide.legend.landmarks': 'Los Pincheira e Quincho del Valle',
+      'checkin.time.value': '15:00',
+      'wifi.network.label': 'Rede',
+      'wifi.network.value': '34A',
+      'guide.mode.route.headingSummary': 'Lugares do corredor ordenados desde sua localização; detectando o sentido do trajeto',
     
     },
 
@@ -5938,6 +5946,10 @@
       'guide.location.updateFailed': 'We could not refresh GPS; the last position from this session is still shown.',
       'guide.map.centerUser': 'Center on my location',
       'guide.legend.landmarks': 'Los Pincheira and Quincho del Valle',
+      'checkin.time.value': '3:00 PM',
+      'wifi.network.label': 'Network',
+      'wifi.network.value': '34A',
+      'guide.mode.route.headingSummary': 'Corridor places sorted from your location while travel direction is detected',
     
     }
   };
