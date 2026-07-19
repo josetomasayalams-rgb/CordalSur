@@ -15,6 +15,7 @@ const motion = read('js/location-motion.js');
 const locationController = read('js/location-controller.js');
 const roadClient = read('js/road-distance.js');
 const home = read('index.html');
+const hostData = JSON.parse(read('data/host-data.json'));
 
 if (!/id="guide-map-toggle"[^>]*aria-expanded="true"[^>]*aria-controls="guide-map-shell"/.test(html) ||
     !/id="guide-map-shell"/.test(html)) {
@@ -90,8 +91,9 @@ for (const name of ['checkin', 'wifi', 'instagram', 'valley', 'food', 'activitie
 if (!theme.includes("querySelectorAll('img[data-theme-image]')") || !theme.includes("image.setAttribute('src', next)")) {
   fail('theme changes must swap generated home artwork without CSS filters');
 }
-if (!home.includes('class="card nearby-home-card') || !home.includes('Restaurantes, panoramas y servicios cercanos')) {
-  fail('home must present Explore the Valley as a featured, descriptive entry');
+const nearbyHomeCopy = hostData.scalar?.['nav.nearby.s']?.es;
+if (!home.includes('class="card nearby-home-card') || !nearbyHomeCopy || !home.includes(`data-i18n="nav.nearby.s">${nearbyHomeCopy}<`)) {
+  fail('home must present Explore the Valley as a featured essentials entry without activity copy');
 }
 if (!theme.includes("classList.add('preference-bar')") || !styles.includes('.preference-bar .theme-selector')) {
   fail('language and theme must share one reusable preference bar');
@@ -109,7 +111,7 @@ if (nearby.includes('duplicatesMerged') || nearby.includes('guide.quality.provid
 if (!styles.includes('.action-icon') || !styles.includes('.catalog-action--maps { width: 44px')) {
   fail('external actions must use compact theme-aware icons instead of a Maps wordmark');
 }
-for (const asset of ['navigation', 'google-maps', 'website', 'instagram', 'phone']) {
+for (const asset of ['navigation', 'google-maps', 'website', 'instagram', 'phone', 'mountain-snow']) {
   if (!styles.includes(`../assets/icons/${asset}.svg`)) fail(`theme-aware action icon mapping missing: ${asset}`);
 }
 

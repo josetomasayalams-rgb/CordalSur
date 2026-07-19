@@ -41,18 +41,17 @@ test('distance metadata distinguishes road, mapped, sector and trailhead targets
   assert.equal(road.catalogAccess.label.es, 'Inicio por Andarivel Tata');
 });
 
-test('every public food and activity card has a finite, honest apartment distance', () => {
-  const publicCatalog = guide.places.filter((place) => place.discovery?.apartment && !['hotel', 'cabin'].includes(place.category));
-  assert.equal(publicCatalog.length, 115);
+test('every routable catalog place has a finite, honest apartment distance', () => {
+  const publicCatalog = guide.places.filter((place) =>
+    !['hotel', 'cabin'].includes(place.category) && place.routingEligible !== false && place.status !== 'candidate_coordinate'
+  );
+  assert.ok(publicCatalog.length >= 120);
   assert.deepEqual(publicCatalog.filter((place) => !catalogDistanceIsValid(place)).map((place) => place.id), []);
-  assert.ok(publicCatalog.some((place) => place.distanceFromApartment.source === 'sector-apartment'));
   assert.ok(publicCatalog.some((place) => place.distanceFromApartment.source === 'direct-apartment'));
   assert.ok(publicCatalog.some((place) => place.distanceFromApartment.source === 'road-apartment'));
+  assert.ok(publicCatalog.every((place) => place.distanceFromApartment.source !== 'sector-apartment'));
   for (const place of publicCatalog.filter((item) => item.distanceFromApartment.source.startsWith('road-'))) {
     assert.ok(Number.isFinite(place.discovery.apartmentRoadDistanceMeters), `${place.id} claims a road distance without a route`);
-  }
-  for (const place of publicCatalog.filter((item) => item.distanceFromApartment.source === 'sector-apartment')) {
-    assert.ok(place.distanceFromApartment.label, `${place.id} lacks a sector label`);
   }
   for (const place of publicCatalog.filter((item) => item.category === 'trail')) {
     assert.equal(place.distanceFromApartment.target, 'trailhead', `${place.id} must measure to the trailhead`);
@@ -60,15 +59,25 @@ test('every public food and activity card has a finite, honest apartment distanc
   }
 });
 
-test('generated food and activity cards never ship an empty apartment distance', () => {
+test('generated catalog cards expose distance only when they are routable', () => {
   for (const page of ['restaurantes.html', 'actividades.html']) {
     const html = fs.readFileSync(path.join(LANDING_ROOT, page), 'utf8');
-    const cards = [...html.matchAll(/<article class="rest-card catalog-card"[^>]+>/g)].map((match) => match[0]);
+    const cards = [...html.matchAll(/<article\b[^>]*class="[^"]*\bcatalog-card\b[^"]*"[^>]*>/g)].map((match) => match[0]);
     assert.ok(cards.length > 50, `${page} unexpectedly lost catalog coverage`);
     for (const card of cards) {
-      assert.match(card, /data-apartment-distance="\d+(?:\.\d+)?"/);
-      assert.doesNotMatch(card, /data-(?:apartment-)?distance-source="(?:unknown)?"/);
-      assert.match(card, /data-distance-target="(?:place|locality|trailhead)"/);
+      const id = card.match(/data-id="([^"]+)"/)?.[1] || 'unknown';
+      const routingEligible = card.match(/data-routing-eligible="([^"]+)"/)?.[1];
+      if (routingEligible === 'true') {
+        assert.match(card, /data-distance="\d+(?:\.\d+)?"/, `${page}:${id} lacks current distance`);
+        assert.match(card, /data-apartment-distance="\d+(?:\.\d+)?"/, `${page}:${id} lacks apartment distance`);
+        assert.doesNotMatch(card, /data-(?:apartment-)?distance-source="unknown"/, `${page}:${id} has an unknown distance source`);
+        assert.match(card, /data-distance-target="(?:place|locality|trailhead)"/, `${page}:${id} lacks a distance target`);
+        continue;
+      }
+      assert.equal(routingEligible, 'false', `${page}:${id} lacks routing eligibility`);
+      assert.match(card, /data-lat="" data-lon=""/);
+      assert.match(card, /data-distance="" data-distance-source="unknown"/);
+      assert.match(card, /data-apartment-distance="" data-apartment-distance-source="unknown"/);
     }
   }
 });

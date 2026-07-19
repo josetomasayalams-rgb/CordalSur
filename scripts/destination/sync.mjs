@@ -5,7 +5,7 @@ import { mergePlaces } from './dedupe.mjs';
 import { haversineMeters, nearestPointOnLine } from './geo.mjs';
 import { categoryEntries } from './taxonomy.mjs';
 import { loadManualPlaces } from './providers/manual.mjs';
-import { loadEditorialCatalog } from './providers/editorial.mjs';
+import { applyResearchedProfiles, isDirectRouteUrl, loadEditorialCatalog } from './providers/editorial.mjs';
 import { fetchOsmTile } from './providers/osm.mjs';
 import { fetchGoogleTile } from './providers/google.mjs';
 import { fetchTripadvisorTile } from './providers/tripadvisor.mjs';
@@ -129,10 +129,23 @@ function validateGuide(guide) {
     if (!place.name || !place.category || !Number.isFinite(place.location?.lat) || !Number.isFinite(place.location?.lon)) errors.push(`invalid place: ${place.id}`);
     if (!place.navigationUrl || !place.googleMapsUrl) errors.push(`missing navigation: ${place.id}`);
     if (!Array.isArray(place.sources) || !place.sources.length) errors.push(`missing provenance: ${place.id}`);
-    if (place.instagram && place.instagram.verifiedBy !== 'osm_contact_tag' && place.instagram.provider !== 'manual') errors.push(`unverified Instagram: ${place.id}`);
+    if (place.instagram && !['osm_contact_tag', 'manual_verified_override', 'editorial_verified_profile'].includes(place.instagram.verifiedBy)) errors.push(`unverified Instagram: ${place.id}`);
     if (place.googleRating && place.googleRating.provider !== 'google') errors.push(`Google rating source mismatch: ${place.id}`);
     if (place.tripadvisorRating && place.tripadvisorRating.provider !== 'tripadvisor') errors.push(`Tripadvisor rating source mismatch: ${place.id}`);
     if (place.discovery?.apartment && !['hotel', 'cabin'].includes(place.category) && !catalogDistanceIsValid(place)) errors.push(`missing catalog distance: ${place.id}`);
+  }
+  for (const offering of guide.offerings || []) {
+    if (offering.routeUrl && !isDirectRouteUrl(offering.routeUrl)) errors.push(`non-direct offering route: ${offering.id}`);
+  }
+  for (const route of guide.routes || []) {
+    if (route.routeUrl && !isDirectRouteUrl(route.routeUrl)) errors.push(`non-direct route: ${route.id}`);
+  }
+  for (const entry of guide.catalogEntries || []) {
+    if (!entry.id || ids.has(entry.id)) errors.push(`duplicate or missing catalog id: ${entry.id}`);
+    ids.add(entry.id);
+    if (!['activities', 'provisions'].includes(entry.catalog) || !entry.name || !entry.category) errors.push(`invalid catalog entry: ${entry.id}`);
+    if (entry.routeAccess?.url && !isDirectRouteUrl(entry.routeAccess.url)) errors.push(`non-direct catalog route: ${entry.id}`);
+    if (!Array.isArray(entry.sources) || !entry.sources.length) errors.push(`missing catalog provenance: ${entry.id}`);
   }
   if (errors.length) throw new Error(`Destination guide validation failed:\n- ${errors.slice(0, 20).join('\n- ')}`);
 }
@@ -148,6 +161,7 @@ async function main() {
   const accessTargets = loadCatalogAccessTargets(path.join(LANDING_ROOT, 'data/catalog-access-targets.json'));
   let offerings = [];
   let routes = [];
+  let catalogEntries = [];
   let manual = [];
 
   if (enabledProviders.has('manual')) {
@@ -159,11 +173,16 @@ async function main() {
   }
 
   if (enabledProviders.has('editorial')) {
-    const editorial = loadEditorialCatalog(path.join(LANDING_ROOT, 'data/host-data.json'), manual);
+    const editorial = loadEditorialCatalog(
+      path.join(LANDING_ROOT, 'data/host-data.json'),
+      manual,
+      path.join(LANDING_ROOT, 'data/researched-catalog.json')
+    );
     records.push(...editorial.restaurants);
     offerings = editorial.offerings;
     routes = editorial.routes;
-    providerStatus.push({ id: 'editorial', enabled: true, records: editorial.restaurants.length, offerings: offerings.length, routes: routes.length, note: 'Host-curated catalog; unresolved coordinates remain explicit candidates.' });
+    catalogEntries = editorial.catalogEntries;
+    providerStatus.push({ id: 'editorial', enabled: true, records: editorial.restaurants.length, offerings: offerings.length, routes: routes.length, catalogEntries: catalogEntries.length, note: 'Host-curated catalog; unresolved coordinates remain explicit candidates.' });
   } else {
     providerStatus.push({ id: 'editorial', enabled: false, reason: 'not_requested' });
   }
@@ -196,7 +215,8 @@ async function main() {
   const placeRecords = records.filter((record) => !record.sourceTags?.['piste:type']);
   const deduplicated = mergePlaces(placeRecords, mergeOverrides(overrides));
   const overriddenPlaces = applyPlaceOverrides(deduplicated.places, overrides);
-  const places = applyCatalogAccessTargets(overriddenPlaces, accessTargets).map(applyModes).filter((place) => place.discovery.apartment || place.discovery.corridor);
+  const researchedPlaces = applyResearchedProfiles(overriddenPlaces, path.join(LANDING_ROOT, 'data/researched-catalog.json'));
+  const places = applyCatalogAccessTargets(researchedPlaces, accessTargets).map(applyModes).filter((place) => place.discovery.apartment || place.discovery.corridor);
   const categoryCounts = Object.fromEntries(categoryEntries().map((category) => [category.id, places.filter((place) => place.category === category.id).length]));
   const providerCounts = Object.fromEntries(providerStatus.map((provider) => [provider.id, places.filter((place) => place.sources.some((source) => source.provider === provider.id)).length]));
   const guide = {
@@ -225,6 +245,7 @@ async function main() {
     places,
     offerings,
     routes,
+    catalogEntries,
     providers: providerStatus,
     mergeAudit: deduplicated.audit.concat(pisteRecords.length > uniquePistes.length ? [{ reason: 'osm_piste_identifier', mergedCount: pisteRecords.length - uniquePistes.length }] : []),
     performance: { calls: metrics, failures }

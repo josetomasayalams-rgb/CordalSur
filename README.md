@@ -33,10 +33,20 @@ La red vial `data/driving-network.json` se calcula desde OpenStreetMap y se
 resuelve íntegramente en el navegador, sin enviar la posición a un router
 externo. El perfil v2 respeta sentidos y restricciones de automóvil, evita
 caminos intransitables y penaliza huellas, estacionamientos y accesos de
-servicio. Cada ficha publicada conserva una distancia desde el departamento:
-vial cuando existe ruta, en línea recta para un punto cartografiado o hasta el
-sector cuando la entrada exacta sigue pendiente. Los senderos usan un inicio
-verificado y nunca la cumbre o el refugio como supuesto punto de partida.
+servicio. Las fichas georreferenciadas distinguen distancia vial, línea recta e
+inicio de sendero. Una ficha sin pin confiable conserva su información
+editorial, pero no inventa una distancia ni ofrece navegación.
+
+**Explora el Valle** muestra sólo necesidades rápidas y georreferenciadas del
+trayecto: comida, combustible, farmacia, salud, supermercado, cajero y otros
+servicios. **Actividades** y **Comida y provisiones** son directorios amplios y
+mantienen fichas aunque no exista una coordenada confirmada. Los perfiles de
+Instagram y accesos directos a rutas SUDA/Trailforks verificados se versionan en
+`data/researched-catalog.json`; una ruta digital se mantiene separada de la
+navegación vehicular.
+
+La evidencia, los perfiles descartados y la limitación de Strava quedan en el
+[informe de investigación](docs/reports/catalog-research-2026-07-19.md).
 
 Para regenerar catálogo, red y reporte:
 
@@ -61,6 +71,7 @@ La suite opcional de navegador requiere Playwright y un servidor local activo:
 ```sh
 python3 -m http.server 4173 --bind 127.0.0.1
 CORDALSUR_TEST_URL=http://127.0.0.1:4173 \
+CORDALSUR_ACCESS_PIN='<guest-pin>' \
   node tests/playwright-location-smoke.mjs
 ```
 

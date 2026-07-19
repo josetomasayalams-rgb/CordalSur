@@ -145,8 +145,12 @@ test('versioned artifact preserves known road distances and ODbL provenance', ()
   const candidates = new Set(guide.places.filter((place) => place.routingEligible === false || place.status === 'candidate_coordinate').map((place) => place.id));
   assert.ok(candidates.size >= 15);
   assert.ok(graph.destinations.every((destination) => !candidates.has(destination.id)));
-  const verifiedEditorial = guide.places.filter((place) => place.coordinateKind === 'google_maps_place');
-  assert.ok(verifiedEditorial.length >= 19);
+  const verifiedEditorial = guide.places.filter((place) =>
+    place.sources.some((source) => source.provider === 'editorial') &&
+    place.routingEligible !== false &&
+    ['google_maps_place', 'manual_catalog'].includes(place.coordinateKind)
+  );
+  assert.ok(verifiedEditorial.length >= 20);
   assert.equal(new Set(verifiedEditorial.map((place) => `${place.location.lat},${place.location.lon}`)).size, verifiedEditorial.length);
   assert.equal(guide.places.filter((place) => /^(?:Rucahue|Rucahue Minimarket)$/i.test(place.name)).length, 1, 'Rucahue minimarket must be a single destination');
   const prepared = prepareNetwork(graph);

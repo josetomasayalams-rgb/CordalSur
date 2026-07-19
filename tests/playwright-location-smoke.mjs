@@ -52,8 +52,8 @@ async function selectLocation(page, kind, choice = 'once') {
   await page.locator('[data-catalog-location-dialog]').waitFor({ state: 'visible' });
   await page.locator(`[data-catalog-location-choice="${choice}"]`).click();
   await page.waitForFunction(() => {
-    const card = document.querySelector('.catalog-card[data-distance-source]');
-    return card && /-current$/.test(card.dataset.distanceSource || '');
+    return [...document.querySelectorAll('.catalog-card[data-distance-source]')]
+      .some((card) => /-current$/.test(card.dataset.distanceSource || ''));
   });
 }
 
@@ -100,8 +100,12 @@ async function runPrimaryCase(browser, browserName, scenario) {
     assert.ok(new Set(firstRoadDistances).size >= 15, `${browserName}: nearby food distances collapsed onto repeated values`);
     const candidates = page.locator('.catalog-card:visible[data-routing-eligible="false"]');
     assert.ok(await candidates.count() >= 15, `${browserName}: unresolved places should remain visible`);
-    assert.equal(await candidates.locator('.catalog-distance').count(), await candidates.count(), `${browserName}: every unresolved place must retain its honest sector distance`);
-    assert.equal(await candidates.locator('[data-road-distance-note]').count(), await candidates.count(), `${browserName}: sector distances need an explicit qualifier`);
+    assert.equal(await candidates.locator('.catalog-distance').count(), 0, `${browserName}: unresolved places must not invent a distance`);
+    assert.equal(await candidates.locator('.catalog-action--navigation, .catalog-action--maps').count(), 0, `${browserName}: unresolved places must not expose navigation`);
+    assert.ok(await candidates.evaluateAll((cards) => cards.every((card) => (
+      card.dataset.distance === '' && card.dataset.distanceSource === 'unknown' &&
+      card.dataset.lat === '' && card.dataset.lon === ''
+    ))), `${browserName}: unresolved places must keep their coordinate and distance fields empty`);
   }
 
   if (scenario.kind === 'guide') {
@@ -197,7 +201,8 @@ async function runManualAndOutsideCases() {
   assert.ok(box, 'manual selector map should be measurable');
   await manualPage.mouse.click(box.x + box.width * 0.55, box.y + box.height * 0.52);
   await manualPage.locator('[data-catalog-manual-confirm]').click();
-  await manualPage.waitForFunction(() => document.querySelector('.catalog-card')?.dataset.distanceSource === 'direct-current' || document.querySelector('.catalog-card')?.dataset.distanceSource === 'road-current');
+  await manualPage.waitForFunction(() => [...document.querySelectorAll('.catalog-card')]
+    .some((card) => card.dataset.distanceSource === 'direct-current' || card.dataset.distanceSource === 'road-current'));
   await manualContext.close();
 
   const outsideContext = await browser.newContext({

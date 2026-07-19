@@ -252,6 +252,26 @@ for (const e of (data.restaurants || [])) {
   }
 }
 
+const CATALOG_CATEGORY_COPY = {
+  senderos: { es: 'Senderos', pt: 'Trilhas', en: 'Trails' },
+  bici: { es: 'Bicicleta', pt: 'Bicicleta', en: 'Biking' },
+  nieve: { es: 'Nieve', pt: 'Neve', en: 'Snow' },
+  termas: { es: 'Termas', pt: 'Termas', en: 'Hot springs' },
+  aventura: { es: 'Aventura', pt: 'Aventura', en: 'Adventure' },
+  bienestar: { es: 'Bienestar', pt: 'Bem-estar', en: 'Wellness' },
+  servicios: { es: 'Servicios', pt: 'Serviços', en: 'Services' }
+};
+for (const [id, localized] of Object.entries(CATALOG_CATEGORY_COPY)) {
+  for (const L of LANGS) appendKeys(L, [[`catalog.category.${id}`, localized[L]]]);
+}
+for (const entry of (destinationGuide.catalogEntries || [])) {
+  for (const L of LANGS) {
+    for (const [field, value] of [['name', entry.name], ['zone', entry.zone], ['summary', entry.summary], ['safety', entry.safetyNotes]]) {
+      if (value) appendKeys(L, [[`catalog.${entry.id}.${field}`, tVal(value, L, `catalogEntries.${entry.id}.${field}`)]]);
+    }
+  }
+}
+
 fs.writeFileSync(langPath, lang);
 
 // ---------- 2. @LISTINGS HTML regen ----------
@@ -458,23 +478,56 @@ function sortableRoadDistance(place) {
     : Infinity;
 }
 
-// Public catalog v10: every guest-facing card derives from the normalized
-// destination snapshot. host-data remains an editorial provider, but it no
-// longer creates a competing runtime catalog.
+// Public catalog v11: Explora uses georeferenced quick needs, while the two
+// directory pages remain complete even when a record has no verified pin.
 const ACTIVITY_CATEGORIES = new Set(['tourism', 'thermal_baths', 'ski', 'trail', 'adventure']);
 const LODGING_CATEGORIES = new Set(['hotel', 'cabin']);
-const publicApartmentPlaces = destinationGuide.places
-  .filter((place) => place.discovery && place.discovery.apartment && !LODGING_CATEGORIES.has(place.category))
+const publicCatalogPlaces = destinationGuide.places
+  .filter((place) => !LODGING_CATEGORIES.has(place.category))
   .sort((left, right) => sortableRoadDistance(left) - sortableRoadDistance(right) || left.name.localeCompare(right.name));
-const activityPlaces = publicApartmentPlaces.filter((place) => ACTIVITY_CATEGORIES.has(place.category));
-const provisionPlaces = publicApartmentPlaces.filter((place) => !ACTIVITY_CATEGORIES.has(place.category));
+const provisionPlaces = publicCatalogPlaces.filter((place) => !ACTIVITY_CATEGORIES.has(place.category));
+const researchedEntries = destinationGuide.catalogEntries || [];
+const provisionEntries = [
+  ...provisionPlaces.map((place) => ({ kind: 'place', id: place.id, category: place.category, place })),
+  ...researchedEntries.filter((entry) => entry.catalog === 'provisions').map((entry) => ({ kind: 'directory', ...entry }))
+];
+const activityEntries = [
+  ...(destinationGuide.offerings || []).filter((offering) => offering.status === 'published').map((offering) => ({ kind: 'offering', ...offering })),
+  ...researchedEntries.filter((entry) => entry.catalog === 'activities').map((entry) => ({ kind: 'directory', ...entry }))
+];
+
+const EDITORIAL_CATEGORY_STYLE = {
+  senderos: { id: 'senderos', label: 'Senderos', key: 'catalog.category.senderos', color: '#2f6f58' },
+  bici: { id: 'bici', label: 'Bicicleta', key: 'catalog.category.bici', color: '#d9a24f' },
+  nieve: { id: 'nieve', label: 'Nieve', key: 'catalog.category.nieve', color: '#6f91a8' },
+  termas: { id: 'termas', label: 'Termas', key: 'catalog.category.termas', color: '#b96f4d' },
+  aventura: { id: 'aventura', label: 'Aventura', key: 'catalog.category.aventura', color: '#8b5e3c' },
+  bienestar: { id: 'bienestar', label: 'Bienestar', key: 'catalog.category.bienestar', color: '#7f9f84' },
+  servicios: { id: 'servicios', label: 'Servicios', key: 'catalog.category.servicios', color: '#66706c' }
+};
 
 function fieldValue(field) {
   return field && typeof field === 'object' && Object.prototype.hasOwnProperty.call(field, 'value') ? field.value : field;
 }
 
 function categoryFor(id) {
-  return destinationGuide.categories.find((category) => category.id === id) || { id, label: id, color: '#66706c' };
+  const category = destinationGuide.categories.find((item) => item.id === id);
+  return category ? { ...category, key: `guide.cat.${id}` } : (EDITORIAL_CATEGORY_STYLE[id] || { id, label: id, key: `guide.cat.${id}`, color: '#66706c' });
+}
+
+function catalogCategory(entry) {
+  return entry.kind === 'offering' ? (entry.module || 'servicios') : entry.category;
+}
+
+function normalizedName(value) {
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+function placeForOffering(offering) {
+  const byLegacy = destinationGuide.places.find((place) => place.legacyId === offering.id);
+  if (byLegacy) return byLegacy;
+  const name = normalizedName(tVal(offering.name, 'es', `offerings.${offering.id}.name`));
+  return destinationGuide.places.find((place) => normalizedName(place.name) === name) || null;
 }
 
 function catalogAction(url, key, label, type, className = '') {
@@ -487,16 +540,16 @@ function canonicalCard(place) {
   const category = categoryFor(place.category);
   const routingEligible = isRoutingEligible(place);
   const apartmentDistance = place.distanceFromApartment;
-  if (!apartmentDistance || !Number.isFinite(Number(apartmentDistance.meters))) throw new Error(`${place.id}: canonical catalog distance is missing`);
-  const distanceMeters = Number(apartmentDistance.meters);
-  const distanceSource = apartmentDistance.source;
-  const distanceTarget = apartmentDistance.target;
-  const targetLocation = place.catalogAccess?.location || place.location;
-  const navigationUrl = place.catalogAccess?.navigationUrl || place.navigationUrl;
-  const googleMapsUrl = place.catalogAccess?.googleMapsUrl || place.googleMapsUrl;
+  const hasDistance = routingEligible && apartmentDistance && Number.isFinite(Number(apartmentDistance.meters));
+  const distanceMeters = hasDistance ? Number(apartmentDistance.meters) : '';
+  const distanceSource = hasDistance ? apartmentDistance.source : 'unknown';
+  const distanceTarget = hasDistance ? apartmentDistance.target : 'unknown';
+  const targetLocation = routingEligible ? (place.catalogAccess?.location || place.location) : null;
+  const navigationUrl = routingEligible ? (place.catalogAccess?.navigationUrl || place.navigationUrl) : null;
+  const googleMapsUrl = routingEligible ? (place.catalogAccess?.googleMapsUrl || place.googleMapsUrl) : null;
   const address = fieldValue(place.address) || place.municipality || '';
   const pendingLocation = `${address ? `${attrEsc(address)} <span aria-hidden="true">·</span> ` : ''}<span data-i18n="guide.coordinate.pendingLocation">Ubicación exacta por confirmar</span>`;
-  const approximate = apartmentDistance.confidence === 'approximate';
+  const approximate = hasDistance && apartmentDistance.confidence === 'approximate';
   const precision = place.coordinatePrecision || (routingEligible ? place.coordinateKind : 'unverified');
   const accessLabel = place.catalogAccess?.label;
   const locationLine = accessLabel
@@ -511,15 +564,15 @@ function canonicalCard(place) {
     ? `<span class="catalog-rating"><b>★ ${attrEsc(rating.value)}</b><span aria-hidden="true"> · </span>${attrEsc(rating.reviewCount || 0)} <span data-i18n="guide.reviews">reseñas</span></span>`
     : '';
   const phoneHref = phone ? `tel:${String(phone).replace(/[^+\d]/g, '')}` : '';
-  return `      <article class="rest-card catalog-card" data-id="${attrEsc(place.id)}" data-category="${attrEsc(place.category)}" data-lat="${attrEsc(targetLocation.lat)}" data-lon="${attrEsc(targetLocation.lon)}" data-routing-eligible="${routingEligible ? 'true' : 'false'}" data-coordinate-precision="${attrEsc(precision)}" data-distance="${distanceMeters}" data-distance-source="${attrEsc(distanceSource)}" data-distance-target="${attrEsc(distanceTarget)}" data-distance-confidence="${attrEsc(apartmentDistance.confidence)}" data-apartment-distance="${distanceMeters}" data-apartment-distance-source="${attrEsc(distanceSource)}" data-apartment-distance-coverage="${attrEsc(apartmentDistance.coverage || 'direct')}" data-apartment-access-nearby="${apartmentDistance.accessNearby ? 'true' : 'false'}" data-road-access-nearby="${apartmentDistance.accessNearby ? 'true' : 'false'}" style="--catalog-color:${attrEsc(category.color)}">
+  return `      <article class="rest-card catalog-card" data-id="${attrEsc(place.id)}" data-road-id="${attrEsc(place.id)}" data-kind="place" data-category="${attrEsc(place.category)}" data-lat="${targetLocation ? attrEsc(targetLocation.lat) : ''}" data-lon="${targetLocation ? attrEsc(targetLocation.lon) : ''}" data-routing-eligible="${routingEligible ? 'true' : 'false'}" data-coordinate-precision="${attrEsc(precision)}" data-distance="${distanceMeters}" data-distance-source="${attrEsc(distanceSource)}" data-distance-target="${attrEsc(distanceTarget)}" data-distance-confidence="${hasDistance ? attrEsc(apartmentDistance.confidence) : ''}" data-apartment-distance="${distanceMeters}" data-apartment-distance-source="${attrEsc(distanceSource)}" data-apartment-distance-coverage="${hasDistance ? attrEsc(apartmentDistance.coverage || 'direct') : 'unknown'}" data-apartment-access-nearby="${hasDistance && apartmentDistance.accessNearby ? 'true' : 'false'}" data-road-access-nearby="${hasDistance && apartmentDistance.accessNearby ? 'true' : 'false'}" style="--catalog-color:${attrEsc(category.color)}">
         <header class="catalog-card__head">
           <span class="catalog-card__marker" aria-hidden="true"></span>
           <div class="catalog-card__identity">
-            <span class="catalog-card__category" data-i18n="guide.cat.${attrEsc(place.category)}">${attrEsc(category.label)}</span>
+            <span class="catalog-card__category" data-i18n="${attrEsc(category.key)}">${attrEsc(category.label)}</span>
             <h3 class="rest-card__name">${attrEsc(place.name)}</h3>
             <p>${locationLine}</p>
           </div>
-          <strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>
+          ${hasDistance ? '<strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>' : ''}
         </header>
         ${approximate ? '<p class="catalog-warning" data-i18n="guide.coordinate.warning">Coordenada aproximada: confirma la entrada antes de viajar.</p>' : ''}
         ${closed ? '<p class="catalog-warning catalog-warning--closed" data-i18n="guide.status.closed">Cerrado según la última verificación. Revisa el sitio oficial antes de viajar.</p>' : ''}
@@ -534,12 +587,88 @@ function canonicalCard(place) {
       </article>`;
 }
 
-function catalogToolbar(kind, places) {
-  const categories = [...new Set(places.map((place) => place.category))]
+function localizedMeta(key, value) {
+  if (!value) return '';
+  const text = tVal(value, 'es', key);
+  if (!text || EMPTY_RX.test(text.trim())) return '';
+  return `<span data-i18n="${attrEsc(key)}">${attrEsc(text)}</span>`;
+}
+
+function directoryCard(entry) {
+  const category = categoryFor(entry.category);
+  const nameKey = `catalog.${entry.id}.name`;
+  const zoneKey = `catalog.${entry.id}.zone`;
+  const summaryKey = `catalog.${entry.id}.summary`;
+  const safetyKey = `catalog.${entry.id}.safety`;
+  const routeUrl = entry.routeAccess?.status === 'verified-direct' ? entry.routeAccess.url : null;
+  const instagram = fieldValue(entry.instagram);
+  return `      <article class="rest-card catalog-card catalog-card--editorial" data-id="${attrEsc(entry.id)}" data-kind="directory" data-category="${attrEsc(entry.category)}" data-lat="" data-lon="" data-routing-eligible="false" data-distance="" data-distance-source="unknown" data-distance-target="unknown" data-apartment-distance="" data-apartment-distance-source="unknown" data-apartment-distance-coverage="unknown" style="--catalog-color:${attrEsc(category.color)}">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="${attrEsc(category.key)}">${attrEsc(category.label)}</span>
+            <h3 class="rest-card__name" data-i18n="${attrEsc(nameKey)}">${attrEsc(tVal(entry.name, 'es', `catalogEntries.${entry.id}.name`))}</h3>
+            ${entry.zone ? `<p data-i18n="${attrEsc(zoneKey)}">${attrEsc(tVal(entry.zone, 'es', `catalogEntries.${entry.id}.zone`))}</p>` : ''}
+          </div>
+        </header>
+        ${entry.summary ? `<p class="catalog-card__summary" data-i18n="${attrEsc(summaryKey)}">${attrEsc(tVal(entry.summary, 'es', `catalogEntries.${entry.id}.summary`))}</p>` : ''}
+        ${entry.safetyNotes ? `<p class="catalog-warning" data-i18n="${attrEsc(safetyKey)}">${attrEsc(tVal(entry.safetyNotes, 'es', `catalogEntries.${entry.id}.safety`))}</p>` : ''}
+        <div class="catalog-actions">
+          ${catalogAction(routeUrl, 'guide.action.route', 'Abrir ruta', 'route', routeUrl ? 'catalog-action--primary' : '')}
+          ${catalogAction(entry.officialUrl, 'guide.action.website', 'Sitio oficial', 'website')}
+          ${catalogAction(instagram, 'guide.action.instagram', 'Abrir en Instagram', 'instagram')}
+          ${catalogAction(entry.phone ? `tel:${String(entry.phone).replace(/[^+\d]/g, '')}` : null, 'nearby.call', 'Llamar', 'phone')}
+        </div>
+      </article>`;
+}
+
+function offeringCard(offering) {
+  const categoryId = offering.module || 'servicios';
+  const category = categoryFor(categoryId);
+  const place = placeForOffering(offering);
+  const routingEligible = Boolean(place && isRoutingEligible(place));
+  const apartmentDistance = routingEligible ? place.distanceFromApartment : null;
+  const hasDistance = Boolean(apartmentDistance && Number.isFinite(Number(apartmentDistance.meters)));
+  const targetLocation = routingEligible ? (place.catalogAccess?.location || place.location) : null;
+  const routeUrl = offering.routeAccess?.status === 'verified-direct' ? offering.routeUrl : null;
+  const nameKey = `${offering.id}.nombre`;
+  const summaryKey = `${offering.id}.copy_card`;
+  const zoneKey = `${offering.id}.zona`;
+  const duration = localizedMeta(`${offering.id}.duracion`, offering.duration);
+  const difficulty = localizedMeta(`${offering.id}.dificultad`, offering.difficulty);
+  const meta = [duration, difficulty].filter(Boolean).join('<span aria-hidden="true">·</span>');
+  return `      <article class="rest-card catalog-card catalog-card--offering" data-id="offering-${attrEsc(offering.id)}" data-road-id="${place ? attrEsc(place.id) : ''}" data-kind="offering" data-category="${attrEsc(categoryId)}" data-lat="${targetLocation ? attrEsc(targetLocation.lat) : ''}" data-lon="${targetLocation ? attrEsc(targetLocation.lon) : ''}" data-routing-eligible="${routingEligible ? 'true' : 'false'}" data-distance="${hasDistance ? attrEsc(apartmentDistance.meters) : ''}" data-distance-source="${hasDistance ? attrEsc(apartmentDistance.source) : 'unknown'}" data-distance-target="${hasDistance ? attrEsc(apartmentDistance.target) : 'unknown'}" data-apartment-distance="${hasDistance ? attrEsc(apartmentDistance.meters) : ''}" data-apartment-distance-source="${hasDistance ? attrEsc(apartmentDistance.source) : 'unknown'}" data-apartment-distance-coverage="${hasDistance ? attrEsc(apartmentDistance.coverage || 'direct') : 'unknown'}" data-apartment-access-nearby="${hasDistance && apartmentDistance.accessNearby ? 'true' : 'false'}" style="--catalog-color:${attrEsc(category.color)}">
+        <header class="catalog-card__head">
+          <span class="catalog-card__marker" aria-hidden="true"></span>
+          <div class="catalog-card__identity">
+            <span class="catalog-card__category" data-i18n="${attrEsc(category.key)}">${attrEsc(category.label)}</span>
+            <h3 class="rest-card__name" data-i18n="${attrEsc(nameKey)}">${attrEsc(tVal(offering.name, 'es', `offerings.${offering.id}.name`))}</h3>
+            ${offering.zone ? `<p data-i18n="${attrEsc(zoneKey)}">${attrEsc(tVal(offering.zone, 'es', `offerings.${offering.id}.zone`))}</p>` : ''}
+          </div>
+          ${hasDistance ? '<strong class="catalog-distance"><span data-distance-label>—</span><small data-road-distance-note></small></strong>' : ''}
+        </header>
+        ${meta ? `<div class="catalog-card__meta">${meta}</div>` : ''}
+        ${offering.summary ? `<p class="catalog-card__summary" data-i18n="${attrEsc(summaryKey)}">${attrEsc(tVal(offering.summary, 'es', `offerings.${offering.id}.summary`))}</p>` : ''}
+        <div class="catalog-actions">
+          ${catalogAction(routeUrl, 'guide.action.route', 'Abrir ruta', 'route', routeUrl ? 'catalog-action--primary' : '')}
+          ${catalogAction(routingEligible ? (place.catalogAccess?.navigationUrl || place.navigationUrl) : null, 'guide.action.navigate', 'Navegar', 'navigation')}
+          ${catalogAction(offering.officialUrl && offering.officialUrl !== routeUrl ? offering.officialUrl : null, 'guide.action.website', 'Más información', 'website')}
+        </div>
+      </article>`;
+}
+
+function renderCatalogEntry(entry) {
+  if (entry.kind === 'place') return canonicalCard(entry.place);
+  if (entry.kind === 'offering') return offeringCard(entry);
+  return directoryCard(entry);
+}
+
+function catalogToolbar(kind, entries) {
+  const categories = [...new Set(entries.map(catalogCategory))]
     .map(categoryFor)
     .sort((left, right) => left.label.localeCompare(right.label));
   const buttons = categories.map((category) =>
-    `<button type="button" class="catalog-filter" data-catalog-filter="${attrEsc(category.id)}" aria-pressed="false"><i style="--filter-color:${attrEsc(category.color)}"></i><span data-i18n="guide.cat.${attrEsc(category.id)}">${attrEsc(category.label)}</span></button>`
+    `<button type="button" class="catalog-filter" data-catalog-filter="${attrEsc(category.id)}" aria-pressed="false"><i style="--filter-color:${attrEsc(category.color)}"></i><span data-i18n="${attrEsc(category.key)}">${attrEsc(category.label)}</span></button>`
   ).join('\n          ');
   return `      <div class="catalog-toolbar" data-catalog-toolbar="${kind}">
         <div class="catalog-origin" role="group" data-i18n-aria="catalog.origin.aria" aria-label="Origen de la distancia">
@@ -553,18 +682,18 @@ function catalogToolbar(kind, places) {
           <button type="button" class="catalog-filter is-active" data-catalog-filter="all" aria-pressed="true"><span data-i18n="nearby.cat.all">Todos</span></button>
           ${buttons}
         </div>
-        <strong class="catalog-count" data-catalog-count aria-live="polite">${places.length} lugares</strong>
+        <strong class="catalog-count" data-catalog-count aria-live="polite">${entries.length} opciones</strong>
       </div>`;
 }
 
-function canonicalCatalog(kind, titleKey, title, introKey, intro, places) {
+function canonicalCatalog(kind, titleKey, title, introKey, intro, entries) {
   const graph = destinationGuide.meta && destinationGuide.meta.drivingNetwork || {};
   const apartment = destinationGuide.geometry.apartment;
   return `    <section class="canonical-catalog" data-canonical-catalog="${kind}" data-apartment-lat="${attrEsc(apartment.lat)}" data-apartment-lon="${attrEsc(apartment.lon)}" data-graph-schema-version="${attrEsc(graph.schemaVersion ?? '')}" data-graph-version="${attrEsc(graph.networkVersion || graph.generatedAt || '')}" data-graph-hash="${attrEsc(graph.networkHash || graph.artifactSha256 || graph.responseSha256 || '')}">
-      <div class="catalog-heading"><div><span class="guide-eyebrow" data-i18n="catalog.eyebrow">Selección territorial verificada</span><h2 class="section-title" data-i18n="${titleKey}">${title}</h2><p data-i18n="${introKey}">${intro}</p></div><span class="catalog-total"><b>${places.length}</b><span data-i18n="guide.quality.places">lugares</span></span></div>
-${catalogToolbar(kind, places)}
+      <div class="catalog-heading"><div><span class="guide-eyebrow" data-i18n="catalog.eyebrow">Directorio del valle</span><h2 class="section-title" data-i18n="${titleKey}">${title}</h2><p data-i18n="${introKey}">${intro}</p></div><span class="catalog-total"><b>${entries.length}</b><span data-i18n="catalog.count.options">opciones</span></span></div>
+${catalogToolbar(kind, entries)}
       <div class="rest-grid" data-catalog-grid>
-${places.map(canonicalCard).join('\n')}
+${entries.map(renderCatalogEntry).join('\n')}
       </div>
       <p class="catalog-empty" data-catalog-empty hidden data-i18n="catalog.empty">No hay lugares que coincidan con tu búsqueda.</p>
       <dialog class="guide-location-dialog catalog-location-dialog" data-catalog-location-dialog aria-labelledby="catalog-location-title-${kind}">
@@ -592,11 +721,11 @@ ${places.map(canonicalCard).join('\n')}
 
 regenListings('actividades.html', canonicalCatalog(
   'activities', 'act.top.t', 'Qué hacer en Las Trancas', 'catalog.activities.intro',
-  'Turismo, naturaleza y experiencias dentro del radio del departamento.', activityPlaces
+  'Actividades, senderos y rutas directas para planificar tu salida.', activityEntries
 ));
 regenListings('restaurantes.html', canonicalCatalog(
   'provisions', 'rest.title', 'Comida y provisiones en Las Trancas', 'catalog.provisions.intro',
-  'Comida, abastecimiento y servicios esenciales ordenados desde el departamento.', provisionPlaces
+  'Directorio completo de comida, compras y servicios, tengan o no una ubicación confirmada.', provisionEntries
 ));
 
 // ---------- 3. Canonical page titles + public support ----------
@@ -632,6 +761,17 @@ for (const [file, key] of Object.entries(PAGE_TITLE_KEYS)) {
   }
   html = html.replace(/<html\b[^>]*>/i, (tag) => setAttribute(tag, 'data-i18n-title', key));
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${attrEsc(title)}</title>`);
+  fs.writeFileSync(p, html);
+}
+
+// Keep critical home-card copy useful before lang.js finishes loading.
+for (const { file, key } of [{ file: 'index.html', key: 'nav.nearby.s' }]) {
+  const p = `${projectDir}/${file}`;
+  let html = fs.readFileSync(p, 'utf8');
+  const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const simpleText = new RegExp(`(<([a-z][a-z0-9]*)\\b[^>]*\\bdata-i18n="${escapedKey}"[^>]*>)[^<]*(<\\/\\2>)`, 'i');
+  if (!simpleText.test(html)) throw new Error(`${file}: simple data-i18n target ${key} missing`);
+  html = html.replace(simpleText, `$1${attrEsc(tVal(data.scalar[key], 'es', `scalar.${key}`))}$3`);
   fs.writeFileSync(p, html);
 }
 

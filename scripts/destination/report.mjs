@@ -27,11 +27,22 @@ const modes = {
 };
 const lodgingCategories = new Set(['hotel', 'cabin']);
 const activityCategories = new Set(['tourism', 'thermal_baths', 'ski', 'trail', 'adventure']);
-const apartmentPlaces = guide.places.filter((place) => place.discovery.apartment);
-const guestApartmentPlaces = apartmentPlaces.filter((place) => !lodgingCategories.has(place.category));
-const lodgingExcluded = apartmentPlaces.filter((place) => lodgingCategories.has(place.category));
-const guestActivities = guestApartmentPlaces.filter((place) => activityCategories.has(place.category));
-const guestProvisions = guestApartmentPlaces.filter((place) => !activityCategories.has(place.category));
+const exploreQuickCategories = new Set([
+  'restaurant', 'coffee', 'fast_food', 'bakery', 'supermarket', 'convenience', 'hardware',
+  'home_improvement', 'pharmacy', 'medical', 'veterinary', 'gas_station', 'bank', 'atm',
+  'laundry', 'shopping', 'vehicle_service', 'emergency'
+]);
+const nonLodgingPlaces = guide.places.filter((place) => !lodgingCategories.has(place.category));
+const lodgingExcluded = guide.places.filter((place) => lodgingCategories.has(place.category));
+const explorePlaces = nonLodgingPlaces.filter((place) =>
+  exploreQuickCategories.has(place.category) && place.routingEligible !== false && place.status !== 'candidate_coordinate'
+);
+const provisionPlaces = nonLodgingPlaces.filter((place) => !activityCategories.has(place.category));
+const activityPlaceInventory = nonLodgingPlaces.filter((place) => activityCategories.has(place.category));
+const publishedOfferings = guide.offerings.filter((offering) => offering.status === 'published');
+const activityCatalogEntries = (guide.catalogEntries || []).filter((entry) => entry.catalog === 'activities');
+const provisionCatalogEntries = (guide.catalogEntries || []).filter((entry) => entry.catalog === 'provisions');
+const directActivityRoutes = publishedOfferings.filter((offering) => offering.routeUrl).length + activityCatalogEntries.filter((entry) => entry.routeAccess?.url).length;
 const missingCategories = guide.categories.filter((category) => !category.count).map((category) => category.label);
 
 const categoryRows = guide.categories.map((category) =>
@@ -57,9 +68,12 @@ const report = `# Informe de cobertura de la guía territorial CordalSur
 - **${stats.rawRecords} registros brutos** consolidados en **${stats.publishedPlaces} lugares publicables**.
 - **${stats.duplicatesMerged} duplicados fusionados** mediante identificadores de proveedor, teléfono/sitio, nombre, categoría y proximidad.
 - **${modes.apartment} lugares** dentro del radio automático del departamento y **${modes.corridor} lugares** dentro del corredor N-55; **${modes.both}** pertenecen a ambas geometrías.
-- De los **${modes.apartment} lugares** del radio, **${lodgingExcluded.length} alojamientos** (hotel/cabaña) se excluyen de todas las vistas de huéspedes y quedan sólo en esta auditoría. El catálogo visible final contiene **${guestApartmentPlaces.length} lugares**.
-- Los **${guestApartmentPlaces.length} lugares visibles** se publican exactamente una vez: **${guestActivities.length} en Actividades** y **${guestProvisions.length} en Comida y provisiones**.
-- **${guide.offerings.length} ofertas** editoriales y **${guide.routes.length} rutas** se mantienen separadas de los lugares físicos.
+- Los **${lodgingExcluded.length} alojamientos** (hotel/cabaña) se excluyen de Explora, Actividades y Comida/provisiones; permanecen en el inventario completo para trazabilidad.
+- **Explora el Valle** usa un subconjunto inmediato de **${explorePlaces.length} servicios esenciales ruteables**. No mezcla panoramas ni fichas con coordenadas candidatas.
+- **Comida y provisiones** publica **${provisionPlaces.length} lugares no turísticos** más **${provisionCatalogEntries.length} entradas investigadas** sin ubicación exacta: **${provisionPlaces.length + provisionCatalogEntries.length} fichas** en total.
+- **Actividades** publica **${publishedOfferings.length} ofertas editoriales** más **${activityCatalogEntries.length} rutas investigadas**: **${publishedOfferings.length + activityCatalogEntries.length} fichas** en total. El inventario geográfico conserva además **${activityPlaceInventory.length} lugares de actividad** como evidencia territorial, sin convertirlos automáticamente en fichas duplicadas.
+- Hay **${guide.catalogEntries.length} entradas investigadas** separadas de los lugares físicos y **${directActivityRoutes} accesos directos a rutas individuales** validados.
+- **${guide.routes.length} rutas normalizadas** se mantienen separadas de la navegación vehicular; un enlace de sendero no implica que su inicio o estacionamiento estén verificados.
 - **${stats.pisteFeaturesMovedToRoutes || 0} elementos de pista de ski** se trasladaron de la lista de establecimientos al modelo de rutas sin navegación vehicular.
 - **${stats.candidateCoordinates} coordenadas candidatas** permanecen visibles con advertencia; no se presentan como entradas exactas.
 - El radio del departamento es **${(guide.geometry.apartment.radiusMeters / 1000).toFixed(2)} km**, calculado por Haversine WGS84 hasta Restaurant Los Pincheira. La línea central N-55 mide **${(guide.geometry.corridor.centerlineLengthMeters / 1000).toFixed(2)} km** y usa un buffer de **${(guide.geometry.corridor.bufferMeters / 1000).toFixed(1)} km**.
@@ -101,22 +115,25 @@ ${categoryRows}
 
 Categorías sin un lugar verificable en el corte actual: **${missingCategories.join(', ') || 'ninguna'}**. La ausencia de resultados no demuestra que el servicio no exista; indica un vacío de evidencia pública trazable.
 
-## Partición de catálogos para huéspedes
+## Catálogos para huéspedes
 
-| Etapa | Lugares |
-|---|---:|
-| Inventario geográfico dentro del radio del departamento | ${apartmentPlaces.length} |
-| Hoteles y cabañas excluidos de vistas públicas | −${lodgingExcluded.length} |
-| Catálogo visible único | ${guestApartmentPlaces.length} |
-| Actividades | ${guestActivities.length} |
-| Comida y provisiones | ${guestProvisions.length} |
+| Superficie | Fuente | Fichas |
+|---|---|---:|
+| Explora el Valle | Servicios esenciales georreferenciados y ruteables | ${explorePlaces.length} |
+| Actividades | Ofertas editoriales | ${publishedOfferings.length} |
+| Actividades | Rutas investigadas sin ubicación vehicular inferida | ${activityCatalogEntries.length} |
+| Actividades | **Total visible** | **${publishedOfferings.length + activityCatalogEntries.length}** |
+| Comida y provisiones | Inventario geográfico no turístico | ${provisionPlaces.length} |
+| Comida y provisiones | Directorio investigado sin coordenada confirmada | ${provisionCatalogEntries.length} |
+| Comida y provisiones | **Total visible** | **${provisionPlaces.length + provisionCatalogEntries.length}** |
 
-La suma de Actividades y Comida/provisiones coincide con el catálogo visible y no contiene IDs repetidos. Hoteles y cabañas continúan en el inventario completo inferior únicamente para trazabilidad administrativa y para futuras auditorías de deduplicación.
+Estas superficies ya no son una partición del radio del departamento. Explora prioriza decisiones inmediatas y distancias confiables; los otros dos catálogos privilegian cobertura editorial. Una ficha sin ubicación confirmada permanece visible, pero no expone distancia, pin ni navegación. Los IDs se mantienen únicos dentro de cada catálogo.
 
 ## Calidad, seguridad y decisiones editoriales
 
 - Cada lugar tiene navegación y apertura en Google Maps sin incluir la ubicación del huésped en el enlace externo.
-- Instagram sólo se publica desde etiquetas de contacto OSM o una fuente oficial/manual verificada. En este corte hay **${guide.places.filter((place) => place.instagram).length} cuentas verificadas**.
+- Instagram sólo se publica desde etiquetas de contacto OSM, una corrección manual verificada o investigación editorial con fuente trazable. En este corte hay **${guide.places.filter((place) => place.instagram).length} cuentas verificadas**.
+- Los botones de ruta aceptan únicamente páginas de una ruta individual en SUDA, Trailforks, Wikiloc o Andeshandbook; no se presentan páginas regionales ni búsquedas como si fueran un recorrido concreto.
 - Las valoraciones, cuando existan, muestran proveedor, cantidad de reseñas, URL de origen y fecha de consulta. No se trasladan valoraciones editoriales a campos de Google o Tripadvisor.
 - Bike Park Nevados está marcado cerrado según su [página oficial](https://www.nevadosdechillan.com/bike-park), cuyo último día de temporada fue el 5 de abril de 2026.
 - La Reserva Nacional Ñuble está cerrada preventivamente desde el 1 de junio de 2026 y hasta nuevo aviso, según [CONAF](https://www.conaf.cl/reserva-nuble-inicia-cierre-preventivo-de-invierno/).

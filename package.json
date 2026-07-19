@@ -13,6 +13,7 @@
     "report:destination": "node scripts/destination/report.mjs",
     "test:destination": "node --test tests/destination/*.test.mjs",
     "test:landing": "bash tests/verify-gates.sh",
+    "test:location:browsers": "node tests/playwright-location-smoke.mjs",
     "test:worker": "npm --prefix worker test",
     "test": "npm run test:destination && npm run test:landing && npm run test:worker"
   }

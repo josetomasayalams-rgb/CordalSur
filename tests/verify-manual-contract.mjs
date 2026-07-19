@@ -168,9 +168,9 @@ else if (headings[0].attributes.hidden !== undefined || headings[0].attributes['
 }
 
 const expectedAssets = [
-  ['script', 'src', 'js/lang.js?v=16'],
+  ['script', 'src', 'js/lang.js?v=17'],
   ['script', 'src', 'js/manual.js?v=2'],
-  ['link', 'href', 'css/styles.css?v=26']
+  ['link', 'href', 'css/styles.css?v=27']
 ];
 for (const [tagName, attribute, expected] of expectedAssets) {
   const basename = expected.split('?')[0];

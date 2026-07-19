@@ -42,7 +42,7 @@ test('guest pages use shared GPS and expose a truthful direct-distance fallback'
   assert.match(catalog, /pagehide/);
 });
 
-test('unverified locality centers keep a visible sector distance without masquerading as road destinations', () => {
+test('unverified locality centers remain visible without masquerading as road destinations', () => {
   const generator = read('scripts/apply-host-data.mjs').toString();
   const catalog = read('js/catalog-guide.js').toString();
   const nearby = read('js/nearby.js').toString();
@@ -61,7 +61,8 @@ test('unverified locality centers keep a visible sector distance without masquer
   assert.match(catalog, /data-apartment-distance-source/);
   assert.match(catalog, /sector-current/);
   assert.match(catalog, /guide\.distance\.sector/);
-  assert.doesNotMatch(catalog, /if \(!isRoutingEligible\(card\)\) \{[\s\S]*?data-distance[\s\S]*?unavailable/);
+  assert.match(catalog, /if \(!isRoutingEligible\(card\)\) \{\s*setDistance\(card, \{ meters: null, source: 'unknown'/);
+  assert.match(catalog, /if \(!Number\.isFinite\(meters\)\) \{[\s\S]*?guide\.road\.unavailable/);
   assert.match(nearby, /function isRoutingEligible\(place\)/);
   assert.match(nearby, /filteredPlaces\.filter\(isRoutingEligible\)/);
   assert.match(nearby, /if \(!isRoutingEligible\(place\)\) \{[\s\S]*?_roadDistanceMeters = NaN/);

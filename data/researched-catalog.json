@@ -1,0 +1,382 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-07-19",
+  "instagramProfiles": [
+    {
+      "legacyId": "sitari-tapas-y-brasas",
+      "url": "https://www.instagram.com/sitari_tapasbrasas/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/sitari-tapas-y-brasas/"
+    },
+    {
+      "legacyId": "bagual",
+      "url": "https://www.instagram.com/bagual_lastrancas/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/bagual/"
+    },
+    {
+      "legacyId": "restaurant-borde-andino",
+      "url": "https://www.instagram.com/hotel_bordeandino/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/restaurant-borde-andino/"
+    },
+    {
+      "legacyId": "los-hualles-restobar",
+      "url": "https://www.instagram.com/cabanasloshualles/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/los-hualles-restobar/"
+    },
+    {
+      "legacyId": "oliva-s-restaurant",
+      "url": "https://www.instagram.com/olivas.restaurant/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/olivas-restaurant/"
+    },
+    {
+      "legacyId": "miski-lirio",
+      "url": "https://www.instagram.com/miski_lirio_termas_de_chillan/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/miskilirio/"
+    },
+    {
+      "legacyId": "restaurante-pizzer-a-chil-in",
+      "url": "https://www.instagram.com/chilin_lastrancas/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/chilin/"
+    },
+    {
+      "legacyId": "pizzas-and-beers-del-valle",
+      "url": "https://www.instagram.com/pizzasandbeers.delvalle/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/pizzasbeers/"
+    },
+    {
+      "legacyId": "steak-house",
+      "url": "https://www.instagram.com/bar_restaurant_steakhouse/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/steak-house/"
+    },
+    {
+      "legacyId": "restobar-shangrila",
+      "url": "https://www.instagram.com/restobar_shangrila/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/restobar-shangrila/"
+    },
+    {
+      "legacyId": "snow-pub",
+      "url": "https://www.instagram.com/snow.pub/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/snow-pub/"
+    },
+    {
+      "legacyId": "dulce-monta-a",
+      "url": "https://www.instagram.com/dulcemontanalt/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/dulce-montana/"
+    },
+    {
+      "legacyId": "koiwe-cafe-boutique",
+      "url": "https://www.instagram.com/koiwecafe/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/koiwe/"
+    },
+    {
+      "legacyId": "las-cacha-as",
+      "url": "https://www.instagram.com/lascachanas_/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/las-cachanas/"
+    },
+    {
+      "legacyId": "che-cami",
+      "url": "https://www.instagram.com/che_cami_/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/che-cami/"
+    },
+    {
+      "legacyId": "charcuter-a-las-cabras",
+      "url": "https://www.instagram.com/lascabras_charcuteria/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/charcuteria-las-cabras/"
+    },
+    {
+      "legacyId": "cervecer-a-garganta-del-diablo",
+      "url": "https://www.instagram.com/cervezagargantadeldiablo/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/cerveceria-garganta-del-diablo/"
+    },
+    {
+      "legacyId": "cervecer-a-shangrila",
+      "url": "https://www.instagram.com/cerveza_shangrila/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/cerveceria-shangrila/"
+    },
+    {
+      "legacyId": "las-bravas-cafe",
+      "url": "https://www.instagram.com/lasbravasbar_cafe/",
+      "verifiedFrom": "https://trancas.cl/plaza-oliva/"
+    },
+    {
+      "legacyId": "valdo",
+      "url": "https://www.instagram.com/valdolastrancas/",
+      "verifiedFrom": "https://trancas.cl/plaza-oliva/"
+    },
+    {
+      "legacyId": "lux-petit-club-cafe-bar",
+      "url": "https://www.instagram.com/petitclub_cafebar/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/lux/"
+    },
+    {
+      "legacyId": "caramba-helados",
+      "url": "https://www.instagram.com/caramba_helados/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/caramba-helados/"
+    },
+    {
+      "legacyId": "la-cava-de-la-monta-a",
+      "url": "https://www.instagram.com/lacavadelamontana/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/la-cava-de-la-montana/"
+    },
+    {
+      "legacyId": "patio-tranquino",
+      "url": "https://www.instagram.com/patio_tranquino/",
+      "verifiedFrom": "https://trancas.cl/patio-tranquino-cerveza-pasteleria/"
+    },
+    {
+      "legacyId": "alto-las-trancas",
+      "url": "https://www.instagram.com/altolastrancas/",
+      "verifiedFrom": "https://trancas.cl/alto-las-trancas-restaurant/"
+    },
+    {
+      "placeId": "manual-don-quelo",
+      "url": "https://www.instagram.com/donqueloltda/",
+      "verifiedFrom": "https://www.chilegastronomia.cl/picadas-cool-en-regiones/don-quelo-un-refugio-con-aroma-a-avellana-en-la-cordillera-de-nuble"
+    },
+    {
+      "placeId": "manual-rucahue",
+      "url": "https://www.instagram.com/ecoturismorucahue/",
+      "scope": "operator",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/rucahue/"
+    },
+    {
+      "placeId": "manual-cafeteria-tata",
+      "url": "https://www.instagram.com/nevadosdechillan/",
+      "scope": "operator",
+      "verifiedFrom": "https://mail.nevadosdechillan.com/servicios-centro-de-ski"
+    },
+    {
+      "placeId": "manual-cafeteria-tio-willy",
+      "url": "https://www.instagram.com/nevadosdechillan/",
+      "scope": "operator",
+      "verifiedFrom": "https://mail.nevadosdechillan.com/servicios-centro-de-ski"
+    },
+    {
+      "legacyId": "super-mcpato",
+      "url": "https://www.instagram.com/minimarket_mcpato/",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/pti/minimarket-mc-pato/"
+    }
+  ],
+  "routeOverrides": [
+    {
+      "offeringId": "atr-laguna-huemul",
+      "provider": "SUDA Outdoors",
+      "url": "https://suda.io/activity/B7HxY9latl",
+      "fallbackUrl": "https://www.wikiloc.com/hiking-trails/las-trancas-laguna-huemul-118598213",
+      "verifiedFrom": "https://suda.io/adventures/valle-las-trancas-un-destino-de-montana-para-visitar-en-cualquier-epoca-del-ano/"
+    },
+    {
+      "offeringId": "atr-rucapiren",
+      "provider": "SUDA Outdoors",
+      "url": "https://suda.io/activity/Fd2ZzeWp32",
+      "verifiedFrom": "https://suda.io/adventures/valle-las-trancas-un-destino-de-montana-para-visitar-en-cualquier-epoca-del-ano/"
+    },
+    {
+      "offeringId": "atr-mirador-valle",
+      "provider": "SUDA Outdoors",
+      "url": "https://suda.io/activity/T5qJrmIGT8",
+      "verifiedFrom": "https://suda.io/adventures/valle-las-trancas-un-destino-de-montana-para-visitar-en-cualquier-epoca-del-ano/"
+    },
+    {
+      "offeringId": "atr-aguas-calientes",
+      "provider": "SUDA Outdoors",
+      "url": "https://suda.io/activity/eCm6lqHPZr",
+      "verifiedFrom": "https://suda.io/activity/eCm6lqHPZr"
+    },
+    {
+      "offeringId": "atr-ruta-caballos",
+      "provider": "SUDA Outdoors",
+      "url": "https://suda.io/activity/BIoNbHdgIs",
+      "fallbackUrl": "https://www.trailforks.com/trails/ruta-de-los-caballos/",
+      "verifiedFrom": "https://suda.io/activity/BIoNbHdgIs"
+    },
+    {
+      "offeringId": "mtb-garganta",
+      "provider": "Trailforks",
+      "url": "https://www.trailforks.com/trails/garganta-58059/",
+      "fallbackUrl": "https://suda.io/activity/cNwb0RnEgy",
+      "verifiedFrom": "https://www.trailforks.com/region/chillan/"
+    },
+    {
+      "offeringId": "mtb-enlace-garganta",
+      "provider": "Trailforks",
+      "url": "https://www.trailforks.com/trails/enlace-garganta-del-diablo/",
+      "verifiedFrom": "https://www.trailforks.com/region/chillan/"
+    },
+    {
+      "offeringId": "atr-parque-turbinas",
+      "status": "info-only",
+      "verifiedFrom": "https://www.turismovallelastrancas.com/atractivos/parque-las-turbinas/"
+    },
+    {
+      "offeringId": "mtb-grunidor",
+      "status": "unverified",
+      "verifiedFrom": "https://es.wikiloc.com/rutas-mountain-bike/las-trancas-shangri-la-ruinas-refugio-65999327"
+    },
+    {
+      "offeringId": "mtb-otonal",
+      "status": "unverified",
+      "verifiedFrom": "https://es.wikiloc.com/rutas-mountain-bike/las-trancas-shangri-la-ruinas-refugio-65999327"
+    }
+  ],
+  "catalogEntries": [
+    {
+      "id": "route-atr-parque-coltrahues",
+      "catalog": "activities",
+      "category": "senderos",
+      "name": { "es": "Parque Los Coltrahues", "pt": "Parque Los Coltrahues", "en": "Los Coltrahues Park" },
+      "zone": { "es": "Valle Las Trancas", "pt": "Valle Las Trancas", "en": "Valle Las Trancas" },
+      "summary": { "es": "Recorrido de montaña publicado por SUDA para explorar el entorno de Los Coltrahues.", "pt": "Percurso de montanha publicado pela SUDA para explorar Los Coltrahues.", "en": "A mountain route published by SUDA for exploring Los Coltrahues." },
+      "safetyNotes": { "es": "Revisa clima, acceso y estado del sendero antes de salir.", "pt": "Verifique o clima, o acesso e o estado da trilha antes de sair.", "en": "Check weather, access and trail conditions before setting out." },
+      "routeAccess": {
+        "provider": "SUDA Outdoors",
+        "status": "verified-direct",
+        "url": "https://suda.io/activity/H8MUjjaf9t",
+        "verifiedFrom": "https://suda.io/adventures/valle-las-trancas-un-destino-de-montana-para-visitar-en-cualquier-epoca-del-ano/"
+      }
+    },
+    {
+      "id": "route-mtb-nevados-aguila",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Águila", "pt": "Águila", "en": "Águila" },
+      "zone": { "es": "Bike Park Nevados", "pt": "Bike Park Nevados", "en": "Nevados Bike Park" },
+      "summary": { "es": "Pista MTB individual de Nevados de Chillán.", "pt": "Trilha MTB individual de Nevados de Chillán.", "en": "Individual MTB trail at Nevados de Chillán." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/aguila-799017/", "verifiedFrom": "https://www.trailforks.com/region/nevados-de-chillan/trails/" }
+    },
+    {
+      "id": "route-mtb-nevados-bosque-zion",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Bosque Zion", "pt": "Bosque Zion", "en": "Bosque Zion" },
+      "zone": { "es": "Bike Park Nevados", "pt": "Bike Park Nevados", "en": "Nevados Bike Park" },
+      "summary": { "es": "Pista MTB individual de Nevados de Chillán.", "pt": "Trilha MTB individual de Nevados de Chillán.", "en": "Individual MTB trail at Nevados de Chillán." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/bosque-zion/", "verifiedFrom": "https://www.trailforks.com/region/nevados-de-chillan/trails/" }
+    },
+    {
+      "id": "route-mtb-nevados-candado",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Candado", "pt": "Candado", "en": "Candado" },
+      "zone": { "es": "Bike Park Nevados", "pt": "Bike Park Nevados", "en": "Nevados Bike Park" },
+      "summary": { "es": "Pista MTB individual de Nevados de Chillán.", "pt": "Trilha MTB individual de Nevados de Chillán.", "en": "Individual MTB trail at Nevados de Chillán." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/candado/", "verifiedFrom": "https://www.trailforks.com/region/nevados-de-chillan/trails/" }
+    },
+    {
+      "id": "route-mtb-nevados-condor-1",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Cóndor 1", "pt": "Cóndor 1", "en": "Cóndor 1" },
+      "zone": { "es": "Bike Park Nevados", "pt": "Bike Park Nevados", "en": "Nevados Bike Park" },
+      "summary": { "es": "Pista MTB individual de Nevados de Chillán.", "pt": "Trilha MTB individual de Nevados de Chillán.", "en": "Individual MTB trail at Nevados de Chillán." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/condor-1/", "verifiedFrom": "https://www.trailforks.com/region/nevados-de-chillan/trails/" }
+    },
+    {
+      "id": "route-mtb-nevados-moto-x",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Moto X", "pt": "Moto X", "en": "Moto X" },
+      "zone": { "es": "Bike Park Nevados", "pt": "Bike Park Nevados", "en": "Nevados Bike Park" },
+      "summary": { "es": "Pista MTB individual de Nevados de Chillán.", "pt": "Trilha MTB individual de Nevados de Chillán.", "en": "Individual MTB trail at Nevados de Chillán." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/moto-x-59595/", "verifiedFrom": "https://www.trailforks.com/region/nevados-de-chillan/trails/" }
+    },
+    {
+      "id": "route-mtb-nevados-nacional",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Nacional", "pt": "Nacional", "en": "Nacional" },
+      "zone": { "es": "Bike Park Nevados", "pt": "Bike Park Nevados", "en": "Nevados Bike Park" },
+      "summary": { "es": "Pista MTB individual de Nevados de Chillán.", "pt": "Trilha MTB individual de Nevados de Chillán.", "en": "Individual MTB trail at Nevados de Chillán." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/nacional-799019/", "verifiedFrom": "https://www.trailforks.com/region/nevados-de-chillan/trails/" }
+    },
+    {
+      "id": "route-mtb-nevados-novicios",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Novicios", "pt": "Novicios", "en": "Novicios" },
+      "zone": { "es": "Bike Park Nevados", "pt": "Bike Park Nevados", "en": "Nevados Bike Park" },
+      "summary": { "es": "Pista MTB individual de Nevados de Chillán.", "pt": "Trilha MTB individual de Nevados de Chillán.", "en": "Individual MTB trail at Nevados de Chillán." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/novicios/", "verifiedFrom": "https://www.trailforks.com/region/nevados-de-chillan/trails/" }
+    },
+    {
+      "id": "route-mtb-nevados-olimpico",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Olímpico", "pt": "Olímpico", "en": "Olímpico" },
+      "zone": { "es": "Bike Park Nevados", "pt": "Bike Park Nevados", "en": "Nevados Bike Park" },
+      "summary": { "es": "Pista MTB individual de Nevados de Chillán.", "pt": "Trilha MTB individual de Nevados de Chillán.", "en": "Individual MTB trail at Nevados de Chillán." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/olimpico-58037/", "verifiedFrom": "https://www.trailforks.com/region/nevados-de-chillan/trails/" }
+    },
+    {
+      "id": "route-mtb-nevados-renegado",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Renegado", "pt": "Renegado", "en": "Renegado" },
+      "zone": { "es": "Bike Park Nevados", "pt": "Bike Park Nevados", "en": "Nevados Bike Park" },
+      "summary": { "es": "Pista MTB individual de Nevados de Chillán.", "pt": "Trilha MTB individual de Nevados de Chillán.", "en": "Individual MTB trail at Nevados de Chillán." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/renegado-799016/", "verifiedFrom": "https://www.trailforks.com/region/nevados-de-chillan/trails/" }
+    },
+    {
+      "id": "route-mtb-nevados-super-x",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Super X", "pt": "Super X", "en": "Super X" },
+      "zone": { "es": "Bike Park Nevados", "pt": "Bike Park Nevados", "en": "Nevados Bike Park" },
+      "summary": { "es": "Pista MTB individual de Nevados de Chillán.", "pt": "Trilha MTB individual de Nevados de Chillán.", "en": "Individual MTB trail at Nevados de Chillán." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/super-x/", "verifiedFrom": "https://www.trailforks.com/region/nevados-de-chillan/trails/" }
+    },
+    {
+      "id": "route-mtb-nevados-valle-hermoso",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Valle Hermoso MTB", "pt": "Valle Hermoso MTB", "en": "Valle Hermoso MTB" },
+      "zone": { "es": "Bike Park Nevados", "pt": "Bike Park Nevados", "en": "Nevados Bike Park" },
+      "summary": { "es": "Pista MTB individual de Nevados de Chillán.", "pt": "Trilha MTB individual de Nevados de Chillán.", "en": "Individual MTB trail at Nevados de Chillán." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/valle-hermoso/", "verifiedFrom": "https://www.trailforks.com/region/nevados-de-chillan/trails/" }
+    },
+    {
+      "id": "route-mtb-garganta-access",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Acceso Garganta", "pt": "Acesso Garganta", "en": "Garganta Access" },
+      "zone": { "es": "Nevados de Chillán", "pt": "Nevados de Chillán", "en": "Nevados de Chillán" },
+      "summary": { "es": "Enlace de acceso MTB publicado en la red regional.", "pt": "Ligação de acesso MTB publicada na rede regional.", "en": "MTB access link published in the regional trail network." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/garganta-access/", "verifiedFrom": "https://www.trailforks.com/region/chillan/" }
+    },
+    {
+      "id": "route-mtb-subida-fumarolas",
+      "catalog": "activities",
+      "category": "bici",
+      "name": { "es": "Subida Fumarolas", "pt": "Subida Fumarolas", "en": "Fumarolas Climb" },
+      "zone": { "es": "Nevados de Chillán", "pt": "Nevados de Chillán", "en": "Nevados de Chillán" },
+      "summary": { "es": "Tramo de subida MTB publicado en la red regional.", "pt": "Trecho de subida MTB publicado na rede regional.", "en": "MTB climbing segment published in the regional trail network." },
+      "routeAccess": { "provider": "Trailforks", "status": "verified-direct", "url": "https://www.trailforks.com/trails/subida-fumarolas/", "verifiedFrom": "https://www.trailforks.com/region/chillan/" }
+    },
+    {
+      "id": "directory-minimarket-el-lenador",
+      "catalog": "provisions",
+      "category": "supermarket",
+      "name": { "es": "Minimarket El Leñador", "pt": "Minimarket El Leñador", "en": "El Leñador Minimarket" },
+      "zone": { "es": "Valle Las Trancas", "pt": "Valle Las Trancas", "en": "Valle Las Trancas" },
+      "summary": { "es": "Minimarket, frutas, carnes y CajaVecina.", "pt": "Minimercado, frutas, carnes e CajaVecina.", "en": "Minimarket, fruit, meat and CajaVecina services." },
+      "instagram": { "value": "https://www.instagram.com/marketellenador/", "verifiedBy": "official-directory", "sourceUrl": "https://www.turismovallelastrancas.com/pti/minimarket-el-lenador/", "checkedAt": "2026-07-19" }
+    },
+    {
+      "id": "directory-copito-de-nieve",
+      "catalog": "provisions",
+      "category": "convenience",
+      "name": { "es": "Copito de Nieve", "pt": "Copito de Nieve", "en": "Copito de Nieve" },
+      "zone": { "es": "Valle Las Trancas", "pt": "Valle Las Trancas", "en": "Valle Las Trancas" },
+      "summary": { "es": "Minimarket, botillería y ferretería.", "pt": "Minimercado, bebidas e ferragens.", "en": "Minimarket, drinks and hardware." },
+      "instagram": { "value": "https://www.instagram.com/copodenieveminimarket/", "verifiedBy": "official-directory", "sourceUrl": "https://www.turismovallelastrancas.com/pti/copito-de-nieve/", "checkedAt": "2026-07-19" }
+    },
+    {
+      "id": "directory-emporio-nicanor",
+      "catalog": "provisions",
+      "category": "convenience",
+      "name": { "es": "Emporio Nicanor", "pt": "Emporio Nicanor", "en": "Emporio Nicanor" },
+      "zone": { "es": "Plaza Olivas, Valle Las Trancas", "pt": "Plaza Olivas, Valle Las Trancas", "en": "Plaza Olivas, Valle Las Trancas" },
+      "summary": { "es": "Frutas, verduras y productos gourmet.", "pt": "Frutas, verduras e produtos gourmet.", "en": "Fruit, vegetables and gourmet products." },
+      "officialUrl": "https://trancas.cl/frutas-verduras-emporio-nicanor-minimarket-las-trancas/"
+    }
+  ]
+}

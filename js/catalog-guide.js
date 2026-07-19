@@ -121,7 +121,7 @@
       return distance(left) - distance(right) || normalized(left.querySelector('h3').textContent).localeCompare(normalized(right.querySelector('h3').textContent));
     }).forEach(function (card) { grid.appendChild(card); });
 
-    count.textContent = visible.length + ' ' + translate('guide.quality.places', 'lugares');
+    count.textContent = visible.length + ' ' + translate('catalog.count.options', 'opciones');
     empty.hidden = visible.length !== 0;
     renderDistances();
   }
@@ -147,7 +147,15 @@
 
   function applyDirect(snapshot) {
     cards.forEach(function (card) {
+      if (!isRoutingEligible(card)) {
+        setDistance(card, { meters: null, source: 'unknown', accessNearby: false, coverage: 'unknown' });
+        return;
+      }
       var destination = { lat: Number(card.getAttribute('data-lat')), lon: Number(card.getAttribute('data-lon')) };
+      if (!Number.isFinite(destination.lat) || !Number.isFinite(destination.lon)) {
+        setDistance(card, { meters: null, source: 'unknown', accessNearby: false, coverage: 'unknown' });
+        return;
+      }
       var target = card.getAttribute('data-distance-target');
       setDistance(card, {
         meters: window.CordalLocationMotion.distanceMeters(snapshot, destination),
@@ -176,7 +184,7 @@
       roadCoverage = 'covered';
       cards.forEach(function (card) {
         if (!isRoutingEligible(card)) return;
-        var route = message.distances[card.getAttribute('data-id')];
+        var route = message.distances[card.getAttribute('data-road-id') || card.getAttribute('data-id')];
         if (!route || !Number.isFinite(Number(route.meters))) return;
         setDistance(card, {
           meters: route.meters,

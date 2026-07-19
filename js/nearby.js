@@ -38,7 +38,26 @@
   var total = document.getElementById('guide-place-total');
   if (!results || !locate || !categories || !mapCanvas) return;
 
-  var LODGING = { hotel: true, cabin: true };
+  var EXPLORE_QUICK_CATEGORIES = {
+    restaurant: true,
+    coffee: true,
+    fast_food: true,
+    bakery: true,
+    supermarket: true,
+    convenience: true,
+    hardware: true,
+    home_improvement: true,
+    pharmacy: true,
+    medical: true,
+    veterinary: true,
+    gas_station: true,
+    bank: true,
+    atm: true,
+    laundry: true,
+    shopping: true,
+    vehicle_service: true,
+    emergency: true
+  };
   var data = null;
   var publicPlaces = [];
   var mode = 'apartment';
@@ -862,8 +881,8 @@
   }
 
   Promise.all([
-    fetch('data/destination-guide.json?v=location-v2', { cache: 'no-store' }),
-    fetch('data/nearby.json?v=location-v2', { cache: 'no-store' })
+    fetch('data/destination-guide.json?v=catalog-v3', { cache: 'no-store' }),
+    fetch('data/nearby.json?v=catalog-v3', { cache: 'no-store' })
   ]).then(function (responses) {
     if (!responses[0].ok) throw new Error('destination guide unavailable');
     return Promise.all([responses[0].json(), responses[1].ok ? responses[1].json() : Promise.resolve(null)]);
@@ -873,7 +892,10 @@
     data._landmarks = payloads[1] && payloads[1].coverage ? payloads[1].coverage.anchors || [] : [];
     if (loading) loading.hidden = true;
     if (resultsRegion) resultsRegion.setAttribute('aria-busy', 'false');
-    publicPlaces = data.places.filter(function (place) { return !LODGING[place.category]; });
+    publicPlaces = data.places.filter(function (place) {
+      return Boolean(EXPLORE_QUICK_CATEGORIES[place.category]) &&
+        place.routingEligible !== false && place.status !== 'candidate_coordinate';
+    });
     restoreApartmentDistances();
     data._centerline = data.geometry.corridor.geometry.coordinates.map(function (point) { return { lon: point[0], lat: point[1] }; });
     renderQuality();

@@ -3,7 +3,7 @@
   "$id": "https://cordalsur.example/schemas/destination-guide.schema.json",
   "title": "CordalSur destination guide",
   "type": "object",
-  "required": ["schemaVersion", "meta", "geometry", "categories", "places", "offerings", "routes", "providers"],
+  "required": ["schemaVersion", "meta", "geometry", "categories", "places", "offerings", "routes", "catalogEntries", "providers"],
   "properties": {
     "schemaVersion": { "const": 1 },
     "meta": {
@@ -83,6 +83,8 @@
           "name": { "type": "object" },
           "module": { "type": "string", "minLength": 1 },
           "officialUrl": { "type": ["string", "null"] },
+          "routeUrl": { "type": ["string", "null"] },
+          "routeAccess": { "type": "object" },
           "verifiedAt": { "type": ["string", "null"] },
           "status": { "type": "string", "minLength": 1 }
         }
@@ -100,7 +102,26 @@
           "navigationAvailable": { "const": false },
           "navigationUrl": { "type": "null" },
           "status": { "type": "string", "minLength": 1 },
-          "warning": { "type": "object" }
+          "warning": { "type": "object" },
+          "routeUrl": { "type": ["string", "null"] },
+          "routeAccess": { "type": "object" }
+        }
+      }
+    },
+    "catalogEntries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "catalog", "category", "name", "routingEligible", "status", "sources"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "catalog": { "enum": ["activities", "provisions"] },
+          "category": { "type": "string", "minLength": 1 },
+          "name": { "type": "object" },
+          "routingEligible": { "const": false },
+          "status": { "type": "string", "minLength": 1 },
+          "routeAccess": { "type": "object" },
+          "sources": { "type": "array", "minItems": 1 }
         }
       }
     },

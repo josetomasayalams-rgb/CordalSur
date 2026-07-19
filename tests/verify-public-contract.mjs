@@ -28,9 +28,9 @@ for (const file of expectedPages) {
   const html = read(file);
   if (!/<title>[^<]*CordalSur[^<]*<\/title>/i.test(html)) fail(`${file}: static title must contain CordalSur`);
   if (!/<html\b[^>]*data-i18n-title="page\.[^"]+"/i.test(html)) fail(`${file}: <html> needs a localized page.* title key`);
-  if (!html.includes('js/lang.js?v=16')) fail(`${file}: localized copy must use the current cache version`);
+  if (!html.includes('js/lang.js?v=17')) fail(`${file}: localized copy must use the current cache version`);
   if (!html.includes('js/theme.js?v=10')) fail(`${file}: theme control must use the current cache version`);
-  if (!html.includes('css/styles.css?v=26')) fail(`${file}: shared sensory brand styles are stale`);
+  if (!html.includes('css/styles.css?v=27')) fail(`${file}: shared sensory brand styles are stale`);
   if (!html.includes("document.documentElement.classList.add('access-pending')") ||
       !html.includes('css/access.css?v=4') || !html.includes('js/access.js?v=4')) {
     fail(`${file}: guest gate must load before protected content is shown`);
@@ -50,7 +50,7 @@ const nearbyHtml = read('cerca-de-mi.html');
 const nearbyScript = read('js/nearby.js');
 const locationControllerScript = read('js/location-controller.js');
 const destinationGuide = JSON.parse(read('data/destination-guide.json'));
-if (!index.includes('href="cerca-de-mi.html"') || !nearbyHtml.includes('js/nearby.js?v=13') || !nearbyHtml.includes('js/road-distance.js?v=4') || !nearbyHtml.includes('js/location-motion.js?v=1') || !nearbyHtml.includes('js/location-controller.js?v=1')) {
+if (!index.includes('href="cerca-de-mi.html"') || !nearbyHtml.includes('js/nearby.js?v=14') || !nearbyHtml.includes('js/road-distance.js?v=4') || !nearbyHtml.includes('js/location-motion.js?v=1') || !nearbyHtml.includes('js/location-controller.js?v=1')) {
   fail('home must expose the protected nearby essentials tool');
 }
 if (!locationControllerScript.includes('geolocation.watchPosition') ||
@@ -59,7 +59,7 @@ if (!locationControllerScript.includes('geolocation.watchPosition') ||
     /localStorage\.(?:getItem|setItem)/.test(nearbyScript + locationControllerScript)) {
   fail('destination guide must support one-time/session location without persistence');
 }
-if (!nearbyScript.includes("destination-guide.json?v=location-v2") || !nearbyScript.includes("cache: 'no-store'")) {
+if (!nearbyScript.includes("destination-guide.json?v=catalog-v3") || !nearbyScript.includes("cache: 'no-store'")) {
   fail('nearby guide must revalidate its versioned destination snapshot instead of mixing stale graph data');
 }
 if (destinationGuide.schemaVersion !== 1 || !Array.isArray(destinationGuide.places) || destinationGuide.places.length < 200 ||
@@ -67,8 +67,9 @@ if (destinationGuide.schemaVersion !== 1 || !Array.isArray(destinationGuide.plac
   fail('destination guide must publish the canonical catalog and both real geographic boundaries');
 }
 if (!Array.isArray(destinationGuide.offerings) || destinationGuide.offerings.length < 50 ||
-    !Array.isArray(destinationGuide.routes) || destinationGuide.routes.length < 20) {
-  fail('destination guide must keep physical places, bookable offerings and unverified-trailhead routes separate');
+    !Array.isArray(destinationGuide.routes) || destinationGuide.routes.length < 20 ||
+    !Array.isArray(destinationGuide.catalogEntries)) {
+  fail('destination guide must keep physical places, bookable offerings, routes and researched catalog entries separate');
 }
 for (const provider of ['manual', 'editorial', 'osm']) {
   if (!destinationGuide.providers.some((item) => item.id === provider && item.enabled)) fail(`destination guide missing active ${provider} provider`);
@@ -77,7 +78,7 @@ for (const place of destinationGuide.places || []) {
   if (!place.navigationUrl || !place.googleMapsUrl || !Array.isArray(place.sources) || !place.sources.length) {
     fail(`destination place missing navigation or provenance: ${place.id || '(missing id)'}`);
   }
-  if (place.instagram && !['osm_contact_tag', 'manual_verified_override'].includes(place.instagram.verifiedBy)) {
+  if (place.instagram && !['osm_contact_tag', 'manual_verified_override', 'editorial_verified_profile'].includes(place.instagram.verifiedBy)) {
     fail(`destination place exposes an unverified Instagram account: ${place.id}`);
   }
   if (place.googleRating && place.googleRating.provider !== 'google') fail(`Google rating source mismatch: ${place.id}`);
@@ -109,28 +110,30 @@ for (const asset of ['assets/icons/google-maps.svg', 'assets/icons/instagram.svg
 }
 const activityCategories = new Set(['tourism', 'thermal_baths', 'ski', 'trail', 'adventure']);
 const lodgingCategories = new Set(['hotel', 'cabin']);
-const apartmentPlaces = destinationGuide.places.filter((place) => place.discovery?.apartment);
-const publicApartmentPlaces = apartmentPlaces.filter((place) => !lodgingCategories.has(place.category));
-const expectedActivities = publicApartmentPlaces.filter((place) => activityCategories.has(place.category));
-const expectedProvisions = publicApartmentPlaces.filter((place) => !activityCategories.has(place.category));
+const expectedActivityOfferings = destinationGuide.offerings.map((offering) => `offering-${offering.id}`);
+const expectedActivityEntries = destinationGuide.catalogEntries.filter((entry) => entry.catalog === 'activities').map((entry) => entry.id);
+const expectedProvisionPlaces = destinationGuide.places.filter((place) => !activityCategories.has(place.category) && !lodgingCategories.has(place.category)).map((place) => place.id);
+const expectedProvisionEntries = destinationGuide.catalogEntries.filter((entry) => entry.catalog === 'provisions').map((entry) => entry.id);
 const activityHtml = read('actividades.html');
 const provisionsHtml = read('restaurantes.html');
-const activityIds = [...activityHtml.matchAll(/class="rest-card catalog-card" data-id="([^"]+)"/g)].map((match) => match[1]);
-const provisionIds = [...provisionsHtml.matchAll(/class="rest-card catalog-card" data-id="([^"]+)"/g)].map((match) => match[1]);
+const activityIds = [...activityHtml.matchAll(/<article\b[^>]*class="[^"]*\bcatalog-card\b[^"]*"[^>]*data-id="([^"]+)"/g)].map((match) => match[1]);
+const provisionIds = [...provisionsHtml.matchAll(/<article\b[^>]*class="[^"]*\bcatalog-card\b[^"]*"[^>]*data-id="([^"]+)"/g)].map((match) => match[1]);
 const publishedIds = activityIds.concat(provisionIds);
-if (expectedActivities.length + expectedProvisions.length !== publicApartmentPlaces.length || publicApartmentPlaces.length < 110) {
-  fail('canonical partition must cover every public apartment place after excluding lodging');
+if (destinationGuide.offerings.length !== 53 || expectedActivityEntries.length < 1 || expectedProvisionEntries.length < 1) {
+  fail('canonical catalogs must publish all 53 offerings plus researched editorial entries');
 }
-if (activityIds.length !== expectedActivities.length || provisionIds.length !== expectedProvisions.length ||
+if (activityIds.length !== expectedActivityOfferings.length + expectedActivityEntries.length ||
+    provisionIds.length !== expectedProvisionPlaces.length + expectedProvisionEntries.length ||
     new Set(publishedIds).size !== publishedIds.length ||
-    publicApartmentPlaces.some((place) => !publishedIds.includes(place.id))) {
-  fail('every public apartment place must appear exactly once in the two canonical catalogs');
+    expectedActivityOfferings.concat(expectedActivityEntries).some((id) => !activityIds.includes(id)) ||
+    expectedProvisionPlaces.concat(expectedProvisionEntries).some((id) => !provisionIds.includes(id))) {
+  fail('canonical catalogs must include every offering, provision place and researched entry exactly once');
 }
 if (publishedIds.some((id) => lodgingCategories.has(destinationGuide.places.find((place) => place.id === id)?.category)) ||
     nearbyScript.includes("hotel: false") || nearbyHtml.includes('data-guide-category="hotel"')) {
   fail('lodging must remain outside every guest-facing guide surface');
 }
-if (!activityHtml.includes('js/catalog-guide.js?v=5') || !provisionsHtml.includes('js/catalog-guide.js?v=5') ||
+if (!activityHtml.includes('js/catalog-guide.js?v=6') || !provisionsHtml.includes('js/catalog-guide.js?v=6') ||
     !activityHtml.includes('js/road-distance.js?v=4') || !provisionsHtml.includes('js/road-distance.js?v=4') ||
     !activityHtml.includes('js/location-motion.js?v=1') || !provisionsHtml.includes('js/location-motion.js?v=1') ||
     !activityHtml.includes('js/location-controller.js?v=1') || !provisionsHtml.includes('js/location-controller.js?v=1') ||
@@ -303,7 +306,7 @@ if (!accessScript.includes('async function restoreGuestSession()') ||
   fail('administrator access must revalidate after history restores and safely fall back to a valid guest session');
 }
 if (!adminScript.includes('href="index.html"') || !adminScript.includes("t('admin.enterSite')") ||
-    !adminHtml.includes('js/lang.js?v=16') || !adminHtml.includes('js/admin.js?v=4')) {
+    !adminHtml.includes('js/lang.js?v=17') || !adminHtml.includes('js/admin.js?v=4')) {
   fail('Administration must expose the localized same-tab platform entry action');
 }
 const enterSiteCopy = hostData.scalar?.['admin.enterSite'];

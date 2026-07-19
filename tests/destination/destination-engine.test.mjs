@@ -6,13 +6,16 @@ import { overpassTileQuery, OSM_USEFUL_TAGS } from '../../scripts/destination/pr
 import { safeInstagram } from '../../scripts/destination/providers/common.mjs';
 import { GOOGLE_FIELD_MASK, GOOGLE_NEARBY_TYPES, GOOGLE_TEXT_QUERIES } from '../../scripts/destination/providers/google.mjs';
 import { TRIPADVISOR_API_ROOT } from '../../scripts/destination/providers/tripadvisor.mjs';
-import { loadEditorialCatalog } from '../../scripts/destination/providers/editorial.mjs';
+import { applyResearchedProfiles, isDirectRouteUrl, loadEditorialCatalog } from '../../scripts/destination/providers/editorial.mjs';
 import { loadManualPlaces } from '../../scripts/destination/providers/manual.mjs';
 import { applyPlaceOverrides, mergeOverrides, recordsFromAddOverrides } from '../../scripts/destination/overrides.mjs';
 import path from 'node:path';
 import { GOOGLE_DETAILS_FIELD_MASK } from '../../scripts/destination/providers/google.mjs';
 import { directionFlags, impedanceRange, overpassQuery as drivingOverpassQuery, validateNetworkCandidate, validateOverpassPayload, wayProfile } from '../../scripts/destination/fetch-driving-network.mjs';
 import { LANDING_ROOT } from '../../scripts/destination/paths.mjs';
+
+const HOST_DATA = path.join(LANDING_ROOT, 'data/host-data.json');
+const RESEARCH_CATALOG = path.join(LANDING_ROOT, 'data/researched-catalog.json');
 
 test('canonical taxonomy covers required and unknown place types', () => {
   assert.equal(canonicalCategory({ amenity: 'restaurant' }), 'restaurant');
@@ -124,8 +127,17 @@ test('Instagram is accepted only in a verifiable account form', () => {
   assert.equal(safeInstagram('cordal sur'), null);
 });
 
-test('editorial catalog keeps candidate businesses visible and separates offerings from routes', () => {
-  const catalog = loadEditorialCatalog(path.join(LANDING_ROOT, 'data/host-data.json'));
+test('route actions accept individual public routes and reject generic discovery pages', () => {
+  assert.equal(isDirectRouteUrl('https://suda.io/activity/B7HxY9latl'), true);
+  assert.equal(isDirectRouteUrl('https://suda.io/adventures/valle-las-trancas/'), false);
+  assert.equal(isDirectRouteUrl('https://www.trailforks.com/trails/aguila-799017/'), true);
+  assert.equal(isDirectRouteUrl('https://www.trailforks.com/region/nevados-de-chillan/trails/'), false);
+  assert.equal(isDirectRouteUrl('https://es.wikiloc.com/rutas-mountain-bike/las-trancas-shangri-la-ruinas-refugio-65999327'), true);
+  assert.equal(isDirectRouteUrl('https://www.strava.com/segments/explore'), false);
+});
+
+test('editorial catalog keeps broad listings visible and separates offerings, routes and researched entries', () => {
+  const catalog = loadEditorialCatalog(HOST_DATA, [], RESEARCH_CATALOG);
   assert.ok(catalog.restaurants.length >= 35);
   assert.ok(catalog.restaurants.every((place) => place.navigationUrl && place.googleMapsUrl));
   const candidates = catalog.restaurants.filter((place) => place.coordinateKind === 'center_candidate');
@@ -137,6 +149,45 @@ test('editorial catalog keeps candidate businesses visible and separates offerin
   assert.ok(catalog.offerings.length >= 50);
   assert.ok(catalog.routes.length >= 20);
   assert.ok(catalog.routes.every((route) => route.navigationAvailable === false && route.status === 'trailhead_unverified'));
+  assert.ok(catalog.catalogEntries.length >= 17);
+  assert.ok(catalog.catalogEntries.every((entry) => ['activities', 'provisions'].includes(entry.catalog)));
+  assert.ok(catalog.catalogEntries.every((entry) => entry.routingEligible === false && entry.sources.length));
+  assert.ok(catalog.catalogEntries.some((entry) => entry.catalog === 'activities'));
+  assert.ok(catalog.catalogEntries.some((entry) => entry.catalog === 'provisions'));
+});
+
+test('researched profiles and direct routes retain their evidence contract', () => {
+  const catalog = loadEditorialCatalog(HOST_DATA, [], RESEARCH_CATALOG);
+  const verifiedProfiles = catalog.restaurants.filter((place) => place.instagram);
+  assert.ok(verifiedProfiles.length >= 25);
+  assert.ok(verifiedProfiles.every((place) => place.instagram.verifiedBy === 'editorial_verified_profile'));
+  assert.ok(verifiedProfiles.every((place) => safeInstagram(place.instagram.value) === place.instagram.value));
+  assert.ok(verifiedProfiles.every((place) => place.instagram.sourceUrl && place.sources.some((source) => source.provider === 'research' && source.url === place.instagram.sourceUrl)));
+  assert.equal(catalog.restaurants.find((place) => place.legacyId === 'super-mcpato')?.instagram?.value, 'https://www.instagram.com/minimarket_mcpato/');
+
+  const directOfferings = catalog.offerings.filter((offering) => offering.routeUrl);
+  const directRoutes = catalog.routes.filter((route) => route.routeUrl);
+  const directEntries = catalog.catalogEntries.filter((entry) => entry.routeAccess?.url);
+  assert.ok(directOfferings.length >= 10);
+  assert.ok(directRoutes.length >= 10);
+  assert.ok(directEntries.length >= 10);
+  for (const item of [...directOfferings, ...directRoutes]) {
+    assert.equal(item.routeAccess.status, 'verified-direct');
+    assert.equal(item.routeAccess.url, item.routeUrl);
+    assert.ok(isDirectRouteUrl(item.routeUrl));
+  }
+  for (const entry of directEntries) {
+    assert.equal(entry.routeAccess.status, 'verified-direct');
+    assert.ok(isDirectRouteUrl(entry.routeAccess.url));
+  }
+
+  const enriched = applyResearchedProfiles([
+    { id: 'manual-don-quelo', sources: [] },
+    { id: 'unrelated-place', sources: [] }
+  ], RESEARCH_CATALOG);
+  assert.equal(enriched[0].instagram.value, 'https://www.instagram.com/donqueloltda/');
+  assert.equal(enriched[0].instagram.verifiedBy, 'editorial_verified_profile');
+  assert.equal(enriched[1].instagram, undefined);
 });
 
 test('a verified editorial match becomes routable without losing search navigation', () => {
@@ -147,7 +198,7 @@ test('a verified editorial match becomes routable without losing search navigati
     status: 'published',
     googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Sitari'
   }];
-  const catalog = loadEditorialCatalog(path.join(LANDING_ROOT, 'data/host-data.json'), manual);
+  const catalog = loadEditorialCatalog(HOST_DATA, manual, RESEARCH_CATALOG);
   const place = catalog.restaurants.find((item) => item.legacyId === 'sitari-tapas-y-brasas');
   assert.equal(place.routingEligible, true);
   assert.equal(place.coordinatePrecision, 'verified');
