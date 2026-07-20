@@ -32,13 +32,15 @@ by GitHub Pages secret. The HTML remains retrievable from the static origin.
 
 | Name | Kind | Purpose |
 |---|---|---|
-| `DB` | D1 binding | Access state, catalog overrides and the last verified ski-price snapshot |
+| `DB` | D1 binding | Manual and synchronized access state, catalog overrides and the last verified ski-price snapshot |
 | `ALLOWED_ORIGINS` | variable | Comma-separated exact origins, no path or trailing slash |
 | `TOKEN_ISSUER` | variable | Token namespace; keep stable after launch |
 | `TOKEN_SECRET` | secret | At least 32 random characters, used only for token signatures |
 | `PIN_PEPPER` | secret | A different random secret of at least 32 characters |
 | `ADMIN_PIN_DIGEST` | secret | 64-character hex HMAC digest for the private administrator PIN |
 | `DEFAULT_GUEST_PIN_DIGEST` | secret | 64-character hex HMAC digest for the private default guest PIN |
+| `SOURCE_SUPABASE_URL` | secret | Server-side URL of the operational source shared with CordalSur Control |
+| `SOURCE_SUPABASE_ANON_KEY` | secret | Server-side key used only to read operational dates and status |
 
 Production uses exact origins only:
 
@@ -79,6 +81,9 @@ npx wrangler secret put ADMIN_PIN_DIGEST
 
 PIN="NN-NN" PIN_PEPPER="the-same-pepper-entered-above" npm run hash-pin
 npx wrangler secret put DEFAULT_GUEST_PIN_DIGEST
+
+npx wrangler secret put SOURCE_SUPABASE_URL
+npx wrangler secret put SOURCE_SUPABASE_ANON_KEY
 ```
 
 Enter the generated value at each secret prompt. Repeat with `--env dev` and
@@ -93,8 +98,25 @@ npx wrangler d1 migrations apply DB --remote
 npx wrangler deploy
 ```
 
-The schema creates no stay automatically, so guest access starts locked.
-Administration remains available and the first stay can be created there.
+Migration `0004_calendar_access_sync.sql` adds automatic windows and the cron in
+`wrangler.toml` refreshes them every five minutes. The first scheduled run or an
+administrator `POST /v1/admin/calendar-sync` performs the initial sync.
+
+## Operational calendar policy
+
+The Worker reads the same `rentals` source used server-side by CordalSur Control.
+It selects only `id`, `checkin_date`, `checkout_date` and `status`; guest names,
+references, notes and financial data are never requested or copied to D1.
+
+- Every non-cancelled rental opens access at 15:00 on the day before check-in.
+- Access remains open through 12:00 on checkout day.
+- Overlapping windows are merged. A checkout and check-in on the same date can
+  therefore never create an intermediate lock.
+- Cancelled and invalid zero-night rows never open access.
+- A failed or malformed refresh leaves the last valid windows untouched and
+  records only a bounded error code.
+- Manual stays remain available as explicit exceptions and may overlap an
+  automatic window. The default guest PIN digest applies to automatic windows.
 
 ## Front-end configuration
 
@@ -144,6 +166,8 @@ All request bodies are JSON. Protected routes use
 | `POST /v1/admin/stays` | admin | Creates a stay |
 | `PATCH /v1/admin/stays/:id` | admin | Updates, enables/disables, changes PIN, or finishes |
 | `DELETE /v1/admin/stays/:id` | admin | Deletes and immediately revokes a stay |
+| `GET /v1/admin/calendar-sync` | admin | Returns sanitized sync health and the automatic-window policy |
+| `POST /v1/admin/calendar-sync` | admin | Refreshes automatic windows immediately from the operational source |
 | `GET /v1/admin/place-overrides` | admin | Lists current catalog corrections for export |
 | `POST /v1/admin/place-overrides` | admin | Creates a validated, versioned correction |
 | `PATCH /v1/admin/place-overrides/:id` | admin | Updates a correction and stores the previous revision |
@@ -197,6 +221,7 @@ npm test
 ```
 
 They cover exact CORS, token tampering/expiry, peppered digests,
-`America/Santiago` conversion and DST edges, access policy constants, the D1
-no-overlap trigger, official ski-calendar parsing, snapshot fallback and the
-no-invented-price invariant.
+`America/Santiago` conversion and DST edges, the 24-hour release policy,
+same-day turnovers, atomic calendar replacement, failure preservation,
+calendar-session revocation, the D1 no-overlap trigger, official ski-calendar
+parsing, snapshot fallback and the no-invented-price invariant.

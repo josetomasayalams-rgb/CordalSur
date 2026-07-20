@@ -176,6 +176,24 @@ Worker and grants access even when there is no active guest stay. The token
 remains in `sessionStorage`, so navigation must continue in the same tab and
 still expires after 30 minutes.
 
+## Acceso sincronizado con Operaciones
+
+El Worker consulta en servidor la misma fuente operacional que usa CordalSur
+Control. Cada arriendo no cancelado habilita la clave predeterminada desde las
+15:00 del día anterior al check-in hasta las 12:00 del check-out, siempre en
+`America/Santiago`.
+
+Las ventanas superpuestas se fusionan: si una persona sale el mismo día que
+llega la siguiente, la guía permanece disponible sin un bloqueo intermedio. La
+sincronización ocurre cada cinco minutos, pero las horas guardadas son exactas.
+Si la fuente falla o entrega datos inválidos, D1 conserva el último calendario
+válido. El Worker solicita solo identificador técnico, fechas y estado; nunca
+copia nombres, referencias, notas ni información financiera.
+
+Las estadías creadas desde Administración siguen funcionando como excepciones
+manuales. La política, recuperación y despliegue están documentados en
+[`worker/README.md`](worker/README.md).
+
 ## How the filter bar works
 
 1. The script `apply-host-data.mjs` emits a `<script type="application/json" id="restaurants-data">…</script>` block inside the `@LISTINGS` region of `restaurantes.html`. Same for `actividades.html` with `#activities-data`.

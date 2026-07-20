@@ -11,6 +11,14 @@ const PLACE_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$/;
 const SKI_PRICE_SOURCE_URL = 'https://www.nevadosdechillan.com/andariveles-y-pistas';
 const SKI_PRICE_FRESH_SECONDS = 30 * 60;
 const SKI_PRICE_TIMEOUT_MS = 8_000;
+const OPERATIONAL_CHECKIN_TIME = '15:00';
+const OPERATIONAL_CHECKOUT_TIME = '12:00';
+const CALENDAR_RELEASE_LEAD_DAYS = 1;
+const CALENDAR_LOOKBACK_DAYS = 2;
+const CALENDAR_LOOKAHEAD_DAYS = 400;
+const CALENDAR_SOURCE_TIMEOUT_MS = 8_000;
+const CALENDAR_SOURCE_MAX_ROWS = 5_000;
+const CALENDAR_SOURCE_MAX_BYTES = 1024 * 1024;
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
@@ -460,6 +468,182 @@ export function utcSecondsToLocal(timestamp) {
   return `${parts.year}-${pad(parts.month)}-${pad(parts.day)}T${pad(parts.hour)}:${pad(parts.minute)}`;
 }
 
+function isoDate(value, field) {
+  const text = String(value || '');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) throw new Error(`${field} must use YYYY-MM-DD.`);
+  const date = new Date(`${text}T00:00:00Z`);
+  if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== text) {
+    throw new Error(`${field} must be a real calendar date.`);
+  }
+  return text;
+}
+
+function shiftIsoDate(value, days) {
+  const date = new Date(`${isoDate(value, 'date')}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+}
+
+async function sha256Hex(value) {
+  const bytes = new Uint8Array(await crypto.subtle.digest('SHA-256', encoder.encode(String(value))));
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function calendarRevision(sourceHash) {
+  const revision = Number.parseInt(sourceHash.slice(0, 8), 16) & 0x7fffffff;
+  return revision || 1;
+}
+
+export async function buildCalendarAccessWindows(rows) {
+  if (!Array.isArray(rows)) throw new Error('Operational rentals must be an array.');
+  if (rows.length > CALENDAR_SOURCE_MAX_ROWS) throw new Error('Operational calendar returned too many rentals.');
+
+  let ignoredRows = 0;
+  const intervals = [];
+  for (const row of rows) {
+    if (!row || typeof row !== 'object' || Array.isArray(row)) throw new Error('Operational rental is invalid.');
+    if (String(row.status || '') === 'cancelled') continue;
+    const id = String(row.id || '').trim();
+    if (!id || id.length > 200) throw new Error('Operational rental id is invalid.');
+    const checkinDate = isoDate(row.checkin_date, 'checkin_date');
+    const checkoutDate = isoDate(row.checkout_date, 'checkout_date');
+    if (checkoutDate <= checkinDate) {
+      ignoredRows += 1;
+      continue;
+    }
+    intervals.push({
+      sourceId: id,
+      checkinDate,
+      checkoutDate,
+      startsAt: localToUtcSeconds(`${shiftIsoDate(checkinDate, -CALENDAR_RELEASE_LEAD_DAYS)}T${OPERATIONAL_CHECKIN_TIME}`),
+      endsAt: localToUtcSeconds(`${checkoutDate}T${OPERATIONAL_CHECKOUT_TIME}`)
+    });
+  }
+
+  intervals.sort((left, right) => left.startsAt - right.startsAt || left.endsAt - right.endsAt || left.sourceId.localeCompare(right.sourceId));
+  const groups = [];
+  for (const interval of intervals) {
+    const current = groups[groups.length - 1];
+    if (!current || interval.startsAt > current.endsAt) {
+      groups.push({ startsAt: interval.startsAt, endsAt: interval.endsAt, members: [interval] });
+      continue;
+    }
+    current.endsAt = Math.max(current.endsAt, interval.endsAt);
+    current.members.push(interval);
+  }
+
+  const windows = [];
+  for (const group of groups) {
+    const memberIds = group.members.map((member) => member.sourceId).sort();
+    const idHash = await sha256Hex(memberIds.join('\u0000'));
+    const sourceHash = await sha256Hex(group.members
+      .map((member) => `${member.sourceId}\u0000${member.checkinDate}\u0000${member.checkoutDate}`)
+      .sort()
+      .join('\u0001'));
+    windows.push({
+      id: `calendar:${idHash.slice(0, 32)}`,
+      label: group.members.length === 1 ? 'Calendario operativo' : `Calendario operativo · ${group.members.length} reservas`,
+      startsAt: group.startsAt,
+      endsAt: group.endsAt,
+      sourceCount: group.members.length,
+      sourceHash,
+      revision: calendarRevision(sourceHash)
+    });
+  }
+  return { windows, sourceRows: rows.length, ignoredRows };
+}
+
+function calendarSourceConfiguration(env) {
+  const baseUrl = String(env.SOURCE_SUPABASE_URL || '').trim().replace(/\/+$/, '');
+  const key = String(env.SOURCE_SUPABASE_ANON_KEY || '').trim();
+  if (!/^https:\/\/[^/]+$/.test(baseUrl) || !key) {
+    throw new Error('calendar_source_not_configured');
+  }
+  return { baseUrl, key };
+}
+
+function localDateAt(currentTime) {
+  const parts = zonedParts(currentTime * 1000);
+  const pad = (number) => String(number).padStart(2, '0');
+  return `${parts.year}-${pad(parts.month)}-${pad(parts.day)}`;
+}
+
+async function fetchOperationalRentals(env, currentTime, fetcher = fetch) {
+  const { baseUrl, key } = calendarSourceConfiguration(env);
+  const currentDate = localDateAt(currentTime);
+  const url = new URL(`${baseUrl}/rest/v1/rentals`);
+  url.searchParams.set('select', 'id,checkin_date,checkout_date,status');
+  url.searchParams.set('status', 'neq.cancelled');
+  url.searchParams.set('checkout_date', `gte.${shiftIsoDate(currentDate, -CALENDAR_LOOKBACK_DAYS)}`);
+  url.searchParams.set('checkin_date', `lt.${shiftIsoDate(currentDate, CALENDAR_LOOKAHEAD_DAYS)}`);
+  url.searchParams.set('order', 'checkin_date.asc');
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), CALENDAR_SOURCE_TIMEOUT_MS);
+  try {
+    const response = await fetcher(url.toString(), {
+      headers: { Accept: 'application/json', apikey: key, Authorization: `Bearer ${key}` },
+      signal: controller.signal
+    });
+    if (!response.ok) throw new Error(`calendar_source_http_${response.status}`);
+    const text = await response.text();
+    if (encoder.encode(text).length > CALENDAR_SOURCE_MAX_BYTES) throw new Error('calendar_source_too_large');
+    let rows;
+    try { rows = JSON.parse(text); } catch { throw new Error('calendar_source_invalid_json'); }
+    if (!Array.isArray(rows)) throw new Error('calendar_source_invalid_payload');
+    return rows;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function calendarSyncError(error) {
+  if (error && /^calendar_[a-z0-9_]+$/.test(String(error.code || ''))) return String(error.code);
+  const message = String(error && error.message || error || 'calendar_sync_failed');
+  if (message === 'calendar_source_not_configured') return message;
+  if (/^calendar_source_[a-z0-9_]+$/.test(message)) return message;
+  if (error && error.name === 'AbortError') return 'calendar_source_timeout';
+  return 'calendar_sync_failed';
+}
+
+async function recordCalendarSyncFailure(env, currentTime, errorCode) {
+  await env.DB.prepare(`
+    INSERT INTO calendar_access_sync (id, status, last_attempt_at, last_success_at, source_rows, window_count, ignored_rows, error_code)
+    VALUES (1, 'error', ?, NULL, 0, 0, 0, ?)
+    ON CONFLICT(id) DO UPDATE SET status = 'error', last_attempt_at = excluded.last_attempt_at,
+      error_code = excluded.error_code
+  `).bind(currentTime, errorCode).run();
+}
+
+export async function synchronizeCalendarAccess(env, currentTime = nowSeconds(), fetcher = fetch) {
+  try {
+    const rows = await fetchOperationalRentals(env, currentTime, fetcher);
+    const prepared = await buildCalendarAccessWindows(rows);
+    const statements = [env.DB.prepare('DELETE FROM calendar_access_windows')];
+    for (const window of prepared.windows) {
+      statements.push(env.DB.prepare(`
+        INSERT INTO calendar_access_windows
+          (id, label, starts_at, ends_at, source_count, source_hash, revision, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `).bind(window.id, window.label, window.startsAt, window.endsAt, window.sourceCount,
+        window.sourceHash, window.revision, currentTime));
+    }
+    statements.push(env.DB.prepare(`
+      INSERT INTO calendar_access_sync (id, status, last_attempt_at, last_success_at, source_rows, window_count, ignored_rows, error_code)
+      VALUES (1, 'ok', ?, ?, ?, ?, ?, NULL)
+      ON CONFLICT(id) DO UPDATE SET status = 'ok', last_attempt_at = excluded.last_attempt_at,
+        last_success_at = excluded.last_success_at, source_rows = excluded.source_rows,
+        window_count = excluded.window_count, ignored_rows = excluded.ignored_rows, error_code = NULL
+    `).bind(currentTime, currentTime, prepared.sourceRows, prepared.windows.length, prepared.ignoredRows));
+    await env.DB.batch(statements);
+    return { status: 'ok', synchronizedAt: iso(currentTime), ...prepared };
+  } catch (error) {
+    const errorCode = calendarSyncError(error);
+    try { await recordCalendarSyncFailure(env, currentTime, errorCode); } catch {}
+    throw new ApiError(503, errorCode, 'The operational calendar could not be synchronized.');
+  }
+}
+
 function iso(timestamp) {
   return new Date(Number(timestamp) * 1000).toISOString();
 }
@@ -523,14 +707,30 @@ async function clearFailures(key, env) {
   await env.DB.prepare('DELETE FROM auth_attempts WHERE rate_key = ?').bind(key).run();
 }
 
-async function activeStay(env, currentTime) {
-  return env.DB.prepare(`
+async function activeAccessWindows(env, currentTime) {
+  const [manual, calendar] = await Promise.all([
+    env.DB.prepare(`
     SELECT id, label, starts_at, ends_at, guest_pin_digest, enabled, revision
     FROM stays
     WHERE enabled = 1 AND starts_at <= ? AND ends_at > ?
-    ORDER BY starts_at ASC
-    LIMIT 1
-  `).bind(currentTime, currentTime).first();
+    ORDER BY ends_at DESC
+  `).bind(currentTime, currentTime).all(),
+    env.DB.prepare(`
+      SELECT id, label, starts_at, ends_at, revision
+      FROM calendar_access_windows
+      WHERE starts_at <= ? AND ends_at > ?
+      ORDER BY ends_at DESC
+    `).bind(currentTime, currentTime).all()
+  ]);
+  return [
+    ...(manual.results || []).map((row) => ({ ...row, access_source: 'manual' })),
+    ...(calendar.results || []).map((row) => ({
+      ...row,
+      enabled: 1,
+      guest_pin_digest: String(env.DEFAULT_GUEST_PIN_DIGEST).toLowerCase(),
+      access_source: 'calendar'
+    }))
+  ].sort((left, right) => Number(right.ends_at) - Number(left.ends_at) || Number(left.starts_at) - Number(right.starts_at));
 }
 
 async function authenticatedClaims(request, env, expectedRole, currentTime) {
@@ -540,10 +740,16 @@ async function authenticatedClaims(request, env, expectedRole, currentTime) {
     if (typeof claims.stayId !== 'string' || !Number.isInteger(claims.revision)) {
       throw new ApiError(401, 'invalid_token', 'Invalid access token.');
     }
-    const stay = await env.DB.prepare(`
-      SELECT id, label, starts_at, ends_at, enabled, revision
-      FROM stays WHERE id = ?
-    `).bind(claims.stayId).first();
+    const accessSource = claims.accessSource === 'calendar' ? 'calendar' : 'manual';
+    const stay = accessSource === 'calendar'
+      ? await env.DB.prepare(`
+          SELECT id, label, starts_at, ends_at, 1 AS enabled, revision
+          FROM calendar_access_windows WHERE id = ?
+        `).bind(claims.stayId).first()
+      : await env.DB.prepare(`
+          SELECT id, label, starts_at, ends_at, enabled, revision
+          FROM stays WHERE id = ?
+        `).bind(claims.stayId).first();
     if (!stay || !Number(stay.enabled) || Number(stay.revision) !== claims.revision ||
         Number(stay.starts_at) > currentTime || Number(stay.ends_at) <= currentTime ||
         claims.exp > Number(stay.ends_at)) {
@@ -790,10 +996,10 @@ async function runStayMutation(statement) {
 }
 
 async function accessStatus(env, currentTime) {
-  const stay = await activeStay(env, currentTime);
+  const windows = await activeAccessWindows(env, currentTime);
   return json({
-    active: Boolean(stay),
-    state: stay ? 'active' : 'locked',
+    active: windows.length > 0,
+    state: windows.length ? 'active' : 'locked',
     timeZone: TIME_ZONE
   });
 }
@@ -801,18 +1007,19 @@ async function accessStatus(env, currentTime) {
 async function guestLogin(request, env, currentTime) {
   const body = await readJson(request);
   const pin = normalizePin(body.pin);
-  const stay = await activeStay(env, currentTime);
-  if (!stay) throw new ApiError(423, 'no_active_stay', 'Guest access is not active right now.');
+  const windows = await activeAccessWindows(env, currentTime);
+  if (!windows.length) throw new ApiError(423, 'no_active_stay', 'Guest access is not active right now.');
   const key = await reserveAttempt('guest', request, env, currentTime);
   const candidate = await pinDigest(pin, env.PIN_PEPPER);
-  if (!constantTimeEqual(candidate, String(stay.guest_pin_digest))) {
+  const stay = windows.find((window) => constantTimeEqual(candidate, String(window.guest_pin_digest)));
+  if (!stay) {
     throw new ApiError(401, 'invalid_credentials', 'Invalid PIN.');
   }
   await clearFailures(key, env);
   const expiration = Number(stay.ends_at);
   const token = await createToken({
     role: 'guest', sub: `stay:${stay.id}`, stayId: stay.id,
-    revision: Number(stay.revision), iat: currentTime, exp: expiration
+    accessSource: stay.access_source, revision: Number(stay.revision), iat: currentTime, exp: expiration
   }, env);
   return json({ token, expiresAt: iso(expiration), stay: { id: stay.id, label: stay.label || '' } });
 }
@@ -935,6 +1142,50 @@ async function deleteStay(request, env, currentTime, id) {
   return empty();
 }
 
+async function calendarSyncStatus(request, env, currentTime) {
+  await authenticatedClaims(request, env, 'admin', currentTime);
+  const [sync, windowSummary] = await Promise.all([
+    env.DB.prepare(`
+      SELECT status, last_attempt_at, last_success_at, source_rows, window_count, ignored_rows, error_code
+      FROM calendar_access_sync WHERE id = 1
+    `).first(),
+    env.DB.prepare(`
+      SELECT COUNT(*) AS window_count, MIN(starts_at) AS first_start, MAX(ends_at) AS last_end
+      FROM calendar_access_windows
+    `).first()
+  ]);
+  return json({
+    configured: Boolean(String(env.SOURCE_SUPABASE_URL || '').trim() && String(env.SOURCE_SUPABASE_ANON_KEY || '').trim()),
+    status: sync ? sync.status : 'never',
+    lastAttemptAt: sync && sync.last_attempt_at ? iso(sync.last_attempt_at) : null,
+    lastSuccessAt: sync && sync.last_success_at ? iso(sync.last_success_at) : null,
+    sourceRows: Number(sync && sync.source_rows || 0),
+    windowCount: Number(windowSummary && windowSummary.window_count || 0),
+    ignoredRows: Number(sync && sync.ignored_rows || 0),
+    errorCode: sync && sync.error_code || null,
+    firstStartUtc: windowSummary && windowSummary.first_start ? iso(windowSummary.first_start) : null,
+    lastEndUtc: windowSummary && windowSummary.last_end ? iso(windowSummary.last_end) : null,
+    policy: {
+      releaseHoursBeforeCheckin: 24,
+      checkinLocal: OPERATIONAL_CHECKIN_TIME,
+      checkoutLocal: OPERATIONAL_CHECKOUT_TIME,
+      timeZone: TIME_ZONE
+    }
+  });
+}
+
+async function triggerCalendarSync(request, env, currentTime) {
+  await authenticatedClaims(request, env, 'admin', currentTime);
+  const result = await synchronizeCalendarAccess(env, currentTime);
+  return json({
+    status: result.status,
+    synchronizedAt: result.synchronizedAt,
+    sourceRows: result.sourceRows,
+    windowCount: result.windows.length,
+    ignoredRows: result.ignoredRows
+  });
+}
+
 async function route(request, env) {
   assertEnvironment(env);
   const currentTime = nowSeconds();
@@ -949,6 +1200,8 @@ async function route(request, env) {
   if (method === 'GET' && path === `${API_PREFIX}/auth/session`) return sessionStatus(request, env, currentTime);
   if (method === 'GET' && path === `${API_PREFIX}/admin/stays`) return listStays(request, env, currentTime);
   if (method === 'POST' && path === `${API_PREFIX}/admin/stays`) return createStay(request, env, currentTime);
+  if (method === 'GET' && path === `${API_PREFIX}/admin/calendar-sync`) return calendarSyncStatus(request, env, currentTime);
+  if (method === 'POST' && path === `${API_PREFIX}/admin/calendar-sync`) return triggerCalendarSync(request, env, currentTime);
   if (method === 'GET' && path === `${API_PREFIX}/admin/place-overrides`) return listPlaceOverrides(request, env, currentTime);
   if (method === 'POST' && path === `${API_PREFIX}/admin/place-overrides`) return createPlaceOverride(request, env, currentTime);
 
@@ -988,7 +1241,14 @@ export async function handleRequest(request, env) {
   }
 }
 
-export default { fetch: handleRequest };
+export function handleScheduled(_controller, env, context) {
+  const task = synchronizeCalendarAccess(env).catch((error) => {
+    console.error('CordalSur calendar access sync failed', calendarSyncError(error));
+  });
+  context.waitUntil(task);
+}
+
+export default { fetch: handleRequest, scheduled: handleScheduled };
 
 export const __test = {
   ApiError,
@@ -999,6 +1259,9 @@ export const __test = {
   FAILURE_LIMIT,
   FAILURE_WINDOW_SECONDS,
   LOCK_SECONDS,
+  OPERATIONAL_CHECKIN_TIME,
+  OPERATIONAL_CHECKOUT_TIME,
+  CALENDAR_RELEASE_LEAD_DAYS,
   RESERVE_ATTEMPT_SQL,
   validatePlaceOverride,
   parseOfficialSkiPrices,

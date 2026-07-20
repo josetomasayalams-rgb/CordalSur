@@ -28,7 +28,7 @@ for (const file of expectedPages) {
   const html = read(file);
   if (!/<title>[^<]*CordalSur[^<]*<\/title>/i.test(html)) fail(`${file}: static title must contain CordalSur`);
   if (!/<html\b[^>]*data-i18n-title="page\.[^"]+"/i.test(html)) fail(`${file}: <html> needs a localized page.* title key`);
-  if (!html.includes('js/lang.js?v=17')) fail(`${file}: localized copy must use the current cache version`);
+  if (!html.includes('js/lang.js?v=18')) fail(`${file}: localized copy must use the current cache version`);
   if (!html.includes('js/theme.js?v=10')) fail(`${file}: theme control must use the current cache version`);
   if (!html.includes('css/styles.css?v=27')) fail(`${file}: shared sensory brand styles are stale`);
   if (!html.includes("document.documentElement.classList.add('access-pending')") ||
@@ -306,7 +306,7 @@ if (!accessScript.includes('async function restoreGuestSession()') ||
   fail('administrator access must revalidate after history restores and safely fall back to a valid guest session');
 }
 if (!adminScript.includes('href="index.html"') || !adminScript.includes("t('admin.enterSite')") ||
-    !adminHtml.includes('js/lang.js?v=17') || !adminHtml.includes('js/admin.js?v=4')) {
+    !adminHtml.includes('js/lang.js?v=18') || !adminHtml.includes('js/admin.js?v=4')) {
   fail('Administration must expose the localized same-tab platform entry action');
 }
 const enterSiteCopy = hostData.scalar?.['admin.enterSite'];

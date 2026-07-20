@@ -8,6 +8,9 @@ compatibility_date = "2025-04-01"
 ALLOWED_ORIGINS = "https://josetomasayalams-rgb.github.io,http://127.0.0.1:4174,http://localhost:4174,http://127.0.0.1:8765,http://localhost:8765"
 TOKEN_ISSUER = "cordal-sur-access"
 
+[triggers]
+crons = ["*/5 * * * *"]
+
 [[d1_databases]]
 binding = "DB"
 database_name = "cordal-sur-access"

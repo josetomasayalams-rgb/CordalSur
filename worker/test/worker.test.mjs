@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import {
   __test,
+  buildCalendarAccessWindows,
   constantTimeEqual,
   createToken,
   handleRequest,
@@ -16,6 +17,7 @@ import {
   parseAllowedOrigins,
   pinDigest,
   skiPriceForDate,
+  synchronizeCalendarAccess,
   utcSecondsToLocal,
   verifyToken
 } from '../src/index.js';
@@ -121,6 +123,145 @@ test('America/Santiago local timestamps round-trip in summer and winter', () => 
   }
   assert.equal(new Date(localToUtcSeconds('2026-01-13T12:00') * 1000).toISOString(), '2026-01-13T15:00:00.000Z');
   assert.equal(new Date(localToUtcSeconds('2026-07-13T12:00') * 1000).toISOString(), '2026-07-13T16:00:00.000Z');
+});
+
+test('operational calendar releases access exactly 24 hours before 15:00 check-in', async () => {
+  const result = await buildCalendarAccessWindows([{
+    id: 'rental-one', status: 'scheduled', checkin_date: '2026-07-20', checkout_date: '2026-07-24'
+  }]);
+  assert.equal(result.windows.length, 1);
+  assert.equal(utcSecondsToLocal(result.windows[0].startsAt), '2026-07-19T15:00');
+  assert.equal(utcSecondsToLocal(result.windows[0].endsAt), '2026-07-24T12:00');
+  assert.equal(result.windows[0].sourceCount, 1);
+  assert.match(result.windows[0].id, /^calendar:[a-f0-9]{32}$/);
+});
+
+test('same-day turnover stays unlocked while separated stays keep their closed gap', async () => {
+  const continuous = await buildCalendarAccessWindows([
+    { id: 'first', status: 'scheduled', checkin_date: '2026-07-20', checkout_date: '2026-07-24' },
+    { id: 'second', status: 'scheduled', checkin_date: '2026-07-24', checkout_date: '2026-07-27' }
+  ]);
+  assert.equal(continuous.windows.length, 1);
+  assert.equal(continuous.windows[0].sourceCount, 2);
+  assert.equal(utcSecondsToLocal(continuous.windows[0].startsAt), '2026-07-19T15:00');
+  assert.equal(utcSecondsToLocal(continuous.windows[0].endsAt), '2026-07-27T12:00');
+
+  const separated = await buildCalendarAccessWindows([
+    { id: 'first', status: 'scheduled', checkin_date: '2026-07-20', checkout_date: '2026-07-24' },
+    { id: 'second', status: 'scheduled', checkin_date: '2026-07-26', checkout_date: '2026-07-28' }
+  ]);
+  assert.equal(separated.windows.length, 2);
+  assert.equal(utcSecondsToLocal(separated.windows[1].startsAt), '2026-07-25T15:00');
+});
+
+test('cancelled and zero-night source rows never unlock guest access', async () => {
+  const result = await buildCalendarAccessWindows([
+    { id: 'cancelled', status: 'cancelled', checkin_date: '2026-07-20', checkout_date: '2026-07-22' },
+    { id: 'invalid-legacy', status: 'scheduled', checkin_date: '2026-07-23', checkout_date: '2026-07-23' }
+  ]);
+  assert.deepEqual(result.windows, []);
+  assert.equal(result.ignoredRows, 1);
+});
+
+test('a failed operational refresh preserves the last valid D1 windows', async () => {
+  let batchCalls = 0;
+  let failureWrites = 0;
+  const db = {
+    prepare() {
+      return {
+        bind() { return this; },
+        async run() { failureWrites += 1; return { meta: { changes: 1 } }; }
+      };
+    },
+    async batch() { batchCalls += 1; }
+  };
+  await assert.rejects(
+    () => synchronizeCalendarAccess({
+      DB: db,
+      SOURCE_SUPABASE_URL: 'https://project.supabase.co',
+      SOURCE_SUPABASE_ANON_KEY: 'public-source-key'
+    }, 1_784_500_000, async () => { throw new Error('network unavailable'); }),
+    (error) => error.code === 'calendar_sync_failed'
+  );
+  assert.equal(batchCalls, 0, 'the replacement transaction must not run after a failed fetch');
+  assert.equal(failureWrites, 1, 'only synchronization health may be updated after failure');
+});
+
+test('successful synchronization replaces windows atomically and sends no guest fields', async () => {
+  const prepared = [];
+  let batch = [];
+  let requestedUrl = '';
+  let requestedHeaders;
+  const db = {
+    prepare(sql) {
+      const statement = {
+        sql,
+        values: [],
+        bind(...values) { this.values = values; return this; }
+      };
+      prepared.push(statement);
+      return statement;
+    },
+    async batch(statements) { batch = statements; return statements.map(() => ({ success: true })); }
+  };
+  const result = await synchronizeCalendarAccess({
+    DB: db,
+    SOURCE_SUPABASE_URL: 'https://project.supabase.co',
+    SOURCE_SUPABASE_ANON_KEY: 'server-source-key'
+  }, localToUtcSeconds('2026-07-19T12:00'), async (url, options) => {
+    requestedUrl = url;
+    requestedHeaders = options.headers;
+    return new Response(JSON.stringify([
+      { id: 'one', status: 'scheduled', checkin_date: '2026-07-20', checkout_date: '2026-07-24' }
+    ]), { status: 200 });
+  });
+  assert.equal(result.windows.length, 1);
+  assert.equal(batch[0].sql, 'DELETE FROM calendar_access_windows');
+  assert.match(batch[1].sql, /INSERT INTO calendar_access_windows/);
+  assert.match(batch.at(-1).sql, /calendar_access_sync/);
+  const sourceUrl = new URL(requestedUrl);
+  assert.equal(sourceUrl.searchParams.get('select'), 'id,checkin_date,checkout_date,status');
+  assert.equal(sourceUrl.search.includes('guest_name'), false);
+  assert.equal(sourceUrl.search.includes('reference'), false);
+  assert.equal(requestedHeaders.apikey, 'server-source-key');
+  assert.ok(prepared.length >= 3);
+});
+
+test('calendar-backed guest sessions are revoked when the synchronized revision changes', async () => {
+  const now = Math.floor(Date.now() / 1000);
+  const claims = {
+    role: 'guest', sub: 'stay:calendar:test', stayId: 'calendar:test', accessSource: 'calendar',
+    revision: 7, iat: now - 60, exp: now + 3600
+  };
+  const token = await createToken(claims, tokenEnv);
+  let revision = 7;
+  const env = {
+    ...tokenEnv,
+    ALLOWED_ORIGINS: 'https://app.example',
+    PIN_PEPPER: 'pepper-that-is-longer-than-thirty-two-characters',
+    ADMIN_PIN_DIGEST: 'a'.repeat(64),
+    DEFAULT_GUEST_PIN_DIGEST: 'b'.repeat(64),
+    DB: {
+      prepare(sql) {
+        return {
+          bind() { return this; },
+          async first() {
+            if (!/calendar_access_windows/.test(sql)) return null;
+            return { id: 'calendar:test', label: 'Calendario operativo', starts_at: now - 3600, ends_at: now + 7200, enabled: 1, revision };
+          }
+        };
+      }
+    }
+  };
+  const request = () => new Request('https://worker.example/v1/auth/session', {
+    headers: { Origin: 'https://app.example', Authorization: `Bearer ${token}` }
+  });
+  const valid = await handleRequest(request(), env);
+  assert.equal(valid.status, 200);
+  revision = 8;
+  const revoked = await handleRequest(request(), env);
+  assert.equal(revoked.status, 401);
+  assert.equal((await revoked.json()).error.code, 'session_revoked');
 });
 
 test('official ski parser combines the operation calendar with verified web prices', () => {
@@ -256,7 +397,8 @@ test('D1 place override migration keeps current revisions and append-only histor
     const migrations = [
       readFileSync(new URL('../migrations/0001_access.sql', import.meta.url), 'utf8'),
       readFileSync(new URL('../migrations/0002_place_overrides.sql', import.meta.url), 'utf8'),
-      readFileSync(new URL('../migrations/0003_ski_price_snapshots.sql', import.meta.url), 'utf8')
+      readFileSync(new URL('../migrations/0003_ski_price_snapshots.sql', import.meta.url), 'utf8'),
+      readFileSync(new URL('../migrations/0004_calendar_access_sync.sql', import.meta.url), 'utf8')
     ].join('\n');
     execFileSync('sqlite3', [database], { input: migrations });
     execFileSync('sqlite3', [database, `INSERT INTO place_overrides VALUES ('one','category','osm-node-1',NULL,'{"category":"pharmacy"}','verified locally',1,'admin',1,1);`]);
@@ -264,6 +406,7 @@ test('D1 place override migration keeps current revisions and append-only histor
     assert.equal(execFileSync('sqlite3', [database, 'SELECT COUNT(*) FROM place_overrides;'], { encoding: 'utf8' }).trim(), '1');
     assert.equal(execFileSync('sqlite3', [database, 'SELECT COUNT(*) FROM place_override_history;'], { encoding: 'utf8' }).trim(), '1');
     assert.equal(execFileSync('sqlite3', [database, "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='ski_price_snapshots';"], { encoding: 'utf8' }).trim(), '1');
+    assert.equal(execFileSync('sqlite3', [database, "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='calendar_access_windows';"], { encoding: 'utf8' }).trim(), '1');
     assert.throws(() => execFileSync('sqlite3', [database, `INSERT INTO place_overrides VALUES ('bad','unsupported','x',NULL,'{}','bad reason',1,'admin',1,1);`], { stdio: 'pipe' }));
   } finally {
     rmSync(directory, { recursive: true, force: true });

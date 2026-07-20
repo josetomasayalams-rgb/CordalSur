@@ -168,7 +168,7 @@ else if (headings[0].attributes.hidden !== undefined || headings[0].attributes['
 }
 
 const expectedAssets = [
-  ['script', 'src', 'js/lang.js?v=17'],
+  ['script', 'src', 'js/lang.js?v=18'],
   ['script', 'src', 'js/manual.js?v=2'],
   ['link', 'href', 'css/styles.css?v=27']
 ];

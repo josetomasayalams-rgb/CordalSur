@@ -4,3 +4,8 @@ PIN_PEPPER=replace-with-a-different-at-least-32-byte-secret
 # HMAC-SHA256 hex digests made with the same PIN_PEPPER. Keep plaintext PINs private.
 ADMIN_PIN_DIGEST=replace-with-output-from-npm-run-hash-pin
 DEFAULT_GUEST_PIN_DIGEST=replace-with-output-from-npm-run-hash-pin
+
+# Server-side source shared with CordalSur Control. The Worker reads only
+# operational dates/status; it never copies guest names, references or notes.
+SOURCE_SUPABASE_URL=https://your-project.supabase.co
+SOURCE_SUPABASE_ANON_KEY=replace-with-server-side-source-key

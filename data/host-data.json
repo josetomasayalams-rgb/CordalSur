@@ -1730,9 +1730,9 @@
       "en": "Access unavailable"
     },
     "access.locked.body": {
-      "es": "No hay una estadía activa en este momento. Revisa las fechas o contacta al anfitrión.",
-      "pt": "Não há uma estadia ativa neste momento. Confira as datas ou fale com o anfitrião.",
-      "en": "There is no active stay at this time. Check your dates or contact the host."
+      "es": "El acceso se habilita automáticamente 24 horas antes del check-in. Revisa las fechas o contacta al anfitrión.",
+      "pt": "O acesso é liberado automaticamente 24 horas antes do check-in. Confira as datas ou fale com o anfitrião.",
+      "en": "Access opens automatically 24 hours before check-in. Check your dates or contact the host."
     },
     "access.config.error": {
       "es": "El acceso todavía no está configurado. Inténtalo más tarde.",
@@ -1785,9 +1785,9 @@
       "en": "Administration"
     },
     "admin.login.subtitle": {
-      "es": "Configura las estadías y el acceso de huéspedes.",
-      "pt": "Configure as estadias e o acesso dos hóspedes.",
-      "en": "Configure stays and guest access."
+      "es": "Revisa excepciones manuales del acceso de huéspedes.",
+      "pt": "Revise exceções manuais do acesso dos hóspedes.",
+      "en": "Review manual exceptions for guest access."
     },
     "admin.pin.label": {
       "es": "Clave de administrador",
@@ -1845,9 +1845,9 @@
       "en": "Stays"
     },
     "admin.dashboard.subtitle": {
-      "es": "Programa cuándo estará disponible el acceso de huéspedes.",
-      "pt": "Programe quando o acesso dos hóspedes estará disponível.",
-      "en": "Schedule when guest access will be available."
+      "es": "El calendario operativo habilita el acceso 24 horas antes del check-in. Usa estadías manuales solo para excepciones.",
+      "pt": "O calendário operacional libera o acesso 24 horas antes do check-in. Use estadias manuais somente para exceções.",
+      "en": "The operations calendar opens access 24 hours before check-in. Use manual stays only for exceptions."
     },
     "admin.tabs.stays": { "es": "Estadías", "pt": "Estadias", "en": "Stays" },
     "admin.tabs.places": { "es": "Lugares y correcciones", "pt": "Lugares e correções", "en": "Places and corrections" },
@@ -1895,9 +1895,9 @@
       "en": "New stay"
     },
     "admin.empty": {
-      "es": "Aún no hay estadías programadas.",
-      "pt": "Ainda não há estadias programadas.",
-      "en": "No stays have been scheduled yet."
+      "es": "No hay excepciones manuales. El calendario operativo sigue administrando el acceso automático.",
+      "pt": "Não há exceções manuais. O calendário operacional continua administrando o acesso automático.",
+      "en": "There are no manual exceptions. The operations calendar is still managing automatic access."
     },
     "admin.loading": {
       "es": "Cargando estadías…",
