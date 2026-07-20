@@ -1,0 +1,80 @@
+/* CordalSur background collection v1: responsive, access-gated and decorative. */
+body.cs-has-background {
+  background-image: none;
+  isolation: isolate;
+}
+
+.cs-page-background {
+  --cs-photo-overlay: linear-gradient(180deg, rgba(248, 243, 231, 0.1) 0%, rgba(235, 241, 233, 0.38) 52%, rgba(245, 241, 231, 0.84) 100%);
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f8f7f0 0%, #edf2ec 58%, #dce7e2 100%);
+  pointer-events: none;
+}
+
+.cs-page-background[data-profile="bright"] {
+  --cs-photo-overlay: linear-gradient(180deg, rgba(248, 243, 231, 0.16) 0%, rgba(235, 241, 233, 0.48) 52%, rgba(245, 241, 231, 0.88) 100%);
+}
+
+.cs-page-background[data-profile="moody"] {
+  --cs-photo-overlay: linear-gradient(180deg, rgba(248, 243, 231, 0.06) 0%, rgba(235, 241, 233, 0.3) 52%, rgba(245, 241, 231, 0.8) 100%);
+}
+
+.cs-background__layer,
+.cs-background__layer picture,
+.cs-background__layer img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cs-background__layer {
+  opacity: 0;
+  transition: opacity 1400ms ease-in-out;
+}
+
+.cs-background__layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--cs-photo-overlay);
+  transition: background 260ms ease;
+}
+
+.cs-background__layer img {
+  object-fit: cover;
+  object-position: var(--cs-photo-position-desktop, center center);
+}
+
+.cs-background__layer.is-active {
+  opacity: 1;
+}
+
+html[data-theme="dark"] .cs-page-background {
+  --cs-photo-overlay: linear-gradient(180deg, rgba(8, 35, 28, 0.28) 0%, rgba(11, 48, 39, 0.52) 52%, rgba(7, 27, 22, 0.86) 100%);
+  background: linear-gradient(180deg, #153b33 0%, #0d241f 58%, #091a16 100%);
+}
+
+html[data-theme="dark"] .cs-page-background[data-profile="bright"] {
+  --cs-photo-overlay: linear-gradient(180deg, rgba(8, 35, 28, 0.34) 0%, rgba(11, 48, 39, 0.58) 52%, rgba(7, 27, 22, 0.88) 100%);
+}
+
+html[data-theme="dark"] .cs-page-background[data-profile="moody"] {
+  --cs-photo-overlay: linear-gradient(180deg, rgba(8, 35, 28, 0.2) 0%, rgba(11, 48, 39, 0.46) 52%, rgba(7, 27, 22, 0.84) 100%);
+}
+
+@media (max-width: 719px) {
+  .cs-background__layer img {
+    object-position: var(--cs-photo-position-mobile, center center);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-background__layer,
+  .cs-background__layer::after {
+    transition: none !important;
+  }
+}

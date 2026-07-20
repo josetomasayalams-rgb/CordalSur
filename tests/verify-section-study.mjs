@@ -101,7 +101,7 @@ for (let block = 1; block <= 20; block += 1) {
 for (const definition of Object.values(paletteData.sections)) {
   const html = fs.readFileSync(path.join(ROOT, definition.page), 'utf8');
   const loaderPosition = html.indexOf('data-study-condition');
-  const stylesheetPosition = html.indexOf('css/section-palettes.css?v=5');
+  const stylesheetPosition = html.indexOf('css/section-palettes.css?v=6');
   assert.ok(loaderPosition >= 0 && loaderPosition < stylesheetPosition, `${definition.page}: condition must load before CSS`);
   assert.match(html, /js\/study-condition\.js\?v=1/);
 }

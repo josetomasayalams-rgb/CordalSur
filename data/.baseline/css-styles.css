@@ -68,8 +68,6 @@
   --tint-copper: rgba(217, 162, 79, 0.16);
   --tint-ice: rgba(220, 231, 226, 0.68);
   --copper-strong: #785018;
-  --photo-overlay-home: linear-gradient(180deg, rgba(245, 241, 231, 0.16) 0%, rgba(232, 239, 231, 0.48) 52%, rgba(245, 241, 231, 0.94) 100%);
-  --photo-overlay-inner: linear-gradient(180deg, rgba(245, 241, 231, 0.26) 0%, rgba(232, 239, 231, 0.62) 50%, rgba(245, 241, 231, 0.92) 100%);
 }
 
 /* Seasons affect content and imagery, never the brand palette. */
@@ -99,8 +97,6 @@ html[data-theme="dark"] body {
   --tint-ice: rgba(255, 255, 255, 0.06);
   --copper: #d9a24f;
   --copper-strong: #f0cc91;
-  --photo-overlay-home: linear-gradient(180deg, rgba(8, 35, 28, 0.38) 0%, rgba(11, 48, 39, 0.62) 52%, rgba(7, 27, 22, 0.94) 100%);
-  --photo-overlay-inner: linear-gradient(180deg, rgba(8, 35, 28, 0.5) 0%, rgba(11, 48, 39, 0.72) 50%, rgba(7, 27, 22, 0.94) 100%);
 }
 html[data-theme="dark"] body {
   background-color: #0d241f;
@@ -123,10 +119,7 @@ body {
   margin: 0;
   font-family: 'Manrope', system-ui, -apple-system, sans-serif;
   color: var(--deep-blue);
-  /* Base shell — neutral gradient. The per-page photo + fade overlay is set
-     by the .bg-* modifier on each HTML <body>. The fade is built INTO the
-     page-specific background-image stack, so cards always land on a calm
-     surface regardless of which page they live on. */
+  /* Neutral shell shown before access and whenever imagery is unavailable. */
   background-color: var(--snow);
   background-image: linear-gradient(180deg, #f8f7f0 0%, #edf2ec 58%, #dce7e2 100%);
   background-attachment: fixed;
@@ -137,83 +130,7 @@ body {
   transition: background-color var(--motion-slide), color var(--motion-slide), background-image var(--motion-slide);
 }
 
-/* is-summer / is-winter still drive the .tag-* system and .season-* hiding,
-   but no longer the background — user chose unified "mountain identity" over
-   winter/summer duality in the plan. The body's photo background is set by
-   the page-specific .bg-* class instead. */
-
-/* ============================================================
-   Per-page background system (FASE 2 del plan aprobado)
-   8 mountain-identity photos + layered fade overlay + WebP→JPG fallback.
-   Pattern: two stacked background-image declarations — the second one
-   (webp) overrides the first (jpg). Browsers that can't parse the webp
-   url() fall through to the jpg declaration.
-   - Home (bg-home): full-bleed hero, gentle fade so the photo reads as a
-     brand moment but the cards still land on a calm surface.
-   - 7 inner pages: strong fade (atmospheric texture, not a primary visual)
-     so the cards stay the protagonist. Per-page position is tuned for the
-     subject of each photo (peaks up, cabin centered, trail eye-level, etc).
-
-   iOS Safari fix (2026-07-03): background-attachment: fixed is gated to
-   hover-capable devices only. iOS Safari has a long-standing repaint bug
-   with fixed backgrounds (photo freezes or jankies during scroll). Touch
-   devices don't need the parallax effect — the fade is built INTO the
-   bg-image stack, so the visual reads coherently when the photo scrolls
-   with the content. Desktop with mouse keeps the original atmospheric effect.
-   ============================================================ */
-.bg-home, .bg-checkin, .bg-checkout, .bg-clima, .bg-tickets,
-.bg-instrucciones, .bg-restaurantes, .bg-actividades {
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-/* Fixed-viewport photo layer for the 7 inner pages (home uses the JS rotator).
-   A position:fixed ::before — NOT background-attachment:fixed on <body> — so
-   cover sizes to the VIEWPORT, not the full document height. On touch (where
-   fixed-attachment was gated off) the body bg used to scroll with content and
-   stretch the photo across the whole long page, washing it out under the fade
-   → "sin fondo". Now every scroll position shows a crisp viewport-sized photo.
-   Mirrors the home rotator's .bg-rotator__layer (position:fixed, z-index:-1). */
-.bg-checkin::before, .bg-checkout::before, .bg-clima::before, .bg-tickets::before,
-.bg-instrucciones::before, .bg-restaurantes::before, .bg-actividades::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-/* BACKGROUND ROTATOR LAYERS */
-.has-bg-rotator {
-  background-image: none !important;
-  isolation: isolate;
-}
-.bg-rotator__layer {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-size: cover;
-  background-position: center 30%;
-  background-repeat: no-repeat;
-  opacity: 0;
-  transition: opacity 1200ms ease-in-out;
-  pointer-events: none;
-}
-.bg-rotator__layer::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--photo-overlay-home);
-  transition: background var(--motion-slide);
-}
-.bg-rotator__layer.is-active {
-  opacity: 1;
-}
-@media (prefers-reduced-motion: reduce) {
-  .bg-rotator__layer {
-    transition: none !important;
-  }
-}
+/* Season classes still control seasonal content, never the brand imagery. */
 
 /* Explora el Valle — map-first guest guide. */
 .guide-hero { padding: clamp(18px, 3vw, 26px); border-color: color-mix(in srgb, var(--gold) 30%, var(--card-border)); }
@@ -506,95 +423,6 @@ html[data-theme="dark"] .nearby-card__call { color: #e8bd79; border-color: #e8bd
   .nearby-card__distance { grid-column: 2; }
 }
 
-/* HOME — full-bleed hero */
-.bg-home {
-  background-position: center 30%;
-  /* JPG fallback first (browsers that can't parse webp ignore the 2nd rule) */
-  background-image:
-    var(--photo-overlay-home),
-    url("bg/winter/home-01-nevados-panorama.jpg?v=2");
-  background-image:
-    var(--photo-overlay-home),
-    url("bg/winter/home-01-nevados-panorama.webp?v=2");
-}
-
-/* CHECK-IN — camino nieve */
-.bg-checkin::before {
-  background-position: center 40%;
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/checkin-camino-nieve.jpg?v=2");
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/checkin-camino-nieve.webp?v=2");
-}
-
-/* CHECK-OUT — bosque atardecer */
-.bg-checkout::before {
-  background-position: center 35%;
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/checkout-bosque-atardecer.jpg?v=2");
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/checkout-bosque-atardecer.webp?v=2");
-}
-
-/* CLIMA — nieve panoramica */
-.bg-clima::before {
-  background-position: center 50%;
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/clima-nieve-panoramica.jpg?v=2");
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/clima-nieve-panoramica.webp?v=2");
-}
-
-/* TICKETS — pistas nevados */
-.bg-tickets::before {
-  background-position: center 45%;
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/tickets-pistas-nevados.jpg?v=2");
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/tickets-pistas-nevados.webp?v=2");
-}
-
-/* INSTRUCCIONES — termas nieve */
-.bg-instrucciones::before {
-  background-position: center 45%;
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/instrucciones-termas-nieve.jpg?v=2");
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/instrucciones-termas-nieve.webp?v=2");
-}
-
-/* RESTAURANTES — atardecer bosque */
-.bg-restaurantes::before {
-  background-position: center 50%;
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/restaurantes-atardecer-bosque.jpg?v=2");
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/restaurantes-atardecer-bosque.webp?v=2");
-}
-
-/* ACTIVIDADES — montana otono */
-.bg-actividades::before {
-  background-position: center 50%;
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/actividades-montana-otono.jpg?v=2");
-  background-image:
-    var(--photo-overlay-inner),
-    url("bg/winter/actividades-montana-otono.webp?v=2");
-}
-
 /* Entrance — single unified reveal. Product law: no orchestrated load cascade;
    a guest opens the app to get information, not to watch it choreograph in. */
 @keyframes gh-rise {
@@ -744,9 +572,9 @@ a.card:active { transform: scale(0.985); transition: transform var(--motion-snap
 @media (hover: hover) {
   .card:hover::before, .emergency-card:hover::before, .rest-card:hover::before, .hero-panel:hover::before { opacity: 1; }
 }
-.bg-home .card::before,
-.bg-home .emergency-card::before,
-.bg-home .hero-panel::before {
+body[data-section="home"] .card::before,
+body[data-section="home"] .emergency-card::before,
+body[data-section="home"] .hero-panel::before {
   background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.42), transparent 64%);
   transition-duration: 220ms;
 }
@@ -1751,9 +1579,9 @@ html[data-theme="dark"] .locker-card__reference { color: var(--snow); }
 .emergency-card .btn { background: var(--copper); color: #fff; }
 
 /* Home Liquid Glass — scoped to the landing hub so dense content pages stay readable. */
-.bg-home .card,
-.bg-home .emergency-card,
-.bg-home .quick-contact {
+body[data-section="home"] .card,
+body[data-section="home"] .emergency-card,
+body[data-section="home"] .quick-contact {
   background: linear-gradient(135deg, rgba(255,255,255,0.66), rgba(255,255,255,0.36));
   border: 1px solid rgba(255,255,255,0.58);
   box-shadow: 0 18px 50px rgba(11,37,56,0.18), inset 0 1px 0 rgba(255,255,255,0.75);
@@ -1761,9 +1589,9 @@ html[data-theme="dark"] .locker-card__reference { color: var(--snow); }
   -webkit-backdrop-filter: blur(22px) saturate(1.65);
   overflow: hidden;
 }
-.bg-home .card::after,
-.bg-home .emergency-card::after,
-.bg-home .quick-contact::after {
+body[data-section="home"] .card::after,
+body[data-section="home"] .emergency-card::after,
+body[data-section="home"] .quick-contact::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1773,18 +1601,18 @@ html[data-theme="dark"] .locker-card__reference { color: var(--snow); }
   pointer-events: none;
   z-index: 0;
 }
-.bg-home .quick-contact > * { position: relative; z-index: 1; }
+body[data-section="home"] .quick-contact > * { position: relative; z-index: 1; }
 @media (hover: hover) {
-  .bg-home a.card:hover {
+  body[data-section="home"] a.card:hover {
     transform: translateY(-3px) scale(1.01);
     box-shadow: 0 22px 56px rgba(11,37,56,0.22), inset 0 1px 0 rgba(255,255,255,0.82);
     transition-duration: 220ms;
   }
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .bg-home .card,
-  .bg-home .emergency-card,
-  .bg-home .quick-contact {
+  body[data-section="home"] .card,
+  body[data-section="home"] .emergency-card,
+  body[data-section="home"] .quick-contact {
     background: rgba(255,255,255,0.88);
   }
 }
@@ -3188,7 +3016,7 @@ html[data-theme="dark"] .site-credit__link { text-shadow: none; }
   right: -70px;
   top: -88px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(91,143,169,0.24), rgba(91,143,169,0) 68%);
+  background: radial-gradient(circle, rgba(217, 162, 79, 0.2), rgba(21, 59, 51, 0) 68%);
   pointer-events: none;
   z-index: 0;
 }
@@ -3348,13 +3176,6 @@ html[data-theme="dark"] .site-credit__link { text-shadow: none; }
   .theme-selector button { min-height: 44px; }
   .btn-back { width: 44px; height: 44px; }
   .app-container { padding-top: 18px; }
-}
-@media (hover: none) {
-  /* Touch devices: rely on bg gradient only until photo arrives. */
-  .bg-home, .bg-checkin, .bg-checkout, .bg-clima, .bg-tickets,
-  .bg-instrucciones, .bg-restaurantes, .bg-actividades {
-    background-color: #eef4f8;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   .app-container, .hero-panel, .prefs-stack, .rest-filter-bar,
@@ -3892,13 +3713,6 @@ html[data-theme="dark"] .whatsapp-support-card {
 html[data-theme="dark"] .emergency-contact b,
 html[data-theme="dark"] .whatsapp-support-card__action {
   background: var(--forest);
-}
-
-@media (hover: none) {
-  .bg-home, .bg-checkin, .bg-checkout, .bg-clima, .bg-tickets,
-  .bg-instrucciones, .bg-restaurantes, .bg-actividades {
-    background-color: var(--ivory);
-  }
 }
 
 @media (max-width: 420px) {
@@ -5142,14 +4956,6 @@ html[data-theme="dark"] .catalog-card[data-distance-source="direct-current"] .ca
 /* Manual: guest instructions, thermostat guide and house rules. */
 body[data-section="manual"] .app-container {
   max-width: 820px;
-}
-
-body[data-section="manual"] {
-  --photo-overlay-inner: linear-gradient(180deg, rgba(245, 241, 231, .62) 0%, rgba(232, 239, 231, .82) 46%, rgba(245, 241, 231, .94) 100%);
-}
-
-html[data-theme="dark"] body[data-section="manual"] {
-  --photo-overlay-inner: linear-gradient(180deg, rgba(8, 35, 28, .68) 0%, rgba(11, 48, 39, .84) 48%, rgba(7, 27, 22, .96) 100%);
 }
 
 body[data-section="manual"] h1,

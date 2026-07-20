@@ -40,7 +40,7 @@ for (const required of [
 ]) {
   assert.ok(paths.has(required), `${required} must be locked`);
 }
-assert.ok(first.files.some((file) => file.path.startsWith('css/bg/') && file.path.endsWith('.webp')));
+assert.ok(first.files.some((file) => file.path.startsWith('assets/backgrounds/v1/') && file.path.endsWith('.webp')));
 assert.ok(first.files.some((file) => file.path.startsWith('assets/brand/')));
 assert.ok(first.files.every((file) => !file.path.includes('.DS_Store')));
 assert.throws(

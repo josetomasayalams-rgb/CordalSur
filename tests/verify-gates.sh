@@ -23,6 +23,8 @@ node tests/verify-study-preregistration.mjs
 
 echo "=== Gate 5: public CordalSur contract ==="
 node tests/verify-public-contract.mjs
+node tests/verify-backgrounds.mjs
+node --test tests/backgrounds.test.mjs
 node tests/verify-manual-contract.mjs
 node --test tests/manual-interaction.test.mjs
 node tests/verify-mountain-links.mjs

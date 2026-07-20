@@ -30,7 +30,11 @@ for (const file of expectedPages) {
   if (!/<html\b[^>]*data-i18n-title="page\.[^"]+"/i.test(html)) fail(`${file}: <html> needs a localized page.* title key`);
   if (!html.includes('js/lang.js?v=18')) fail(`${file}: localized copy must use the current cache version`);
   if (!html.includes('js/theme.js?v=10')) fail(`${file}: theme control must use the current cache version`);
-  if (!html.includes('css/styles.css?v=27')) fail(`${file}: shared sensory brand styles are stale`);
+  if (!html.includes('css/styles.css?v=28')) fail(`${file}: shared sensory brand styles are stale`);
+  if (!html.includes('css/section-palettes.css?v=6') || !html.includes('css/backgrounds.css?v=1') ||
+      !html.includes('js/backgrounds.js?v=3')) {
+    fail(`${file}: responsive background collection is stale or missing`);
+  }
   if (!html.includes("document.documentElement.classList.add('access-pending')") ||
       !html.includes('css/access.css?v=4') || !html.includes('js/access.js?v=4')) {
     fail(`${file}: guest gate must load before protected content is shown`);
@@ -200,6 +204,7 @@ for (const asset of [
 }
 const styles = read('css/styles.css');
 const accessStyles = read('css/access.css');
+const backgroundStyles = read('css/backgrounds.css');
 for (const token of ['#153b33', '#d9a24f']) {
   if (!styles.toLowerCase().includes(token) || !accessStyles.toLowerCase().includes(token)) {
     fail(`official brand token ${token} must be shared by the guide and access screen`);
@@ -213,10 +218,9 @@ if (!read('js/theme.js').includes("return 'dark';") ||
     !index.includes('js/theme.js?v=10')) {
   fail('the first visit must default to dark while preserving manual selection');
 }
-if (!styles.includes('--photo-overlay-home') || !styles.includes('--photo-overlay-inner') ||
-    !styles.includes('var(--photo-overlay-home)') || !styles.includes('var(--photo-overlay-inner)') ||
-    !index.includes('js/backgrounds.js?v=2')) {
-  fail('photos must use the cache-busted, theme-aware green and ivory filters');
+if (!backgroundStyles.includes('--cs-photo-overlay') || !backgroundStyles.includes('html[data-theme="dark"]') ||
+    !backgroundStyles.includes('prefers-reduced-motion') || !index.includes('js/backgrounds.js?v=3')) {
+  fail('photos must use the cache-busted, theme-aware responsive background system');
 }
 if (!styles.includes('--brand-symbol-color') ||
     !styles.includes('html[data-theme="light"] .brand-mark') ||
